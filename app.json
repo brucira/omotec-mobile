@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "Cubicle Talks",
+    "slug": "cubicletalks",
+    "version": "1.0.0",
+    "newArchEnabled": true,
+    "plugins": [
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "image": "./src/assets/icon.png",
+          "imageWidth": 40
+        }
+      ]
+    ]
+  }
+}
