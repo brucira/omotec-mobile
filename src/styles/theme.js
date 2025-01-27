@@ -8,9 +8,9 @@ const themeObj = {
   },
   colors: {
     /* eslint-disable sort-keys */
-    primary: "#269CD2",
+    primary: "#852DCD",
     // primaryContainer: palette.primary90,
-    secondary: "#D32F68",
+    secondary: "#852DCD",
     // secondaryContainer: palette.secondary90,
     tertiary: "#8A959C",
     // tertiaryContainer: palette.tertiary90,

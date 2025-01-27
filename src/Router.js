@@ -38,16 +38,6 @@ const Tabs = () => (
 
             return (
               <>
-                <View
-                  style={[
-                    styles.activeIndicator,
-                    {
-                      backgroundColor: focused
-                        ? color
-                        : CombinedDefaultTheme.colors.background,
-                    },
-                  ]}
-                />
                 <Image
                   style={{
                     height: size,
@@ -63,24 +53,36 @@ const Tabs = () => (
 
           return null;
         }}
-        renderLabel={({ route, focused }) => {
+        renderLabel={({ route, focused, color }) => {
           const { options } = descriptors[route.key];
 
           return (
-            <Text
-              style={[
-                {
-                  color:
-                    CombinedDefaultTheme.colors[
-                      focused ? "secondary" : "onSurfaceDisabled"
-                    ],
-                  textAlign: "center",
-                },
-              ]}
-              variant="labelMedium"
-            >
-              {options.tabBarLabel}
-            </Text>
+            <>
+              <Text
+                style={[
+                  {
+                    color:
+                      CombinedDefaultTheme.colors[
+                        focused ? "secondary" : "onSurfaceDisabled"
+                      ],
+                    textAlign: "center",
+                  },
+                ]}
+                variant="labelMedium"
+              >
+                {options.tabBarLabel}
+              </Text>
+              <View
+                style={[
+                  styles.activeIndicator,
+                  {
+                    backgroundColor: focused
+                      ? color
+                      : CombinedDefaultTheme.colors.background,
+                  },
+                ]}
+              />
+            </>
           );
         }}
         renderTouchable={({ children, key, ...props }) => (
@@ -182,11 +184,13 @@ const Router = () => {
 
 const styles = StyleSheet.create({
   activeIndicator: {
-    borderBottomLeftRadius: CombinedDefaultTheme.roundness,
-    borderBottomRightRadius: CombinedDefaultTheme.roundness,
+    alignSelf: "center",
+    borderTopLeftRadius: CombinedDefaultTheme.roundness,
+    borderTopRightRadius: CombinedDefaultTheme.roundness,
     height: Dimensions.margin / 4,
-    marginBottom: Dimensions.margin / 4,
-    marginTop: -Dimensions.margin / 2,
+    // justifyContent: "center",
+    // marginBottom: Dimensions.margin / 4,
+    // marginTop: -Dimensions.margin / 2,
     width: Dimensions.screenWidth / 4 - Dimensions.margin * 2,
   },
 });
