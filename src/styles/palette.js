@@ -50,6 +50,8 @@ const palette = {
   grey200: "#EAECF0",
   grey600: "#55646F",
   grey700: "#6C7784",
+  tintOrange: "#FFEFE8",
+  tintGreen: "#E3F7EE",
   green300: "#18B975",
   green500: "#4CAF50",
   success600: "#039855",

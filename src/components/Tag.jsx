@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Avatar, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 
 import palette from "../styles/palette";
 import { Dimensions } from "../utils/constant";
