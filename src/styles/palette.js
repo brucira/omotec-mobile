@@ -54,6 +54,7 @@ const palette = {
   tintGreen: "#E3F7EE",
   green300: "#18B975",
   green500: "#4CAF50",
+  success50: "#ECFDF3",
   success600: "#039855",
   yellow500: "#FFEB3B",
   transparent: "#00000000",

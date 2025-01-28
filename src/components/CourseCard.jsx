@@ -58,8 +58,6 @@ const CourseCard = ({ index }) => {
   );
 };
 
-export default CourseCard;
-
 const styles = StyleSheet.create({
   banner: {
     borderTopLeftRadius: Dimensions.padding / 2,
@@ -98,8 +96,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   progressBar: {
-    borderRadius: 16,
-    height: 8,
+    borderRadius: Dimensions.margin,
+    height: Dimensions.margin / 2,
     width: 183,
   },
   progressText: {},
@@ -109,3 +107,5 @@ const styles = StyleSheet.create({
     paddingBottom: Dimensions.padding / 1.77,
   },
 });
+
+export default CourseCard;

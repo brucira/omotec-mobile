@@ -8,20 +8,20 @@ import { Dimensions } from "../utils/constant";
 const Tag = ({ iconSource, label, backgroundColor, textColor }) => {
   return (
     <View style={[styles.dateChip, { backgroundColor: backgroundColor }]}>
-      <Image
-        size={14}
-        source={iconSource}
-        style={styles.chipIcon}
-        tintColor={textColor}
-      />
+      {iconSource && (
+        <Image
+          size={14}
+          source={iconSource}
+          style={styles.chipIcon}
+          tintColor={textColor}
+        />
+      )}
       <Text style={[{ color: textColor }]} variant="labelSmall">
         {label}
       </Text>
     </View>
   );
 };
-
-export default Tag;
 
 const styles = StyleSheet.create({
   chipIcon: {
@@ -42,3 +42,5 @@ const styles = StyleSheet.create({
     paddingVertical: Dimensions.padding / 4,
   },
 });
+
+export default Tag;

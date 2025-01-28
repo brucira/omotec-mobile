@@ -17,7 +17,6 @@ import { Dimensions, RouteNames } from "./utils/constant";
 const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
-console.log("im here");
 
 const Tabs = () => (
   <Tab.Navigator

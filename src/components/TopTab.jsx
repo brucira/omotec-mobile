@@ -9,7 +9,6 @@ const TopTab = ({ activeTab, setActiveTab, tabData }) => {
   const renderTab = (tab, index) => (
     <View key={index} style={styles.headerContainer}>
       <TouchableOpacity
-        // key={tab}
         style={[
           styles.tab,
           activeTab === tab && styles.activeTab,
@@ -38,8 +37,6 @@ const TopTab = ({ activeTab, setActiveTab, tabData }) => {
   );
 };
 
-export default TopTab;
-
 const styles = StyleSheet.create({
   activeTab: {
     borderBottomColor: CombinedDefaultTheme.colors.primary,
@@ -47,8 +44,8 @@ const styles = StyleSheet.create({
   },
   activeTabIndicator: {
     backgroundColor: CombinedDefaultTheme.colors.primary,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    borderTopLeftRadius: Dimensions.margin / 2,
+    borderTopRightRadius: Dimensions.margin / 2,
     height: Dimensions.margin / 5.3,
     marginTop: Dimensions.padding / 1.6,
   },
@@ -77,3 +74,5 @@ const styles = StyleSheet.create({
     paddingRight: Dimensions.padding / 2,
   },
 });
+
+export default TopTab;
