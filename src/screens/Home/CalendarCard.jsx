@@ -2,53 +2,55 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { cardData, Dimensions } from "../../utils/constant";
+import { Dimensions } from "../../utils/constant";
 
-const CalendarCard = () => {
+const CalendarCard = ({ item }) => {
   return (
-    <>
-      {cardData.map((item, index) => (
-        <View
-          key={index}
-          style={[styles.dailyCourseCard, { backgroundColor: item.background }]}
-        >
-          <Image source={item.gradient} style={styles.gradient} />
-          <View style={styles.dailyCourseCardContent}>
-            <View>
-              <Text variant="titleMedium">UI/UX Design Course</Text>
-              <View style={styles.subHeading}>
-                <Text variant="bodySmall">2:00 - 4:00 PM</Text>
-                <Text
-                  style={{
-                    alignSelf: "center",
-                    paddingHorizontal: Dimensions.padding / 6,
-                  }}
-                >
-                  &bull;
-                </Text>
-                <Text variant="bodySmall">Mumbai</Text>
-              </View>
-            </View>
-            <View style={styles.calendarContentFooter}>
-              <View style={styles.avatarGroup}>
-                <Image
-                  source={require("../../assets/avatar.png")}
-                  style={styles.avatar}
-                />
-                {[...Array(3)].map((_, index) => (
-                  <Image
-                    key={index}
-                    source={require("../../assets/avatar.png")}
-                    style={styles.avatarOverlap}
-                  />
-                ))}
-              </View>
-              <Text variant="bodySmall"> + 57 Others</Text>
+    <View>
+      <View
+        style={[styles.dailyCourseCard, { backgroundColor: item.background }]}
+      >
+        <Image source={item.gradient} style={styles.gradient} />
+        <View style={styles.dailyCourseCardContent}>
+          <View>
+            <Text variant="titleMedium">UI/UX Design Course</Text>
+            <View style={styles.subHeading}>
+              <Text variant="bodySmall">2:00 - 4:00 PM</Text>
+              <Text
+                style={{
+                  alignSelf: "center",
+                  paddingHorizontal: Dimensions.padding / 6,
+                }}
+              >
+                &bull;
+              </Text>
+              <Text variant="bodySmall">Mumbai</Text>
             </View>
           </View>
+          <View style={styles.calendarContentFooter}>
+            <View style={styles.avatarGroup}>
+              <Image
+                source={require("../../assets/avatar.png")}
+                style={styles.avatar}
+              />
+              <Image
+                source={require("../../assets/avatar.png")}
+                style={styles.avatarOverlap}
+              />
+              <Image
+                source={require("../../assets/avatar.png")}
+                style={styles.avatarOverlap}
+              />
+              <Image
+                source={require("../../assets/avatar.png")}
+                style={styles.avatarOverlap}
+              />
+            </View>
+            <Text variant="bodySmall"> + 57 Others</Text>
+          </View>
         </View>
-      ))}
-    </>
+      </View>
+    </View>
   );
 };
 

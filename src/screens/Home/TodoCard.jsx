@@ -6,20 +6,17 @@ import Tag from "../../components/Tag";
 import palette from "../../styles/palette";
 import { Dimensions } from "../../utils/constant";
 
-const TodoCard = ({ item, index }) => {
+const TodoCard = ({ imageSource, todoTitle, subject, date, label }) => {
   const [checked, setChecked] = useState("first");
 
   return (
-    <View key={index} style={styles.todoCardContainer}>
+    <View style={styles.todoCardContainer}>
       <View style={styles.todoContentContainer}>
-        <Image
-          source={require("../../assets/icons/clock.png")}
-          style={styles.todoImage}
-        />
+        <Image source={imageSource} style={styles.todoImage} />
         <View style={{ justifyContent: "space-between" }}>
-          <Text>Complete the quiz</Text>
+          <Text>{todoTitle}</Text>
           <View style={styles.subHeading}>
-            <Text variant="bodySmall">Robotics</Text>
+            <Text variant="bodySmall">{subject}</Text>
             <Text
               style={{
                 alignSelf: "center",
@@ -28,7 +25,7 @@ const TodoCard = ({ item, index }) => {
             >
               &bull;
             </Text>
-            <Text variant="bodySmall">20 March</Text>
+            <Text variant="bodySmall">{date}</Text>
           </View>
         </View>
       </View>
@@ -42,7 +39,7 @@ const TodoCard = ({ item, index }) => {
         </View>
         <Tag
           backgroundColor={palette.success50}
-          label={"In Progress"}
+          label={label}
           textColor={palette.success600}
         />
       </View>

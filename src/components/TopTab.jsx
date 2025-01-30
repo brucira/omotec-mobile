@@ -6,23 +6,27 @@ import { CombinedDefaultTheme } from "../styles/theme";
 import { Dimensions } from "../utils/constant";
 
 const TopTab = ({ activeTab, setActiveTab, tabData }) => {
-  const renderTab = (tab, index) => (
-    <View key={index} style={styles.headerContainer}>
-      <TouchableOpacity
-        style={[
-          styles.tab,
-          activeTab === tab && styles.activeTab,
-          activeTab !== tab && styles.inactiveTab,
-        ]}
-        onPress={() => setActiveTab(tab)}
-      >
-        <Text style={activeTab === tab ? styles.activeTabText : styles.tabText}>
-          {tab}
-        </Text>
-        {activeTab === tab && <View style={styles.activeTabIndicator} />}
-      </TouchableOpacity>
-    </View>
-  );
+  const renderTab = (tab, index) => {
+    return (
+      <View key={tab.id} style={styles.headerContainer}>
+        <TouchableOpacity
+          style={[
+            styles.tab,
+            activeTab === tab && styles.activeTab,
+            activeTab !== tab && styles.inactiveTab,
+          ]}
+          onPress={() => setActiveTab(tab)}
+        >
+          <Text
+            style={activeTab === tab ? styles.activeTabText : styles.tabText}
+          >
+            {tab.city}
+          </Text>
+          {activeTab === tab && <View style={styles.activeTabIndicator} />}
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <View>
