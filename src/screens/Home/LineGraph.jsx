@@ -4,8 +4,40 @@ import { LineChart } from "react-native-chart-kit";
 import Svg, { Polygon, Rect, Text } from "react-native-svg";
 
 import palette from "../../styles/palette";
+import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions, lineGraphData } from "../../utils/constant";
 
+const chartConfig = {
+  backgroundGradientFrom: CombinedDefaultTheme.colors.background,
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientTo: CombinedDefaultTheme.colors.background,
+  backgroundGradientToOpacity: 0.5,
+  color: (opacity = 1) => `rgba(7, 150, 104, ${opacity})`,
+  decimalPlaces: 0,
+  fillShadowGradientFrom: palette.linearGradient,
+  fillShadowGradientFromOpacity: 0.1,
+  fillShadowGradientTo: palette.transparent,
+  fillShadowGradientToOpacity: 0,
+  propsForBackgroundLines: {
+    stroke: palette.grey200,
+    strokeDasharray: "0,0",
+    strokeWidth: 1,
+  },
+  propsForHorizontalLabels: {
+    fill: palette.grey500,
+    fontSize: 10,
+    fontWeight: "bold",
+    rotation: 0,
+  },
+  propsForVerticalLabels: {
+    fill: palette.grey500,
+    fontSize: 10,
+    fontWeight: "bold",
+    rotation: 0,
+  },
+  strokeWidth: 3,
+  useShadowColorFromDataset: false,
+};
 const LineGraph = () => {
   const [tooltipPos, setTooltipPos] = useState({
     value: 0,
@@ -13,38 +45,6 @@ const LineGraph = () => {
     x: 0,
     y: 0,
   });
-
-  const chartConfig = {
-    backgroundGradientFrom: "#FFF",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#FFF",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(7, 150, 104, ${opacity})`,
-    decimalPlaces: 0,
-    fillShadowGradientFrom: palette.linearGradient,
-    fillShadowGradientFromOpacity: 0.1,
-    fillShadowGradientTo: palette.transparent,
-    fillShadowGradientToOpacity: 0,
-    propsForBackgroundLines: {
-      stroke: palette.grey200,
-      strokeDasharray: "0,0",
-      strokeWidth: 1,
-    },
-    propsForHorizontalLabels: {
-      fill: palette.grey500,
-      fontSize: 10,
-      fontWeight: "bold",
-      rotation: 0,
-    },
-    propsForVerticalLabels: {
-      fill: palette.grey500,
-      fontSize: 10,
-      fontWeight: "bold",
-      rotation: 0,
-    },
-    strokeWidth: 3,
-    useShadowColorFromDataset: false,
-  };
 
   const onDataPointClick = (data) => {
     setTooltipPos((prevState) => {

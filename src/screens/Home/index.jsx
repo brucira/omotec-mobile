@@ -38,20 +38,6 @@ const RenderTabItem = ({ activeTab }) => {
   );
 };
 
-const renderTodoItem = (item, index) => {
-  return (
-    <View key={item.id}>
-      <TodoCard
-        date={item.date}
-        imageSource={item.imageSource}
-        label={item.label}
-        subject={item.subject}
-        todoTitle={item.todoTitle}
-      />
-    </View>
-  );
-};
-
 const Home = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState("Mumbai");
   const keyExtractor = (item) => item.toString();
@@ -69,6 +55,20 @@ const Home = ({ navigation }) => {
 
   const [attendanceSubject, setAttendanceSubject] = useState(null);
   const [attendanceSubjectFocus, setattendanceSubjectFocus] = useState(false);
+  const renderTodoItem = (item, index) => {
+    return (
+      <View key={item.id}>
+        <TodoCard
+          date={item.date}
+          imageSource={item.imageSource}
+          label={item.label}
+          subject={item.subject}
+          todoTitle={item.todoTitle}
+        />
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Appbar style={styles.appBarContainer}>
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginBottom: Dimensions.margin / 1.33,
-    // marginTop: Dimensions.margin,
+    marginTop: Dimensions.margin,
     paddingHorizontal: Dimensions.padding,
     width: Dimensions.screenWidth,
   },

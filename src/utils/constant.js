@@ -1,40 +1,22 @@
 import { Dimensions as NativeDimensions } from "react-native";
 
 import palette from "../styles/palette";
+import { CombinedDefaultTheme } from "../styles/theme";
 
-export const Dimensions = {
-  margin: 16,
-  padding: 16,
-  screenHeight: NativeDimensions.get("window").height,
-  screenWidth: NativeDimensions.get("window").width,
+export const barGraphData = {
+  datasets: [
+    {
+      data: [42, 64, 37, 83, 55],
+    },
+    {
+      data: [1],
+    },
+    {
+      data: [100],
+    },
+  ],
+  labels: ["Quiz 1", "Assignment", "Puzzle", "Quiz 2", "Assignment"],
 };
-
-export const tabData = [
-  {
-    city: "Mumbai",
-    id: 1,
-  },
-  {
-    city: "Pune",
-    id: 2,
-  },
-  {
-    city: "Goa",
-    id: 3,
-  },
-  {
-    city: "Delhi",
-    id: 4,
-  },
-  {
-    city: "Kolkata",
-    id: 5,
-  },
-  {
-    city: "Bengaluru",
-    id: 6,
-  },
-];
 
 export const cardData = [
   {
@@ -75,6 +57,60 @@ export const cardData = [
   },
 ];
 
+export const courseCardData = [
+  {
+    avgPerformance: "78%",
+    avgProgress: "78%",
+    batch: 1,
+    coverImage: require("../assets/dummy_2.png"),
+    date: "May 1 - Jun 30",
+    id: 211,
+    learningType: "course",
+    location: "Mumbai",
+    progressDenominator: 5,
+    progressNumerator: 4,
+    sessions: 12,
+    title: "Science, technology, engineering design and math skills",
+    trainer: "John Doe",
+  },
+  {
+    avgPerformance: "78%",
+    avgProgress: "78%",
+    batch: 1,
+    coverImage: require("../assets/dummy_2.png"),
+    date: "May 1 - Jun 30",
+    id: 212,
+    learningType: "course",
+    location: "Mumbai",
+    progressDenominator: 5,
+    progressNumerator: 4,
+    sessions: 12,
+    title: "Science, technology, engineering design and math skills",
+    trainer: "John Doe",
+  },
+  {
+    avgPerformance: "78%",
+    avgProgress: "78%",
+    batch: 1,
+    coverImage: require("../assets/dummy_2.png"),
+    date: "May 1 - Jun 30",
+    id: 213,
+    learningType: "course",
+    location: "Mumbai",
+    progressDenominator: 5,
+    progressNumerator: 4,
+    sessions: 12,
+    title: "Science, technology, engineering design and math skills",
+    trainer: "John Doe",
+  },
+];
+
+export const Dimensions = {
+  margin: 16,
+  padding: 16,
+  screenHeight: NativeDimensions.get("window").height,
+  screenWidth: NativeDimensions.get("window").width,
+};
 export const dropdownData = [
   { label: "Item 1", value: "1" },
   { label: "Item 2", value: "2" },
@@ -85,7 +121,94 @@ export const dropdownData = [
   { label: "Item 7", value: "7" },
   { label: "Item 8", value: "8" },
 ];
+export const lineGraphData = {
+  datasets: [
+    {
+      data: [0, 30, 68, 100],
+    },
+  ],
+  labels: ["Session 1", "Session 2", "Session 3", "Session 4"],
+};
 
+export const projectCardData = [
+  {
+    batch: 1,
+    coverImage: require("../assets/dummy_1.png"),
+    duration: "4 months",
+    endDate: "12 Sept,2024",
+    id: 311,
+    learningType: "project",
+    location: "Mumbai",
+    progressDenominator: 5,
+    progressNumerator: 4,
+    startDate: "3 May,2024",
+    subject: "Machine",
+    tasks: 5,
+    title: "Science, technology, engineering design and math skills",
+  },
+  {
+    batch: 1,
+    coverImage: require("../assets/dummy_2.png"),
+    duration: "4 months",
+    endDate: "12 Sept,2024",
+    id: 312,
+    learningType: "project",
+    location: "Mumbai",
+    progressDenominator: 5,
+    progressNumerator: 4,
+    startDate: "3 May,2024",
+    subject: "Machine",
+    tasks: 5,
+    title: "Science, technology, engineering design and math skills",
+  },
+  {
+    batch: 1,
+    coverImage: require("../assets/dummy_2.png"),
+    duration: "4 months",
+    endDate: "12 Sept,2024",
+    id: 313,
+    learningType: "project",
+    location: "Mumbai",
+    progressDenominator: 5,
+    progressNumerator: 4,
+    startDate: "3 May,2024",
+    subject: "Machine",
+    tasks: 5,
+    title: "Science, technology, engineering design and math skills",
+  },
+];
+
+export const progressData = {
+  colors: [CombinedDefaultTheme.colors.primary],
+  data: [0.2],
+};
+
+export const tabData = [
+  {
+    city: "Mumbai",
+    id: 1,
+  },
+  {
+    city: "Pune",
+    id: 2,
+  },
+  {
+    city: "Goa",
+    id: 3,
+  },
+  {
+    city: "Delhi",
+    id: 4,
+  },
+  {
+    city: "Kolkata",
+    id: 5,
+  },
+  {
+    city: "Bengaluru",
+    id: 6,
+  },
+];
 export const todoCardData = [
   {
     date: "20 March",
@@ -112,30 +235,6 @@ export const todoCardData = [
     todoTitle: "Complete the quiz",
   },
 ];
-
-export const lineGraphData = {
-  datasets: [
-    {
-      data: [0, 30, 68, 100],
-    },
-  ],
-  labels: ["Session 1", "Session 2", "Session 3", "Session 4"],
-};
-
-export const barGraphData = {
-  datasets: [
-    {
-      data: [42, 64, 37, 83, 55],
-    },
-    {
-      data: [1],
-    },
-    {
-      data: [100],
-    },
-  ],
-  labels: ["Quiz 1", "Assignment", "Puzzle", "Quiz 2", "Assignment"],
-};
 
 export const RouteNames = {
   Calender: "Calender",

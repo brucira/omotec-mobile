@@ -43,11 +43,15 @@ const ChartCard = ({
       </View>
       <View style={styles.contentDetailContainer}>
         <View style={{ gap: Dimensions.margin / 4 }}>
-          <Text variant="labelMedium">{cardSubTitle}</Text>
+          <Text style={styles.averageTitle} variant="labelMedium">
+            {cardSubTitle}
+          </Text>
           <Text variant="titleMedium">85%</Text>
         </View>
         <View style={{ gap: Dimensions.margin / 4 }}>
-          <Text variant="labelMedium">From {chipTitle}</Text>
+          <Text style={styles.fromDuration} variant="labelMedium">
+            From {chipTitle}
+          </Text>
           <View style={styles.tag}>
             <Image
               source={require("../../assets/icons/trend_up.png")}
@@ -142,6 +146,9 @@ const ChartCard = ({
 };
 
 const styles = StyleSheet.create({
+  averageTitle: {
+    color: palette.grey600,
+  },
   contentDetailContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -168,6 +175,9 @@ const styles = StyleSheet.create({
     height: Dimensions.margin,
     resizeMode: "cover",
     width: Dimensions.margin,
+  },
+  fromDuration: {
+    color: palette.grey550,
   },
   graphContainer: {
     backgroundColor: CombinedDefaultTheme.colors.background,

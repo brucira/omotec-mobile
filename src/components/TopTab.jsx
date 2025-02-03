@@ -12,17 +12,19 @@ const TopTab = ({ activeTab, setActiveTab, tabData }) => {
         <TouchableOpacity
           style={[
             styles.tab,
-            activeTab === tab && styles.activeTab,
-            activeTab !== tab && styles.inactiveTab,
+            activeTab === tab.city && styles.activeTab,
+            activeTab !== tab.city && styles.inactiveTab,
           ]}
-          onPress={() => setActiveTab(tab)}
+          onPress={() => setActiveTab(tab.city)}
         >
           <Text
-            style={activeTab === tab ? styles.activeTabText : styles.tabText}
+            style={
+              activeTab === tab.city ? styles.activeTabText : styles.tabText
+            }
           >
             {tab.city}
           </Text>
-          {activeTab === tab && <View style={styles.activeTabIndicator} />}
+          {activeTab === tab.city && <View style={styles.activeTabIndicator} />}
         </TouchableOpacity>
       </View>
     );

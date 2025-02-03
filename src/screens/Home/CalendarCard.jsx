@@ -1,6 +1,8 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
+import { Text } from "react-native-paper";
 
+import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions } from "../../utils/constant";
 
@@ -13,9 +15,13 @@ const CalendarCard = ({ item }) => {
         <Image source={item.gradient} style={styles.gradient} />
         <View style={styles.dailyCourseCardContent}>
           <View>
-            <Text variant="titleMedium">UI/UX Design Course</Text>
+            <Text style={styles.title} variant="titleMedium">
+              UI/UX Design Course
+            </Text>
             <View style={styles.subHeading}>
-              <Text variant="bodySmall">2:00 - 4:00 PM</Text>
+              <Text style={styles.timeAndLocation} variant="bodySmall">
+                2:00 - 4:00 PM
+              </Text>
               <Text
                 style={{
                   alignSelf: "center",
@@ -24,7 +30,9 @@ const CalendarCard = ({ item }) => {
               >
                 &bull;
               </Text>
-              <Text variant="bodySmall">Mumbai</Text>
+              <Text style={styles.timeAndLocation} variant="bodySmall">
+                Mumbai
+              </Text>
             </View>
           </View>
           <View style={styles.calendarContentFooter}>
@@ -46,7 +54,10 @@ const CalendarCard = ({ item }) => {
                 style={styles.avatarOverlap}
               />
             </View>
-            <Text variant="bodySmall"> + 57 Others</Text>
+            <Text style={{ color: palette.grey700 }} variant="bodySmall">
+              {" "}
+              + 57 Others
+            </Text>
           </View>
         </View>
       </View>
@@ -122,7 +133,14 @@ const styles = StyleSheet.create({
   },
   subHeading: {
     alignItems: "center",
+    color: palette.grey600,
     flexDirection: "row",
+  },
+  timeAndLocation: {
+    color: palette.grey600,
+  },
+  title: {
+    color: palette.grey900,
   },
 });
 

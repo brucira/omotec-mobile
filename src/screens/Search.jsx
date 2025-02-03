@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Appbar, Avatar, Text } from "react-native-paper";
 
+import CourseCard from "../components/CourseCard";
 import { CombinedDefaultTheme } from "../styles/theme";
 import { Dimensions, RouteNames } from "../utils/constant";
 

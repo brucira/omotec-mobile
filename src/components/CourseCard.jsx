@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     width: "auto",
   },
   cardContent: {
-    flex: 1,
+    // flex: 1,
     padding: Dimensions.padding / 1.33,
   },
   container: {
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     borderColor: palette.grey200,
     borderTopLeftRadius: Dimensions.padding / 2,
     borderTopRightRadius: Dimensions.padding / 2,
-    flex: 1,
+    // flex: 1,
     paddingHorizontal: 0,
     paddingVertical: 0,
     width: 254,

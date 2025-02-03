@@ -5,49 +5,51 @@ import { BarChart } from "react-native-chart-kit";
 import palette from "../../styles/palette";
 import { barGraphData, Dimensions } from "../../utils/constant";
 
+const chartConfig = {
+  backgroundGradientFrom: "#FFF",
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientTo: "#FFF",
+  backgroundGradientToOpacity: 0.5,
+  barPercentage: 0.7,
+  barRadius: 8,
+  color: (opacity = 1) => `rgba(7, 150, 104, ${opacity})`,
+  decimalPlaces: 0,
+  fillShadowGradientFromOpacity: 1,
+  fillShadowGradientToOpacity: 1,
+  propsForBackgroundLines: {
+    stroke: palette.grey200,
+    strokeDasharray: "0,0",
+    strokeWidth: 1,
+    x: 60,
+  },
+
+  propsForHorizontalLabels: {
+    fill: palette.grey500,
+    fontSize: 10,
+    fontWeight: "bold",
+    rotation: 0,
+  },
+  propsForVerticalLabels: {
+    // dx: 36,
+    // dx: 34,
+    fill: palette.grey500,
+    fontSize: 10,
+    fontWeight: "bold",
+    rotation: 0,
+  },
+  strokeWidth: 3,
+
+  useShadowColorFromDataset: false,
+};
 const BarGraph = ({ barChartBackground }) => {
-  const chartConfig = {
-    backgroundGradientFrom: "#FFF",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#FFF",
-    backgroundGradientToOpacity: 0.5,
-    barPercentage: 0.7,
-    barRadius: 8,
-    color: (opacity = 1) => `rgba(7, 150, 104, ${opacity})`,
-    decimalPlaces: 0,
-    fillShadowGradientFrom: barChartBackground,
-    fillShadowGradientFromOpacity: 1,
-    fillShadowGradientTo: barChartBackground,
-    fillShadowGradientToOpacity: 1,
-    propsForBackgroundLines: {
-      stroke: palette.grey200,
-      strokeDasharray: "0,0",
-      strokeWidth: 1,
-      x: 60,
-    },
-
-    propsForHorizontalLabels: {
-      fill: palette.grey500,
-      fontSize: 10,
-      fontWeight: "bold",
-      rotation: 0,
-    },
-    propsForVerticalLabels: {
-      // dx: 36,
-      // dx: 34,
-      fill: palette.grey500,
-      fontSize: 10,
-      fontWeight: "bold",
-      rotation: 0,
-    },
-    strokeWidth: 3,
-
-    useShadowColorFromDataset: false,
-  };
   return (
     <View>
       <BarChart
-        chartConfig={chartConfig}
+        chartConfig={{
+          ...chartConfig,
+          fillShadowGradientFrom: barChartBackground,
+          fillShadowGradientTo: barChartBackground,
+        }}
         data={barGraphData}
         fromZero={true}
         height={278}
