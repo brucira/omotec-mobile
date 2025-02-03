@@ -47,14 +47,18 @@ const palette = {
   pink200: "#F49FC5",
   red500: "#F44336",
   red600: "#E83B3B",
+  grey25: "#FCFCFD",
   grey200: "#EAECF0",
-  grey600: "#55646F",
-  grey700: "#6C7784",
+  grey400: "#98A2B3",
+  grey600: "##475467",
+  grey700: "##344054",
+  grey900: "#101828",
   green300: "#18B975",
   green500: "#4CAF50",
   success600: "#039855",
   yellow500: "#FFEB3B",
   transparent: "#00000000",
+  warning500: "#F79009",
 };
 
 export default palette;
