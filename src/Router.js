@@ -17,7 +17,6 @@ import { Dimensions, RouteNames } from "./utils/constant";
 const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
-console.log("im here");
 
 const Tabs = () => (
   <Tab.Navigator
@@ -169,7 +168,7 @@ const Router = () => {
           headerShown: false,
         }}
         id="stack"
-        initialRouteName={RouteNames.Notifications}
+        initialRouteName={RouteNames.Tabs}
       >
         <Stack.Screen component={Tabs} name={RouteNames.Tabs} />
         <Stack.Screen

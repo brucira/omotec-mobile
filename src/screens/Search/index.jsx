@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { FlatList, Image, ScrollView, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Appbar, Avatar, Chip, Searchbar, Text } from "react-native-paper";
 
 import palette from "../../styles/palette";
@@ -9,12 +16,14 @@ import {
   Dimensions,
   popularCourseCardData,
   RouteNames,
+  suggestions,
 } from "../../utils/constant";
 import PopularCourseCard from "./PopularCourseCard";
 import SearchCourseCard from "./SearchCourseCard";
 
 const Search = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [recentSearches, setRecentSearches] = useState([
     "Physics",
     "Maths",
@@ -22,19 +31,42 @@ const Search = ({ navigation }) => {
     "AI",
     "Python",
   ]);
+  const [showResults, setShowResults] = useState(false);
+
+  const keyExtractor = (item) => item.id.toString();
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query) {
+      setShowResults(true); // Hide "hi" text when typing
+      const filtered = suggestions.filter((item) => {
+        return item.toLowerCase().includes(query.toLowerCase());
+      });
+      setFilteredSuggestions(filtered);
+    } else {
+      setShowResults(false);
+      setFilteredSuggestions([]);
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    setFilteredSuggestions([]);
+  };
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion);
+    setFilteredSuggestions([]);
+    setShowResults(true);
+  };
 
   const removeChip = (chip) => {
     const updatedSearches = recentSearches.filter((item) => item !== chip);
     setRecentSearches(updatedSearches);
   };
-  const keyExtractor = (item) => item.id.toString();
   const renderItem = ({ item }) => <PopularCourseCard {...item} />;
-
-  const renderBrowseCards = (item, index) => (
+  const renderSearchCourseCard = (item, index) => (
     <SearchCourseCard key={item.id} {...item} />
   );
-
-  const renderChips = (chip, index) => (
+  const renderSearchChip = (chip, index) => (
     <Chip
       key={chip + index}
       compact
@@ -46,7 +78,6 @@ const Search = ({ navigation }) => {
       {chip}
     </Chip>
   );
-  const itemSeperator = () => <View style={styles.itemSeparator} />;
   return (
     <View style={styles.container}>
       <Appbar style={styles.appBarContainer}>
@@ -82,43 +113,74 @@ const Search = ({ navigation }) => {
             placeholderTextColor={palette.grey400}
             style={styles.searchBar}
             value={searchQuery}
-            onChangeText={setSearchQuery}
+            onChangeText={handleSearch}
+            onSubmitEditing={handleSearchSubmit} // Handles search submission
           />
           <Image
             source={require("../../assets/icons/mic.png")}
             style={styles.mic}
           />
         </View>
-        {recentSearches.length > 0 && (
+        {filteredSuggestions.length > 0 && searchQuery && (
+          <FlatList
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => handleSuggestionClick(item)}>
+                <View style={styles.suggestionItem}>
+                  <Image
+                    source={require("../../assets/icons/search.png")}
+                    style={styles.searchIcon}
+                  />
+                  <Text>{item}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+            data={filteredSuggestions}
+            keyExtractor={(item) => item}
+            scrollEnabled={false}
+            style={styles.suggestionList}
+          />
+        )}
+        {!showResults && recentSearches.length > 0 && (
           <View style={styles.recentSearches}>
             <Text variant="titleLarge">Recent searches</Text>
             <View style={styles.itemSearched}>
-              {recentSearches.map((chip, index) => renderChips(chip, index))}
+              {recentSearches.map((chip, index) => {
+                return renderSearchChip(chip, index);
+              })}
             </View>
           </View>
         )}
-        <View style={styles.recentSearches}>
-          <Text variant="titleLarge">Popular courses</Text>
-          <View style={styles.popularCardContainer}>
-            <FlatList
-              contentContainerStyle={styles.arrowIndicator}
-              data={popularCourseCardData}
-              horizontal={true}
-              ItemSeparatorComponent={itemSeperator}
-              keyExtractor={keyExtractor}
-              renderItem={renderItem}
-              style={styles.ongoingCardList}
-            />
+        {!showResults && (
+          <View>
+            <View style={styles.recentSearches}>
+              <Text variant="titleLarge">Popular courses</Text>
+              <View style={styles.popularCardContainer}>
+                <FlatList
+                  contentContainerStyle={styles.arrowIndicator}
+                  data={popularCourseCardData}
+                  horizontal={true}
+                  keyExtractor={keyExtractor}
+                  renderItem={renderItem}
+                />
+              </View>
+            </View>
+            <View style={styles.recentSearches}>
+              <Text variant="titleLarge">Browse all</Text>
+              <View style={styles.browseCourseCard}>
+                {browseCourseCardData.map((item, index) => {
+                  return renderSearchCourseCard(item, index);
+                })}
+              </View>
+            </View>
           </View>
-        </View>
-        <View style={styles.recentSearches}>
-          <Text variant="titleLarge">Browse all</Text>
+        )}
+        {showResults && (
           <View style={styles.browseCourseCard}>
             {browseCourseCardData.map((item, index) => {
-              return renderBrowseCards(item, index);
+              return renderSearchCourseCard(item, index);
             })}
           </View>
-        </View>
+        )}
       </ScrollView>
     </View>
   );
@@ -170,6 +232,10 @@ const styles = StyleSheet.create({
   },
   lens: {
     height: Dimensions.margin * 1.25,
+    left: Dimensions.margin / 4,
+    marginLeft: 0,
+    paddingLeft: 0,
+    position: "absolute",
     resizeMode: "contain",
     width: Dimensions.margin * 1.25,
   },
@@ -191,22 +257,45 @@ const styles = StyleSheet.create({
     borderColor: palette.grey200,
     borderWidth: 1,
     flex: 1,
+    marginLeft: 0,
     maxHeight: 40,
     minHeight: 40,
-    paddingLeft: Dimensions.padding / 2,
+    paddingLeft: 0,
   },
   searchContainer: {
     alignItems: "center",
     flexDirection: "row",
     gap: Dimensions.margin / 2,
   },
+  searchIcon: {
+    height: Dimensions.margin * 1.25,
+    width: Dimensions.margin * 1.25,
+  },
   searchInput: {
     color: palette.grey900,
     fontSize: 14,
-    minHeight: 28,
-    paddingBottom: 0,
-    paddingTop: 0,
-    paddingVertical: Dimensions.padding / 1.6,
+    left: -(Dimensions.margin / 1.33),
+    marginLeft: 0,
+    marginRight: 0,
+    minHeight: 0,
+    paddingVertical: 0,
+    position: "relative",
+  },
+  suggestionItem: {
+    alignItems: "center",
+    borderBottomColor: palette.grey200,
+    // borderBottomWidth: 1,
+    flexDirection: "row",
+    gap: Dimensions.margin / 1.6,
+    paddingHorizontal: Dimensions.padding / 1.6,
+    paddingVertical: Dimensions.padding / 1.33,
+  },
+
+  suggestionList: {
+    borderColor: palette.grey200,
+    // borderWidth: 1,
+    marginTop: 8,
+    // maxHeight: 200,
   },
 });
 

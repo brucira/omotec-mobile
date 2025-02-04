@@ -1,6 +1,6 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
-import { Badge, Button, Text } from "react-native-paper";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Badge, Button, ProgressBar, Text } from "react-native-paper";
 
 import palette from "../../styles/palette";
 import { Dimensions } from "../../utils/constant";
@@ -14,7 +14,9 @@ const NotificationCard = ({
   feedback,
   fileName,
   fileSize,
+  fileUri,
   newNotification,
+  progress,
 }) => {
   return (
     <View style={styles.container}>
@@ -71,7 +73,10 @@ been posted.`
             </View>
           )}
           {notificationType === "assignment" && (
-            <View style={styles.assignmentContainer}>
+            <TouchableOpacity
+              style={styles.assignmentContainer}
+              onPress={() => {}}
+            >
               <View style={styles.fileContent}>
                 <Image
                   source={require("../../assets/icons/file.png")}
@@ -85,6 +90,16 @@ been posted.`
                     <Text numberOfLines={1} variant="labelSmall">
                       {fileSize}
                     </Text>
+                    <View style={styles.progress}>
+                      <ProgressBar
+                        color={palette.success600}
+                        progress={progress / 100}
+                        style={styles.progressBar}
+                      />
+                      <Text style={styles.progressText} variant="labelSmall">
+                        {progress} %
+                      </Text>
+                    </View>
                   </View>
                   <Image
                     source={require("../../assets/icons/check.png")}
@@ -92,7 +107,7 @@ been posted.`
                   />
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
           <Button
             compact
@@ -193,6 +208,22 @@ const styles = StyleSheet.create({
     borderRadius: Dimensions.padding * 4,
     height: Dimensions.margin * 2.75,
     width: Dimensions.margin * 2.75,
+  },
+  progress: {
+    alignItems: "center",
+    flex: 1,
+    flexDirection: "row",
+    gap: Dimensions.margin / 1.6,
+    justifyContent: "space-between",
+    // width: "100%",
+  },
+  progressBar: {
+    borderRadius: 16,
+    height: 6,
+    width: 173,
+  },
+  progressText: {
+    color: palette.grey600,
   },
   titleAndDuration: {
     flexDirection: "row",

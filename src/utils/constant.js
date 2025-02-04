@@ -37,6 +37,39 @@ export const Dimensions = {
   screenWidth: NativeDimensions.get("window").width,
 };
 
+export const popularCourseCardData = [
+  {
+    coverImage: require("../assets/dummy_11.png"),
+    duration: "4 months",
+    enrolls: "12.1k",
+    id: 121,
+    location: "Mumbai",
+    rating: "4.5",
+    session: 12,
+    title: "Mastering Python",
+  },
+  {
+    coverImage: require("../assets/dummy_11.png"),
+    duration: "4 months",
+    enrolls: "12.1k",
+    id: 122,
+    location: "Chennai",
+    rating: "4.5",
+    session: 12,
+    title: "Mastering Java",
+  },
+  {
+    coverImage: require("../assets/dummy_11.png"),
+    duration: "4 months",
+    enrolls: "12.1k",
+    id: 123,
+    location: "Mumbai",
+    rating: "4.5",
+    session: 12,
+    title: "Mastering Python",
+  },
+];
+
 export const notificationData = [
   {
     course: "Robotic kit handling",
@@ -77,44 +110,24 @@ export const notificationData = [
     duration: "1d",
     fileName: "Omotec design requirements.pdf",
     fileSize: "200KB",
+    fileUri:
+      "file:///var/mobile/Containers/Data/Application/D266C834-E7CA-4314-9F47-088BC7CA147E/Library/Caches/ExponentExperienceData/@anonymous/cubicletalks-afa39620-f32d-4293-af1a-3871340d96c5/DocumentPicker/C945235A-7003-41D0-BC35-5D93A741D486.pdf",
     id: 1005,
     imageSource: require("../assets/dummy_1.png"),
     newNotification: false,
     notificationType: "assignment",
+    progress: 100,
   },
 ];
 
-export const popularCourseCardData = [
-  {
-    coverImage: require("../assets/dummy_11.png"),
-    duration: "4 months",
-    enrolls: "12.1k",
-    id: 121,
-    location: "Mumbai",
-    rating: "4.5",
-    session: 12,
-    title: "Mastering Python",
-  },
-  {
-    coverImage: require("../assets/dummy_11.png"),
-    duration: "4 months",
-    enrolls: "12.1k",
-    id: 122,
-    location: "Chennai",
-    rating: "4.5",
-    session: 12,
-    title: "Mastering Java",
-  },
-  {
-    coverImage: require("../assets/dummy_11.png"),
-    duration: "4 months",
-    enrolls: "12.1k",
-    id: 123,
-    location: "Mumbai",
-    rating: "4.5",
-    session: 12,
-    title: "Mastering Python",
-  },
+export const suggestions = [
+  "Physics",
+  "Maths",
+  "Robotics",
+  "AI",
+  "Python",
+  "JavaScript",
+  "React",
 ];
 
 export const RouteNames = {
