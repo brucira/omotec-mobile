@@ -12,6 +12,7 @@ import LineGraph from "./LineGraph";
 const ChartCard = ({
   chartType,
   barChartBackground,
+  barData,
   cardTitle,
   cardSubTitle,
   chipTitle,
@@ -139,7 +140,7 @@ const ChartCard = ({
       {chartType === "line" ? (
         <LineGraph />
       ) : (
-        <BarGraph barChartBackground={barChartBackground} />
+        <BarGraph barChartBackground={barChartBackground} data={barData} />
       )}
     </Card>
   );

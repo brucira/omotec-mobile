@@ -3,7 +3,7 @@ import { Dimensions as NativeDimensions } from "react-native";
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
 
-export const barGraphData = {
+export const barGraphPerformanceData = {
   datasets: [
     {
       data: [42, 64, 37, 83, 55],
@@ -16,6 +16,20 @@ export const barGraphData = {
     },
   ],
   labels: ["Quiz 1", "Assignment", "Puzzle", "Quiz 2", "Assignment"],
+};
+export const barGraphAttendanceData = {
+  datasets: [
+    {
+      data: [42, 64, 37, 83, 55],
+    },
+    {
+      data: [1],
+    },
+    {
+      data: [100],
+    },
+  ],
+  labels: ["Batch 1", "Batch 2", "Batch 3", "Batch 4", "Batch 5"],
 };
 
 export const cardData = [

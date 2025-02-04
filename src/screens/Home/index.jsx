@@ -14,6 +14,8 @@ import TopTab from "../../components/TopTab";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import {
+  barGraphAttendanceData,
+  barGraphPerformanceData,
   cardData,
   Dimensions,
   RouteNames,
@@ -23,20 +25,6 @@ import {
 import CalendarCard from "./CalendarCard";
 import ChartCard from "./ChartCard";
 import TodoCard from "./TodoCard";
-
-const RenderTabItem = ({ activeTab }) => {
-  return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      style={styles.dailyCalendarCardContainer}
-    >
-      {cardData.map((item, index) => {
-        return <CalendarCard key={item.id.toString()} item={item} />;
-      })}
-    </ScrollView>
-  );
-};
 
 const Home = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState("Mumbai");
@@ -69,6 +57,9 @@ const Home = ({ navigation }) => {
     );
   };
 
+  const renderCalendarCard = (item, index) => {
+    return <CalendarCard key={item.id.toString()} item={item} />;
+  };
   return (
     <View style={styles.container}>
       <Appbar style={styles.appBarContainer}>
@@ -139,7 +130,16 @@ const Home = ({ navigation }) => {
             setActiveTab={setActiveTab}
             tabData={tabData}
           />
-          <RenderTabItem activeTab={activeTab} />
+          {/* <RenderTabItem activeTab={activeTab} /> */}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.dailyCalendarCardContainer}
+          >
+            {cardData.map((item, index) => {
+              return renderCalendarCard(item, index);
+            })}
+          </ScrollView>
         </View>
         <View style={styles.containerBox}>
           <View style={styles.contentHeadingContainer}>
@@ -184,6 +184,7 @@ const Home = ({ navigation }) => {
             />
             <ChartCard
               barChartBackground={palette.orange600}
+              barData={barGraphPerformanceData}
               cardSubTitle={"Average performance"}
               cardTitle={"Performance Overview"}
               chartType={"bar"}
@@ -197,6 +198,7 @@ const Home = ({ navigation }) => {
             />
             <ChartCard
               barChartBackground={palette.blue600}
+              barData={barGraphAttendanceData}
               cardSubTitle={"Average attendance"}
               cardTitle={"Attendance Overview"}
               chartType={"bar"}

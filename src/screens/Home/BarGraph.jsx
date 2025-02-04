@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { BarChart } from "react-native-chart-kit";
 
 import palette from "../../styles/palette";
-import { barGraphData, Dimensions } from "../../utils/constant";
+import { Dimensions } from "../../utils/constant";
 
 const chartConfig = {
   backgroundGradientFrom: "#FFF",
@@ -41,7 +41,7 @@ const chartConfig = {
 
   useShadowColorFromDataset: false,
 };
-const BarGraph = ({ barChartBackground }) => {
+const BarGraph = ({ barChartBackground, data }) => {
   return (
     <View>
       <BarChart
@@ -50,7 +50,7 @@ const BarGraph = ({ barChartBackground }) => {
           fillShadowGradientFrom: barChartBackground,
           fillShadowGradientTo: barChartBackground,
         }}
-        data={barGraphData}
+        data={data}
         fromZero={true}
         height={278}
         segments={5}
