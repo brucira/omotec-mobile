@@ -38,7 +38,7 @@ const Search = ({ navigation }) => {
   const handleSearch = (query) => {
     setSearchQuery(query);
     if (query) {
-      setShowResults(true); // Hide "hi" text when typing
+      setShowResults(true);
       const filtered = suggestions.filter((item) => {
         return item.toLowerCase().includes(query.toLowerCase());
       });
@@ -63,6 +63,24 @@ const Search = ({ navigation }) => {
     setRecentSearches(updatedSearches);
   };
   const renderItem = ({ item }) => <PopularCourseCard {...item} />;
+  const renderItemSeperator = () => <View style={styles.seperator} />;
+  const renderCourseCardItem = ({ item }) => (
+    <TouchableOpacity onPress={() => handleSuggestionClick(item)}>
+      <View style={styles.suggestionItem}>
+        <Image
+          source={require("../../assets/icons/search.png")}
+          style={styles.searchIcon}
+        />
+        <Text>{item}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+  const renderSearchIcon = () => (
+    <Image
+      source={require("../../assets/icons/search.png")}
+      style={styles.lens}
+    />
+  );
   const renderSearchCourseCard = (item, index) => (
     <SearchCourseCard key={item.id} {...item} />
   );
@@ -102,19 +120,14 @@ const Search = ({ navigation }) => {
       >
         <View style={styles.searchContainer}>
           <Searchbar
-            icon={() => (
-              <Image
-                source={require("../../assets/icons/search.png")}
-                style={styles.lens}
-              />
-            )}
+            icon={renderSearchIcon}
             inputStyle={styles.searchInput}
             placeholder="Search"
             placeholderTextColor={palette.grey400}
             style={styles.searchBar}
             value={searchQuery}
             onChangeText={handleSearch}
-            onSubmitEditing={handleSearchSubmit} // Handles search submission
+            onSubmitEditing={handleSearchSubmit}
           />
           <Image
             source={require("../../assets/icons/mic.png")}
@@ -123,19 +136,10 @@ const Search = ({ navigation }) => {
         </View>
         {filteredSuggestions.length > 0 && searchQuery && (
           <FlatList
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleSuggestionClick(item)}>
-                <View style={styles.suggestionItem}>
-                  <Image
-                    source={require("../../assets/icons/search.png")}
-                    style={styles.searchIcon}
-                  />
-                  <Text>{item}</Text>
-                </View>
-              </TouchableOpacity>
-            )}
             data={filteredSuggestions}
-            keyExtractor={(item) => item}
+            ItemSeparatorComponent={renderItemSeperator}
+            keyExtractor={keyExtractor}
+            renderItem={renderCourseCardItem}
             scrollEnabled={false}
             style={styles.suggestionList}
           />
@@ -280,6 +284,9 @@ const styles = StyleSheet.create({
     minHeight: 0,
     paddingVertical: 0,
     position: "relative",
+  },
+  seperator: {
+    width: Dimensions.margin / 1.33,
   },
   suggestionItem: {
     alignItems: "center",
