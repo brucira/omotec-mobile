@@ -34,6 +34,7 @@ const Search = ({ navigation }) => {
   const [showResults, setShowResults] = useState(false);
 
   const keyExtractor = (item) => item.id.toString();
+  const keyExtractorForSearch = (item) => item;
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -63,7 +64,6 @@ const Search = ({ navigation }) => {
     setRecentSearches(updatedSearches);
   };
   const renderItem = ({ item }) => <PopularCourseCard {...item} />;
-  const renderItemSeperator = () => <View style={styles.seperator} />;
   const renderCourseCardItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleSuggestionClick(item)}>
       <View style={styles.suggestionItem}>
@@ -95,6 +95,9 @@ const Search = ({ navigation }) => {
     >
       {chip}
     </Chip>
+  );
+  const renderItemSeperatorForPopularCourse = () => (
+    <View style={styles.itemSeparator} />
   );
   return (
     <View style={styles.container}>
@@ -137,8 +140,7 @@ const Search = ({ navigation }) => {
         {filteredSuggestions.length > 0 && searchQuery && (
           <FlatList
             data={filteredSuggestions}
-            ItemSeparatorComponent={renderItemSeperator}
-            keyExtractor={keyExtractor}
+            keyExtractor={keyExtractorForSearch}
             renderItem={renderCourseCardItem}
             scrollEnabled={false}
             style={styles.suggestionList}
@@ -156,13 +158,14 @@ const Search = ({ navigation }) => {
         )}
         {!showResults && (
           <View>
-            <View style={styles.recentSearches}>
+            <View style={styles.popularSearches}>
               <Text variant="titleLarge">Popular courses</Text>
               <View style={styles.popularCardContainer}>
                 <FlatList
                   contentContainerStyle={styles.arrowIndicator}
                   data={popularCourseCardData}
                   horizontal={true}
+                  ItemSeparatorComponent={renderItemSeperatorForPopularCourse}
                   keyExtractor={keyExtractor}
                   renderItem={renderItem}
                 />
@@ -179,7 +182,7 @@ const Search = ({ navigation }) => {
           </View>
         )}
         {showResults && (
-          <View style={styles.browseCourseCard}>
+          <View style={styles.browseCourseCardAfterSearch}>
             {browseCourseCardData.map((item, index) => {
               return renderSearchCourseCard(item, index);
             })}
@@ -199,6 +202,11 @@ const styles = StyleSheet.create({
   browseCourseCard: {
     gap: Dimensions.margin / 1.33,
     paddingVertical: Dimensions.padding / 1.142,
+  },
+  browseCourseCardAfterSearch: {
+    gap: Dimensions.margin / 1.33,
+    paddingHorizontal: Dimensions.padding,
+    paddingVertical: Dimensions.padding * 1.25,
   },
   chip: {
     // alignSelf: "baseline",
@@ -221,7 +229,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    paddingHorizontal: Dimensions.padding,
     paddingVertical: Dimensions.padding * 1.25,
   },
   itemSearched: {
@@ -232,7 +239,7 @@ const styles = StyleSheet.create({
     rowGap: Dimensions.margin / 1.6,
   },
   itemSeparator: {
-    width: 12,
+    width: Dimensions.margin / 1.33,
   },
   lens: {
     height: Dimensions.margin * 1.25,
@@ -253,7 +260,12 @@ const styles = StyleSheet.create({
   popularCardContainer: {
     paddingTop: Dimensions.padding / 1.142,
   },
+  popularSearches: {
+    paddingLeft: Dimensions.padding,
+    paddingTop: Dimensions.padding * 1.25,
+  },
   recentSearches: {
+    paddingHorizontal: Dimensions.padding,
     paddingTop: Dimensions.padding * 1.25,
   },
   searchBar: {
@@ -270,6 +282,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     gap: Dimensions.margin / 2,
+    paddingHorizontal: Dimensions.padding,
   },
   searchIcon: {
     height: Dimensions.margin * 1.25,
@@ -284,9 +297,6 @@ const styles = StyleSheet.create({
     minHeight: 0,
     paddingVertical: 0,
     position: "relative",
-  },
-  seperator: {
-    width: Dimensions.margin / 1.33,
   },
   suggestionItem: {
     alignItems: "center",
@@ -303,6 +313,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     marginTop: 8,
     // maxHeight: 200,
+    paddingHorizontal: Dimensions.padding,
   },
 });
 
