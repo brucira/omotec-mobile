@@ -121,7 +121,7 @@ const Tabs = () => (
       />
     )}
     id="tabs"
-    initialRouteName={RouteNames.Home}
+    initialRouteName={RouteNames.Calender}
   >
     <Tab.Screen
       options={{
