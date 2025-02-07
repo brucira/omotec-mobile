@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Appbar, Avatar, Chip, Text } from "react-native-paper";
+import { Appbar, Avatar, Badge, Chip, Text } from "react-native-paper";
 
 import CourseCard from "../../components/CourseCard";
 import TopTab from "../../components/TopTab";
@@ -28,9 +28,7 @@ import TodoCard from "./TodoCard";
 
 const Home = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState("Mumbai");
-  const keyExtractor = (item) => item.toString();
-  const itemSeperator = () => <View style={styles.itemSeparator} />;
-  const renderItem = ({ index }) => <CourseCard index={index} />;
+  const [checkedItems, setCheckedItems] = useState({});
   const [isSale, setIsSale] = useState(true);
 
   const [progressSubject, setProgressSubject] = useState(null);
@@ -43,15 +41,36 @@ const Home = ({ navigation }) => {
 
   const [attendanceSubject, setAttendanceSubject] = useState(null);
   const [attendanceSubjectFocus, setattendanceSubjectFocus] = useState(false);
+
+  const keyExtractor = (item) => item.toString();
+  const itemSeperator = () => <View style={styles.itemSeparator} />;
+  const renderItem = ({ index, item }) => (
+    <CourseCard
+      key={index}
+      index={index}
+      isLast={index === [1, 2, 3, 4].length - 1}
+      {...item}
+    />
+  );
+
+  const handleCheck = (id) => {
+    setCheckedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id], // Toggle the state for the specific item
+    }));
+  };
+
   const renderTodoItem = (item, index) => {
     return (
       <View key={item.id}>
         <TodoCard
           date={item.date}
           imageSource={item.imageSource}
+          isChecked={checkedItems[item.id] || false}
           label={item.label}
           subject={item.subject}
           todoTitle={item.todoTitle}
+          onCheck={() => handleCheck(item.id)}
         />
       </View>
     );
@@ -71,10 +90,13 @@ const Home = ({ navigation }) => {
             </View>
           }
         />
-        <Appbar.Action
-          icon={require("../../assets/icons/notification.png")}
-          onPress={() => navigation.navigate(RouteNames.Notifications)}
-        />
+        <View>
+          <Appbar.Action
+            icon={require("../../assets/icons/notification.png")}
+            onPress={() => navigation.navigate(RouteNames.Notifications)}
+          />
+          <Badge size={8} style={styles.dot}></Badge>
+        </View>
         <Appbar.Action
           icon={(props) => (
             <Avatar.Image
@@ -107,11 +129,11 @@ const Home = ({ navigation }) => {
           </View>
           <FlatList
             contentContainerStyle={styles.arrowIndicator}
-            data={[1, 2, 3]}
+            data={[1, 2, 3, 4]}
             horizontal={true}
             ItemSeparatorComponent={itemSeperator}
             keyExtractor={keyExtractor}
-            renderItem={renderItem}
+            renderItem={(props) => renderItem({ ...props, data: [1, 2, 3] })}
             style={styles.ongoingCardList}
           />
         </View>
@@ -264,7 +286,7 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   appBarContainer: {
     backgroundColor: CombinedDefaultTheme.colors.background,
-    paddingBottom: Dimensions.padding,
+    // paddingBottom: Dimensions.padding,
   },
   banner: {
     alignSelf: "center",
@@ -280,7 +302,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginBottom: Dimensions.margin / 1.33,
-    marginTop: Dimensions.margin,
+    marginTop: Dimensions.margin * 1.75,
     paddingHorizontal: Dimensions.padding,
     width: Dimensions.screenWidth,
   },
@@ -315,11 +337,18 @@ const styles = StyleSheet.create({
     paddingBottom: Dimensions.padding / 1.14,
     paddingRight: Dimensions.padding,
   },
+  dot: {
+    backgroundColor: palette.error500,
+    position: "absolute",
+    right: "32%",
+    top: "24%",
+  },
   itemSeparator: {
     width: 12,
   },
   ongoingCardList: {
-    gap: Dimensions.padding / 1.33,
+    // gap: Dimensions.padding / 1.33,
+    // marginRight: 16,
   },
   saleChip: {
     backgroundColor: palette.purple700,

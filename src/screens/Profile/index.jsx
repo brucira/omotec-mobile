@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   backIcon: {
     alignSelf: "center",
     height: Dimensions.margin * 1.25,
-    // paddingVertical: Dimensions.padding / 10,
+    paddingBottom: 3,
     resizeMode: "cover",
     width: Dimensions.margin * 1.25,
   },

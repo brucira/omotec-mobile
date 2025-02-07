@@ -7,14 +7,17 @@ import { CombinedDefaultTheme } from "../styles/theme";
 import { Dimensions } from "../utils/constant";
 import Tag from "./Tag";
 
-const CourseCard = ({ index }) => {
+const CourseCard = ({ index, isLast }) => {
   const calenderSource = require("../assets/icons/calender.png");
   const userSource = require("../assets/icons/user.png");
   return (
     <Card
+      style={[
+        styles.container,
+        { marginRight: isLast ? Dimensions.margin : 0 },
+      ]}
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
-      style={styles.container}
     >
       <Image source={require("../assets/dummy_1.png")} style={styles.banner} />
       <View style={styles.cardContent}>

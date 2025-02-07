@@ -55,6 +55,7 @@ const palette = {
   grey50: "#F9FAFB",
   grey100: "#F2F4F7",
   grey200: "#EAECF0",
+  grey400: "#98A2B3",
   grey500: "#667085",
   grey550: "#6F747F",
   grey600: "#475467",
@@ -73,6 +74,7 @@ const palette = {
   success600: "#039855",
   yellow500: "#FFEB3B",
   transparent: "#00000000",
+  warning500: "#F79009",
 };
 
 export default palette;

@@ -8,7 +8,7 @@ import { BottomNavigation, Text, TouchableRipple } from "react-native-paper";
 import Calender from "./screens/Calender";
 import Home from "./screens/Home";
 import Learning from "./screens/Learning";
-import Notifications from "./screens/Notifications";
+import Notifications from "./screens/Notifications/Notifications";
 import Profile from "./screens/Profile";
 import Search from "./screens/Search";
 import { CombinedDefaultTheme } from "./styles/theme";

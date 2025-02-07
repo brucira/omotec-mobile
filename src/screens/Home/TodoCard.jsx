@@ -6,9 +6,15 @@ import Tag from "../../components/Tag";
 import palette from "../../styles/palette";
 import { Dimensions } from "../../utils/constant";
 
-const TodoCard = ({ imageSource, todoTitle, subject, date, label }) => {
-  const [checked, setChecked] = useState("first");
-
+const TodoCard = ({
+  imageSource,
+  todoTitle,
+  subject,
+  date,
+  label,
+  isChecked,
+  onCheck,
+}) => {
   return (
     <View style={styles.todoCardContainer}>
       <View style={styles.todoContentContainer}>
@@ -32,9 +38,9 @@ const TodoCard = ({ imageSource, todoTitle, subject, date, label }) => {
       <View style={styles.todoProgress}>
         <View style={styles.radioContainer}>
           <RadioButton
-            status={checked === "first" ? "checked" : "unchecked"}
+            status={isChecked ? "checked" : "unchecked"}
             value="first"
-            onPress={() => setChecked("first")}
+            onPress={onCheck}
           />
         </View>
         <Tag
