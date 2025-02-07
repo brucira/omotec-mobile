@@ -19,7 +19,18 @@ const NotificationCard = ({
   progress,
 }) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor:
+            notificationType === "enrollment"
+              ? "rgba(133, 45, 205, 0.05)"
+              : palette.transparent,
+          paddingHorizontal: Dimensions.padding,
+        },
+      ]}
+    >
       <View>
         <Image source={imageSource} style={styles.notificationImage} />
         {newNotification === true && (
@@ -31,7 +42,7 @@ const NotificationCard = ({
           <View style={styles.contentContainer}>
             <Text style={styles.heading} variant="labelLarge">
               {notificationType === "newCourse"
-                ? "You have been added to a new course"
+                ? `Hello, Welcome to ${course} course!`
                 : notificationType === "grades"
                   ? `Your grade for ${course} has 
 been posted.`
@@ -41,7 +52,9 @@ been posted.`
                       ? `Your certificate is ready!`
                       : notificationType === "assignment"
                         ? `File Uploaded Succesfully`
-                        : null}
+                        : notificationType === "enrollment"
+                          ? "New Course has been added."
+                          : null}
             </Text>
           </View>
           <Text style={{ color: palette.grey500 }} variant="bodySmall">
@@ -62,7 +75,9 @@ been posted.`
                     ? `${course} certificate is out now.`
                     : notificationType === "assignment"
                       ? `${course} assignment has been uploaded`
-                      : null}
+                      : notificationType === "enrollment"
+                        ? `Check out the new course now.`
+                        : null}
           </Text>
           {notificationType === "feedback" && (
             <View style={styles.feedbackComment}>
@@ -124,9 +139,11 @@ been posted.`
                   ? `View feedback`
                   : notificationType === "certificate"
                     ? `View`
-                    : notificationType === "assignment"
-                      ? null
-                      : null}
+                    : notificationType === "enrollment"
+                      ? `View`
+                      : notificationType === "assignment"
+                        ? null
+                        : null}
           </Button>
         </View>
       </View>

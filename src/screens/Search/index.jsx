@@ -63,7 +63,12 @@ const Search = ({ navigation }) => {
     const updatedSearches = recentSearches.filter((item) => item !== chip);
     setRecentSearches(updatedSearches);
   };
-  const renderItem = ({ item }) => <PopularCourseCard {...item} />;
+  const renderItem = ({ item, index }) => (
+    <PopularCourseCard
+      {...item}
+      isLast={index === popularCourseCardData.length - 1}
+    />
+  );
   const renderCourseCardItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleSuggestionClick(item)}>
       <View style={styles.suggestionItem}>

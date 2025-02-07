@@ -15,12 +15,16 @@ const PopularCourseCard = ({
   session,
   duration,
   enrolls,
+  isLast,
 }) => {
   return (
     <Card
+      style={[
+        styles.container,
+        { marginRight: isLast ? Dimensions.margin : 0 },
+      ]}
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
-      style={styles.container}
     >
       <Image source={coverImage} style={styles.banner} />
       <View style={styles.cardContent}>

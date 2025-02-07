@@ -14,8 +14,13 @@ const Notifications = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Appbar style={styles.appBarContainer}>
+        <Appbar.Action
+          icon={require("../../assets/icons/chevron_left.png")}
+          style={styles.backIcon}
+          onPress={navigation.goBack}
+        />
         <Appbar.Content
-          title={<Text variant="titleLarge">Notification</Text>}
+          title={<Text variant="titleMedium">Notification</Text>}
         />
         <Appbar.Action
           icon={(props) => (
@@ -57,14 +62,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: palette.grey200,
   },
+  backIcon: {
+    height: Dimensions.margin * 1.25,
+    // paddingVertical: Dimensions.padding / 10,
+    paddingBottom: 3,
+    resizeMode: "contain",
+    width: Dimensions.margin * 1.25,
+  },
   container: {
     backgroundColor: CombinedDefaultTheme.colors.background,
     flex: 1,
   },
   contentContainer: {
-    // backgroundColor: "red",
     flex: 1,
-    paddingHorizontal: Dimensions.padding,
+    // paddingHorizontal: Dimensions.padding,
   },
   emptyContainer: {
     alignItems: "center",
