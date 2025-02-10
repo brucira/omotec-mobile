@@ -1,20 +1,23 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Button, Card, Chip, ProgressBar, Text } from "react-native-paper";
+import { Card, ProgressBar, Text } from "react-native-paper";
 
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
 import { Dimensions } from "../utils/constant";
 import Tag from "./Tag";
 
-const CourseCard = ({ index }) => {
+const CourseCard = ({ index, isLast }) => {
   const calenderSource = require("../assets/icons/calender.png");
   const userSource = require("../assets/icons/user.png");
   return (
     <Card
+      style={[
+        styles.container,
+        { marginRight: isLast ? Dimensions.margin : 0 },
+      ]}
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
-      style={styles.container}
     >
       <Image source={require("../assets/dummy_1.png")} style={styles.banner} />
       <View style={styles.cardContent}>
@@ -58,8 +61,6 @@ const CourseCard = ({ index }) => {
   );
 };
 
-export default CourseCard;
-
 const styles = StyleSheet.create({
   banner: {
     borderTopLeftRadius: Dimensions.padding / 2,
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     width: "auto",
   },
   cardContent: {
-    flex: 1,
+    // flex: 1,
     padding: Dimensions.padding / 1.33,
   },
   container: {
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     borderColor: palette.grey200,
     borderTopLeftRadius: Dimensions.padding / 2,
     borderTopRightRadius: Dimensions.padding / 2,
-    flex: 1,
+    // flex: 1,
     paddingHorizontal: 0,
     paddingVertical: 0,
     width: 254,
@@ -98,8 +99,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   progressBar: {
-    borderRadius: 16,
-    height: 8,
+    borderRadius: Dimensions.margin,
+    height: Dimensions.margin / 2,
     width: 183,
   },
   progressText: {},
@@ -109,3 +110,5 @@ const styles = StyleSheet.create({
     paddingBottom: Dimensions.padding / 1.77,
   },
 });
+
+export default CourseCard;

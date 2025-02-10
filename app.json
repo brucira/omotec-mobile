@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Cubicle Talks",
-    "slug": "cubicletalks",
+    "name": "Omotec",
+    "slug": "omotec",
     "version": "1.0.0",
     "newArchEnabled": true,
     "plugins": [
@@ -14,6 +14,14 @@
           "imageWidth": 40
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "d8718e85-25d0-4ac2-b934-b6cf45639fdc"
+      }
+    },
+    "android": {
+      "package": "com.devbrucira.omotec"
+    }
   }
 }
