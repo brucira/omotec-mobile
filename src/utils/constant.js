@@ -194,24 +194,18 @@ export const dropdownData = [
   { label: "Item 7", value: "7" },
   { label: "Item 8", value: "8" },
 ];
-const today = new Date();
+export const today = new Date();
 
 export const events = [
   {
     background: palette.blue400,
-    end: new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate(),
-      11,
-      0
-    ),
+    end: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 2, 0),
     specialDay: "Mahavir Jayanti",
     start: new Date(
       today.getFullYear(),
       today.getMonth(),
       today.getDate(),
-      8,
+      0,
       0
     ),
     subtitle: "Web Development",
@@ -475,6 +469,13 @@ export const notificationData = [
     progress: 100,
   },
 ];
+export const specialDays = {
+  "02-10": "Gandhi Jayanti",
+  "11-02": "Special Holiday",
+  "15-08": "Independence Day",
+  "25-12": "Christmas",
+  "26-01": "Republic Day",
+};
 
 export const suggestions = [
   "Physics",
