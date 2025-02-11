@@ -22,26 +22,20 @@ const theme = {
     nowIndicator: palette.primaryStudent400,
   },
 };
-// function extractDateInfo(dateRange) {
-//   const date = new Date(dateRange[0]); // Convert string to Date object
-
-//   const day = date.getDate(); // Get the day of the month
-//   const month = date.getMonth() + 1; // Months are zero-based, so add 1
-//   const dayName = date.toLocaleString("en-US", { weekday: "short" }); // Get short day name (Tue)
-
-//   return { day, dayName, month };
-// }
 
 const Calender = ({ navigation }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isToday, setIsToday] = useState(true);
   const isSameDate = (date1, date2) => {
-    const d1 = new Date(date1).toISOString().split("T")[0]; // Extract YYYY-MM-DD
+    const d1 = new Date(date1).toISOString().split("T")[0];
     const d2 = new Date(date2).toISOString().split("T")[0];
 
     return setIsToday(d1 === d2);
   };
+  const selected = selectedDate.toISOString().split("T")[0];
+  console.log(selected);
+
   const getMonthName = (date) => {
     return date.toLocaleString("default", { month: "long" });
   };
@@ -91,7 +85,7 @@ const Calender = ({ navigation }) => {
                   ? CombinedDefaultTheme.colors.primary
                   : palette.transparent,
                 borderRadius: Dimensions.margin * 4,
-                paddingVertical: Dimensions.margin / 4,
+                paddingVertical: Dimensions.margin / 3.5,
                 width: 32,
               }}
             >
@@ -116,7 +110,7 @@ const Calender = ({ navigation }) => {
             />
             <Text
               style={{ color: CombinedDefaultTheme.colors.primary }}
-              variant="bodyMedium"
+              variant="labelMedium"
             >
               Online
             </Text>
@@ -152,7 +146,7 @@ const Calender = ({ navigation }) => {
     if (selectedDate) {
       isSameDate(selectedDate, today);
     }
-  }, [selectedDate]); // Runs when selectedDate changes
+  }, [selectedDate]);
 
   return (
     <View style={styles.container}>
@@ -183,7 +177,26 @@ const Calender = ({ navigation }) => {
                   >
                     <Calendars
                       hideArrows
-                      current={selectedDate.toISOString().split("T")[0]} // Format to YYYY-MM-DD
+                      markedDates={{
+                        [selected]: {
+                          selected: true,
+                          selectedColor: CombinedDefaultTheme.colors.primary,
+                        },
+                        [today.toISOString().split("T")[0]]:
+                          selected === today.toISOString().split("T")[0]
+                            ? {
+                                dotColor: palette.grey25,
+                                marked: true,
+                                selected: true,
+                                selectedColor:
+                                  CombinedDefaultTheme.colors.primary,
+                              }
+                            : { dotColor: palette.grey900, marked: true },
+                      }}
+                      theme={{
+                        todayTextColor: palette.grey900,
+                      }}
+                      current={selected}
                       enableSwipeMonths={true}
                       firstDay={1}
                       renderHeader={() => null}

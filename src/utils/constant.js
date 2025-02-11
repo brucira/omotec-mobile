@@ -199,13 +199,19 @@ export const today = new Date();
 export const events = [
   {
     background: palette.blue400,
-    end: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 2, 0),
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      11,
+      0
+    ),
     specialDay: "Mahavir Jayanti",
     start: new Date(
       today.getFullYear(),
       today.getMonth(),
       today.getDate(),
-      0,
+      8,
       0
     ),
     subtitle: "Web Development",
@@ -261,6 +267,24 @@ export const events = [
       today.getMonth(),
       today.getDate(),
       14,
+      0
+    ),
+    title: "Meeting",
+  },
+  {
+    background: palette.purple500,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1,
+      14,
+      0
+    ),
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1,
+      11,
       0
     ),
     title: "Meeting",
