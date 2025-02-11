@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Dimensions as NativeDimensions } from "react-native";
 
 import palette from "../styles/palette";
@@ -192,6 +193,84 @@ export const dropdownData = [
   { label: "Item 6", value: "6" },
   { label: "Item 7", value: "7" },
   { label: "Item 8", value: "8" },
+];
+const today = new Date();
+
+export const events = [
+  {
+    background: palette.blue400,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      11,
+      0
+    ),
+    specialDay: "Mahavir Jayanti",
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      8,
+      0
+    ),
+    subtitle: "Web Development",
+    title: "Meeting",
+  },
+  {
+    background: palette.yellow700,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      12,
+      0
+    ),
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      11,
+      0
+    ),
+    title: "Meeting",
+  },
+  {
+    background: palette.pink700,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      13,
+      0
+    ),
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      12,
+      0
+    ),
+    title: "Meeting",
+  },
+  {
+    background: palette.purple500,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      15,
+      0
+    ),
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      14,
+      0
+    ),
+    title: "Meeting",
+  },
 ];
 export const lineGraphData = {
   datasets: [

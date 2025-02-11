@@ -2,115 +2,154 @@ import filter from "lodash/filter";
 import find from "lodash/find";
 import groupBy from "lodash/groupBy";
 import React, { useCallback, useState } from "react";
-import { Alert, Image, StyleSheet, View } from "react-native";
 import {
-  CalendarProvider,
-  CalendarUtils,
-  ExpandableCalendar,
-  TimelineList,
-} from "react-native-calendars";
-import { Appbar, Avatar, Text } from "react-native-paper";
+  Alert,
+  Image,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Calendar } from "react-native-big-calendar";
+import { Appbar, Avatar, Surface, Text } from "react-native-paper";
 
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions, RouteNames } from "../../utils/constant";
+import { Dimensions, events, RouteNames } from "../../utils/constant";
 import { getDate, timelineEvents } from "./mock";
 
-const INITIAL_TIME = { hour: 9, minutes: 0 };
-const EVENTS = timelineEvents;
+const specialDays = {
+  "02-10": "Gandhi Jayanti",
+  "10-02": "Special Holiday",
+  "15-08": "Independence Day",
+  "25-12": "Christmas",
+  "26-01": "Republic Day",
+};
+
+const theme = {
+  palette: {
+    gray: {
+      grey200: palette.grey200,
+    },
+    nowIndicator: palette.primaryStudent400,
+  },
+};
+function extractDateInfo(dateRange) {
+  const date = new Date(dateRange[0]); // Convert string to Date object
+
+  const day = date.getDate(); // Get the day of the month
+  const month = date.getMonth() + 1; // Months are zero-based, so add 1
+  const dayName = date.toLocaleString("en-US", { weekday: "short" }); // Get short day name (Tue)
+
+  return { day, dayName, month };
+}
 
 const Calender = ({ navigation }) => {
-  const [currentDate, setCurrentDate] = useState(getDate());
-  const [eventsByDate, setEventsByDate] = useState(() => {
-    return groupBy(EVENTS, (e) => CalendarUtils.getCalendarDateString(e.start));
-  });
+  // const renderHeader = (prop) => {
+  //   console.log(prop);
 
-  const marked = {
-    [`${getDate(-1)}`]: { marked: true },
-    [`${getDate()}`]: { marked: true },
-    [`${getDate(1)}`]: { marked: true },
-    [`${getDate(2)}`]: { marked: true },
-    [`${getDate(4)}`]: { marked: true },
+  //   return (
+  //     <View style={styles.headerContainer}>
+  //       <View style={styles.headerDateContainer}>
+  //         <Text variant="labelMedium">Tue</Text>
+  //         {/* <Text style={{ fontSize: 18 }}>30</Text> */}
+  //         <Text variant="labelMedium">{prop.dateRange[0]}</Text>
+  //       </View>
+  //       <Text variant="labelMedium">{prop.dateRange[0]}</Text>
+  //     </View>
+  //   );
+  // };
+
+  const extractDateInfo = (dateString) => {
+    const date = new Date(dateString);
+
+    const day = date.getDate(); // Extract the day (10)
+    const month = date.getMonth() + 1; // Extract the month (2)
+    const dayName = date.toLocaleString("en-US", { weekday: "short" }); // Extract the weekday (Tue)
+
+    return { day, dayName, month };
   };
 
-  const onDateChanged = useCallback((date, source) => {
-    console.log("TimelineCalendarScreen onDateChanged: ", date, source);
-    setCurrentDate(date);
-  }, []);
+  const renderHeader = (prop) => {
+    console.log(prop);
+    if (!prop.dateRange || prop.dateRange.length === 0) return null;
 
-  const onMonthChange = useCallback((month, updateSource) => {
-    console.log("TimelineCalendarScreen onMonthChange: ", month, updateSource);
-  }, []);
+    const { day, month, dayName } = extractDateInfo(prop.dateRange[0]);
+    const formattedDate = `${day.toString().padStart(2, "0")}-${month
+      .toString()
+      .padStart(2, "0")}`;
+    const specialDay = specialDays[formattedDate];
 
-  const createNewEvent = useCallback((timeString, timeObject) => {
-    const hourString = `${(timeObject.hour + 1).toString().padStart(2, "0")}`;
-    const minutesString = `${timeObject.minutes.toString().padStart(2, "0")}`;
+    return (
+      <View style={styles.headerContainer}>
+        <View style={styles.headerDateContainer}>
+          <Text style={{ width: 36 }} variant="bodySmall">
+            {dayName}
+          </Text>
+          <Text style={{ fontSize: 18 }}>{day}</Text>
+        </View>
+        <View style={styles.dayEventContainer}>
+          <View style={styles.onlineContainer}>
+            <Image
+              source={require("../../assets/icons/video.png")}
+              style={styles.videoIcon}
+            />
+            <Text
+              style={{ color: CombinedDefaultTheme.colors.primary }}
+              variant="bodyMedium"
+            >
+              Online
+            </Text>
+          </View>
+          {specialDay && (
+            <View style={styles.specialDay}>
+              <Text
+                style={{ color: CombinedDefaultTheme.colors.background }}
+                variant="labelMedium"
+              >
+                {specialDay}
+              </Text>
+            </View>
+          )}
+        </View>
+      </View>
+    );
+  };
 
-    const newEvent = {
-      color: "white",
-      end: `${timeObject.date} ${hourString}:${minutesString}:00`,
-      id: "draft",
-      start: timeString,
-      title: "New Event",
-    };
-
-    if (timeObject.date) {
-      setEventsByDate((prevEvents) => {
-        const updatedEvents = { ...prevEvents };
-        updatedEvents[timeObject.date] = updatedEvents[timeObject.date]
-          ? [...updatedEvents[timeObject.date], newEvent]
-          : [newEvent];
-        return updatedEvents;
-      });
-    }
-  }, []);
-
-  const approveNewEvent = useCallback((_timeString, timeObject) => {
-    if (!timeObject.date) return;
-
-    Alert.prompt("New Event", "Enter event title", [
-      {
-        onPress: () => {
-          setEventsByDate((prevEvents) => {
-            const updatedEvents = { ...prevEvents };
-            updatedEvents[timeObject.date] = filter(
-              updatedEvents[timeObject.date],
-              // eslint-disable-next-line prettier/prettier
-              (e) => e.id !== "draft"
-            );
-            return updatedEvents;
-          });
-        },
-        text: "Cancel",
-      },
-      {
-        onPress: (eventTitle) => {
-          setEventsByDate((prevEvents) => {
-            const updatedEvents = { ...prevEvents };
-            const draftEvent = find(updatedEvents[timeObject.date], {
-              id: "draft",
-            });
-            if (draftEvent) {
-              draftEvent.id = undefined;
-              draftEvent.title = eventTitle ?? "New Event";
-              draftEvent.color = "lightgreen";
-              updatedEvents[timeObject.date] = [
-                ...updatedEvents[timeObject.date],
-              ];
-            }
-            return updatedEvents;
-          });
-        },
-        text: "Create",
-      },
-    ]);
-  }, []);
-  function getDayOfWeek(dateString) {
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-    const date = new Date(dateString); // Convert the string to a Date object
-    return days[date.getDay()]; // Get the day of the week
-  }
+  const renderEvent = (event, touchableOpacityProps) => {
+    return (
+      <TouchableOpacity {...touchableOpacityProps} key={event}>
+        {/* {dayjs(event.end).diff(event.start, "minute") < 32 && showTime ? (
+          <Text style={eventTitleStyle}>
+            {event.title},
+            <Text style={eventTimeStyle}>
+              {dayjs(event.start).format(ampm ? "hh:mm a" : "HH:mm")}
+            </Text>
+          </Text>
+        ) : (
+          <>
+            <Text style={eventTitleStyle}>{event.title}</Text>
+            {showTime && (
+              <Text style={eventTimeStyle}>
+                {formatStartEnd(
+                  event.start,
+                  event.end,
+                  ampm ? "h:mm a" : "HH:mm"
+                )}
+              </Text>
+            )}
+            {event.children && event.children}
+          </>
+        )} */}
+        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
+          {event.title}
+        </Text>
+        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
+          {event.subtitle}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -131,109 +170,46 @@ const Calender = ({ navigation }) => {
         />
       </Appbar>
       <View style={styles.contentContainer}>
-        <CalendarProvider
-          showTodayButton
-          date={currentDate}
-          disabledOpacity={0.6}
-          style={{ borderWidth: 0 }}
-          onDateChanged={onDateChanged}
-          onMonthChange={onMonthChange}
-        >
-          {/* <ExpandableCalendar
-            firstDay={1}
-            markedDates={marked}
-            openThreshold={true}
-          /> */}
-          <View style={styles.dayAndTaskContainer}>
-            <View style={styles.currentDayContainer}>
-              <Text>{getDayOfWeek(currentDate)}</Text>
-              <Text style={styles.currentDateText}>
-                {currentDate.split("-")[2]}
-              </Text>
-            </View>
-          </View>
-          {/* <TimelineList
-            key={12}
-            scrollToFirst
-            showNowIndicator
-            timelineProps={{
-              format24h: false,
-              onBackgroundLongPress: createNewEvent,
-              onBackgroundLongPressOut: approveNewEvent,
-              renderEvent: (event) => {
-                return (
-                  <View
-                    style={{
-                      backgroundColor:
-                        event.color || CombinedDefaultTheme.colors.primary,
-                      borderColor: "transparent",
-                      borderRadius: 12,
-                      borderWidth: 0,
-                      flex: 1,
-                      height: "100%",
-                      left: 0,
-                      margin: 0,
-                      overflow: "hidden",
-                      paddingHorizontal: 12,
-                      paddingVertical: 12,
-                      position: "absolute",
-                      right: 0,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: "#fff",
-                        fontSize: 12,
-                        fontWeight: "bold",
-                      }}
-                      numberOfLines={1}
-                    >
-                      {event.title}
-                    </Text>
-                    <Text
-                      style={{
-                        color: CombinedDefaultTheme.colors.background,
-                        fontSize: 12,
-                      }}
-                      numberOfLines={1}
-                    >
-                      {event.start} - {event.end}
-                    </Text>
-                  </View>
-                );
-              },
-              theme: {
-                contentStyle: {
-                  borderRadius: 8,
-                  height: Dimensions.screenHeight,
-                  right: 4,
-                },
-                timelineContainer: {},
-                timeLabel: {
-                  left: 0,
-                  position: "absolute",
-                },
-                event: {
-                  borderRadius: 8,
-                  borderWidth: 0,
-                },
-                nowIndicatorKnob: {
-                  backgroundColor: CombinedDefaultTheme.colors.primary,
-                  height: 12,
-                  width: 3.9,
-                },
-                nowIndicatorLine: {
-                  backgroundColor: CombinedDefaultTheme.colors.primary,
-                  position: "absolute",
-                  top: 2,
-                },
-              },
-            }}
-            events={eventsByDate}
-            initialTime={INITIAL_TIME}
-            style={{ backgroundColor: "yellow" }}
-          /> */}
-        </CalendarProvider>
+        <Calendar
+          bodyContainerStyle={{
+            backgroundColor: CombinedDefaultTheme.colors.background,
+          }}
+          calendarCellStyle={{
+            backgroundColor: CombinedDefaultTheme.colors.background,
+            left: 17,
+            position: "relative",
+            zIndex: -1,
+          }}
+          eventCellStyle={(event) => ({
+            backgroundColor: event.background, // Set the color dynamically
+            borderRadius: Dimensions.margin / 2,
+            // marginBottom: 4,
+            marginLeft: 18,
+            marginTop: 0,
+            maxWidth: "96%",
+            paddingHorizontal: Dimensions.padding / 1.33,
+            paddingVertical: Dimensions.padding / 2.66,
+          })}
+          headerContentStyle={
+            {
+              // backgroundColor: "red",
+              // alignSelf: "baseline",
+              // position: "absolute",
+              // left: 0,
+            }
+          }
+          ampm={true}
+          events={events}
+          height={Dimensions.screenHeight}
+          hourRowHeight={52}
+          hourStyle={styles.hourStyle}
+          mode="day"
+          renderEvent={renderEvent}
+          renderHeader={renderHeader}
+          swipeEnabled={true}
+          theme={theme}
+          // theme={{ nowIndicator: "yellow" }}
+        />
       </View>
     </View>
   );
@@ -269,6 +245,68 @@ const styles = StyleSheet.create({
     minHeight: 54,
     paddingHorizontal: Dimensions.padding,
     // paddingVertical: Dimensions.padding / 2,
+  },
+  dayEventContainer: {
+    flex: 1,
+    flexDirection: "column",
+    gap: Dimensions.margin / 4,
+  },
+  headerContainer: {
+    alignItems: "center",
+    backgroundColor: CombinedDefaultTheme.colors.background,
+    // backgroundColor: "red",
+    borderColor: palette.grey200,
+    borderRightWidth: 1,
+    flex: 1,
+    flexDirection: "row",
+    position: "absolute",
+    width: Dimensions.screenWidth,
+    zIndex: 3,
+  },
+  headerDateContainer: {
+    alignSelf: "baseline",
+    borderColor: palette.grey200,
+    borderRightWidth: 1,
+    maxWidth: 68,
+    minWidth: 68,
+    paddingHorizontal: Dimensions.padding * 1.375,
+    paddingVertical: Dimensions.padding,
+  },
+  hourStyle: {
+    backgroundColor: "#FFF",
+    borderColor: palette.grey200,
+    borderRightWidth: 1,
+    bottom: 6,
+    fontSize: 11,
+    height: "100%",
+    left: 0,
+    maxWidth: 68,
+    minWidth: 68,
+    // position: "absolute",
+    zIndex: 10,
+  },
+  onlineContainer: {
+    alignItems: "center",
+    alignSelf: "baseline",
+    backgroundColor: palette.primaryStudent50,
+    borderRadius: Dimensions.padding * 4,
+    flexDirection: "row",
+    gap: Dimensions.margin / 2.66,
+    paddingHorizontal: Dimensions.padding / 2,
+    paddingVertical: Dimensions.padding / 8,
+  },
+  specialDay: {
+    backgroundColor: palette.success700,
+    borderRadius: Dimensions.margin / 2,
+    // flex: 1,
+    marginRight: Dimensions.margin,
+    paddingHorizontal: Dimensions.padding / 1.33,
+    paddingVertical: Dimensions.padding / 4,
+    width: "auto",
+  },
+  videoIcon: {
+    height: Dimensions.margin / 1.33,
+    width: Dimensions.margin / 1.33,
   },
 });
 
