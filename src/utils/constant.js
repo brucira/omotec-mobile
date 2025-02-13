@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import dayjs from "dayjs";
 import { Dimensions as NativeDimensions } from "react-native";
 
 import palette from "../styles/palette";
@@ -214,8 +215,8 @@ export const events = [
       8,
       0
     ),
-    subtitle: "Web Development",
-    title: "Meeting",
+    subtitle: "Web Development Bootcamp · Mumbai",
+    title: "Proposal Submission",
   },
   {
     background: palette.yellow700,
@@ -233,7 +234,8 @@ export const events = [
       11,
       0
     ),
-    title: "Meeting",
+    subtitle: "Web Development Bootcamp · Mumbai",
+    title: "Proposal Submission",
   },
   {
     background: palette.pink700,
@@ -251,7 +253,8 @@ export const events = [
       12,
       0
     ),
-    title: "Meeting",
+    subtitle: "Web Development Bootcamp · Mumbai",
+    title: "Proposal Submission",
   },
   {
     background: palette.purple500,
@@ -269,7 +272,8 @@ export const events = [
       14,
       0
     ),
-    title: "Meeting",
+    subtitle: "Web Development Bootcamp · Mumbai",
+    title: "Proposal Submission",
   },
   {
     background: palette.purple500,
@@ -287,7 +291,8 @@ export const events = [
       11,
       0
     ),
-    title: "Meeting",
+    subtitle: "Web Development Bootcamp · Mumbai",
+    title: "Proposal Submission",
   },
 ];
 export const lineGraphData = {
@@ -495,7 +500,7 @@ export const notificationData = [
 ];
 export const specialDays = {
   "02-10": "Gandhi Jayanti",
-  "11-02": "Special Holiday",
+  "13-02": "Special Holiday",
   "15-08": "Independence Day",
   "25-12": "Christmas",
   "26-01": "Republic Day",
@@ -510,7 +515,142 @@ export const suggestions = [
   "JavaScript",
   "React",
 ];
-
+const monday = dayjs().day(1);
+const wednusday = dayjs().day(3);
+export const week_events = [
+  {
+    allDay: true,
+    background: palette.blue400,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      11,
+      0
+    ),
+    specialDay: "Mahavir Jayanti",
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      8,
+      0
+    ),
+    subtitle: "Web Development",
+    title: "Holiday",
+  },
+  {
+    allDay: true,
+    end: wednusday.add(4, "day").set("hour", 0).set("minute", 0).toDate(),
+    start: wednusday.add(4, "day").set("hour", 0).set("minute", 0).toDate(),
+    title: "Vacation Recovery",
+  },
+];
+export const allDayEvents = [
+  {
+    background: "blue", // Ensure colors are correctly referenced
+    end: new Date(2025, 1, 12, 0, 0), // Corrected to February
+    specialDay: "Mahavir Jayanti",
+    start: new Date(2025, 1, 12, 23, 0), // Start of the day
+    subtitle: "Web Development",
+    title: "Holiday",
+  },
+];
+export const weekEvents = [
+  {
+    allDayEvents: [{ title: "1" }],
+    background: palette.blue400,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      11,
+      0
+    ),
+    specialDay: "Mahavir Jayanti",
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      8,
+      0
+    ),
+    subtitle: "Web Development",
+    title: "Meeting",
+  },
+  {
+    background: palette.yellow700,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      12,
+      0
+    ),
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      11,
+      0
+    ),
+    title: "Meeting",
+  },
+  {
+    background: palette.pink700,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      13,
+      0
+    ),
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      12,
+      0
+    ),
+    title: "Meeting",
+  },
+  {
+    background: palette.purple500,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      15,
+      0
+    ),
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      14,
+      0
+    ),
+    title: "Meeting",
+  },
+  {
+    background: palette.purple500,
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1,
+      14,
+      0
+    ),
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1,
+      11,
+      0
+    ),
+    title: "Meeting",
+  },
+];
 export const RouteNames = {
   Calender: "Calender",
   Home: "Home",
