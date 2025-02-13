@@ -7,26 +7,12 @@ import { Appbar, Avatar, Portal, Text } from "react-native-paper";
 
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import {
-  allDayEvents,
-  Dimensions,
-  events,
-  RouteNames,
-  specialDays,
-  today,
-  week_events,
-  weekEvents,
-} from "../../utils/constant";
+import { Dimensions, RouteNames, today } from "../../utils/constant";
+import Daily from "./Daily";
+import Monthly from "./Monthly";
+import Weekly from "./Weekly";
 
-const theme = {
-  palette: {
-    gray: {
-      grey200: palette.grey200,
-    },
-    nowIndicator: palette.primaryStudent400,
-  },
-};
-const dayMap = ["S", "M", "T", "W", "T", "F", "S"];
+// const dayMap = ["S", "M", "T", "W", "T", "F", "S"];
 const session_line_width = Dimensions.screenWidth / 24;
 const session_duration = (Dimensions.screenWidth / 8) * 4;
 // const session_duration = 48 * 2;
@@ -45,262 +31,7 @@ const Calender = ({ navigation }) => {
   const getMonthName = (date) => {
     return date.toLocaleString("default", { month: "long" });
   };
-  const extractDateInfo = (dateString) => {
-    const date = new Date(dateString);
 
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const dayName = date.toLocaleString("en-US", { weekday: "short" });
-
-    return { day, dayName, month };
-  };
-
-  const renderHeader = (prop) => {
-    if (!prop.dateRange || prop.dateRange.length === 0) return null;
-    const { day, month, dayName } = extractDateInfo(prop.dateRange[0]);
-    const formattedDate = `${day.toString().padStart(2, "0")}-${month
-      .toString()
-      .padStart(2, "0")}`;
-    const specialDay = specialDays[formattedDate];
-
-    return (
-      <View style={styles.headerContainer}>
-        <View style={styles.headerDateContainer}>
-          <View
-            style={{
-              alignItems: "center",
-              gap: Dimensions.margin / 4,
-              width: 36,
-            }}
-          >
-            <Text
-              style={{
-                color: isToday
-                  ? CombinedDefaultTheme.colors.primary
-                  : palette.grey900,
-                maxWidth: 36,
-              }}
-              variant="bodySmall"
-            >
-              {dayName}
-            </Text>
-            <View
-              style={{
-                alignItems: "center",
-                backgroundColor: isToday
-                  ? CombinedDefaultTheme.colors.primary
-                  : palette.transparent,
-                borderRadius: Dimensions.margin * 4,
-                paddingVertical: Dimensions.margin / 3.5,
-                width: 32,
-              }}
-            >
-              <Text
-                style={{
-                  color: isToday
-                    ? CombinedDefaultTheme.colors.background
-                    : palette.grey900,
-                  fontSize: 18,
-                }}
-              >
-                {day}
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.dayEventContainer}>
-          <View style={styles.onlineContainer}>
-            <Image
-              source={require("../../assets/icons/video.png")}
-              style={styles.videoIcon}
-            />
-            <Text
-              style={{ color: CombinedDefaultTheme.colors.primary }}
-              variant="labelMedium"
-            >
-              Online
-            </Text>
-          </View>
-          {specialDay && (
-            <View style={styles.specialDay}>
-              <Text
-                style={{ color: CombinedDefaultTheme.colors.background }}
-                variant="labelMedium"
-              >
-                {specialDay}
-              </Text>
-            </View>
-          )}
-        </View>
-      </View>
-    );
-  };
-  const renderWeekHeader = (prop) => {
-    if (!prop.dateRange || prop.dateRange.length === 0) return null;
-    const { day, month, dayName } = extractDateInfo(prop.dateRange[0]);
-    const formattedDate = `${day.toString().padStart(2, "0")}-${month
-      .toString()
-      .padStart(2, "0")}`;
-    const specialDay = specialDays[formattedDate];
-    const hasSpecialDay = prop.dateRange.some((date) => {
-      const formattedDate = date.format("DD-MM");
-      return specialDays[formattedDate];
-    });
-    return (
-      <View style={{ position: "relative" }}>
-        <View style={styles.weekHeaderContainer}>
-          <View style={styles.weekNumberContainer}>
-            <View></View>
-          </View>
-          {prop.dateRange.map((date) => {
-            const formattedDate = date.format("DD-MM");
-            const specialDay = specialDays[formattedDate];
-            const shouldHighlight = selected
-              ? date.isSame(selected, "date")
-              : isToday(date);
-            return (
-              <TouchableOpacity
-                key={date.toString()}
-                style={{
-                  // backgroundColor: "red",
-                  borderColor: palette.grey200,
-                  flex: 1,
-                  gap: 12,
-                  paddingTop: 2,
-                }}
-              >
-                <View
-                  style={[
-                    {
-                      // backgroundColor: CombinedDefaultTheme.colors.primary,
-                      backgroundColor: !shouldHighlight
-                        ? CombinedDefaultTheme.colors.background
-                        : CombinedDefaultTheme.colors.primary,
-                      borderRadius: Dimensions.margin / 2,
-                      fontSize: 10,
-                      justifyContent: "space-between",
-                      marginHorizontal: Dimensions.margin / 3,
-                      paddingTop: Dimensions.padding / 2.66,
-                    },
-                  ]}
-                >
-                  <Text
-                    style={[
-                      { textAlign: "center" },
-                      {
-                        color: !shouldHighlight
-                          ? palette.grey500
-                          : CombinedDefaultTheme.colors.background,
-                      },
-                    ]}
-                  >
-                    {date.format("dd")}
-                  </Text>
-                  <View
-                    style={{
-                      alignItems: "center",
-                      alignSelf: "center",
-                      borderRadius: 40,
-                      height: 36,
-                      justifyContent: "center",
-                      width: 36,
-                      zIndex: 10,
-                    }}
-                  >
-                    <Text
-                      style={[
-                        {
-                          color: !shouldHighlight
-                            ? palette.grey700
-                            : CombinedDefaultTheme.colors.background,
-                          textAlign: "center",
-                        },
-                      ]}
-                    >
-                      {date.format("D")}
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    // backgroundColor: "red",
-                    borderColor: palette.grey200,
-                    borderLeftWidth: 1,
-                    height: 24,
-                    marginTop: hasSpecialDay ? Dimensions.margin : 0,
-                    position: "relative",
-                  }}
-                >
-                  {specialDay && (
-                    <TouchableOpacity
-                      style={[styles.eventCellCss, "red", { bottom: 4 }]}
-                    >
-                      <Text
-                        style={{
-                          backgroundColor: palette.success700,
-                          color: CombinedDefaultTheme.colors.background,
-                          height: 24,
-                          paddingLeft: Dimensions.padding / 2,
-                          paddingVertical: Dimensions.padding / 4,
-                        }}
-                        numberOfLines={1}
-                        variant="labelSmall"
-                      >
-                        {specialDay}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-          {/* </View> */}
-        </View>
-        <View
-          style={[
-            styles.sessionWeekIndicatorContainer,
-            {
-              bottom: hasSpecialDay
-                ? Dimensions.margin * 2
-                : Dimensions.margin / 4,
-            },
-          ]}
-        >
-          <View style={styles.weekVideoIconContainer}>
-            <Image
-              source={require("../../assets/icons/video.png")}
-              style={styles.weekVideoIcon}
-            />
-            <Image
-              source={require("../../assets/icons/session_line.png")}
-              style={styles.sessionLine}
-            />
-          </View>
-        </View>
-      </View>
-    );
-  };
-  const renderEvent = (event, touchableOpacityProps) => {
-    return (
-      <TouchableOpacity {...touchableOpacityProps} key={event}>
-        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
-          {event.title}
-        </Text>
-        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
-          {event.subtitle}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
-  const renderWeekEvent = (event, touchableOpacityProps) => {
-    return (
-      <TouchableOpacity {...touchableOpacityProps} key={event}>
-        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
-          {event.title}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
   useEffect(() => {
     if (selectedDate) {
       isSameDate(selectedDate, today);
@@ -390,85 +121,18 @@ const Calender = ({ navigation }) => {
           onPress={() => navigation.navigate(RouteNames.Profile)}
         />
       </Appbar>
+      <Daily
+        isToday={isToday}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
+      {/* <Weekly
+        isToday={isToday}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      /> */}
 
-      {/* <View style={styles.contentContainer}>
-        <Calendar
-          bodyContainerStyle={{
-            backgroundColor: CombinedDefaultTheme.colors.background,
-            marginTop: Dimensions.margin * 4.375,
-          }}
-          calendarCellStyle={{
-            backgroundColor: CombinedDefaultTheme.colors.background,
-            left: 17,
-            position: "relative",
-            zIndex: -1,
-          }}
-          eventCellStyle={(event) => ({
-            backgroundColor: event.background, // Set the color dynamically
-            borderRadius: Dimensions.margin / 2,
-            // marginBottom: 4,
-            marginLeft: 18,
-            marginTop: 0,
-            maxWidth: "96%",
-            paddingHorizontal: Dimensions.padding / 1.33,
-            paddingVertical: Dimensions.padding / 2.66,
-          })}
-          ampm={true}
-          date={selectedDate}
-          events={events}
-          headerContentStyle={{}}
-          height={Dimensions.screenHeight}
-          hourRowHeight={52}
-          hourStyle={styles.hourStyle}
-          mode="day"
-          renderEvent={renderEvent}
-          renderHeader={renderHeader}
-          swipeEnabled={true}
-          theme={theme}
-          // minHour={7}
-          onSwipeEnd={(date) => {
-            setSelectedDate(date);
-          }}
-        />
-      </View> */}
-
-      <View style={styles.contentContainer}>
-        <Calendar
-          bodyContainerStyle={{
-            backgroundColor: CombinedDefaultTheme.colors.background,
-            // marginTop: Dimensions.margin * 1.375,
-          }}
-          calendarCellStyle={{
-            backgroundColor: CombinedDefaultTheme.colors.background,
-            // left: 17,
-            position: "relative",
-            zIndex: -1,
-          }}
-          eventCellStyle={(event) => ({
-            backgroundColor: event.background,
-            borderRadius: Dimensions.margin / 2,
-            gap: Dimensions.margin / 2,
-            marginTop: 0,
-            // paddingHorizontal: Dimensions.padding / 1.33,
-            paddingVertical: Dimensions.padding / 2.66,
-          })}
-          ampm={true}
-          date={selectedDate}
-          events={events}
-          headerContentStyle={{}}
-          height={Dimensions.screenHeight}
-          hourRowHeight={52}
-          mode="week"
-          renderEvent={renderWeekEvent}
-          renderHeader={renderWeekHeader}
-          showAllDayEventCell={true}
-          swipeEnabled={true}
-          theme={theme}
-          onSwipeEnd={(date) => {
-            setSelectedDate(date);
-          }}
-        />
-      </View>
+      {/* <Monthly selectedDate={selectedDate} setSelectedDate={setSelectedDate} /> */}
     </View>
   );
 };
@@ -503,7 +167,6 @@ const styles = StyleSheet.create({
   },
   dayEventContainer: {
     flex: 1,
-    flexDirection: "row",
     gap: Dimensions.margin / 4,
   },
   downIcon: {

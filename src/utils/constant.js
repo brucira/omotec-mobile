@@ -92,6 +92,15 @@ export const barGraphAttendanceData = {
   labels: ["Batch 1", "Batch 2", "Batch 3", "Batch 4", "Batch 5"],
 };
 
+export const calendarTheme = {
+  palette: {
+    gray: {
+      grey200: palette.grey200,
+    },
+    nowIndicator: palette.primaryStudent400,
+  },
+};
+
 export const cardData = [
   {
     background: palette.tintGreen,
@@ -442,7 +451,139 @@ export const popularCourseCardData = [
     title: "Mastering Python",
   },
 ];
-
+export const monthly_events = [
+  {
+    background: palette.blue400,
+    end: dayjs("2025-02-17").toDate(),
+    start: dayjs("2025-02-11").toDate(),
+    title: "Web",
+  },
+  {
+    background: palette.pink700,
+    end: dayjs("2025-02-12").toDate(),
+    start: dayjs("2025-02-12").toDate(),
+    title: "Python",
+  },
+  {
+    background: palette.purple500,
+    end: dayjs("2025-02-27").toDate(),
+    start: dayjs("2025-02-13").toDate(),
+    title: "Java",
+  },
+  {
+    end: dayjs("2025-02-3").toDate(),
+    specialDay: true,
+    start: dayjs("2025-02-3").toDate(),
+    title: "Diwali",
+  },
+  {
+    background: palette.purple500,
+    end: dayjs("2025-02-7").toDate(),
+    start: dayjs("2025-02-7").toDate(),
+    title: "Java",
+  },
+  {
+    background: palette.yellow700,
+    end: dayjs("2025-02-7").toDate(),
+    start: dayjs("2025-02-7").toDate(),
+    title: "Java",
+  },
+  {
+    end: dayjs("2025-02-7").toDate(),
+    overlapPosition: 24,
+    specialDay: true,
+    start: dayjs("2025-02-7").toDate(),
+    title: "Makar Sankranti",
+  },
+  // {
+  //   end: dayjs("2025-02-13").toDate(),
+  //   specialDay: true,
+  //   start: dayjs("2025-02-13").toDate(),
+  //   special: "Diwali",
+  // },
+  {
+    background: palette.yellow700,
+    end: dayjs().add(5, "days").hour(0).minute(0).second(0).toDate(),
+    start: dayjs().hour(0).minute(0).second(0).toDate(),
+    title: "RX-1002",
+  },
+  // {
+  //   background: palette.yellow700,
+  //   end: new Date(
+  //     today.getFullYear(),
+  //     today.getMonth(),
+  //     today.getDate(),
+  //     12,
+  //     0
+  //   ),
+  //   start: new Date(
+  //     today.getFullYear(),
+  //     today.getMonth(),
+  //     today.getDate(),
+  //     11,
+  //     0
+  //   ),
+  //   subtitle: "Web Development Bootcamp · Mumbai",
+  //   title: "Proposal Submission",
+  // },
+  // {
+  //   background: palette.pink700,
+  //   end: new Date(
+  //     today.getFullYear(),
+  //     today.getMonth(),
+  //     today.getDate(),
+  //     13,
+  //     0
+  //   ),
+  //   start: new Date(
+  //     today.getFullYear(),
+  //     today.getMonth(),
+  //     today.getDate(),
+  //     12,
+  //     0
+  //   ),
+  //   subtitle: "Web Development Bootcamp · Mumbai",
+  //   title: "Proposal Submission",
+  // },
+  // {
+  //   background: palette.purple500,
+  //   end: new Date(
+  //     today.getFullYear(),
+  //     today.getMonth(),
+  //     today.getDate(),
+  //     15,
+  //     0
+  //   ),
+  //   start: new Date(
+  //     today.getFullYear(),
+  //     today.getMonth(),
+  //     today.getDate(),
+  //     14,
+  //     0
+  //   ),
+  //   subtitle: "Web Development Bootcamp · Mumbai",
+  //   title: "Proposal Submission",
+  // },
+  // {
+  //   background: palette.purple500,
+  //   end: new Date(
+  //     today.getFullYear(),
+  //     today.getMonth(),
+  //     today.getDate() + 1,
+  //     14,
+  //     0
+  //   ),
+  //   start: new Date(
+  //     today.getFullYear(),
+  //     today.getMonth(),
+  //     today.getDate() + 1,
+  //     11,
+  //     0
+  //   ),
+  //   subtitle: "Web Development Bootcamp · Mumbai",
+  //   title: "Proposal Submission",
+  // },
+];
 export const notificationData = [
   {
     course: "Robotic kit handling",
