@@ -8,10 +8,13 @@
     "ios": "expo start --ios",
     "lint": "eslint .",
     "web": "expo start --web",
+    "prebuild-a": "npx expo prebuild --platform android",
+    "prebuild-ios": "npx expo prebuild --platform ios",
     "prepare": "husky"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.3",
+    "@gorhom/bottom-sheet": "^5.1.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/native-stack": "^7.2.0",
@@ -34,7 +37,8 @@
     "react-native-safe-area-context": "^5.1.0",
     "react-native-screens": "^4.5.0",
     "react-native-svg": "^15.11.1",
-    "react-native-vector-icons": "^10.2.0"
+    "react-native-vector-icons": "^10.2.0",
+    "expo-checkbox": "~4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

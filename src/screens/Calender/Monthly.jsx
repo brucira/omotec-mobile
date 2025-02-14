@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Calendar } from "react-native-big-calendar";
 
 import palette from "../../styles/palette";
@@ -42,7 +42,7 @@ const Monthly = ({ selectedDate, setSelectedDate }) => {
         events={monthly_events}
         height={600}
         hideNowIndicator={false}
-        maxVisibleEventCount={2}
+        maxVisibleEventCount={3}
         // renderCustomDateForMonth={(date) => <Text>{date.getDate()}</Text>}
         mode="month"
         renderEvent={renderMontlyEvent}

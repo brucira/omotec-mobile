@@ -58,6 +58,7 @@ const palette = {
   grey50: "#F9FAFB",
   grey100: "#F2F4F7",
   grey200: "#EAECF0",
+  grey300: "#D0D5DD",
   grey400: "#98A2B3",
   grey500: "#667085",
   grey550: "#6F747F",
