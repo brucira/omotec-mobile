@@ -5,6 +5,12 @@ import { Badge, Button, ProgressBar, Text } from "react-native-paper";
 import palette from "../../styles/palette";
 import { Dimensions } from "../../utils/constant";
 
+const ENROLLMENT = "enrollment";
+const NEW_COURSE = "newCourse";
+const GRADES = "grades";
+const FEEDBACK = "feedback";
+const CERTIFICATE = "certificate";
+const ASSIGNMENT = "assignment";
 const NotificationCard = ({
   course,
   notificationType,
@@ -24,7 +30,7 @@ const NotificationCard = ({
         styles.container,
         {
           backgroundColor:
-            notificationType === "enrollment"
+            notificationType === ENROLLMENT
               ? "rgba(133, 45, 205, 0.05)"
               : palette.transparent,
           paddingHorizontal: Dimensions.padding,
@@ -41,18 +47,18 @@ const NotificationCard = ({
         <View style={styles.titleAndDuration}>
           <View style={styles.contentContainer}>
             <Text style={styles.heading} variant="labelLarge">
-              {notificationType === "newCourse"
+              {notificationType === NEW_COURSE
                 ? `Hello, Welcome to ${course} course!`
-                : notificationType === "grades"
+                : notificationType === GRADES
                   ? `Your grade for ${course} has 
 been posted.`
-                  : notificationType === "feedback"
+                  : notificationType === FEEDBACK
                     ? `You have received a feedback!`
-                    : notificationType === "certificate"
+                    : notificationType === CERTIFICATE
                       ? `Your certificate is ready!`
-                      : notificationType === "assignment"
+                      : notificationType === ASSIGNMENT
                         ? `File Uploaded Succesfully`
-                        : notificationType === "enrollment"
+                        : notificationType === ENROLLMENT
                           ? "New Course has been added."
                           : null}
             </Text>
@@ -65,21 +71,21 @@ been posted.`
         <View>
           <Text style={{ color: palette.grey600 }} variant="bodySmall">
             {/* You have been added to a new course */}
-            {notificationType === "newCourse"
+            {notificationType === NEW_COURSE
               ? "You have been added to a new course"
-              : notificationType === "grades"
+              : notificationType === GRADES
                 ? `Grade received:  ${grade}`
-                : notificationType === "feedback"
+                : notificationType === FEEDBACK
                   ? `Course: ${course}`
-                  : notificationType === "certificate"
+                  : notificationType === CERTIFICATE
                     ? `${course} certificate is out now.`
-                    : notificationType === "assignment"
+                    : notificationType === ASSIGNMENT
                       ? `${course} assignment has been uploaded`
-                      : notificationType === "enrollment"
+                      : notificationType === ENROLLMENT
                         ? `Check out the new course now.`
                         : null}
           </Text>
-          {notificationType === "feedback" && (
+          {notificationType === FEEDBACK && (
             <View style={styles.feedbackComment}>
               <Text numberOfLines={1} variant="bodyMedium">
                 {/* This is looking good! */}
@@ -87,7 +93,7 @@ been posted.`
               </Text>
             </View>
           )}
-          {notificationType === "assignment" && (
+          {notificationType === ASSIGNMENT && (
             <TouchableOpacity
               style={styles.assignmentContainer}
               onPress={() => {}}
@@ -131,17 +137,17 @@ been posted.`
             mode="text"
             style={styles.button}
           >
-            {notificationType === "newCourse"
+            {notificationType === NEW_COURSE
               ? "View"
-              : notificationType === "grades"
+              : notificationType === GRADES
                 ? `View grades`
-                : notificationType === "feedback"
+                : notificationType === FEEDBACK
                   ? `View feedback`
-                  : notificationType === "certificate"
+                  : notificationType === CERTIFICATE
                     ? `View`
-                    : notificationType === "enrollment"
+                    : notificationType === ENROLLMENT
                       ? `View`
-                      : notificationType === "assignment"
+                      : notificationType === ASSIGNMENT
                         ? null
                         : null}
           </Button>

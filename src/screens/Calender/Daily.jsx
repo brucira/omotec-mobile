@@ -1,5 +1,12 @@
-import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Calendar } from "react-native-big-calendar";
 
 import palette from "../../styles/palette";
@@ -9,10 +16,14 @@ import {
   Dimensions,
   events,
   specialDays,
+  today,
 } from "../../utils/constant";
+import FullEventDetails from "./FullEventDetails";
 
 const MAX_WIDTH = 68;
 const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
+  const [selectedEvent, setSelectedEvent] = useState(today);
+  const [visible, setVisible] = useState(false);
   const extractDateInfo = (dateString) => {
     const date = new Date(dateString);
 
@@ -24,6 +35,23 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
   };
   const onSwipeEnd = (date) => {
     setSelectedDate(date);
+  };
+
+  // const onPressEvent = (event) => {
+  //   const showModal = () => setVisible(true);
+  //   const hideModal = () => setVisible(false);
+
+  //   // console.log(event);
+  //   return (
+  //     <Pressable onPress={showModal}>
+  //       <FullEventDetails hideModal={hideModal} visible={visible} />
+  //     </Pressable>
+  //   );
+  // };
+
+  const onPressEvent = (event) => {
+    setSelectedEvent(event);
+    setVisible(true);
   };
 
   const renderEvent = (event, touchableOpacityProps) => {
@@ -130,7 +158,13 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
         swipeEnabled={true}
         theme={calendarTheme}
         // minHour={7}
+        onPressEvent={onPressEvent}
         onSwipeEnd={onSwipeEnd}
+      />
+      <FullEventDetails
+        event={selectedEvent}
+        hideModal={() => setVisible(false)}
+        visible={visible}
       />
     </View>
   );

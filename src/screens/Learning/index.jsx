@@ -24,7 +24,8 @@ import {
 import LargeCourseCard from "./LargeCourseCard";
 
 const Learning = ({ navigation }) => {
-  const [activeTab, setActiveTab] = useState("Courses");
+  const COURSES = "Courses";
+  const [activeTab, setActiveTab] = useState(COURSES);
   const translateX = useSharedValue(0);
   const keyExtractor = (item) => item.id.toString();
   const itemSeperator = () => <View style={styles.itemSeparator} />;
@@ -38,7 +39,7 @@ const Learning = ({ navigation }) => {
 
   const handleTabPress = (tab) => {
     setActiveTab(tab);
-    translateX.value = tab === "Courses" ? 0 : 112;
+    translateX.value = tab === COURSES ? 0 : 112;
   };
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -78,13 +79,10 @@ const Learning = ({ navigation }) => {
           <Animated.View style={[styles.slider, animatedStyle]} />
           <TouchableOpacity
             style={styles.tab}
-            onPress={() => handleTabPress("Courses")}
+            onPress={() => handleTabPress(COURSES)}
           >
             <Text
-              style={[
-                styles.text,
-                activeTab === "Courses" && styles.activeText,
-              ]}
+              style={[styles.text, activeTab === COURSES && styles.activeText]}
               variant="labelLarge"
             >
               Courses
@@ -105,7 +103,7 @@ const Learning = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </View>
-        {activeTab === "Courses" ? (
+        {activeTab === COURSES ? (
           <View style={styles.courseContainer}>
             <View
               style={{

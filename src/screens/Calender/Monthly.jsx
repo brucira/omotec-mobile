@@ -4,7 +4,7 @@ import { Calendar } from "react-native-big-calendar";
 
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions, monthly_events } from "../../utils/constant";
+import { Dimensions, events, monthly_events } from "../../utils/constant";
 
 const Monthly = ({ selectedDate, setSelectedDate }) => {
   const renderMontlyEvent = (event, touchableOpacityProps) => {
@@ -39,7 +39,7 @@ const Monthly = ({ selectedDate, setSelectedDate }) => {
           backgroundColor: CombinedDefaultTheme.colors.background,
         }}
         date={selectedDate}
-        events={monthly_events}
+        events={events}
         height={600}
         hideNowIndicator={false}
         maxVisibleEventCount={3}
@@ -58,8 +58,6 @@ const Monthly = ({ selectedDate, setSelectedDate }) => {
     </View>
   );
 };
-
-export default Monthly;
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -81,3 +79,5 @@ const styles = StyleSheet.create({
     position: "relative",
   },
 });
+
+export default Monthly;

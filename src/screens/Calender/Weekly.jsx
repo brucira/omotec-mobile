@@ -221,6 +221,9 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
 };
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    flex: 1,
+  },
   eventCellCss: {
     borderRadius: Dimensions.margin / 2,
     elevation: 2,
@@ -256,7 +259,7 @@ const styles = StyleSheet.create({
     backgroundColor: CombinedDefaultTheme.colors.background,
     borderBottomWidth: 0,
     borderColor: palette.grey200,
-    borderRightWidth: 1,
+    // borderRightWidth: 1,
     elevation: 4,
     flexDirection: "row",
     // height: 56,
@@ -271,9 +274,9 @@ const styles = StyleSheet.create({
   },
   weekNumberContainer: {
     borderColor: palette.grey200,
-    borderRightWidth: 1,
-    maxWidth: 50,
-    minWidth: 50,
+    // borderRightWidth: 1,
+    maxWidth: 49.5,
+    minWidth: 49.5,
     zIndex: 10,
   },
   weekVideoIcon: {

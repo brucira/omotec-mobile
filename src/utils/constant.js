@@ -208,7 +208,65 @@ export const today = new Date();
 
 export const events = [
   {
+    address: "Powai, Mumbai, Maharastra",
+    attachment: "Course Details",
+    attendance: [
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+      {
+        name: "Leslie Alexander",
+        status: "absent",
+      },
+      {
+        name: "Darlene Robertson",
+        status: "absent",
+      },
+      {
+        name: "Guy Hawkins",
+        status: "present",
+      },
+      {
+        name: "Devon Lane",
+        status: "present",
+      },
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+    ],
     background: palette.blue400,
+    batchName: "B1",
+    batchStudents: [
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Leslie Alexander",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Darlene Robertson",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Guy Hawkins",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Devon Lane",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+    ],
+    course: "CS50",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     end: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -216,6 +274,8 @@ export const events = [
       11,
       0
     ),
+    location: "Powai",
+    notify: "10 minutes before",
     specialDay: "Mahavir Jayanti",
     start: new Date(
       today.getFullYear(),
@@ -226,6 +286,7 @@ export const events = [
     ),
     subtitle: "Web Development Bootcamp · Mumbai",
     title: "Proposal Submission",
+    trainer: "John Doe",
   },
   {
     background: palette.yellow700,
@@ -251,7 +312,7 @@ export const events = [
     end: new Date(
       today.getFullYear(),
       today.getMonth(),
-      today.getDate(),
+      today.getDate() + 7,
       13,
       0
     ),
@@ -303,6 +364,70 @@ export const events = [
     subtitle: "Web Development Bootcamp · Mumbai",
     title: "Proposal Submission",
   },
+  {
+    background: palette.purple500,
+    end: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3),
+    specialDay: true,
+    start: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3),
+    subtitle: "Web Development Bootcamp · Mumbai",
+    title: "Diwali",
+  },
+
+  // {
+  //   background: palette.blue400,
+  //   end: dayjs("2025-02-17").toDate(),
+  //   start: dayjs("2025-02-11").toDate(),
+  //   title: "Web",
+  // },
+  // {
+  //   background: palette.pink700,
+  //   end: dayjs("2025-02-12").toDate(),
+  //   start: dayjs("2025-02-12").toDate(),
+  //   title: "Python",
+  // },
+  // {
+  //   background: palette.purple500,
+  //   end: dayjs("2025-02-27").toDate(),
+  //   start: dayjs("2025-02-13").toDate(),
+  //   title: "Java",
+  // },
+  // {
+  //   end: dayjs("2025-02-3").toDate(),
+  //   specialDay: true,
+  //   start: dayjs("2025-02-3").toDate(),
+  //   title: "Diwali",
+  // },
+  // {
+  //   background: palette.purple500,
+  //   end: dayjs("2025-02-7").toDate(),
+  //   start: dayjs("2025-02-7").toDate(),
+  //   title: "Java",
+  // },
+  // {
+  //   background: palette.yellow700,
+  //   end: dayjs("2025-02-7").toDate(),
+  //   start: dayjs("2025-02-7").toDate(),
+  //   title: "Java",
+  // },
+  // {
+  //   end: dayjs("2025-02-7").toDate(),
+  //   overlapPosition: 24,
+  //   specialDay: true,
+  //   start: dayjs("2025-02-7").toDate(),
+  //   title: "Makar Sankranti",
+  // },
+  // {
+  //   end: dayjs("2025-02-13").toDate(),
+  //   specialDay: true,
+  //   start: dayjs("2025-02-13").toDate(),
+  //   special: "Diwali",
+  // },
+  // {
+  //   background: palette.yellow700,
+  //   end: dayjs().add(5, "days").hour(0).minute(0).second(0).toDate(),
+  //   start: dayjs().hour(0).minute(0).second(0).toDate(),
+  //   title: "RX-1002",
+  // },
 ];
 export const lineGraphData = {
   datasets: [

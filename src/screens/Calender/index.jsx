@@ -1,14 +1,6 @@
-import dayjs from "dayjs";
 import Checkbox from "expo-checkbox";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { Calendar } from "react-native-big-calendar";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Calendar as Calendars } from "react-native-calendars";
 import { Appbar, Avatar, Divider, Portal, Text } from "react-native-paper";
 
@@ -21,8 +13,6 @@ import Monthly from "./Monthly";
 import Weekly from "./Weekly";
 
 // const dayMap = ["S", "M", "T", "W", "T", "F", "S"];
-const session_line_width = Dimensions.screenWidth / 24;
-const session_duration = (Dimensions.screenWidth / 8) * 4;
 // const session_duration = 48 * 2;
 const Calender = ({ navigation }) => {
   const viewData = [
@@ -351,36 +341,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  contentContainer: {
-    flex: 1,
-    position: "relative",
-    zIndex: 0,
-  },
-  currentDateText: {
-    fontSize: 18,
-    lineHeight: 28,
-  },
-  currentDayContainer: {
-    borderRightWidth: 1,
-    maxWidth: 36,
-    minWidth: 36,
-  },
+
   dateInCalendar: {
     alignSelf: "center",
     fontSize: 8,
     // left: "38%",
     position: "absolute",
     top: "45%",
-  },
-  dayAndTaskContainer: {
-    backgroundColor: CombinedDefaultTheme.colors.background,
-    flexDirection: "row",
-    minHeight: 54,
-    paddingHorizontal: Dimensions.padding,
-  },
-  dayEventContainer: {
-    flex: 1,
-    gap: Dimensions.margin / 4,
   },
   divider: {
     marginVertical: Dimensions.margin,
@@ -391,17 +358,6 @@ const styles = StyleSheet.create({
     height: Dimensions.margin * 1.25,
     justifyContent: "center",
     width: Dimensions.margin * 1.25,
-  },
-  eventCellCss: {
-    borderRadius: Dimensions.margin / 2,
-    elevation: 2,
-    minWidth: "33%",
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: { height: 1, width: 0 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-    zIndex: 100,
   },
   filterTitle: {
     paddingHorizontal: Dimensions.padding / 1.33,
@@ -418,29 +374,6 @@ const styles = StyleSheet.create({
     width: Dimensions.screenWidth,
     zIndex: 3,
   },
-  headerDateContainer: {
-    // alignSelf: "baseline",
-    alignItems: "center",
-    borderColor: palette.grey200,
-    borderRightWidth: 1,
-    // justifyContent: "center",
-    maxWidth: 68,
-    minWidth: 68,
-    paddingHorizontal: Dimensions.padding * 1.375,
-    paddingVertical: Dimensions.padding,
-  },
-  hourStyle: {
-    backgroundColor: "#FFF",
-    borderColor: palette.grey200,
-    borderRightWidth: 1,
-    bottom: 6,
-    fontSize: 11,
-    height: "100%",
-    left: 0,
-    maxWidth: 68,
-    minWidth: 68,
-    zIndex: 10,
-  },
   individualViewContainer: {
     borderRadius: Dimensions.margin / 2,
     flexDirection: "row",
@@ -454,49 +387,6 @@ const styles = StyleSheet.create({
     gap: Dimensions.margin / 2,
     position: "relative",
   },
-  onlineContainer: {
-    alignItems: "center",
-    alignSelf: "baseline",
-    backgroundColor: palette.primaryStudent50,
-    borderRadius: Dimensions.padding * 4,
-    flexDirection: "row",
-    gap: Dimensions.margin / 2.66,
-    paddingHorizontal: Dimensions.padding / 2,
-    paddingVertical: Dimensions.padding / 8,
-  },
-  sessionLine: {
-    height: Dimensions.margin / 8,
-    left: 28,
-    position: "absolute",
-    top: 9,
-    width: session_line_width + session_duration,
-  },
-  sessionWeekIndicatorContainer: {
-    // bottom: Dimensions.margin / 4,
-    left: Dimensions.screenWidth / 3.9,
-    position: "absolute",
-    zIndex: 7,
-  },
-  shadowAndroid: {
-    backgroundColor: "rgba(0,0,0,0.2)",
-    borderRadius: 10,
-    bottom: -25,
-    height: 10,
-    position: "absolute",
-    width: Dimensions.screenWidth,
-  },
-  specialDay: {
-    backgroundColor: palette.success700,
-    borderRadius: Dimensions.margin / 2,
-    marginRight: Dimensions.margin,
-    paddingHorizontal: Dimensions.padding / 1.33,
-    paddingVertical: Dimensions.padding / 4,
-    width: "auto",
-  },
-  videoIcon: {
-    height: Dimensions.margin / 1.33,
-    width: Dimensions.margin / 1.33,
-  },
   viewContainer: {
     paddingTop: Dimensions.padding / 1.23,
   },
@@ -504,49 +394,6 @@ const styles = StyleSheet.create({
     color: palette.grey500,
     paddingBottom: Dimensions.padding / 2,
     paddingHorizontal: Dimensions.padding / 1.33,
-  },
-  weekEventContainer: {
-    flex: 1,
-    flexDirection: "row",
-    paddingTop: 2,
-  },
-  weekHeaderContainer: {
-    alignItems: "baseline",
-    backgroundColor: CombinedDefaultTheme.colors.background,
-    borderBottomWidth: 0,
-    borderColor: palette.grey200,
-    borderRightWidth: 1,
-    elevation: 4,
-    flexDirection: "row",
-    // height: 56,
-    paddingLeft: 0.5,
-    position: "relative",
-    shadowColor: "#000",
-    shadowOffset: { height: 5, width: 0 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    width: Dimensions.screenWidth,
-    zIndex: 3,
-  },
-  weekNumberContainer: {
-    borderColor: palette.grey200,
-    borderRightWidth: 1,
-    maxWidth: 50,
-    minWidth: 50,
-    zIndex: 10,
-  },
-  weekVideoIcon: {
-    height: Dimensions.margin / 1.33,
-    resizeMode: "contain",
-    width: Dimensions.margin / 1.33,
-    zIndex: 5,
-  },
-  weekVideoIconContainer: {
-    backgroundColor: palette.primaryStudent50,
-    borderRadius: Dimensions.margin * 4,
-    paddingHorizontal: Dimensions.padding / 2,
-    paddingVertical: Dimensions.padding / 4,
-    position: "relative",
   },
 });
 
