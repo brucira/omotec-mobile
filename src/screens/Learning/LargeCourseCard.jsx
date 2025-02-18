@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Card, ProgressBar, Text } from "react-native-paper";
@@ -5,7 +6,7 @@ import { Card, ProgressBar, Text } from "react-native-paper";
 import Tag from "../../components/Tag";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions } from "../../utils/constant";
+import { Dimensions, RouteNames } from "../../utils/constant";
 
 const LargeCourseCard = ({
   batch,
@@ -33,11 +34,18 @@ const LargeCourseCard = ({
   const calendarRangeSource = require("../../assets/icons/calendar_range.png");
   const trendSource = require("../../assets/icons/trend_up.png");
   const COURSE = "course";
+  const navigation = useNavigation();
+
   return (
     <Card
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
       style={styles.container}
+      onPress={() =>
+        navigation.navigate(RouteNames.CourseDetail, {
+          title,
+        })
+      }
     >
       <Image source={coverImage} style={styles.banner} />
       <View style={styles.cardContent}>

@@ -919,6 +919,7 @@ export const weekEvents = [
 ];
 export const RouteNames = {
   Calender: "Calender",
+  CourseDetail: "CourseDetail",
   Home: "Home",
   Learning: "My Learning",
   Notifications: "Notifications",
