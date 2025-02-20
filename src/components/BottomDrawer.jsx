@@ -23,7 +23,7 @@ function RenderBackdropComponent({ backgroundColor }) {
 }
 
 const BottomDrawer = forwardRef(
-  ({ children, onDismiss, backgroundColor }, ref) => {
+  ({ children, onDismiss, backgroundColor, snapPoints }, ref) => {
     const HandleIndicator = () => {
       return <RenderBackdropComponent backgroundColor={backgroundColor} />;
     };
@@ -42,6 +42,7 @@ const BottomDrawer = forwardRef(
         )}
         enablePanDownToClose={true}
         handleComponent={HandleIndicator}
+        snapPoints={snapPoints}
         onDismiss={onDismiss}
       >
         <BottomSheetView>{children}</BottomSheetView>

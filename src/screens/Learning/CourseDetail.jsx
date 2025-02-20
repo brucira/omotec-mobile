@@ -1,19 +1,35 @@
+import { BottomSheetFlashList } from "@gorhom/bottom-sheet";
 import { useRoute } from "@react-navigation/native";
-import React, { useCallback, useMemo, useState } from "react";
-import { FlatList, Image, ScrollView, StyleSheet, View } from "react-native";
+import Checkbox from "expo-checkbox";
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import {
+  FlatList,
+  Image,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 import { Appbar, Avatar, Button, Searchbar, Text } from "react-native-paper";
 
+import BottomDrawer from "../../components/BottomDrawer";
+import PrimaryButton from "../../components/PrimaryButton";
 import TopTab from "../../components/TopTab";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { courseCardData, Dimensions } from "../../utils/constant";
+import { courseCardData, Dimensions, today } from "../../utils/constant";
 import CourseTabCard from "./CourseTabCard";
+import TaskTab from "./TaskTab";
+import UserTab from "./UserTab";
 
 const TABS = ["Users", "Task", "Document", "Details"];
 const CourseDetails = ({ navigation }) => {
   const { title } = useRoute().params;
   const [activeTab, setActiveTab] = useState(TABS[0]);
-
   const keyExtractor = (item) => item.id.toString();
   const itemSeperator = () => <View style={styles.itemSeparator} />;
 
@@ -89,57 +105,9 @@ const CourseDetails = ({ navigation }) => {
 
   const tabContent = useMemo(() => {
     return activeTab === "Users" ? (
-      <ScrollView style={{}}>
-        <Searchbar
-          icon={renderSearchIcon}
-          inputStyle={styles.searchInput}
-          placeholder="Search"
-          placeholderTextColor={palette.grey400}
-          right={renderRightIcon}
-          style={styles.searchBar}
-        />
-        <FlatList
-          contentContainerStyle={styles.arrowIndicator}
-          data={courseCardData}
-          ItemSeparatorComponent={itemSeperator}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          scrollEnabled={false}
-          style={styles.ongoingCardList}
-        />
-      </ScrollView>
+      <UserTab activeTab={activeTab} />
     ) : activeTab === "Task" ? (
-      <ScrollView style={{}}>
-        <View style={styles.searchContainer}>
-          <Searchbar
-            icon={renderSearchIcon}
-            inputStyle={styles.searchInput}
-            placeholder="Search"
-            placeholderTextColor={palette.grey400}
-            //   right={renderRightIcon}
-            style={styles.searchBar}
-          />
-          <View style={{ flexDirection: "row", gap: Dimensions.margin * 1.25 }}>
-            <Image
-              source={require("../../assets/icons/table_grid.png")}
-              style={styles.customizeIcon}
-            />
-            <Image
-              source={require("../../assets/icons/filter_two.png")}
-              style={styles.customizeIcon}
-            />
-          </View>
-        </View>
-        <FlatList
-          contentContainerStyle={styles.arrowIndicator}
-          data={courseCardData}
-          ItemSeparatorComponent={itemSeperator}
-          keyExtractor={keyExtractor}
-          renderItem={renderTaskItem}
-          scrollEnabled={false}
-          style={styles.ongoingCardList}
-        />
-      </ScrollView>
+      <TaskTab activeTab={activeTab} />
     ) : activeTab === "Document" ? (
       <ScrollView style={{}}>
         <View>
@@ -219,10 +187,36 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     width: Dimensions.margin * 1.25,
   },
+  bottomSheetContainer: {
+    gap: Dimensions.margin / 2,
+    height: "auto",
+    // paddingBottom: Dimensions.padding * 1.5,
+    marginBottom: Dimensions.margin * 4.375,
+    paddingHorizontal: Dimensions.padding,
+    paddingTop: Dimensions.padding / 1.33,
+  },
+
   buttonContent: {
     alignItems: "center",
     flexDirection: "row",
     gap: Dimensions.margin / 2.66,
+  },
+  calendarContainer: {
+    alignItems: "center",
+    elevation: 4,
+    flexDirection: "row",
+    gap: Dimensions.margin / 2,
+    marginTop: Dimensions.padding / 2.66,
+    paddingHorizontal: Dimensions.padding / 1.33,
+    paddingVertical: Dimensions.padding / 2,
+  },
+  calendarIcon: {
+    height: Dimensions.margin * 1.25,
+    width: Dimensions.margin * 1.25,
+  },
+  checkbox: {
+    borderColor: palette.grey300,
+    borderRadius: Dimensions.margin / 2,
   },
   container: {
     flex: 1,
@@ -236,9 +230,28 @@ const styles = StyleSheet.create({
     height: Dimensions.margin * 1.5,
     width: Dimensions.margin * 1.5,
   },
+  filterBottomContainer: {
+    borderColor: palette.grey200,
+    borderTopWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: Dimensions.padding,
+    paddingVertical: Dimensions.padding * 1.25,
+  },
+
   headingContainer: {
     flexDirection: "row",
     gap: Dimensions.margin / 2,
+  },
+  iconStyle: {
+    height: Dimensions.margin * 1.25,
+    width: Dimensions.margin * 1.25,
+  },
+  individualViewContainer: {
+    borderRadius: Dimensions.margin / 2,
+    flexDirection: "row",
+    gap: Dimensions.margin / 2,
+    paddingVertical: Dimensions.padding / 2,
   },
   itemSeparator: {
     height: Dimensions.margin / 1.33,
@@ -293,6 +306,14 @@ const styles = StyleSheet.create({
     minHeight: 0,
     paddingVertical: 0,
     position: "relative",
+  },
+  singleList: {
+    marginTop: Dimensions.margin / 2,
+    paddingVertical: Dimensions.padding / 2,
+  },
+  sortAndFilterContainer: {
+    marginTop: Dimensions.margin / 2,
+    paddingVertical: Dimensions.padding,
   },
   tabButton: {
     padding: 0,

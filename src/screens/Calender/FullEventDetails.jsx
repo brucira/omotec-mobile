@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Appbar, Switch, Text } from "react-native-paper";
+import { Appbar, Portal, Switch, Text } from "react-native-paper";
 
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
@@ -17,7 +17,6 @@ import AttendanceDetails from "./AttendanceDetails";
 const formatDateTimeRange = (startISO, endISO) => {
   const startDate = new Date(startISO);
   const endDate = new Date(endISO);
-
   const dayName = startDate.toLocaleDateString("en-US", { weekday: "long" });
   const dayNumber = startDate.getDate();
   const monthName = startDate.toLocaleDateString("en-US", { month: "long" });
@@ -48,6 +47,8 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
   const [attendanceVisible, setAttendanceVisible] = useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   const hideAttendanceModal = () => setAttendanceVisible(false);
+  const [studentVisible, setStudentVisible] = useState(true);
+  const hideStudentHandler = () => setStudentVisible(false);
   const studentCount = Array.isArray(event.batchStudents)
     ? event.batchStudents.length
     : 0;
@@ -57,162 +58,180 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
     setAttendanceVisible(true);
   };
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={hideModal}
-    >
-      <SafeAreaView style={styles.container}>
-        <Appbar style={styles.appBarContainer}>
-          <Appbar.Action
-            icon={require("../../assets/icons/close.png")}
-            style={styles.backIcon}
-            onPress={hideModal}
-          />
-        </Appbar>
-        <View style={styles.contentContainer}>
-          <View style={styles.contentSeperatorMultiple}>
-            <View
-              style={[styles.badge, { backgroundColor: event.background }]}
+    <>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={visible}
+        onRequestClose={hideModal}
+      >
+        <SafeAreaView style={styles.container}>
+          <Appbar style={styles.appBarContainer}>
+            <Appbar.Action
+              icon={require("../../assets/icons/close.png")}
+              style={styles.backIcon}
+              onPress={hideModal}
             />
-            <View>
-              <Text variant="titleLarge">{event.title}</Text>
-              <Text style={styles.subDescription} variant="bodyMedium">
-                {`${formattedDateTime.dayName}, ${formattedDateTime.dayNumber} ${formattedDateTime.monthName} - ${formattedDateTime.startTime} - ${formattedDateTime.endTime}`}
-              </Text>
+          </Appbar>
+          <View style={styles.contentContainer}>
+            <View style={styles.contentSeperatorMultiple}>
+              <View
+                style={[styles.badge, { backgroundColor: event.background }]}
+              />
+              <View>
+                <Text variant="titleLarge">{event.title}</Text>
+                <Text style={styles.subDescription} variant="bodyMedium">
+                  {`${formattedDateTime.dayName}, ${formattedDateTime.dayNumber} ${formattedDateTime.monthName} - ${formattedDateTime.startTime} - ${formattedDateTime.endTime}`}
+                </Text>
+              </View>
             </View>
-          </View>
-          <View style={styles.contentSeperator}>
-            <Image
-              source={require("../../assets/icons/user.png")}
-              style={[styles.badge]}
-              tintColor={palette.grey700}
-            />
-            <View style={{ flexDirection: "row" }}>
-              <Text variant="bodyMedium">Trainer: </Text>
-              <Text variant="bodyMedium">{event.trainer}</Text>
-            </View>
-          </View>
-          <View style={styles.contentSeperator}>
-            <Image
-              source={require("../../assets/icons/courses.png")}
-              style={[styles.badge]}
-              tintColor={palette.grey700}
-            />
-            <View style={{ flexDirection: "row" }}>
-              <Text variant="bodyMedium">Course: </Text>
-              <Text variant="bodyMedium">{event.course}</Text>
-            </View>
-          </View>
-          <View style={styles.contentSeperator}>
-            <Image
-              source={require("../../assets/icons/users.png")}
-              style={[styles.badge]}
-              tintColor={palette.grey700}
-            />
-            <View style={{ alignItems: "center", flexDirection: "row" }}>
-              <Text variant="bodyMedium">Batch: </Text>
-              <Text variant="bodyMedium">{event.batchName} -</Text>
-              {studentCount > 0 && (
-                <TouchableOpacity>
-                  <Text style={styles.studentCount}>
-                    {" "}
-                    {studentCount > 1
-                      ? studentCount + " students"
-                      : studentCount + "student"}{" "}
-                  </Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          </View>
-          <View style={styles.contentSeperator}>
-            <Image
-              source={require("../../assets/icons/map.png")}
-              style={[styles.badge]}
-              tintColor={palette.grey700}
-            />
-            <View>
-              <Text variant="bodyMedium">{event.location}</Text>
-              <Text style={styles.subDescription} variant="bodySmall">
-                {event.address}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.contentSeperatorMultiple}>
-            <Image
-              source={require("../../assets/icons/menu.png")}
-              style={[styles.badge]}
-              tintColor={palette.grey700}
-            />
-            <View style={{ flexDirection: "row", maxWidth: "90%" }}>
-              <Text variant="bodyMedium">{event.description}</Text>
-            </View>
-          </View>
-          <View style={styles.contentSeperatorMultiple}>
-            <Image
-              source={require("../../assets/icons/attachment.png")}
-              style={[styles.badge]}
-              tintColor={palette.grey700}
-            />
-            <View style={styles.fileContainer}>
+            <View style={styles.contentSeperator}>
               <Image
-                source={require("../../assets/icons/file_text.png")}
+                source={require("../../assets/icons/user.png")}
                 style={[styles.badge]}
                 tintColor={palette.grey700}
               />
-              <Text style={{ color: palette.slate900 }} variant="titleSmall">
-                {event.attachment}
+              <View style={{ flexDirection: "row" }}>
+                <Text variant="bodyMedium">Trainer: </Text>
+                <Text variant="bodyMedium">{event.trainer}</Text>
+              </View>
+            </View>
+            <View style={styles.contentSeperator}>
+              <Image
+                source={require("../../assets/icons/courses.png")}
+                style={[styles.badge]}
+                tintColor={palette.grey700}
+              />
+              <View style={{ flexDirection: "row" }}>
+                <Text variant="bodyMedium">Course: </Text>
+                <Text variant="bodyMedium">{event.course}</Text>
+              </View>
+            </View>
+            <View style={styles.contentSeperator}>
+              <Image
+                source={require("../../assets/icons/users.png")}
+                style={[styles.badge]}
+                tintColor={palette.grey700}
+              />
+              <View style={{ alignItems: "center", flexDirection: "row" }}>
+                <Text variant="bodyMedium">Batch: </Text>
+                <Text variant="bodyMedium">{event.batchName} -</Text>
+                {studentCount > 0 && (
+                  <TouchableOpacity onPress={() => setStudentVisible(true)}>
+                    <Text style={styles.studentCount}>
+                      {" "}
+                      {studentCount > 1
+                        ? studentCount + " students"
+                        : studentCount + "student"}{" "}
+                    </Text>
+                    {/* <Modal
+                      transparent={true}
+                      visible={studentVisible}
+                      onRequestClose={hideStudentHandler}
+                      style={{ backgroundColor: "green" }}
+                    >
+                      <View
+                        style={{
+                          backgroundColor: "red",
+                          // position: "absolute",
+                          // top: "50%",
+                        }}
+                      >
+                        <Text>Hii</Text>
+                      </View>
+                    </Modal> */}
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+            <View style={styles.contentSeperator}>
+              <Image
+                source={require("../../assets/icons/map.png")}
+                style={[styles.badge]}
+                tintColor={palette.grey700}
+              />
+              <View>
+                <Text variant="bodyMedium">{event.location}</Text>
+                <Text style={styles.subDescription} variant="bodySmall">
+                  {event.address}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.contentSeperatorMultiple}>
+              <Image
+                source={require("../../assets/icons/menu.png")}
+                style={[styles.badge]}
+                tintColor={palette.grey700}
+              />
+              <View style={{ flexDirection: "row", maxWidth: "90%" }}>
+                <Text variant="bodyMedium">{event.description}</Text>
+              </View>
+            </View>
+            <View style={styles.contentSeperatorMultiple}>
+              <Image
+                source={require("../../assets/icons/attachment.png")}
+                style={[styles.badge]}
+                tintColor={palette.grey700}
+              />
+              <View style={styles.fileContainer}>
+                <Image
+                  source={require("../../assets/icons/file_text.png")}
+                  style={[styles.badge]}
+                  tintColor={palette.grey700}
+                />
+                <Text style={{ color: palette.slate900 }} variant="titleSmall">
+                  {event.attachment}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.contentSeperator}>
+              <Image
+                source={require("../../assets/icons/notification.png")}
+                style={[styles.badge]}
+                tintColor={palette.grey700}
+              />
+              <View style={{ flexDirection: "row" }}>
+                <Text variant="bodyMedium">{event.notify}</Text>
+              </View>
+            </View>
+          </View>
+          <View style={styles.bottomContainer}>
+            <View style={styles.attendanceContainer}>
+              <Text style={{ color: palette.grey500 }} variant="titleMedium">
+                Attendance?
+              </Text>
+              <Text
+                style={{ color: CombinedDefaultTheme.colors.primary }}
+                variant="titleMedium"
+                onPress={(event) => onViewAttendancePress(event)}
+              >
+                View
               </Text>
             </View>
-          </View>
-          <View style={styles.contentSeperator}>
-            <Image
-              source={require("../../assets/icons/notification.png")}
-              style={[styles.badge]}
-              tintColor={palette.grey700}
-            />
-            <View style={{ flexDirection: "row" }}>
-              <Text variant="bodyMedium">{event.notify}</Text>
+            <View style={styles.presentMarkingContainer}>
+              <Switch
+                style={styles.switch}
+                thumbColor={CombinedDefaultTheme.colors.background}
+                trackColor={{ true: palette.success600 }}
+                value={isSwitchOn}
+                onValueChange={onToggleSwitch}
+              />
+              <Text variant="titleMedium">Present</Text>
             </View>
           </View>
-        </View>
-        <View style={styles.bottomContainer}>
-          <View style={styles.attendanceContainer}>
-            <Text style={{ color: palette.grey500 }} variant="titleMedium">
-              Attendance?
-            </Text>
-            <Text
-              style={{ color: CombinedDefaultTheme.colors.primary }}
-              variant="titleMedium"
-              onPress={(event) => onViewAttendancePress(event)}
-            >
-              View
-            </Text>
-          </View>
-          <View style={styles.presentMarkingContainer}>
-            <Switch
-              style={styles.switch}
-              thumbColor={CombinedDefaultTheme.colors.background}
-              trackColor={{ true: palette.success600 }}
-              value={isSwitchOn}
-              onValueChange={onToggleSwitch}
-            />
-            <Text variant="titleMedium">Present</Text>
-          </View>
-        </View>
 
-        <AttendanceDetails
-          attendanceList={event.attendance}
-          attendanceStatus={isSwitchOn}
-          event={event}
-          formattedDateTime={formattedDateTime}
-          hideModal={() => setAttendanceVisible(false)}
-          visible={attendanceVisible}
-          onToggleSwitch={onToggleSwitch}
-        />
-      </SafeAreaView>
-    </Modal>
+          <AttendanceDetails
+            attendanceList={event.attendance}
+            attendanceStatus={isSwitchOn}
+            event={event}
+            formattedDateTime={formattedDateTime}
+            hideModal={() => setAttendanceVisible(false)}
+            visible={attendanceVisible}
+            onToggleSwitch={onToggleSwitch}
+          />
+        </SafeAreaView>
+      </Modal>
+    </>
   );
 };
 
