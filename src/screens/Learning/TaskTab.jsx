@@ -15,6 +15,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import { Calendar, isToday } from "react-native-big-calendar";
 import { Dropdown } from "react-native-element-dropdown";
 import { Button, Searchbar, Text } from "react-native-paper";
 
@@ -23,18 +24,28 @@ import PrimaryButton from "../../components/PrimaryButton";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import {
+  calendarTheme,
   courseCardData,
   Dimensions,
   dropdownData,
+  events,
+  specialDays,
   today,
+  week_events,
 } from "../../utils/constant";
+import FullEventDetails from "../Calender/FullEventDetails";
 import CourseTabCard from "./CourseTabCard";
 
+const VIEW = "view";
+const DUPLICATE = "duplicate";
+const DELETE = "delete";
+const ISSUE = "issue";
 const TaskTab = ({ activeTab }) => {
   const [isStatusChecked, setIsStatusChecked] = useState(false);
   const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState(false);
   const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState(false);
   const [showCalendarLayout, setShowCalendarLayout] = useState(false);
+  const [activeBottomItem, setActiveBottomItem] = useState(null);
   const [selectedDate, setSelectedDate] = useState(false);
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [pickerType, setPickerType] = useState(null);
@@ -45,7 +56,203 @@ const TaskTab = ({ activeTab }) => {
   const [tempDate, setTempDate] = useState(new Date());
   const [selectedStartDate, setSelectedStartDate] = useState(false);
   const [selectedEndDate, setSelectedEndDate] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const extractDateInfo = (dateString) => {
+    const date = today;
 
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const dayName = date.toLocaleString("en-US", { weekday: "short" });
+
+    return { day, dayName, month };
+  };
+  const [selectedEvent, setSelectedEvent] = useState(today);
+
+  const onSwipeEnd = (date) => {
+    setSelectedDate(date);
+  };
+  const handleBottomIconPress = (display) => {
+    setActiveBottomItem(display);
+    if (display === VIEW) {
+      setVisible(true);
+      eventBottomSheetModalRef.current?.close();
+    }
+  };
+  // const onPressEvent = (event) => {
+  //   const showModal = () => setVisible(true);
+  //   const hideModal = () => setVisible(false);
+
+  //   // console.log(event);
+  //   return (
+  //     <Pressable onPress={showModal}>
+  //       <FullEventDetails hideModal={hideModal} visible={visible} />
+  //     </Pressable>
+  //   );
+  // };
+
+  const onPressEvent = (event) => {
+    setSelectedEvent(event);
+    handleEventPress();
+  };
+
+  const renderEvent = (event, touchableOpacityProps) => {
+    return (
+      <TouchableOpacity {...touchableOpacityProps} key={event}>
+        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
+          {event.title}
+        </Text>
+        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
+          {event.subtitle}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+  // const renderHeader = (prop) => {
+  //   if (!prop.dateRange || prop.dateRange.length === 0) return null;
+  //   const { day, month, dayName } = extractDateInfo(prop.dateRange[0]);
+  //   const formattedDate = `${day.toString().padStart(2, "0")}-${month
+  //     .toString()
+  //     .padStart(2, "0")}`;
+  //   const specialDay = specialDays[formattedDate];
+  //   const hasSpecialDay = prop.dateRange.some((date) => {
+  //     const formattedDate = date.format("DD-MM");
+  //     return specialDays[formattedDate];
+  //   });
+  //   return (
+  //     <View style={{ position: "relative" }}>
+  //       <View style={styles.weekHeaderContainer}>
+  //         <View style={styles.weekNumberContainer}>
+  //           <View></View>
+  //         </View>
+  //         {prop.dateRange.map((date) => {
+  //           const formattedDate = date.format("DD-MM");
+  //           const specialDay = specialDays[formattedDate];
+  //           const shouldHighlight = true;
+  //           return (
+  //             <TouchableOpacity
+  //               key={date.toString()}
+  //               style={{
+  //                 // backgroundColor: "red",
+  //                 borderColor: palette.grey200,
+  //                 flex: 1,
+  //                 gap: 12,
+  //                 paddingTop: 2,
+  //               }}
+  //             >
+  //               <View
+  //                 style={[
+  //                   {
+  //                     // backgroundColor: CombinedDefaultTheme.colors.primary,
+  //                     backgroundColor: !shouldHighlight
+  //                       ? CombinedDefaultTheme.colors.background
+  //                       : CombinedDefaultTheme.colors.primary,
+  //                     borderRadius: Dimensions.margin / 2,
+  //                     fontSize: 10,
+  //                     justifyContent: "space-between",
+  //                     marginHorizontal: Dimensions.margin / 3,
+  //                     paddingTop: Dimensions.padding / 2.66,
+  //                   },
+  //                 ]}
+  //               >
+  //                 <Text
+  //                   style={[
+  //                     { textAlign: "center" },
+  //                     {
+  //                       color: !shouldHighlight
+  //                         ? palette.grey500
+  //                         : CombinedDefaultTheme.colors.background,
+  //                     },
+  //                   ]}
+  //                 >
+  //                   {date.format("dd")}
+  //                 </Text>
+  //                 <View
+  //                   style={{
+  //                     alignItems: "center",
+  //                     alignSelf: "center",
+  //                     borderRadius: 40,
+  //                     height: 36,
+  //                     justifyContent: "center",
+  //                     width: 36,
+  //                     zIndex: 10,
+  //                   }}
+  //                 >
+  //                   <Text
+  //                     style={[
+  //                       {
+  //                         color: !shouldHighlight
+  //                           ? palette.grey700
+  //                           : CombinedDefaultTheme.colors.background,
+  //                         textAlign: "center",
+  //                       },
+  //                     ]}
+  //                   >
+  //                     {date.format("D")}
+  //                   </Text>
+  //                 </View>
+  //               </View>
+  //               <View
+  //                 style={{
+  //                   // backgroundColor: "red",
+  //                   borderColor: palette.grey200,
+  //                   borderLeftWidth: 1,
+  //                   height: 24,
+  //                   marginTop: hasSpecialDay ? Dimensions.margin : 0,
+  //                   position: "relative",
+  //                 }}
+  //               >
+  //                 {specialDay && (
+  //                   <TouchableOpacity
+  //                     style={[styles.eventCellCss, "red", { bottom: 4 }]}
+  //                   >
+  //                     <Text
+  //                       style={{
+  //                         backgroundColor: palette.success700,
+  //                         color: CombinedDefaultTheme.colors.background,
+  //                         height: 24,
+  //                         paddingLeft: Dimensions.padding / 2,
+  //                         paddingVertical: Dimensions.padding / 4,
+  //                       }}
+  //                       numberOfLines={1}
+  //                       variant="labelSmall"
+  //                     >
+  //                       {specialDay}
+  //                     </Text>
+  //                   </TouchableOpacity>
+  //                 )}
+  //               </View>
+  //             </TouchableOpacity>
+  //           );
+  //         })}
+  //         {/* </View> */}
+  //       </View>
+  //       <View
+  //         style={[
+  //           styles.sessionWeekIndicatorContainer,
+  //           {
+  //             bottom: hasSpecialDay
+  //               ? Dimensions.margin * 2
+  //               : Dimensions.margin / 4,
+  //           },
+  //         ]}
+  //       >
+  //         <View style={styles.weekVideoIconContainer}>
+  //           <Image
+  //             source={require("../../assets/icons/video.png")}
+  //             style={styles.weekVideoIcon}
+  //           />
+  //           <Image
+  //             source={require("../../assets/icons/session_line.png")}
+  //             style={styles.sessionLine}
+  //           />
+  //         </View>
+  //       </View>
+  //     </View>
+  //   );
+  // };
+  const handleLayoutChange = () => {
+    setShowCalendarLayout((prev) => !prev);
+  };
   const formatDate = (date) => {
     return date
       ? date.toLocaleDateString("en-GB", {
@@ -96,11 +303,15 @@ const TaskTab = ({ activeTab }) => {
   };
 
   const bottomSheetModalRef = useRef(null);
+  const eventBottomSheetModalRef = useRef(null);
   const keyExtractor = (item) => item.id.toString();
   const itemSeperator = () => <View style={styles.itemSeparator} />;
   const toggleStatusCheckbox = () => setIsStatusChecked((prev) => !prev);
   const handleFilterModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
+  }, []);
+  const handleEventPress = useCallback(() => {
+    eventBottomSheetModalRef.current?.present();
   }, []);
   const renderTaskItem = useCallback(
     ({ item }) => <CourseTabCard activeTab={"Task"} {...item} />,
@@ -114,7 +325,7 @@ const TaskTab = ({ activeTab }) => {
     />
   );
   return (
-    <ScrollView style={{}}>
+    <View style={{ flex: 1, marginBottom: Dimensions.margin * 1.5 }}>
       <View style={styles.searchContainer}>
         <Searchbar
           icon={renderSearchIcon}
@@ -125,20 +336,23 @@ const TaskTab = ({ activeTab }) => {
           style={styles.searchBar}
         />
         <View style={{ flexDirection: "row", gap: Dimensions.margin * 1.25 }}>
-          {showCalendarLayout ? (
-            <Pressable>
+          {!showCalendarLayout ? (
+            <TouchableOpacity onPress={handleLayoutChange}>
               <Image
                 source={require("../../assets/icons/table_grid.png")}
                 style={styles.customizeIcon}
               />
-            </Pressable>
+            </TouchableOpacity>
           ) : (
-            <Pressable>
+            <TouchableOpacity onPress={handleLayoutChange}>
+              <Text style={styles.dateInCalendar}>
+                {new Date(today).getUTCDate()}
+              </Text>
               <Image
                 source={require("../../assets/icons/calender.png")}
                 style={styles.customizeIcon}
               />
-            </Pressable>
+            </TouchableOpacity>
           )}
 
           <Pressable onPress={handleFilterModalPress}>
@@ -149,15 +363,186 @@ const TaskTab = ({ activeTab }) => {
           </Pressable>
         </View>
       </View>
-      <FlatList
-        contentContainerStyle={styles.arrowIndicator}
-        data={courseCardData}
-        ItemSeparatorComponent={itemSeperator}
-        keyExtractor={keyExtractor}
-        renderItem={renderTaskItem}
-        scrollEnabled={false}
-        style={styles.ongoingCardList}
-      />
+
+      {showCalendarLayout ? (
+        <FlatList
+          contentContainerStyle={styles.arrowIndicator}
+          data={courseCardData}
+          ItemSeparatorComponent={itemSeperator}
+          keyExtractor={keyExtractor}
+          renderItem={renderTaskItem}
+          style={styles.ongoingCardList}
+        />
+      ) : (
+        <View style={styles.contentContainer}>
+          <Calendar
+            ampm={true}
+            calendarCellStyle={{ borderBottomWidth: 0 }}
+            date={today}
+            eventCellStyle={eventCellStyle}
+            events={events}
+            height={Dimensions.screenHeight}
+            hideHours={true}
+            mode="custom"
+            overlapOffset={0}
+            renderEvent={renderEvent}
+            showAllDayEventCell={false}
+            swipeEnabled={true}
+            theme={calendarTheme}
+            weekEndsOn={5}
+            weekStartsOn={1}
+            // renderHeader={renderHeader}
+            onPressEvent={onPressEvent}
+            onSwipeEnd={onSwipeEnd}
+          />
+          <BottomDrawer ref={eventBottomSheetModalRef}>
+            <View style={styles.bottomSheetContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.buttomIndividualContent,
+                  {
+                    backgroundColor:
+                      activeBottomItem === VIEW
+                        ? palette.primaryStudent50
+                        : "transparent",
+                  },
+                ]}
+                onPress={() => handleBottomIconPress("view")}
+              >
+                <Image
+                  tintColor={
+                    activeBottomItem === VIEW
+                      ? CombinedDefaultTheme.colors.primary
+                      : palette.grey700
+                  }
+                  source={require("../../assets/icons/eye.png")}
+                  style={styles.calendarIcon}
+                />
+                <Text
+                  style={[
+                    {
+                      color:
+                        activeBottomItem === VIEW
+                          ? CombinedDefaultTheme.colors.primary
+                          : palette.grey700,
+                    },
+                  ]}
+                >
+                  View
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.buttomIndividualContent,
+                  {
+                    backgroundColor:
+                      activeBottomItem === DELETE
+                        ? palette.primaryStudent50
+                        : "transparent",
+                  },
+                ]}
+                onPress={() => handleBottomIconPress("delete")}
+              >
+                <Image
+                  tintColor={
+                    activeBottomItem === DELETE
+                      ? CombinedDefaultTheme.colors.primary
+                      : palette.grey700
+                  }
+                  source={require("../../assets/icons/trash.png")}
+                  style={styles.calendarIcon}
+                />
+                <Text
+                  style={[
+                    {
+                      color:
+                        activeBottomItem === DELETE
+                          ? CombinedDefaultTheme.colors.primary
+                          : palette.grey700,
+                    },
+                  ]}
+                >
+                  Delete
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.buttomIndividualContent,
+                  {
+                    backgroundColor:
+                      activeBottomItem === DUPLICATE
+                        ? palette.primaryStudent50
+                        : "transparent",
+                  },
+                ]}
+                onPress={() => handleBottomIconPress("duplicate")}
+              >
+                <Image
+                  tintColor={
+                    activeBottomItem === DUPLICATE
+                      ? CombinedDefaultTheme.colors.primary
+                      : palette.grey700
+                  }
+                  source={require("../../assets/icons/copy.png")}
+                  style={styles.calendarIcon}
+                />
+                <Text
+                  style={[
+                    {
+                      color:
+                        activeBottomItem === DUPLICATE
+                          ? CombinedDefaultTheme.colors.primary
+                          : palette.grey700,
+                    },
+                  ]}
+                >
+                  Duplicate
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.buttomIndividualContent,
+                  {
+                    backgroundColor:
+                      activeBottomItem === ISSUE
+                        ? palette.primaryStudent50
+                        : "transparent",
+                  },
+                ]}
+                onPress={() => handleBottomIconPress("issue")}
+              >
+                <Image
+                  tintColor={
+                    activeBottomItem === ISSUE
+                      ? CombinedDefaultTheme.colors.primary
+                      : palette.grey700
+                  }
+                  source={require("../../assets/icons/alert_circle.png")}
+                  style={styles.calendarIcon}
+                />
+                <Text
+                  style={[
+                    {
+                      color:
+                        activeBottomItem === ISSUE
+                          ? CombinedDefaultTheme.colors.primary
+                          : palette.grey700,
+                    },
+                  ]}
+                >
+                  Issue
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </BottomDrawer>
+          <FullEventDetails
+            event={selectedEvent}
+            hideModal={() => setVisible(false)}
+            visible={visible}
+          />
+        </View>
+      )}
+
       <BottomDrawer ref={bottomSheetModalRef}>
         <View style={styles.bottomSheetContainer}>
           <Text variant="titleMedium">Sort & Filters</Text>
@@ -275,7 +660,6 @@ const TaskTab = ({ activeTab }) => {
                 </View>
               </Pressable>
 
-              {/* End Date Picker */}
               <Pressable onPress={() => showPicker("end")}>
                 <Text variant="titleSmall">Due Date</Text>
                 <View style={styles.calendarContainer}>
@@ -387,13 +771,25 @@ const TaskTab = ({ activeTab }) => {
           />
         </View>
       </BottomDrawer>
-    </ScrollView>
+    </View>
   );
 };
 
-export default TaskTab;
-
+const eventCellStyle = (event) => ({
+  backgroundColor: event.background,
+  borderRadius: Dimensions.margin / 2,
+  // marginBottom: 4,
+  // marginLeft: 18,
+  marginTop: 0,
+  // maxWidth: "96%",
+  paddingHorizontal: Dimensions.padding / 1.33,
+  paddingVertical: Dimensions.padding / 2.66,
+});
 const styles = StyleSheet.create({
+  bodyContainerStyle: {
+    backgroundColor: CombinedDefaultTheme.colors.background,
+    marginTop: Dimensions.margin * 4.375,
+  },
   bottomSheetContainer: {
     gap: Dimensions.margin / 2,
     height: "auto",
@@ -401,6 +797,19 @@ const styles = StyleSheet.create({
     marginBottom: Dimensions.margin * 4.375,
     paddingHorizontal: Dimensions.padding,
     paddingTop: Dimensions.padding / 1.33,
+  },
+  buttomIndividualContent: {
+    borderRadius: Dimensions.margin / 2,
+    flexDirection: "row",
+    gap: Dimensions.margin / 2,
+    paddingHorizontal: Dimensions.padding / 2,
+    paddingVertical: Dimensions.padding / 2,
+  },
+  calendarCellStyle: {
+    backgroundColor: CombinedDefaultTheme.colors.background,
+    left: 17,
+    position: "relative",
+    zIndex: -1,
   },
   calendarContainer: {
     alignItems: "center",
@@ -419,9 +828,21 @@ const styles = StyleSheet.create({
     borderColor: palette.grey300,
     borderRadius: Dimensions.margin / 2,
   },
+  contentContainer: {
+    flex: 1,
+    position: "relative",
+    zIndex: 0,
+  },
   customizeIcon: {
     height: Dimensions.margin * 1.5,
     width: Dimensions.margin * 1.5,
+  },
+  dateInCalendar: {
+    alignSelf: "center",
+    fontSize: 8,
+    // left: "38%",
+    position: "absolute",
+    top: "45%",
   },
   datePicker: {
     // backgroundColor: "red",
@@ -526,3 +947,5 @@ const styles = StyleSheet.create({
     paddingVertical: Dimensions.padding,
   },
 });
+
+export default TaskTab;

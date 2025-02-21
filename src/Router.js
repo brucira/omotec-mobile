@@ -8,7 +8,7 @@ import { BottomNavigation, Text, TouchableRipple } from "react-native-paper";
 import Calender from "./screens/Calender";
 import Home from "./screens/Home";
 import Learning from "./screens/Learning";
-import CourseDetail from "./screens/Learning/CourseDetail";
+import ProjectDetail from "./screens/Learning/ProjectDetail";
 import Notifications from "./screens/Notifications/Notifications";
 import Profile from "./screens/Profile";
 import Search from "./screens/Search";
@@ -172,7 +172,11 @@ const Router = () => {
         initialRouteName={RouteNames.Tabs}
       >
         <Stack.Screen component={Tabs} name={RouteNames.Tabs} />
-        <Stack.Screen component={CourseDetail} name={RouteNames.CourseDetail} />
+        {/* <Stack.Screen component={CourseDetail} name={RouteNames.CourseDetail} /> */}
+        <Stack.Screen
+          component={ProjectDetail}
+          name={RouteNames.ProjectDetail}
+        />
         <Stack.Screen
           component={Notifications}
           name={RouteNames.Notifications}

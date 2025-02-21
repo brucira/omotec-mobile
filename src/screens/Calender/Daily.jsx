@@ -153,6 +153,7 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
         hourRowHeight={52}
         hourStyle={styles.hourStyle}
         mode="day"
+        overlapOffset={0}
         renderEvent={renderEvent}
         renderHeader={renderHeader}
         swipeEnabled={true}

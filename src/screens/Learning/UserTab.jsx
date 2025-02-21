@@ -28,15 +28,17 @@ const UserTab = ({ activeTab }) => {
     />
   );
   return (
-    <ScrollView style={{}}>
-      <Searchbar
-        icon={renderSearchIcon}
-        inputStyle={styles.searchInput}
-        placeholder="Search"
-        placeholderTextColor={palette.grey400}
-        right={renderRightIcon}
-        style={styles.searchBar}
-      />
+    <ScrollView style={{ marginBottom: Dimensions.margin * 1.5 }}>
+      <View style={styles.searchContainer}>
+        <Searchbar
+          icon={renderSearchIcon}
+          inputStyle={styles.searchInput}
+          placeholder="Search"
+          placeholderTextColor={palette.grey400}
+          right={renderRightIcon}
+          style={styles.searchBar}
+        />
+      </View>
       <FlatList
         contentContainerStyle={styles.arrowIndicator}
         data={courseCardData}

@@ -45,6 +45,7 @@ const Monthly = ({ selectedDate, setSelectedDate }) => {
         maxVisibleEventCount={3}
         // renderCustomDateForMonth={(date) => <Text>{date.getDate()}</Text>}
         mode="month"
+        overlapOffset={0}
         renderEvent={renderMontlyEvent}
         // showAllDayEventCell={true}
         // eventsAreSorted={true}

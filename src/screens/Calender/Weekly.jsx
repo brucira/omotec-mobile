@@ -207,6 +207,7 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
         height={Dimensions.screenHeight}
         hourRowHeight={52}
         mode="week"
+        overlapOffset={0}
         renderEvent={renderWeekEvent}
         renderHeader={renderWeekHeader}
         showAllDayEventCell={true}
