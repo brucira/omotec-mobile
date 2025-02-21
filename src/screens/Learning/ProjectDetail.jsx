@@ -1,50 +1,21 @@
-import { BottomSheetFlashList } from "@gorhom/bottom-sheet";
 import { useRoute } from "@react-navigation/native";
-import Checkbox from "expo-checkbox";
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import {
-  FlatList,
-  Image,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
-import { Appbar, Avatar, Button, Searchbar, Text } from "react-native-paper";
+import React, { useMemo, useState } from "react";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { Appbar, Button, Text } from "react-native-paper";
 
-import BottomDrawer from "../../components/BottomDrawer";
-import PrimaryButton from "../../components/PrimaryButton";
-import TopTab from "../../components/TopTab";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { courseCardData, Dimensions, today } from "../../utils/constant";
-import CourseTabCard from "./CourseTabCard";
+import { Dimensions } from "../../utils/constant";
+import DetailTab from "./DetailTab";
+import DocumentTab from "./DocumentTab";
 import TaskTab from "./TaskTab";
 import UserTab from "./UserTab";
 
 const TABS = ["Users", "Task", "Document", "Details"];
-const CourseDetails = ({ navigation }) => {
+const ProjectDetail = ({ navigation }) => {
   const { title } = useRoute().params;
   const [activeTab, setActiveTab] = useState(TABS[0]);
-  const keyExtractor = (item) => item.id.toString();
-  const itemSeperator = () => <View style={styles.itemSeparator} />;
 
-  const renderSearchIcon = () => (
-    <Image
-      source={require("../../assets/icons/search.png")}
-      style={styles.lens}
-    />
-  );
-  const renderRightIcon = () => (
-    <Image
-      source={require("../../assets/icons/mic.png")}
-      style={styles.rightIcon}
-    />
-  );
   const renderTab = (item, index) => (
     <View key={index}>
       <Button
@@ -91,17 +62,6 @@ const CourseDetails = ({ navigation }) => {
       </Button>
     </View>
   );
-  const renderItem = useCallback(
-    ({ item }) => <CourseTabCard activeTab={"Users"} {...item} />,
-    // eslint-disable-next-line prettier/prettier
-    [activeTab]
-  );
-
-  const renderTaskItem = useCallback(
-    ({ item }) => <CourseTabCard activeTab={"Task"} {...item} />,
-    // eslint-disable-next-line prettier/prettier
-    [activeTab]
-  );
 
   const tabContent = useMemo(() => {
     return activeTab === "Users" ? (
@@ -109,31 +69,9 @@ const CourseDetails = ({ navigation }) => {
     ) : activeTab === "Task" ? (
       <TaskTab activeTab={activeTab} />
     ) : activeTab === "Document" ? (
-      <ScrollView style={{}}>
-        <View>
-          <Searchbar
-            icon={renderSearchIcon}
-            inputStyle={styles.searchInput}
-            placeholder="Search"
-            placeholderTextColor={palette.grey400}
-            //   right={renderRightIcon}
-            style={styles.searchBar}
-          />
-        </View>
-        <FlatList
-          contentContainerStyle={styles.arrowIndicator}
-          data={courseCardData}
-          ItemSeparatorComponent={itemSeperator}
-          keyExtractor={keyExtractor}
-          renderItem={renderTaskItem}
-          scrollEnabled={false}
-          style={styles.ongoingCardList}
-        />
-      </ScrollView>
+      <DocumentTab activeTab={activeTab} />
     ) : activeTab === "Details" ? (
-      <View style={styles.tabContentContainer}>
-        <Text style={styles.tabContentText}>{activeTab}</Text>
-      </View>
+      <DetailTab />
     ) : null;
   }, [activeTab]);
 
@@ -340,4 +278,4 @@ const styles = StyleSheet.create({
   title: {},
 });
 
-export default CourseDetails;
+export default ProjectDetail;

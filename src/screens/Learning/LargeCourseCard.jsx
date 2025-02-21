@@ -42,7 +42,7 @@ const LargeCourseCard = ({
       mode="outlined"
       style={styles.container}
       onPress={() =>
-        navigation.navigate(RouteNames.CourseDetail, {
+        navigation.navigate(RouteNames.ProjectDetail, {
           title,
         })
       }

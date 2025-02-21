@@ -47,6 +47,7 @@ const palette = {
   blue900: "#082330",
   tintPurple: "#F6EFFF",
   purple500: "#B566FF",
+  purple600: "#60179C",
   purple700: "#300256",
   error50: "#FEF2F2",
   error500: "#F04438",

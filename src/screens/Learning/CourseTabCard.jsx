@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Card, Divider, ProgressBar, Text } from "react-native-paper";
+import { Card, Divider, Text } from "react-native-paper";
 
 import Tag from "../../components/Tag";
 import palette from "../../styles/palette";
@@ -14,14 +14,13 @@ const CourseTabCard = ({ activeTab, title, date, trainer, learningType }) => {
   const COURSE = "course";
   const navigation = useNavigation();
   const TAB_USER = "Users";
-  const TAB_TYPE = "Users";
   return (
     <Card
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
       style={styles.container}
       onPress={() =>
-        navigation.navigate(RouteNames.CourseDetail, {
+        navigation.navigate(RouteNames.ProjectDetail, {
           title,
         })
       }

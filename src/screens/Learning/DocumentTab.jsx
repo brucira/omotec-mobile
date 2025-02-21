@@ -6,7 +6,7 @@ import palette from "../../styles/palette";
 import { courseCardData, Dimensions } from "../../utils/constant";
 import CourseTabCard from "./CourseTabCard";
 
-const UserTab = ({ activeTab }) => {
+const DocumentTab = ({ activeTab }) => {
   const keyExtractor = (item) => item.id.toString();
   const itemSeperator = () => <View style={styles.itemSeparator} />;
   const renderItem = useCallback(
@@ -108,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserTab;
+export default DocumentTab;

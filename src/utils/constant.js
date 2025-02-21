@@ -547,6 +547,23 @@ export const tabData = [
     id: 6,
   },
 ];
+
+export const projectDetailData = {
+  otherDetails: {
+    preRequsite: "Computer Skills, Maths Skills, Problem-Solving",
+    projectFormat: "Online",
+    visibility: "Group",
+  },
+  projectDetails: {
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+    projectCategory: "Robotic",
+    projectId: "CRSID-123",
+    projectTitle: "Project 1",
+    studentName: "Alex",
+  },
+};
+
 export const todoCardData = [
   {
     date: "20 March",
@@ -811,7 +828,6 @@ export const suggestions = [
   "JavaScript",
   "React",
 ];
-const monday = dayjs().day(1);
 const wednusday = dayjs().day(3);
 export const week_events = [
   {
@@ -949,11 +965,11 @@ export const weekEvents = [
 ];
 export const RouteNames = {
   Calender: "Calender",
-  CourseDetail: "CourseDetail",
   Home: "Home",
   Learning: "My Learning",
   Notifications: "Notifications",
   Profile: "Profile",
+  ProjectDetail: "ProjectDetail",
   Search: "Search",
   Tabs: "Tabs",
 };

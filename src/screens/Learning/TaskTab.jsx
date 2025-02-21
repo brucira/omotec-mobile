@@ -1,6 +1,4 @@
-import DateTimePicker, {
-  DateTimePickerAndroid,
-} from "@react-native-community/datetimepicker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import Checkbox from "expo-checkbox";
 import React, { useCallback, useRef, useState } from "react";
 import {
@@ -9,13 +7,11 @@ import {
   Modal,
   Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { Calendar, isToday } from "react-native-big-calendar";
+import { Calendar } from "react-native-big-calendar";
 import { Dropdown } from "react-native-element-dropdown";
 import { Button, Searchbar, Text } from "react-native-paper";
 
@@ -29,12 +25,11 @@ import {
   Dimensions,
   dropdownData,
   events,
-  specialDays,
   today,
-  week_events,
 } from "../../utils/constant";
 import FullEventDetails from "../Calender/FullEventDetails";
 import CourseTabCard from "./CourseTabCard";
+import IssueDetails from "./IssueDetails";
 
 const VIEW = "view";
 const DUPLICATE = "duplicate";
@@ -46,7 +41,7 @@ const TaskTab = ({ activeTab }) => {
   const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState(false);
   const [showCalendarLayout, setShowCalendarLayout] = useState(false);
   const [activeBottomItem, setActiveBottomItem] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(false);
+  const [, setSelectedDate] = useState(false);
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [pickerType, setPickerType] = useState(null);
 
@@ -54,18 +49,10 @@ const TaskTab = ({ activeTab }) => {
   const [endDate, setEndDate] = useState(null);
 
   const [tempDate, setTempDate] = useState(new Date());
-  const [selectedStartDate, setSelectedStartDate] = useState(false);
-  const [selectedEndDate, setSelectedEndDate] = useState(false);
+  const [, setSelectedStartDate] = useState(false);
+  const [, setSelectedEndDate] = useState(false);
   const [visible, setVisible] = useState(false);
-  const extractDateInfo = (dateString) => {
-    const date = today;
-
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const dayName = date.toLocaleString("en-US", { weekday: "short" });
-
-    return { day, dayName, month };
-  };
+  const [issueVisible, setIssueVisible] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(today);
 
   const onSwipeEnd = (date) => {
@@ -75,6 +62,10 @@ const TaskTab = ({ activeTab }) => {
     setActiveBottomItem(display);
     if (display === VIEW) {
       setVisible(true);
+      eventBottomSheetModalRef.current?.close();
+    }
+    if (display === ISSUE) {
+      setIssueVisible(true);
       eventBottomSheetModalRef.current?.close();
     }
   };
@@ -253,15 +244,6 @@ const TaskTab = ({ activeTab }) => {
   const handleLayoutChange = () => {
     setShowCalendarLayout((prev) => !prev);
   };
-  const formatDate = (date) => {
-    return date
-      ? date.toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        })
-      : "Select Date";
-  };
 
   const showPicker = (type) => {
     setPickerType(type);
@@ -316,7 +298,7 @@ const TaskTab = ({ activeTab }) => {
   const renderTaskItem = useCallback(
     ({ item }) => <CourseTabCard activeTab={"Task"} {...item} />,
     // eslint-disable-next-line prettier/prettier
-    [activeTab]
+    []
   );
   const renderSearchIcon = () => (
     <Image
@@ -371,6 +353,7 @@ const TaskTab = ({ activeTab }) => {
           ItemSeparatorComponent={itemSeperator}
           keyExtractor={keyExtractor}
           renderItem={renderTaskItem}
+          showsVerticalScrollIndicator={false}
           style={styles.ongoingCardList}
         />
       ) : (
@@ -509,7 +492,7 @@ const TaskTab = ({ activeTab }) => {
                         : "transparent",
                   },
                 ]}
-                onPress={() => handleBottomIconPress("issue")}
+                onPress={() => handleBottomIconPress(ISSUE)}
               >
                 <Image
                   tintColor={
@@ -539,6 +522,11 @@ const TaskTab = ({ activeTab }) => {
             event={selectedEvent}
             hideModal={() => setVisible(false)}
             visible={visible}
+          />
+          <IssueDetails
+            event={selectedEvent}
+            hideModal={() => setIssueVisible(false)}
+            visible={issueVisible}
           />
         </View>
       )}
