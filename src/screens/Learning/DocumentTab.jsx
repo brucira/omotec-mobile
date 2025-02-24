@@ -1,9 +1,16 @@
 import React, { useCallback } from "react";
-import { FlatList, Image, StyleSheet, View } from "react-native";
-import { Searchbar } from "react-native-paper";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Searchbar, Text } from "react-native-paper";
 
 import palette from "../../styles/palette";
-import { courseCardData, Dimensions } from "../../utils/constant";
+import { courseCardData, Dimensions, today } from "../../utils/constant";
 import CourseTabCard from "./CourseTabCard";
 
 const DocumentTab = ({ activeTab }) => {
@@ -38,9 +45,17 @@ const DocumentTab = ({ activeTab }) => {
           inputStyle={styles.searchInput}
           placeholder="Search"
           placeholderTextColor={palette.grey400}
-          right={renderRightIcon}
+          //   right={renderRightIcon}
           style={styles.searchBar}
         />
+        <View style={{ flexDirection: "row", gap: Dimensions.margin * 1.25 }}>
+          <TouchableOpacity onPress={() => {}}>
+            <Image
+              source={require("../../assets/icons/filter_two.png")}
+              style={styles.customizeIcon}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       <FlatList
         contentContainerStyle={styles.arrowIndicator}
@@ -57,6 +72,10 @@ const DocumentTab = ({ activeTab }) => {
 };
 
 const styles = StyleSheet.create({
+  customizeIcon: {
+    height: Dimensions.margin * 1.5,
+    width: Dimensions.margin * 1.5,
+  },
   itemSeparator: {
     height: Dimensions.margin / 1.33,
   },

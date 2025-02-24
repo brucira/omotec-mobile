@@ -1,24 +1,223 @@
 import React, { useState } from "react";
 import {
+  FlatList,
   Image,
   Modal,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
 } from "react-native";
-import { Appbar, List, ProgressBar, Text } from "react-native-paper";
+import { Appbar, Divider, List, ProgressBar, Text } from "react-native-paper";
 
 import PrimaryButton from "../../components/PrimaryButton";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions } from "../../utils/constant";
+import { Dimensions, issueData } from "../../utils/constant";
+import AddIssue from "./AddIssue";
 
 const IssueDetails = ({ visible, hideModal, event }) => {
   const [expanded, setExpanded] = useState(true);
-
-  const handlePress = () => setExpanded(!expanded);
+  const [addIssueVisible, setAddIssueVisible] = useState(false);
+  const handleFileItem = (file, index) => (
+    <TouchableOpacity
+      key={index}
+      style={styles.fileContainer}
+      onPress={() => {}}
+    >
+      <View style={styles.fileContent}>
+        <Image
+          source={require("../../assets/icons/file.png")}
+          style={styles.file}
+        />
+        <View style={styles.content}>
+          <View style={{}}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text numberOfLines={1} variant="labelSmall">
+                {file.fileName}
+              </Text>
+              <Image
+                source={require("../../assets/icons/check.png")}
+                style={styles.check}
+              />
+            </View>
+            <Text numberOfLines={1} variant="labelSmall">
+              {file.fileSize}
+            </Text>
+            <View style={styles.progress}>
+              <ProgressBar
+                color={palette.success600}
+                progress={100}
+                style={styles.progressBar}
+              />
+              <Text style={styles.progressText} variant="labelSmall">
+                {100} %
+              </Text>
+            </View>
+          </View>
+          {/* <Image
+                            source={require("../../assets/icons/check.png")}
+                            style={styles.check}
+                          /> */}
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+  const itemSeperator = () => <Divider />;
+  const keyExtractor = (item) => item.id.toString();
+  const onPress = () => setAddIssueVisible(true);
+  const renderItem = ({ item }) => (
+    <List.AccordionGroup>
+      <List.Accordion
+        description={
+          expanded ? (
+            <Text style={{ color: palette.grey500 }} variant="titleSmall">
+              {item.subHeading}
+            </Text>
+          ) : null
+        }
+        right={() => (
+          <View
+            style={[
+              styles.rightContainer,
+              // { alignItems: expanded ? "flex-start" : null },
+            ]}
+          >
+            <Image
+              style={[
+                styles.dropdownIcon,
+                { alignSelf: "flex-start", padding: 0 },
+              ]}
+              source={require("../../assets/icons/chevron_down.png")}
+            />
+          </View>
+        )}
+        style={{
+          padding: 0,
+        }}
+        title={
+          <View style={{ paddingHorizontal: 0 }}>
+            <Text variant="titleMedium">{item.name}</Text>
+          </View>
+        }
+        contentStyle={{ paddingHorizontal: 0 }}
+        descriptionStyle={{ marginLeft: -8 }}
+        expanded={expanded}
+        id={2}
+        rippleColor={palette.grey25}
+        theme={{ isV3: false }}
+        titleNumberOfLines={1}
+        titleStyle={{ marginLeft: -8 }}
+        // onPress={handlePress}
+      >
+        <List.Item
+          style={{
+            paddingVertical: Dimensions.padding / 1.6,
+          }}
+          title={
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <Text variant="titleSmall">Issue ID:</Text>
+              <Text variant="bodyMedium"> {item.id}</Text>
+            </View>
+          }
+          contentStyle={{ paddingLeft: 0 }}
+          titleStyle={{}}
+        />
+        <List.Item
+          style={{
+            paddingVertical: Dimensions.padding / 1.6,
+          }}
+          title={
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <Text variant="titleSmall">Issue Name:</Text>
+              <Text variant="bodyMedium"> {item.name}</Text>
+            </View>
+          }
+          contentStyle={{ paddingLeft: 0 }}
+          titleStyle={{}}
+        />
+        <List.Item
+          style={{
+            paddingVertical: Dimensions.padding / 1.6,
+          }}
+          title={
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <Text variant="titleSmall">Severity</Text>
+              <Text variant="bodyMedium"> {item.severity}</Text>
+            </View>
+          }
+          contentStyle={{ paddingLeft: 0 }}
+          titleStyle={{}}
+        />
+        <List.Item
+          style={{
+            paddingVertical: Dimensions.padding / 1.6,
+          }}
+          title={
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <Text variant="titleSmall">Description</Text>
+              <Text variant="bodyMedium"> {item.description}</Text>
+            </View>
+          }
+          contentStyle={{ paddingLeft: 0 }}
+          titleStyle={{}}
+        />
+        <List.Item
+          contentStyle={{
+            flex: 1,
+            maxWidth: Dimensions.screenWidth - Dimensions.margin * 2,
+            minWidth: Dimensions.screenWidth - Dimensions.margin * 2,
+            paddingLeft: 0,
+            paddingRight: 0,
+          }}
+          description={() => (
+            <>
+              {item.uploads.map((file, index) => {
+                return handleFileItem(file, index);
+              })}
+            </>
+          )}
+          style={{
+            paddingVertical: Dimensions.padding / 1.6,
+          }}
+          title={
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <Text style={{ color: palette.grey600 }} variant="titleSmall">
+                Upload additional file
+              </Text>
+            </View>
+          }
+          descriptionStyle={{ backgroundColor: "red" }}
+          titleStyle={{}}
+        />
+      </List.Accordion>
+    </List.AccordionGroup>
+  );
 
   return (
     <>
@@ -37,421 +236,17 @@ const IssueDetails = ({ visible, hideModal, event }) => {
             />
             <Appbar.Content title={<Text variant="titleMedium">Issue</Text>} />
           </Appbar>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.contentContainer}
-          >
-            <List.AccordionGroup>
-              <List.Accordion
-                description={
-                  expanded ? (
-                    <Text
-                      style={{ color: palette.grey500 }}
-                      variant="titleSmall"
-                    >
-                      Initial Design
-                    </Text>
-                  ) : null
-                }
-                right={() => (
-                  <View
-                    style={[
-                      styles.rightContainer,
-                      // { alignItems: expanded ? "flex-start" : null },
-                    ]}
-                  >
-                    <Image
-                      style={[
-                        styles.dropdownIcon,
-                        { alignSelf: "flex-start", padding: 0 },
-                      ]}
-                      source={require("../../assets/icons/chevron_down.png")}
-                    />
-                  </View>
-                )}
-                style={{
-                  padding: 0,
-                }}
-                title={
-                  <View style={{ paddingHorizontal: 0 }}>
-                    <Text variant="titleMedium">Issue 1</Text>
-                  </View>
-                }
-                contentStyle={{ paddingHorizontal: 0 }}
-                descriptionStyle={{ marginLeft: -8 }}
-                expanded={expanded}
-                id={2}
-                rippleColor={palette.grey25}
-                theme={{ isV3: false }}
-                titleNumberOfLines={1}
-                titleStyle={{ marginLeft: -8 }}
-                onPress={handlePress}
-              >
-                <List.Item
-                  style={{
-                    paddingVertical: Dimensions.padding / 1.6,
-                  }}
-                  title={
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Text variant="titleSmall">Issue ID:</Text>
-                      <Text variant="bodyMedium"> IS-001</Text>
-                    </View>
-                  }
-                  contentStyle={{ paddingLeft: 0 }}
-                  titleStyle={{}}
-                />
-                <List.Item
-                  style={{
-                    paddingVertical: Dimensions.padding / 1.6,
-                  }}
-                  title={
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Text variant="titleSmall">Issue Name</Text>
-                      <Text variant="bodyMedium"> Video Playback error</Text>
-                    </View>
-                  }
-                  contentStyle={{ paddingLeft: 0 }}
-                  titleStyle={{}}
-                />
-                <List.Item
-                  style={{
-                    paddingVertical: Dimensions.padding / 1.6,
-                  }}
-                  title={
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Text variant="titleSmall">Severity</Text>
-                      <Text variant="bodyMedium"> High</Text>
-                    </View>
-                  }
-                  contentStyle={{ paddingLeft: 0 }}
-                  titleStyle={{}}
-                />
-                <List.Item
-                  style={{
-                    paddingVertical: Dimensions.padding / 1.6,
-                  }}
-                  title={
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Text variant="titleSmall">Description</Text>
-                      <Text variant="bodyMedium"> Video can't be accessed</Text>
-                    </View>
-                  }
-                  contentStyle={{ paddingLeft: 0 }}
-                  titleStyle={{}}
-                />
-                <List.Item
-                  contentStyle={{
-                    flex: 1,
-                    maxWidth: Dimensions.screenWidth - Dimensions.margin * 2,
-                    minWidth: Dimensions.screenWidth - Dimensions.margin * 2,
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                  }}
-                  description={() => (
-                    // <View>
-                    //   <View style={styles.fileContainer}>
-                    //     <View>
-                    //       <Image
-                    //         source={require("../../assets/icons/file.png")}
-                    //         style={styles.fileIcon}
-                    //       />
-                    //     </View>
-                    //   </View>
-                    // </View>
-                    <TouchableOpacity
-                      style={styles.fileContainer}
-                      onPress={() => {}}
-                    >
-                      <View style={styles.fileContent}>
-                        <Image
-                          source={require("../../assets/icons/file.png")}
-                          style={styles.file}
-                        />
-                        <View style={styles.content}>
-                          <View style={{}}>
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                justifyContent: "space-between",
-                              }}
-                            >
-                              <Text numberOfLines={1} variant="labelSmall">
-                                {"Kit cover"}
-                              </Text>
-                              <Image
-                                source={require("../../assets/icons/check.png")}
-                                style={styles.check}
-                              />
-                            </View>
-                            <Text numberOfLines={1} variant="labelSmall">
-                              {"200 KB"}
-                            </Text>
-                            <View style={styles.progress}>
-                              <ProgressBar
-                                color={palette.success600}
-                                progress={100}
-                                style={styles.progressBar}
-                              />
-                              <Text
-                                style={styles.progressText}
-                                variant="labelSmall"
-                              >
-                                {100} %
-                              </Text>
-                            </View>
-                          </View>
-                          {/* <Image
-                            source={require("../../assets/icons/check.png")}
-                            style={styles.check}
-                          /> */}
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  )}
-                  style={{
-                    paddingVertical: Dimensions.padding / 1.6,
-                  }}
-                  title={
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Text
-                        style={{ color: palette.grey600 }}
-                        variant="titleSmall"
-                      >
-                        Upload additional file
-                      </Text>
-                    </View>
-                  }
-                  descriptionStyle={{ backgroundColor: "red" }}
-                  titleStyle={{}}
-                />
-              </List.Accordion>
-            </List.AccordionGroup>
-            <List.AccordionGroup>
-              <List.Accordion
-                description={
-                  expanded ? (
-                    <Text
-                      style={{ color: palette.grey500 }}
-                      variant="titleSmall"
-                    >
-                      Initial Design
-                    </Text>
-                  ) : null
-                }
-                right={() => (
-                  <View
-                    style={[
-                      styles.rightContainer,
-                      // { alignItems: expanded ? "flex-start" : null },
-                    ]}
-                  >
-                    <Image
-                      style={[
-                        styles.dropdownIcon,
-                        { alignSelf: "flex-start", padding: 0 },
-                      ]}
-                      source={require("../../assets/icons/chevron_down.png")}
-                    />
-                  </View>
-                )}
-                style={{
-                  padding: 0,
-                }}
-                title={
-                  <View style={{ paddingHorizontal: 0 }}>
-                    <Text variant="titleMedium">Issue 1</Text>
-                  </View>
-                }
-                contentStyle={{ paddingHorizontal: 0 }}
-                descriptionStyle={{ marginLeft: -8 }}
-                expanded={expanded}
-                id={1}
-                rippleColor={palette.grey25}
-                theme={{ isV3: false }}
-                titleNumberOfLines={1}
-                titleStyle={{ marginLeft: -8 }}
-                onPress={handlePress}
-              >
-                <List.Item
-                  style={{
-                    paddingVertical: Dimensions.padding / 1.6,
-                  }}
-                  title={
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Text variant="titleSmall">Issue ID:</Text>
-                      <Text variant="bodyMedium"> IS-001</Text>
-                    </View>
-                  }
-                  contentStyle={{ paddingLeft: 0 }}
-                  titleStyle={{}}
-                />
-                <List.Item
-                  style={{
-                    paddingVertical: Dimensions.padding / 1.6,
-                  }}
-                  title={
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Text variant="titleSmall">Issue Name</Text>
-                      <Text variant="bodyMedium"> Video Playback error</Text>
-                    </View>
-                  }
-                  contentStyle={{ paddingLeft: 0 }}
-                  titleStyle={{}}
-                />
-                <List.Item
-                  style={{
-                    paddingVertical: Dimensions.padding / 1.6,
-                  }}
-                  title={
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Text variant="titleSmall">Severity</Text>
-                      <Text variant="bodyMedium"> High</Text>
-                    </View>
-                  }
-                  contentStyle={{ paddingLeft: 0 }}
-                  titleStyle={{}}
-                />
-                <List.Item
-                  style={{
-                    paddingVertical: Dimensions.padding / 1.6,
-                  }}
-                  title={
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Text variant="titleSmall">Description</Text>
-                      <Text variant="bodyMedium"> Video can't be accessed</Text>
-                    </View>
-                  }
-                  contentStyle={{ paddingLeft: 0 }}
-                  titleStyle={{}}
-                />
-                <List.Item
-                  contentStyle={{
-                    flex: 1,
-                    maxWidth: Dimensions.screenWidth - Dimensions.margin * 2,
-                    minWidth: Dimensions.screenWidth - Dimensions.margin * 2,
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                  }}
-                  description={() => (
-                    // <View>
-                    //   <View style={styles.fileContainer}>
-                    //     <View>
-                    //       <Image
-                    //         source={require("../../assets/icons/file.png")}
-                    //         style={styles.fileIcon}
-                    //       />
-                    //     </View>
-                    //   </View>
-                    // </View>
-                    <TouchableOpacity
-                      style={styles.fileContainer}
-                      onPress={() => {}}
-                    >
-                      <View style={styles.fileContent}>
-                        <Image
-                          source={require("../../assets/icons/file.png")}
-                          style={styles.file}
-                        />
-                        <View style={styles.content}>
-                          <View style={{}}>
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                justifyContent: "space-between",
-                              }}
-                            >
-                              <Text numberOfLines={1} variant="labelSmall">
-                                {"Kit cover"}
-                              </Text>
-                              <Image
-                                source={require("../../assets/icons/check.png")}
-                                style={styles.check}
-                              />
-                            </View>
-                            <Text numberOfLines={1} variant="labelSmall">
-                              {"200 KB"}
-                            </Text>
-                            <View style={styles.progress}>
-                              <ProgressBar
-                                color={palette.success600}
-                                progress={100}
-                                style={styles.progressBar}
-                              />
-                              <Text
-                                style={styles.progressText}
-                                variant="labelSmall"
-                              >
-                                {100} %
-                              </Text>
-                            </View>
-                          </View>
-                          {/* <Image
-                            source={require("../../assets/icons/check.png")}
-                            style={styles.check}
-                          /> */}
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  )}
-                  style={{
-                    paddingVertical: Dimensions.padding / 1.6,
-                  }}
-                  title={
-                    <View
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Text
-                        style={{ color: palette.grey600 }}
-                        variant="titleSmall"
-                      >
-                        Upload additional file
-                      </Text>
-                    </View>
-                  }
-                  descriptionStyle={{ backgroundColor: "red" }}
-                  titleStyle={{}}
-                />
-              </List.Accordion>
-            </List.AccordionGroup>
-          </ScrollView>
+          <View style={styles.contentContainer}>
+            <FlatList
+              contentContainerStyle={styles.arrowIndicator}
+              data={issueData}
+              ItemSeparatorComponent={itemSeperator}
+              keyExtractor={keyExtractor}
+              renderItem={renderItem}
+              showsVerticalScrollIndicator={false}
+              style={styles.ongoingCardList}
+            />
+          </View>
           <View style={styles.bottomContainer}>
             <View style={styles.attendanceContainer}>
               <PrimaryButton
@@ -459,9 +254,14 @@ const IssueDetails = ({ visible, hideModal, event }) => {
                 borderColor={palette.purple600}
                 content={"Add issue"}
                 textColor={CombinedDefaultTheme.colors.background}
+                onPress={onPress}
               />
             </View>
           </View>
+          <AddIssue
+            hideModal={() => setAddIssueVisible(false)}
+            visible={addIssueVisible}
+          />
         </SafeAreaView>
       </Modal>
     </>
@@ -513,6 +313,7 @@ const styles = StyleSheet.create({
     borderTopColor: palette.neutral100,
     borderTopWidth: 1,
     flex: 1,
+    zIndex: 5,
   },
   content: {
     flex: 1,

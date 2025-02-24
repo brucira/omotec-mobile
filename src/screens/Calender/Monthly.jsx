@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Calendar } from "react-native-big-calendar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions, events, monthly_events } from "../../utils/constant";
+import { Dimensions, events } from "../../utils/constant";
 
 const Monthly = ({ selectedDate, setSelectedDate }) => {
   const renderMontlyEvent = (event, touchableOpacityProps) => {
@@ -24,38 +25,40 @@ const Monthly = ({ selectedDate, setSelectedDate }) => {
   };
   return (
     <View style={styles.contentContainer}>
-      <Calendar
-        calendarCellStyle={{
-          backgroundColor: CombinedDefaultTheme.colors.background,
-          gap: Dimensions.margin / 4,
-        }}
-        eventCellStyle={(event) => ({
-          backgroundColor: event.specialDay
-            ? palette.success700
-            : event.background,
-          borderRadius: Dimensions.margin / 2.66,
-        })}
-        headerContainerStyle={{
-          backgroundColor: CombinedDefaultTheme.colors.background,
-        }}
-        date={selectedDate}
-        events={events}
-        height={600}
-        hideNowIndicator={false}
-        maxVisibleEventCount={3}
-        // renderCustomDateForMonth={(date) => <Text>{date.getDate()}</Text>}
-        mode="month"
-        overlapOffset={0}
-        renderEvent={renderMontlyEvent}
-        // showAllDayEventCell={true}
-        // eventsAreSorted={true}
-        sortedMonthView={true}
-        weekStartsOn={0}
-        // weekDayHeaderHighlightColor={"red"}
-        onSwipeEnd={(date) => {
-          setSelectedDate(date);
-        }}
-      />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Calendar
+          calendarCellStyle={{
+            backgroundColor: CombinedDefaultTheme.colors.background,
+            gap: Dimensions.margin / 4,
+          }}
+          eventCellStyle={(event) => ({
+            backgroundColor: event.specialDay
+              ? palette.success700
+              : event.background,
+            borderRadius: Dimensions.margin / 2.66,
+          })}
+          headerContainerStyle={{
+            backgroundColor: CombinedDefaultTheme.colors.background,
+          }}
+          date={selectedDate}
+          events={events}
+          height={600}
+          hideNowIndicator={false}
+          maxVisibleEventCount={3}
+          // renderCustomDateForMonth={(date) => <Text>{date.getDate()}</Text>}
+          mode="month"
+          overlapOffset={0}
+          renderEvent={renderMontlyEvent}
+          // showAllDayEventCell={true}
+          // eventsAreSorted={true}
+          sortedMonthView={true}
+          weekStartsOn={0}
+          // weekDayHeaderHighlightColor={"red"}
+          onSwipeEnd={(date) => {
+            setSelectedDate(date);
+          }}
+        />
+      </GestureHandlerRootView>
     </View>
   );
 };

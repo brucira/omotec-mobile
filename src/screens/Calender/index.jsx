@@ -14,6 +14,9 @@ import Weekly from "./Weekly";
 
 // const dayMap = ["S", "M", "T", "W", "T", "F", "S"];
 // const session_duration = 48 * 2;
+const MONTH_VIEW = "Month";
+const WEEK_VIEW = "Week";
+const DAILY_VIEW = "Day";
 const Calender = ({ navigation }) => {
   const viewData = [
     {
@@ -41,9 +44,7 @@ const Calender = ({ navigation }) => {
       title: "Month",
     },
   ];
-  const MONTH_VIEW = "Month";
-  const WEEK_VIEW = "Week";
-  const DAILY_VIEW = "Day";
+
   const [isUpcomingChecked, setIsUpcomingChecked] = useState(false);
   const [isOngoingChecked, setIsOngoingChecked] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);

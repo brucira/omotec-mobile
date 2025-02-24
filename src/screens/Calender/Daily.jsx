@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { Calendar } from "react-native-big-calendar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
@@ -141,6 +142,7 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
   };
   return (
     <View style={styles.contentContainer}>
+      {/* <GestureHandlerRootView style={{ flex: 1 }}> */}
       <Calendar
         ampm={true}
         bodyContainerStyle={styles.bodyContainerStyle}
@@ -162,6 +164,7 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
         onPressEvent={onPressEvent}
         onSwipeEnd={onSwipeEnd}
       />
+      {/* </GestureHandlerRootView> */}
       <FullEventDetails
         event={selectedEvent}
         hideModal={() => setVisible(false)}
@@ -211,7 +214,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: CombinedDefaultTheme.colors.background,
     borderColor: palette.grey200,
-    borderRightWidth: 1,
+    // borderRightWidth: 1,
     flex: 1,
     flexDirection: "row",
     maxHeight: 70,

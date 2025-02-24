@@ -5,61 +5,14 @@ import { Dimensions as NativeDimensions } from "react-native";
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
 
-export const testIDs = {
-  agenda: {
-    CONTAINER: "agenda",
-    ITEM: "item",
-  },
-  calendarList: { CONTAINER: "calendarList" },
-  calendars: {
-    CONTAINER: "calendars",
-    FIRST: "first_calendar",
-    LAST: "last_calendar",
-  },
-  expandableCalendar: { CONTAINER: "expandableCalendar" },
-  horizontalList: { CONTAINER: "horizontalList" },
-  menu: {
-    AGENDA: "agenda_btn",
-    AGENDA_INFINITE: "agenda_infinite_btn",
-    CALENDARS: "calendars_btn",
-    CALENDAR_LIST: "calendar_list_btn",
-    CONTAINER: "menu",
-    EXPANDABLE_CALENDAR: "expandable_calendar_btn",
-    HORIZONTAL_LIST: "horizontal_list_btn",
-    PLAYGROUND: "playground_btn",
-    TIMELINE_CALENDAR: "timeline_calendar_btn",
-    WEEK_CALENDAR: "week_calendar_btn",
-  },
-  weekCalendar: { CONTAINER: "weekCalendar" },
-};
-
-export const browseCourseCardData = [
+export const allDayEvents = [
   {
-    coverImage: require("../assets/dummy_22.png"),
-    enrolls: "12.1k",
-    id: 131,
-    location: "Mumbai",
-    rating: "4.5",
-    session: 12,
-    title: "Mastering Python",
-  },
-  {
-    coverImage: require("../assets/dummy_22.png"),
-    enrolls: "12.1k",
-    id: 132,
-    location: "Mumbai",
-    rating: "4.5",
-    session: 12,
-    title: "Mastering Python",
-  },
-  {
-    coverImage: require("../assets/dummy_22.png"),
-    enrolls: "12.1k",
-    id: 133,
-    location: "Mumbai",
-    rating: "4.5",
-    session: 12,
-    title: "Mastering Python",
+    background: "blue", // Ensure colors are correctly referenced
+    end: new Date(2025, 1, 12, 0, 0), // Corrected to February
+    specialDay: "Mahavir Jayanti",
+    start: new Date(2025, 1, 12, 23, 0), // Start of the day
+    subtitle: "Web Development",
+    title: "Holiday",
   },
 ];
 
@@ -91,6 +44,36 @@ export const barGraphAttendanceData = {
   ],
   labels: ["Batch 1", "Batch 2", "Batch 3", "Batch 4", "Batch 5"],
 };
+
+export const browseCourseCardData = [
+  {
+    coverImage: require("../assets/dummy_22.png"),
+    enrolls: "12.1k",
+    id: 131,
+    location: "Mumbai",
+    rating: "4.5",
+    session: 12,
+    title: "Mastering Python",
+  },
+  {
+    coverImage: require("../assets/dummy_22.png"),
+    enrolls: "12.1k",
+    id: 132,
+    location: "Mumbai",
+    rating: "4.5",
+    session: 12,
+    title: "Mastering Python",
+  },
+  {
+    coverImage: require("../assets/dummy_22.png"),
+    enrolls: "12.1k",
+    id: 133,
+    location: "Mumbai",
+    rating: "4.5",
+    session: 12,
+    title: "Mastering Python",
+  },
+];
 
 export const calendarTheme = {
   palette: {
@@ -459,6 +442,47 @@ export const events = [
   //   title: "RX-1002",
   // },
 ];
+
+export const issueData = [
+  {
+    description: "Video can't be accessed",
+    fileName: "Kit_cover.jpg",
+    fileSize: "200KB",
+    id: "IS-001",
+    name: "Issue 1",
+    severity: "High",
+    subHeading: "Initial Design Brainstorm",
+    uploads: [
+      {
+        fileName: "Kit_cover.jpg",
+        fileSize: "200KB",
+      },
+      {
+        fileName: "Kit_cover.jpg",
+        fileSize: "200KB",
+      },
+    ],
+  },
+  {
+    description: "Video can't be accessed",
+    fileName: "Kit_cover.jpg",
+    fileSize: "200KB",
+    id: "IS-002",
+    name: "Issue 1",
+    severity: "High",
+    subHeading: "Initial Design Brainstorm",
+    uploads: [
+      {
+        fileName: "Kit_cover.jpg",
+        fileSize: "200KB",
+      },
+      {
+        fileName: "Kit_cover.jpg",
+        fileSize: "200KB",
+      },
+    ],
+  },
+];
 export const lineGraphData = {
   datasets: [
     {
@@ -623,139 +647,6 @@ export const popularCourseCardData = [
     title: "Mastering Python",
   },
 ];
-export const monthly_events = [
-  {
-    background: palette.blue400,
-    end: dayjs("2025-02-17").toDate(),
-    start: dayjs("2025-02-11").toDate(),
-    title: "Web",
-  },
-  {
-    background: palette.pink700,
-    end: dayjs("2025-02-12").toDate(),
-    start: dayjs("2025-02-12").toDate(),
-    title: "Python",
-  },
-  {
-    background: palette.purple500,
-    end: dayjs("2025-02-27").toDate(),
-    start: dayjs("2025-02-13").toDate(),
-    title: "Java",
-  },
-  {
-    end: dayjs("2025-02-3").toDate(),
-    specialDay: true,
-    start: dayjs("2025-02-3").toDate(),
-    title: "Diwali",
-  },
-  {
-    background: palette.purple500,
-    end: dayjs("2025-02-7").toDate(),
-    start: dayjs("2025-02-7").toDate(),
-    title: "Java",
-  },
-  {
-    background: palette.yellow700,
-    end: dayjs("2025-02-7").toDate(),
-    start: dayjs("2025-02-7").toDate(),
-    title: "Java",
-  },
-  {
-    end: dayjs("2025-02-7").toDate(),
-    overlapPosition: 24,
-    specialDay: true,
-    start: dayjs("2025-02-7").toDate(),
-    title: "Makar Sankranti",
-  },
-  // {
-  //   end: dayjs("2025-02-13").toDate(),
-  //   specialDay: true,
-  //   start: dayjs("2025-02-13").toDate(),
-  //   special: "Diwali",
-  // },
-  {
-    background: palette.yellow700,
-    end: dayjs().add(5, "days").hour(0).minute(0).second(0).toDate(),
-    start: dayjs().hour(0).minute(0).second(0).toDate(),
-    title: "RX-1002",
-  },
-  // {
-  //   background: palette.yellow700,
-  //   end: new Date(
-  //     today.getFullYear(),
-  //     today.getMonth(),
-  //     today.getDate(),
-  //     12,
-  //     0
-  //   ),
-  //   start: new Date(
-  //     today.getFullYear(),
-  //     today.getMonth(),
-  //     today.getDate(),
-  //     11,
-  //     0
-  //   ),
-  //   subtitle: "Web Development Bootcamp · Mumbai",
-  //   title: "Proposal Submission",
-  // },
-  // {
-  //   background: palette.pink700,
-  //   end: new Date(
-  //     today.getFullYear(),
-  //     today.getMonth(),
-  //     today.getDate(),
-  //     13,
-  //     0
-  //   ),
-  //   start: new Date(
-  //     today.getFullYear(),
-  //     today.getMonth(),
-  //     today.getDate(),
-  //     12,
-  //     0
-  //   ),
-  //   subtitle: "Web Development Bootcamp · Mumbai",
-  //   title: "Proposal Submission",
-  // },
-  // {
-  //   background: palette.purple500,
-  //   end: new Date(
-  //     today.getFullYear(),
-  //     today.getMonth(),
-  //     today.getDate(),
-  //     15,
-  //     0
-  //   ),
-  //   start: new Date(
-  //     today.getFullYear(),
-  //     today.getMonth(),
-  //     today.getDate(),
-  //     14,
-  //     0
-  //   ),
-  //   subtitle: "Web Development Bootcamp · Mumbai",
-  //   title: "Proposal Submission",
-  // },
-  // {
-  //   background: palette.purple500,
-  //   end: new Date(
-  //     today.getFullYear(),
-  //     today.getMonth(),
-  //     today.getDate() + 1,
-  //     14,
-  //     0
-  //   ),
-  //   start: new Date(
-  //     today.getFullYear(),
-  //     today.getMonth(),
-  //     today.getDate() + 1,
-  //     11,
-  //     0
-  //   ),
-  //   subtitle: "Web Development Bootcamp · Mumbai",
-  //   title: "Proposal Submission",
-  // },
-];
 export const notificationData = [
   {
     course: "Robotic kit handling",
@@ -828,46 +719,7 @@ export const suggestions = [
   "JavaScript",
   "React",
 ];
-const wednusday = dayjs().day(3);
-export const week_events = [
-  {
-    allDay: true,
-    background: palette.blue400,
-    end: new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate(),
-      11,
-      0
-    ),
-    specialDay: "Mahavir Jayanti",
-    start: new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate(),
-      8,
-      0
-    ),
-    subtitle: "Web Development",
-    title: "Holiday",
-  },
-  {
-    allDay: true,
-    end: wednusday.add(4, "day").set("hour", 0).set("minute", 0).toDate(),
-    start: wednusday.add(4, "day").set("hour", 0).set("minute", 0).toDate(),
-    title: "Vacation Recovery",
-  },
-];
-export const allDayEvents = [
-  {
-    background: "blue", // Ensure colors are correctly referenced
-    end: new Date(2025, 1, 12, 0, 0), // Corrected to February
-    specialDay: "Mahavir Jayanti",
-    start: new Date(2025, 1, 12, 23, 0), // Start of the day
-    subtitle: "Web Development",
-    title: "Holiday",
-  },
-];
+
 export const weekEvents = [
   {
     allDayEvents: [{ title: "1" }],

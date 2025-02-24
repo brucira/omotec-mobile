@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Calendar } from "react-native-big-calendar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
@@ -181,42 +182,44 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
   };
   return (
     <View style={styles.contentContainer}>
-      <Calendar
-        bodyContainerStyle={{
-          backgroundColor: CombinedDefaultTheme.colors.background,
-          // marginTop: Dimensions.margin * 1.375,
-        }}
-        calendarCellStyle={{
-          backgroundColor: CombinedDefaultTheme.colors.background,
-          // left: 17,
-          position: "relative",
-          zIndex: -1,
-        }}
-        eventCellStyle={(event) => ({
-          backgroundColor: event.background,
-          borderRadius: Dimensions.margin / 2,
-          gap: Dimensions.margin / 2,
-          marginTop: 0,
-          // paddingHorizontal: Dimensions.padding / 1.33,
-          paddingVertical: Dimensions.padding / 2.66,
-        })}
-        ampm={true}
-        date={selectedDate}
-        events={events}
-        headerContentStyle={{}}
-        height={Dimensions.screenHeight}
-        hourRowHeight={52}
-        mode="week"
-        overlapOffset={0}
-        renderEvent={renderWeekEvent}
-        renderHeader={renderWeekHeader}
-        showAllDayEventCell={true}
-        swipeEnabled={true}
-        theme={calendarTheme}
-        onSwipeEnd={(date) => {
-          setSelectedDate(date);
-        }}
-      />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Calendar
+          bodyContainerStyle={{
+            backgroundColor: CombinedDefaultTheme.colors.background,
+            // marginTop: Dimensions.margin * 1.375,
+          }}
+          calendarCellStyle={{
+            backgroundColor: CombinedDefaultTheme.colors.background,
+            // left: 17,
+            position: "relative",
+            zIndex: -1,
+          }}
+          eventCellStyle={(event) => ({
+            backgroundColor: event.background,
+            borderRadius: Dimensions.margin / 2,
+            gap: Dimensions.margin / 2,
+            marginTop: 0,
+            // paddingHorizontal: Dimensions.padding / 1.33,
+            paddingVertical: Dimensions.padding / 2.66,
+          })}
+          ampm={true}
+          date={selectedDate}
+          events={events}
+          headerContentStyle={{}}
+          height={Dimensions.screenHeight}
+          hourRowHeight={52}
+          mode="week"
+          overlapOffset={0}
+          renderEvent={renderWeekEvent}
+          renderHeader={renderWeekHeader}
+          showAllDayEventCell={true}
+          swipeEnabled={true}
+          theme={calendarTheme}
+          onSwipeEnd={(date) => {
+            setSelectedDate(date);
+          }}
+        />
+      </GestureHandlerRootView>
     </View>
   );
 };
