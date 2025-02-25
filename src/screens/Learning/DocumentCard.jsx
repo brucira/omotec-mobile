@@ -9,23 +9,12 @@ import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions, RouteNames } from "../../utils/constant";
 
 const DocumentCard = ({
-  batch,
-  sessions,
-  tasks,
-  location,
+  cover,
+  documentType,
+  id,
+  lastModified,
+  modifiedBy,
   title,
-  date,
-  trainer,
-  subject,
-  duration,
-  avgPerformance,
-  avgProgress,
-  startDate,
-  endDate,
-  coverImage,
-  progressNumerator,
-  progressDenominator,
-  learningType,
 }) => {
   const calendarSource = require("../../assets/icons/calender.png");
   const userSource = require("../../assets/icons/user.png");
@@ -41,82 +30,38 @@ const DocumentCard = ({
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
       style={styles.container}
-      onPress={() =>
-        navigation.navigate(RouteNames.ProjectDetail, {
-          title,
-        })
-      }
+      // onPress={() =>
+      //   navigation.navigate(RouteNames.ProjectDetail, {
+      //     title,
+      //   })
+      // }
     >
-      <Image source={coverImage} style={styles.banner} />
+      <Image source={cover} style={styles.banner} />
       <View style={styles.cardContent}>
+        <Tag
+          backgroundColor={palette.primaryStudent50}
+          iconSource={bookSource}
+          label={documentType}
+          textColor={CombinedDefaultTheme.colors.primary}
+        />
         <Text
-          style={{ marginBottom: Dimensions.margin / 4 }}
-          variant="labelSmall"
+          numberOfLines={2}
+          style={styles.documentTitle}
+          variant="titleSmall"
         >
-          {learningType === COURSE
-            ? `${sessions + " Session •" + " Batch " + batch + " • " + location}`
-            : `${tasks + " Tasks •" + " Batch " + batch + " • " + location}`}
-        </Text>
-        <Text numberOfLines={2} variant="titleSmall">
           {title}
         </Text>
-        <View style={{ paddingVertical: Dimensions.padding / 2 }}>
-          <View style={{ flexDirection: "row", gap: Dimensions.padding / 2 }}>
-            <Tag
-              backgroundColor={palette.primaryStudent50}
-              iconSource={learningType === COURSE ? calendarSource : bookSource}
-              label={learningType === COURSE ? date : subject}
-              textColor={CombinedDefaultTheme.colors.primary}
-            />
-            <Tag
-              backgroundColor={palette.error50}
-              iconSource={learningType === COURSE ? userSource : clockSource}
-              label={learningType === COURSE ? trainer : duration}
-              textColor={palette.error600}
-            />
-          </View>
-        </View>
-        <View style={styles.progress}>
-          <ProgressBar
-            color={palette.success600}
-            progress={progressNumerator / progressDenominator}
-            style={styles.progressBar}
-          />
-          <Text style={styles.progressText} variant="labelSmall">
-            {progressNumerator + "/" + progressDenominator}
+        <View style={styles.cardFooter}>
+          <Text>
+            Last Modified on: <Text>{lastModified}</Text>
           </Text>
-        </View>
-        <View style={styles.statsContainer}>
-          <View style={styles.singleItemContainer}>
+          <View style={styles.modified}>
+            <Text>{" by"}</Text>
             <Image
-              source={
-                learningType === COURSE ? trendSource : calendarRangeSource
-              }
-              style={styles.endIcons}
-              tintColor={palette.grey700}
+              source={require("../../assets/avatar.png")}
+              style={styles.modifiedBy}
             />
-            <Text style={{ color: palette.grey700 }} variant="bodySmall">
-              {learningType === COURSE ? "Avg. Performance:" : "Start Date"}
-            </Text>
-            <Text style={{ color: palette.grey900 }} variant="bodySmall">
-              {learningType === COURSE ? avgPerformance : startDate}
-            </Text>
-          </View>
-          <View style={styles.singleItemContainer}>
-            <Image
-              source={
-                learningType === COURSE ? trendSource : calendarRangeSource
-              }
-              style={styles.endIcons}
-              tintColor={palette.grey700}
-            />
-            <Text style={{ color: palette.grey700 }} variant="bodySmall">
-              {" "}
-              {learningType === COURSE ? "Avg. Progress:" : "End Date"}
-            </Text>
-            <Text style={{ color: palette.grey900 }} variant="bodySmall">
-              {learningType === COURSE ? avgProgress : endDate}
-            </Text>
+            <Text>{modifiedBy}</Text>
           </View>
         </View>
       </View>
@@ -126,17 +71,21 @@ const DocumentCard = ({
 
 const styles = StyleSheet.create({
   banner: {
-    borderTopLeftRadius: Dimensions.padding / 2,
-    borderTopRightRadius: Dimensions.padding / 2,
-    height: 121,
+    borderRadius: Dimensions.padding / 2,
+    height: 131,
     padding: 0,
     resizeMode: "cover",
     width: "100%",
   },
   cardContent: {
     // flex: 1,
-    paddingHorizontal: Dimensions.padding / 1.14,
+    paddingHorizontal: Dimensions.padding,
     paddingVertical: Dimensions.padding / 1.33,
+  },
+  cardFooter: {
+    alignItems: "center",
+    flexDirection: "row",
+    paddingVertical: Dimensions.padding / 2,
   },
   container: {
     backgroundColor: CombinedDefaultTheme.colors.background,
@@ -150,6 +99,9 @@ const styles = StyleSheet.create({
   contentStyleContainer: {
     padding: 0,
   },
+  documentTitle: {
+    paddingTop: Dimensions.padding / 2,
+  },
   downIcon: {
     height: Dimensions.padding,
     width: Dimensions.padding,
@@ -158,6 +110,16 @@ const styles = StyleSheet.create({
     height: Dimensions.margin / 1.06,
     resizeMode: "contain",
     width: Dimensions.margin / 1.06,
+  },
+  modified: {
+    flexDirection: "row",
+    gap: Dimensions.margin / 4,
+  },
+  modifiedBy: {
+    borderRadius: Dimensions.margin * 3,
+    height: Dimensions.margin,
+    resizeMode: "contain",
+    width: Dimensions.margin,
   },
   progress: {
     alignItems: "center",

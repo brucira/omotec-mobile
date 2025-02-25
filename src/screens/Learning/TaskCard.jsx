@@ -8,28 +8,37 @@ import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions, RouteNames } from "../../utils/constant";
 
-const CourseTabCard = ({ activeTab, title, date, trainer, learningType }) => {
+const TaskCard = ({
+  avatar,
+  end_date,
+  id,
+  remark,
+  start_date,
+  status,
+  taskType,
+  test,
+  title,
+}) => {
   const calendarSource = require("../../assets/icons/calender.png");
   const clockSource = require("../../assets/icons/clock_five.png");
   const COURSE = "course";
   const navigation = useNavigation();
   const TAB_USER = "Users";
+  console.log(avatar, remark, title);
+
   return (
     <Card
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
       style={styles.container}
-      onPress={() =>
-        navigation.navigate(RouteNames.ProjectDetail, {
-          title,
-        })
-      }
+      //   onPress={() =>
+      //     navigation.navigate(RouteNames.ProjectDetail, {
+      //       title,
+      //     })
+      //   }
     >
       <View style={styles.headerContainer}>
-        <Image
-          source={require("../../assets/avatar_two.png")}
-          style={styles.banner}
-        />
+        <Image source={avatar} style={styles.banner} />
         <View style={styles.headerContentContainer}>
           <View style={styles.cardContent}>
             <Text
@@ -37,22 +46,20 @@ const CourseTabCard = ({ activeTab, title, date, trainer, learningType }) => {
               style={{ marginBottom: Dimensions.margin / 4 }}
               variant="labelLarge"
             >
-              Magnus Carlson
+              {title}
             </Text>
             <Tag
               backgroundColor={palette.tintPurple}
-              label={"Trainer"}
+              label={status}
               textColor={CombinedDefaultTheme.colors.primary}
             />
           </View>
           <Text
             numberOfLines={1}
             style={{ color: palette.grey600 }}
-            variant={activeTab === TAB_USER ? "labelMedium" : "labelLarge"}
+            variant={"labelLarge"}
           >
-            {activeTab === TAB_USER
-              ? "dolores.chambers@example.com"
-              : "Schedule Call"}
+            {taskType}
           </Text>
         </View>
       </View>
@@ -61,100 +68,64 @@ const CourseTabCard = ({ activeTab, title, date, trainer, learningType }) => {
         style={[
           styles.statsContainer,
           {
-            flexDirection: activeTab === TAB_USER ? "column" : "row",
-            justifyContent: activeTab === TAB_USER ? null : "space-between",
+            flexDirection: "row",
+            justifyContent: "space-between",
           },
         ]}
       >
         <View style={styles.singleItemContainer}>
           <Image
-            source={activeTab === TAB_USER ? clockSource : calendarSource}
+            source={calendarSource}
             style={styles.endIcons}
             tintColor={palette.grey700}
           />
           <Text style={{ color: palette.grey700 }} variant="bodySmall">
-            {activeTab === TAB_USER ? "Last login:" : "Start:"}
+            {"Start:"}
           </Text>
           <Text style={{ color: palette.grey900 }} variant="bodySmall">
-            {learningType === COURSE ? date : date}
+            {start_date}
           </Text>
         </View>
-        {activeTab !== TAB_USER && (
-          <View style={styles.singleItemContainer}>
-            <Image
-              source={activeTab === TAB_USER ? clockSource : calendarSource}
-              style={styles.endIcons}
-              tintColor={palette.grey700}
-            />
-            <Text style={{ color: palette.grey700 }} variant="bodySmall">
-              {activeTab === TAB_USER ? "Last login:" : "Start:"}
-            </Text>
-            <Text style={{ color: palette.grey900 }} variant="bodySmall">
-              {learningType === COURSE ? date : date}
-            </Text>
-          </View>
-        )}
-        {activeTab === TAB_USER && (
-          <View style={styles.certificate}>
-            <View style={styles.singleItemContainer}>
-              <Image
-                source={
-                  learningType === COURSE ? calendarSource : calendarSource
-                }
-                style={styles.endIcons}
-                tintColor={palette.grey700}
-              />
-              <Text style={{ color: palette.grey700 }} variant="bodySmall">
-                {" "}
-                {learningType === COURSE ? "Enrollment date:" : "End Date"}
-              </Text>
-              <Text style={{ color: palette.grey900 }} variant="bodySmall">
-                {learningType === COURSE ? date : date}
-              </Text>
-            </View>
-            <View style={styles.certificateContainer}>
-              <Image
-                source={require("../../assets/icons/download.png")}
-                style={styles.download}
-              />
-              <Text
-                style={{ color: CombinedDefaultTheme.colors.primary }}
-                variant="labelMedium"
-              >
-                Certificate
-              </Text>
-            </View>
-          </View>
-        )}
-      </View>
-      {activeTab !== TAB_USER && (
-        <>
-          <Divider style={styles.divider} />
 
-          <View style={styles.certificate}>
-            <View style={styles.singleItemContainer}>
-              <Text style={{ color: palette.grey700 }} variant="bodySmall">
-                {"Remark:"}
-              </Text>
-              <Text style={{ color: palette.grey900 }} variant="bodySmall">
-                {trainer}
-              </Text>
-            </View>
-            <View style={styles.certificateContainer}>
-              <Image
-                source={require("../../assets/icons/eye.png")}
-                style={styles.download}
-              />
-              <Text
-                style={{ color: CombinedDefaultTheme.colors.primary }}
-                variant="labelMedium"
-              >
-                View Issue
-              </Text>
-            </View>
-          </View>
-        </>
-      )}
+        <View style={styles.singleItemContainer}>
+          <Image
+            source={calendarSource}
+            style={styles.endIcons}
+            tintColor={palette.grey700}
+          />
+          <Text style={{ color: palette.grey700 }} variant="bodySmall">
+            {"End:"}
+          </Text>
+          <Text style={{ color: palette.grey900 }} variant="bodySmall">
+            {end_date}
+          </Text>
+        </View>
+      </View>
+
+      <Divider style={styles.divider} />
+
+      <View style={styles.certificate}>
+        <View style={styles.singleItemContainer}>
+          <Text style={{ color: palette.grey700 }} variant="bodySmall">
+            {"Remark:"}
+          </Text>
+          <Text style={{ color: palette.grey900 }} variant="bodySmall">
+            {remark === null ? "No remarks" : remark}
+          </Text>
+        </View>
+        <View style={styles.certificateContainer}>
+          <Image
+            source={require("../../assets/icons/eye.png")}
+            style={styles.download}
+          />
+          <Text
+            style={{ color: CombinedDefaultTheme.colors.primary }}
+            variant="labelMedium"
+          >
+            View Issue
+          </Text>
+        </View>
+      </View>
     </Card>
   );
 };
@@ -245,4 +216,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CourseTabCard;
+export default TaskCard;

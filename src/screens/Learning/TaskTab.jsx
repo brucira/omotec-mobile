@@ -26,10 +26,11 @@ import {
   Dimensions,
   dropdownData,
   events,
+  projectDetailTaskTabData,
   today,
 } from "../../utils/constant";
-import CourseTabCard from "./CourseTabCard";
 import IssueDetails from "./IssueDetails";
+import TaskCard from "./TaskCard";
 
 const VIEW = "view";
 const DUPLICATE = "duplicate";
@@ -153,7 +154,7 @@ const TaskTab = ({ activeTab }) => {
     eventBottomSheetModalRef.current?.present();
   }, []);
   const renderTaskItem = useCallback(
-    ({ item }) => <CourseTabCard activeTab={"Task"} {...item} />,
+    ({ item }) => <TaskCard {...item} />,
     // eslint-disable-next-line prettier/prettier
     []
   );
@@ -175,7 +176,7 @@ const TaskTab = ({ activeTab }) => {
           style={styles.searchBar}
         />
         <View style={{ flexDirection: "row", gap: Dimensions.margin * 1.25 }}>
-          {!showCalendarLayout ? (
+          {showCalendarLayout ? (
             <TouchableOpacity onPress={handleLayoutChange}>
               <Image
                 source={require("../../assets/icons/table_grid.png")}
@@ -203,10 +204,10 @@ const TaskTab = ({ activeTab }) => {
         </View>
       </View>
 
-      {showCalendarLayout ? (
+      {!showCalendarLayout ? (
         <FlatList
           contentContainerStyle={styles.arrowIndicator}
-          data={courseCardData}
+          data={projectDetailTaskTabData}
           ItemSeparatorComponent={itemSeperator}
           keyExtractor={keyExtractor}
           renderItem={renderTaskItem}

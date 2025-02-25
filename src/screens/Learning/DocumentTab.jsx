@@ -2,22 +2,25 @@ import React, { useCallback } from "react";
 import {
   FlatList,
   Image,
-  Pressable,
   StyleSheet,
   TouchableOpacity,
   View,
 } from "react-native";
-import { Searchbar, Text } from "react-native-paper";
+import { Searchbar } from "react-native-paper";
 
 import palette from "../../styles/palette";
-import { courseCardData, Dimensions, today } from "../../utils/constant";
-import CourseTabCard from "./CourseTabCard";
+import {
+  courseCardData,
+  Dimensions,
+  projectDetailDocumentTabData,
+} from "../../utils/constant";
+import DocumentCard from "./DocumentCard";
 
 const DocumentTab = ({ activeTab }) => {
   const keyExtractor = (item) => item.id.toString();
   const itemSeperator = () => <View style={styles.itemSeparator} />;
   const renderItem = useCallback(
-    ({ item }) => <CourseTabCard activeTab={"Users"} {...item} />,
+    ({ item }) => <DocumentCard {...item} />,
     // eslint-disable-next-line prettier/prettier
     []
   );
@@ -35,17 +38,13 @@ const DocumentTab = ({ activeTab }) => {
     />
   );
   return (
-    <View
-      // showsVerticalScrollIndicator={false}
-      style={{ flex: 1, marginBottom: Dimensions.margin * 1.5 }}
-    >
+    <View style={{ flex: 1, marginBottom: Dimensions.margin * 1.5 }}>
       <View style={styles.searchContainer}>
         <Searchbar
           icon={renderSearchIcon}
           inputStyle={styles.searchInput}
           placeholder="Search"
           placeholderTextColor={palette.grey400}
-          //   right={renderRightIcon}
           style={styles.searchBar}
         />
         <View style={{ flexDirection: "row", gap: Dimensions.margin * 1.25 }}>
@@ -59,11 +58,10 @@ const DocumentTab = ({ activeTab }) => {
       </View>
       <FlatList
         contentContainerStyle={styles.arrowIndicator}
-        data={courseCardData}
+        data={projectDetailDocumentTabData}
         ItemSeparatorComponent={itemSeperator}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        // scrollEnabled={false}
         showsVerticalScrollIndicator={false}
         style={styles.ongoingCardList}
       />

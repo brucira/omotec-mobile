@@ -11,10 +11,27 @@ import DocumentTab from "./DocumentTab";
 import TaskTab from "./TaskTab";
 import UserTab from "./UserTab";
 
-const TABS = ["Users", "Task", "Document", "Details"];
+const TABS = [
+  {
+    icon: require("../../assets/icons/user.png"),
+    name: "Users",
+  },
+  {
+    icon: require("../../assets/icons/book.png"),
+    name: "Task",
+  },
+  {
+    icon: require("../../assets/icons/documents.png"),
+    name: "Document",
+  },
+  {
+    icon: require("../../assets/icons/folder_check.png"),
+    name: "Details",
+  },
+];
 const ProjectDetail = ({ navigation }) => {
   const { title } = useRoute().params;
-  const [activeTab, setActiveTab] = useState(TABS[0]);
+  const [activeTab, setActiveTab] = useState(TABS[0].name);
 
   const renderTab = (item, index) => (
     <View key={index}>
@@ -27,7 +44,7 @@ const ProjectDetail = ({ navigation }) => {
           styles.tabButton,
           {
             backgroundColor:
-              activeTab === item
+              activeTab === item.name
                 ? CombinedDefaultTheme.colors.primary
                 : palette.grey100,
           },
@@ -35,28 +52,28 @@ const ProjectDetail = ({ navigation }) => {
         compact={true}
         contentStyle={styles.tabButtonContent}
         mode="contained"
-        onPress={() => setActiveTab(item)}
+        onPress={() => setActiveTab(item.name)}
       >
         <View style={styles.buttonContent}>
           <Image
             tintColor={
-              activeTab === item
+              activeTab === item.name
                 ? CombinedDefaultTheme.colors.background
                 : palette.grey600
             }
-            source={require("../../assets/icons/user.png")}
+            source={item.icon}
             style={styles.tabIconImage}
           />
           <Text
             style={{
               color:
-                activeTab === item
+                activeTab === item.name
                   ? CombinedDefaultTheme.colors.background
                   : palette.grey600,
             }}
             variant="labelLarge"
           >
-            {item}
+            {item.name}
           </Text>
         </View>
       </Button>
@@ -98,7 +115,6 @@ const ProjectDetail = ({ navigation }) => {
             flex: 1,
             flexDirection: "row",
             flexGrow: 1,
-            minWidth: "100%",
           }}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -266,7 +282,7 @@ const styles = StyleSheet.create({
     // row: Dimensions.margin / 1.33,
     // flex: 1,
     // flexDirection: "column",
-    paddingLeft: Dimensions.margin,
+    paddingHorizontal: Dimensions.margin,
     paddingTop: Dimensions.padding * 1.25,
     // maxHeight: 28,
   },

@@ -5,16 +5,13 @@ import {
   Modal,
   SafeAreaView,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
-import { Appbar, DataTable, Searchbar, Switch, Text } from "react-native-paper";
+import { Appbar, Searchbar, Text } from "react-native-paper";
 
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
-import { Dimensions, dropdownData } from "../utils/constant";
-import Tag from "./Tag";
+import { Dimensions } from "../utils/constant";
 
 const PRESENT = "present";
 const StudentList = ({
@@ -26,10 +23,6 @@ const StudentList = ({
   event,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState();
-  const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState();
-  const [isProgressSubjectFocus, setIsProgressSubjectFocus] = useState(false);
-  const [items] = useState([]);
   const handleSearch = () => {};
   const handleSearchSubmit = () => {};
   const itemSeperator = () => <View style={styles.itemSeparator} />;
