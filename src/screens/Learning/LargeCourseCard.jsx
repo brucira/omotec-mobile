@@ -26,6 +26,7 @@ const LargeCourseCard = ({
   progressNumerator,
   progressDenominator,
   learningType,
+  isProjectCard = false,
 }) => {
   const calendarSource = require("../../assets/icons/calender.png");
   const userSource = require("../../assets/icons/user.png");
@@ -36,16 +37,22 @@ const LargeCourseCard = ({
   const COURSE = "course";
   const navigation = useNavigation();
 
+  const navigationHandler = () => {
+    const pageProps = { title };
+
+    const routeName = isProjectCard
+      ? RouteNames.ProjectDetail
+      : RouteNames.Course;
+
+    navigation.navigate(routeName, pageProps);
+  };
+
   return (
     <Card
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
       style={styles.container}
-      onPress={() =>
-        navigation.navigate(RouteNames.ProjectDetail, {
-          title,
-        })
-      }
+      onPress={navigationHandler}
     >
       <Image source={coverImage} style={styles.banner} />
       <View style={styles.cardContent}>

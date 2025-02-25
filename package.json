@@ -15,6 +15,7 @@
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.3",
     "@gorhom/bottom-sheet": "^5.1.1",
+    "@react-native-community/datetimepicker": "8.2.0",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/native-stack": "^7.2.0",
@@ -26,6 +27,7 @@
     "expo-image": "^2.0.4",
     "expo-splash-screen": "^0.29.21",
     "expo-status-bar": "~2.0.1",
+    "lint": "^0.8.19",
     "react": "18.3.1",
     "react-native": "0.76.6",
     "react-native-big-calendar": "^4.17.1",
@@ -38,13 +40,12 @@
     "react-native-safe-area-context": "^5.1.0",
     "react-native-screens": "^4.5.0",
     "react-native-svg": "^15.11.1",
-    "react-native-vector-icons": "^10.2.0",
-    "@react-native-community/datetimepicker": "8.2.0"
+    "react-native-vector-icons": "^10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@eslint/js": "^9.18.0",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-expo": "^8.0.1",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "^2.31.0",
@@ -53,7 +54,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.2",
     "typescript": "^5.7.3"
   },
   "private": true

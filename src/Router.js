@@ -6,6 +6,7 @@ import { StyleSheet, View } from "react-native";
 import { BottomNavigation, Text, TouchableRipple } from "react-native-paper";
 
 import Calender from "./screens/Calender";
+import CourseDetail from "./screens/Course";
 import Home from "./screens/Home";
 import Learning from "./screens/Learning";
 import ProjectDetail from "./screens/Learning/ProjectDetail";
@@ -182,6 +183,7 @@ const Router = () => {
           name={RouteNames.Notifications}
         />
         <Stack.Screen component={Profile} name={RouteNames.Profile} />
+        <Stack.Screen component={CourseDetail} name={RouteNames.Course} />
       </Stack.Navigator>
     </NavigationContainer>
   );

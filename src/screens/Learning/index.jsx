@@ -33,9 +33,9 @@ const Learning = ({ navigation }) => {
     <LargeCourseCard key={item.id} {...item} />
   );
 
-  const renderItemForProject = ({ index, item }) => (
-    <LargeCourseCard key={item.id} {...item} />
-  );
+  const renderItemForProject = ({ index, item }) => {
+    return <LargeCourseCard key={item.id} {...item} isProjectCard={true} />;
+  };
 
   const handleTabPress = (tab) => {
     setActiveTab(tab);
