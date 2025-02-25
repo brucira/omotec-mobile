@@ -9,10 +9,11 @@ import {
 } from "react-native";
 import { Appbar, Portal, Switch, Text } from "react-native-paper";
 
-import palette from "../../styles/palette";
-import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions } from "../../utils/constant";
+import palette from "../styles/palette";
+import { CombinedDefaultTheme } from "../styles/theme";
+import { Dimensions } from "../utils/constant";
 import AttendanceDetails from "./AttendanceDetails";
+import StudentList from "./StudentList";
 
 const formatDateTimeRange = (startISO, endISO) => {
   const startDate = new Date(startISO);
@@ -42,9 +43,10 @@ const formatDateTimeRange = (startISO, endISO) => {
   };
 };
 
-const FullEventDetails = ({ visible, hideModal, event }) => {
+const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
   const [attendanceVisible, setAttendanceVisible] = useState(false);
+  const [studentListVisible, setStudentListVisible] = useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   const hideAttendanceModal = () => setAttendanceVisible(false);
   const [studentVisible, setStudentVisible] = useState(true);
@@ -57,6 +59,9 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
   const onViewAttendancePress = (event) => {
     setAttendanceVisible(true);
   };
+  const onShowStudentPress = (event) => {
+    setStudentListVisible(true);
+  };
   return (
     <>
       <Modal
@@ -68,7 +73,7 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
         <SafeAreaView style={styles.container}>
           <Appbar style={styles.appBarContainer}>
             <Appbar.Action
-              icon={require("../../assets/icons/close.png")}
+              icon={require("../assets/icons/close.png")}
               style={styles.backIcon}
               onPress={hideModal}
             />
@@ -87,7 +92,7 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
             </View>
             <View style={styles.contentSeperator}>
               <Image
-                source={require("../../assets/icons/user.png")}
+                source={require("../assets/icons/user.png")}
                 style={[styles.badge]}
                 tintColor={palette.grey700}
               />
@@ -98,7 +103,7 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
             </View>
             <View style={styles.contentSeperator}>
               <Image
-                source={require("../../assets/icons/courses.png")}
+                source={require("../assets/icons/courses.png")}
                 style={[styles.badge]}
                 tintColor={palette.grey700}
               />
@@ -109,7 +114,7 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
             </View>
             <View style={styles.contentSeperator}>
               <Image
-                source={require("../../assets/icons/users.png")}
+                source={require("../assets/icons/users.png")}
                 style={[styles.badge]}
                 tintColor={palette.grey700}
               />
@@ -117,7 +122,9 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
                 <Text variant="bodyMedium">Batch: </Text>
                 <Text variant="bodyMedium">{event.batchName} -</Text>
                 {studentCount > 0 && (
-                  <TouchableOpacity onPress={() => setStudentVisible(true)}>
+                  <TouchableOpacity
+                    onPress={(event) => onShowStudentPress(event)}
+                  >
                     <Text style={styles.studentCount}>
                       {" "}
                       {studentCount > 1
@@ -146,7 +153,7 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
             </View>
             <View style={styles.contentSeperator}>
               <Image
-                source={require("../../assets/icons/map.png")}
+                source={require("../assets/icons/map.png")}
                 style={[styles.badge]}
                 tintColor={palette.grey700}
               />
@@ -159,7 +166,7 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
             </View>
             <View style={styles.contentSeperatorMultiple}>
               <Image
-                source={require("../../assets/icons/menu.png")}
+                source={require("../assets/icons/menu.png")}
                 style={[styles.badge]}
                 tintColor={palette.grey700}
               />
@@ -169,13 +176,13 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
             </View>
             <View style={styles.contentSeperatorMultiple}>
               <Image
-                source={require("../../assets/icons/attachment.png")}
+                source={require("../assets/icons/attachment.png")}
                 style={[styles.badge]}
                 tintColor={palette.grey700}
               />
               <View style={styles.fileContainer}>
                 <Image
-                  source={require("../../assets/icons/file_text.png")}
+                  source={require("../assets/icons/file_text.png")}
                   style={[styles.badge]}
                   tintColor={palette.grey700}
                 />
@@ -186,7 +193,7 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
             </View>
             <View style={styles.contentSeperator}>
               <Image
-                source={require("../../assets/icons/notification.png")}
+                source={require("../assets/icons/notification.png")}
                 style={[styles.badge]}
                 tintColor={palette.grey700}
               />
@@ -195,30 +202,32 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
               </View>
             </View>
           </View>
-          <View style={styles.bottomContainer}>
-            <View style={styles.attendanceContainer}>
-              <Text style={{ color: palette.grey500 }} variant="titleMedium">
-                Attendance?
-              </Text>
-              <Text
-                style={{ color: CombinedDefaultTheme.colors.primary }}
-                variant="titleMedium"
-                onPress={(event) => onViewAttendancePress(event)}
-              >
-                View
-              </Text>
+          {showAttendance && (
+            <View style={styles.bottomContainer}>
+              <View style={styles.attendanceContainer}>
+                <Text style={{ color: palette.grey500 }} variant="titleMedium">
+                  Attendance?
+                </Text>
+                <Text
+                  style={{ color: CombinedDefaultTheme.colors.primary }}
+                  variant="titleMedium"
+                  onPress={(event) => onViewAttendancePress(event)}
+                >
+                  View
+                </Text>
+              </View>
+              <View style={styles.presentMarkingContainer}>
+                <Switch
+                  style={styles.switch}
+                  thumbColor={CombinedDefaultTheme.colors.background}
+                  trackColor={{ true: palette.success600 }}
+                  value={isSwitchOn}
+                  onValueChange={onToggleSwitch}
+                />
+                <Text variant="titleMedium">Present</Text>
+              </View>
             </View>
-            <View style={styles.presentMarkingContainer}>
-              <Switch
-                style={styles.switch}
-                thumbColor={CombinedDefaultTheme.colors.background}
-                trackColor={{ true: palette.success600 }}
-                value={isSwitchOn}
-                onValueChange={onToggleSwitch}
-              />
-              <Text variant="titleMedium">Present</Text>
-            </View>
-          </View>
+          )}
 
           <AttendanceDetails
             attendanceList={event.attendance}
@@ -228,6 +237,14 @@ const FullEventDetails = ({ visible, hideModal, event }) => {
             hideModal={() => setAttendanceVisible(false)}
             visible={attendanceVisible}
             onToggleSwitch={onToggleSwitch}
+          />
+          <StudentList
+            event={event}
+            formattedDateTime={formattedDateTime}
+            hideModal={() => setStudentListVisible(false)}
+            studentList={event.batchStudents}
+            visible={studentListVisible}
+            // onToggleSwitch={onToggleSwitch}
           />
         </SafeAreaView>
       </Modal>

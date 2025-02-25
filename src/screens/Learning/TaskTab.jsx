@@ -16,6 +16,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { Button, Searchbar, Text } from "react-native-paper";
 
 import BottomDrawer from "../../components/BottomDrawer";
+import FullEventDetails from "../../components/FullEventDetails";
 import PrimaryButton from "../../components/PrimaryButton";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
@@ -27,7 +28,6 @@ import {
   events,
   today,
 } from "../../utils/constant";
-import FullEventDetails from "../Calender/FullEventDetails";
 import CourseTabCard from "./CourseTabCard";
 import IssueDetails from "./IssueDetails";
 
@@ -98,149 +98,6 @@ const TaskTab = ({ activeTab }) => {
       </TouchableOpacity>
     );
   };
-  // const renderHeader = (prop) => {
-  //   if (!prop.dateRange || prop.dateRange.length === 0) return null;
-  //   const { day, month, dayName } = extractDateInfo(prop.dateRange[0]);
-  //   const formattedDate = `${day.toString().padStart(2, "0")}-${month
-  //     .toString()
-  //     .padStart(2, "0")}`;
-  //   const specialDay = specialDays[formattedDate];
-  //   const hasSpecialDay = prop.dateRange.some((date) => {
-  //     const formattedDate = date.format("DD-MM");
-  //     return specialDays[formattedDate];
-  //   });
-  //   return (
-  //     <View style={{ position: "relative" }}>
-  //       <View style={styles.weekHeaderContainer}>
-  //         <View style={styles.weekNumberContainer}>
-  //           <View></View>
-  //         </View>
-  //         {prop.dateRange.map((date) => {
-  //           const formattedDate = date.format("DD-MM");
-  //           const specialDay = specialDays[formattedDate];
-  //           const shouldHighlight = true;
-  //           return (
-  //             <TouchableOpacity
-  //               key={date.toString()}
-  //               style={{
-  //                 // backgroundColor: "red",
-  //                 borderColor: palette.grey200,
-  //                 flex: 1,
-  //                 gap: 12,
-  //                 paddingTop: 2,
-  //               }}
-  //             >
-  //               <View
-  //                 style={[
-  //                   {
-  //                     // backgroundColor: CombinedDefaultTheme.colors.primary,
-  //                     backgroundColor: !shouldHighlight
-  //                       ? CombinedDefaultTheme.colors.background
-  //                       : CombinedDefaultTheme.colors.primary,
-  //                     borderRadius: Dimensions.margin / 2,
-  //                     fontSize: 10,
-  //                     justifyContent: "space-between",
-  //                     marginHorizontal: Dimensions.margin / 3,
-  //                     paddingTop: Dimensions.padding / 2.66,
-  //                   },
-  //                 ]}
-  //               >
-  //                 <Text
-  //                   style={[
-  //                     { textAlign: "center" },
-  //                     {
-  //                       color: !shouldHighlight
-  //                         ? palette.grey500
-  //                         : CombinedDefaultTheme.colors.background,
-  //                     },
-  //                   ]}
-  //                 >
-  //                   {date.format("dd")}
-  //                 </Text>
-  //                 <View
-  //                   style={{
-  //                     alignItems: "center",
-  //                     alignSelf: "center",
-  //                     borderRadius: 40,
-  //                     height: 36,
-  //                     justifyContent: "center",
-  //                     width: 36,
-  //                     zIndex: 10,
-  //                   }}
-  //                 >
-  //                   <Text
-  //                     style={[
-  //                       {
-  //                         color: !shouldHighlight
-  //                           ? palette.grey700
-  //                           : CombinedDefaultTheme.colors.background,
-  //                         textAlign: "center",
-  //                       },
-  //                     ]}
-  //                   >
-  //                     {date.format("D")}
-  //                   </Text>
-  //                 </View>
-  //               </View>
-  //               <View
-  //                 style={{
-  //                   // backgroundColor: "red",
-  //                   borderColor: palette.grey200,
-  //                   borderLeftWidth: 1,
-  //                   height: 24,
-  //                   marginTop: hasSpecialDay ? Dimensions.margin : 0,
-  //                   position: "relative",
-  //                 }}
-  //               >
-  //                 {specialDay && (
-  //                   <TouchableOpacity
-  //                     style={[styles.eventCellCss, "red", { bottom: 4 }]}
-  //                   >
-  //                     <Text
-  //                       style={{
-  //                         backgroundColor: palette.success700,
-  //                         color: CombinedDefaultTheme.colors.background,
-  //                         height: 24,
-  //                         paddingLeft: Dimensions.padding / 2,
-  //                         paddingVertical: Dimensions.padding / 4,
-  //                       }}
-  //                       numberOfLines={1}
-  //                       variant="labelSmall"
-  //                     >
-  //                       {specialDay}
-  //                     </Text>
-  //                   </TouchableOpacity>
-  //                 )}
-  //               </View>
-  //             </TouchableOpacity>
-  //           );
-  //         })}
-  //         {/* </View> */}
-  //       </View>
-  //       <View
-  //         style={[
-  //           styles.sessionWeekIndicatorContainer,
-  //           {
-  //             bottom: hasSpecialDay
-  //               ? Dimensions.margin * 2
-  //               : Dimensions.margin / 4,
-  //           },
-  //         ]}
-  //       >
-  //         <View style={styles.weekVideoIconContainer}>
-  //           <Image
-  //             source={require("../../assets/icons/video.png")}
-  //             style={styles.weekVideoIcon}
-  //           />
-  //           <Image
-  //             source={require("../../assets/icons/session_line.png")}
-  //             style={styles.sessionLine}
-  //           />
-  //         </View>
-  //       </View>
-  //     </View>
-  //   );
-  // };
   const handleLayoutChange = () => {
     setShowCalendarLayout((prev) => !prev);
   };
@@ -521,6 +378,7 @@ const TaskTab = ({ activeTab }) => {
           <FullEventDetails
             event={selectedEvent}
             hideModal={() => setVisible(false)}
+            showAttendance={false}
             visible={visible}
           />
           <IssueDetails

@@ -1,3 +1,4 @@
+import { useFocusEffect } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
@@ -112,6 +113,13 @@ const Calender = ({ navigation }) => {
       isSameDate(selectedDate, today);
     }
   }, [selectedDate]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => setShowDropdown(false);
+      // eslint-disable-next-line prettier/prettier
+    }, [])
+  );
 
   return (
     <View style={styles.container}>

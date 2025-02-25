@@ -10,6 +10,7 @@ import {
 import { Calendar } from "react-native-big-calendar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import FullEventDetails from "../../components/FullEventDetails";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import {
@@ -19,7 +20,6 @@ import {
   specialDays,
   today,
 } from "../../utils/constant";
-import FullEventDetails from "./FullEventDetails";
 
 const MAX_WIDTH = 68;
 const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
@@ -168,6 +168,7 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
       <FullEventDetails
         event={selectedEvent}
         hideModal={() => setVisible(false)}
+        showAttendance={true}
         visible={visible}
       />
     </View>

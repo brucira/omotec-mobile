@@ -1,5 +1,7 @@
+import * as DocumentPicker from "expo-document-picker";
 import React, { useCallback, useRef, useState } from "react";
 import {
+  FlatList,
   Image,
   Keyboard,
   Modal,
@@ -12,14 +14,12 @@ import {
 import { Dropdown } from "react-native-element-dropdown";
 import {
   Appbar,
-  Card,
   ProgressBar,
   Surface,
   Text,
   TextInput,
 } from "react-native-paper";
 
-import BottomDrawer from "../../components/BottomDrawer";
 import PrimaryButton from "../../components/PrimaryButton";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
@@ -32,10 +32,225 @@ const AddIssue = ({ visible, hideModal }) => {
   const [severityType, setSeverityType] = useState(MODERATE);
   const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState();
   const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState();
+  const [allFiles, setAllFiles] = useState([]);
+  const [currentFile, setCurrentFile] = useState(null);
   const bottomDrawerRef = useRef(null);
+  const handleDelete = (fileId) => {
+    setAllFiles((prevFiles) => prevFiles.filter((file) => file.id !== fileId));
+  };
+  const itemSeperator = () => <View style={styles.itemSeparator} />;
+  const keyExtractor = (item) => item.toString();
+  const renderItem = ({ file }) => (
+    <View style={styles.contentContainer}>
+      <View>
+        <Text>Issue ID</Text>
+        <Surface
+          elevation={Platform.OS === "ios" ? 6 : null}
+          mode="flat"
+          style={styles.surface}
+        >
+          <TextInput
+            contentStyle={styles.issueContentStyle}
+            cursorColor={palette.grey900}
+            dense={true}
+            editable={false}
+            // disabled={true}
+            style={styles.issueInput}
+            underlineColor={CombinedDefaultTheme.colors.background}
+            value="IS-001"
+          />
+        </Surface>
+      </View>
+      <View>
+        <Text>Issue Name</Text>
+        <Surface
+          elevation={Platform.OS === "ios" ? 6 : null}
+          mode="flat"
+          style={styles.surface}
+        >
+          <TextInput
+            activeUnderlineColor={palette.grey200}
+            contentStyle={styles.issueContentStyle}
+            cursorColor={palette.grey900}
+            dense={true}
+            placeholder="Video Playback Error"
+            selectionColor={palette.grey900}
+            style={styles.issueInput}
+            underlineColor={CombinedDefaultTheme.colors.background}
+          />
+        </Surface>
+      </View>
+      <View>
+        <Text>Severity</Text>
+        <Surface
+          elevation={Platform.OS === "ios" ? 6 : null}
+          mode="flat"
+          style={styles.surface}
+        >
+          <TouchableOpacity
+            // activeUnderlineColor={palette.grey200}
+            // contentStyle={styles.issueContentStyle}
+            // dense={true}
+            style={styles.severity}
+            // underlineColor={CombinedDefaultTheme.colors.background}
+            // value={severityType}
+            onPress={handleSeverity}
+          >
+            <Dropdown
+              search
+              renderRightIcon={() => (
+                <Image
+                  color={focusOfFirstDropdown ? "blue" : "black"}
+                  // name="Safety"
+                  source={require("../../assets/icons/chevron_down.png")}
+                  // size={20}
+                  style={styles.dropDownIcon}
+                />
+              )}
+              data={dropdownData}
+              iconStyle={styles.iconStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              labelField="label"
+              maxHeight={300}
+              placeholder={!focusOfFirstDropdown ? "Status" : "..."}
+              placeholderStyle={styles.placeholderStyle}
+              searchPlaceholder="Search..."
+              selectedTextStyle={styles.selectedTextStyle}
+              style={[styles.singleList, { borderColor: palette.transparent }]}
+              value={valueOfFirstDropdown}
+              valueField="value"
+              onChange={(item) => {
+                setValueOfFirstDropdown(item.value);
+                setFocusOfFirstDropdown(false);
+              }}
+              onBlur={() => setFocusOfFirstDropdown(false)}
+              onFocus={() => setFocusOfFirstDropdown(true)}
+            />
+          </TouchableOpacity>
+        </Surface>
+      </View>
+      <View>
+        <Text>Description</Text>
+        <Surface
+          elevation={Platform.OS === "ios" ? 6 : null}
+          mode="flat"
+          style={styles.surface}
+        >
+          <TextInput
+            activeUnderlineColor={palette.transparent}
+            blurOnSubmit={true}
+            contentStyle={styles.issueDescriptionContentStyle}
+            cursorColor={palette.grey900}
+            dense={true}
+            multiline={true}
+            numberOfLines={10}
+            placeholder="Video Playback Error"
+            selectionColor={palette.grey900}
+            style={styles.issueDescription}
+            underlineColor={CombinedDefaultTheme.colors.background}
+            onSubmitEditing={() => Keyboard.dismiss()}
+          />
+        </Surface>
+      </View>
+      <View>
+        <Text>Upload additional file</Text>
+        {allFiles.map((file, index) => (
+          <TouchableOpacity
+            key={file.id}
+            style={styles.assignmentContainer}
+            onPress={() => {}}
+          >
+            <View style={styles.fileContent}>
+              <Image
+                source={require("../../assets/icons/file.png")}
+                style={styles.file}
+              />
+              <View style={styles.content}>
+                <View>
+                  <View style={styles.checkIconContainer}>
+                    <Text
+                      numberOfLines={1}
+                      style={{ maxWidth: "80%" }}
+                      variant="labelSmall"
+                    >
+                      {file.fileName}
+                      {/* kit_cover.jpg */}
+                    </Text>
+                    <TouchableOpacity onPress={() => handleDelete(file.id)}>
+                      <Image
+                        source={require("../../assets/icons/trash_bin.png")}
+                        style={styles.backIcon}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <Text numberOfLines={1} variant="labelSmall">
+                    {file.fileSize}
+                    {/* 200KB */}
+                  </Text>
+                  <View style={styles.progress}>
+                    <ProgressBar
+                      color={palette.success600}
+                      progress={100 / 100}
+                      style={styles.progressBar}
+                    />
+                    <Text style={styles.progressText} variant="labelSmall">
+                      {100} %
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
+
+        <TouchableOpacity
+          style={styles.addFileContainer}
+          onPress={pickDocument}
+        >
+          <Image
+            source={require("../../assets/icons/plus.png")}
+            style={styles.backIcon}
+          />
+          <Text
+            style={{ color: CombinedDefaultTheme.colors.primary }}
+            variant="labelMedium"
+          >
+            Add additional files
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
   const handleSeverity = useCallback(() => {
     bottomDrawerRef.current?.present();
   }, []);
+  const formatFileSize = useCallback((bytes) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+    if (bytes < 1024 * 1024 * 1024)
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+  }, []);
+  const pickDocument = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "*/*",
+      });
+      if (result.canceled) return;
+      const selectedFile = result.assets[0];
+      const newFile = {
+        fileName: selectedFile.name,
+        fileSize: formatFileSize(selectedFile.size),
+        fileType: selectedFile.mimeType,
+        id: Date.now(),
+        progress: 0,
+        uri: selectedFile.uri,
+      };
+      setAllFiles((prevFiles) => [...prevFiles, newFile]);
+    } catch (error) {
+      console.log("error detail: ", error);
+    }
+  };
   return (
     <Modal
       animationType="slide"
@@ -54,163 +269,15 @@ const AddIssue = ({ visible, hideModal }) => {
             title={<Text variant="titleMedium">Add issue</Text>}
           />
         </Appbar>
-        <View style={styles.contentContainer}>
-          <View>
-            <Text>Issue ID</Text>
-            <Surface
-              elevation={Platform.OS === "ios" ? 6 : null}
-              mode="flat"
-              style={styles.surface}
-            >
-              <TextInput
-                contentStyle={styles.issueContentStyle}
-                cursorColor={palette.grey900}
-                dense={true}
-                editable={false}
-                // disabled={true}
-                style={styles.issueInput}
-                underlineColor={CombinedDefaultTheme.colors.background}
-                value="IS-001"
-              />
-            </Surface>
-          </View>
-          <View>
-            <Text>Issue Name</Text>
-            <Surface
-              elevation={Platform.OS === "ios" ? 6 : null}
-              mode="flat"
-              style={styles.surface}
-            >
-              <TextInput
-                activeUnderlineColor={palette.grey200}
-                contentStyle={styles.issueContentStyle}
-                cursorColor={palette.grey900}
-                dense={true}
-                placeholder="Video Playback Error"
-                selectionColor={palette.grey900}
-                style={styles.issueInput}
-                underlineColor={CombinedDefaultTheme.colors.background}
-              />
-            </Surface>
-          </View>
-          <View>
-            <Text>Severity</Text>
-            <Surface
-              elevation={Platform.OS === "ios" ? 6 : null}
-              mode="flat"
-              style={styles.surface}
-            >
-              <TouchableOpacity
-                // activeUnderlineColor={palette.grey200}
-                // contentStyle={styles.issueContentStyle}
-                // dense={true}
-                style={styles.severity}
-                // underlineColor={CombinedDefaultTheme.colors.background}
-                // value={severityType}
-                onPress={handleSeverity}
-              >
-                <Dropdown
-                  search
-                  renderRightIcon={() => (
-                    <Image
-                      color={focusOfFirstDropdown ? "blue" : "black"}
-                      // name="Safety"
-                      source={require("../../assets/icons/chevron_down.png")}
-                      // size={20}
-                      style={styles.dropDownIcon}
-                    />
-                  )}
-                  style={[
-                    styles.singleList,
-                    { borderColor: palette.transparent },
-                  ]}
-                  data={dropdownData}
-                  iconStyle={styles.iconStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  labelField="label"
-                  maxHeight={300}
-                  placeholder={!focusOfFirstDropdown ? "Status" : "..."}
-                  placeholderStyle={styles.placeholderStyle}
-                  searchPlaceholder="Search..."
-                  selectedTextStyle={styles.selectedTextStyle}
-                  value={valueOfFirstDropdown}
-                  valueField="value"
-                  onChange={(item) => {
-                    setValueOfFirstDropdown(item.value);
-                    setFocusOfFirstDropdown(false);
-                  }}
-                  onBlur={() => setFocusOfFirstDropdown(false)}
-                  onFocus={() => setFocusOfFirstDropdown(true)}
-                />
-              </TouchableOpacity>
-            </Surface>
-          </View>
-          <View>
-            <Text>Description</Text>
-            <Surface
-              elevation={Platform.OS === "ios" ? 6 : null}
-              mode="flat"
-              style={styles.surface}
-            >
-              <TextInput
-                activeUnderlineColor={palette.transparent}
-                blurOnSubmit={true}
-                contentStyle={styles.issueDescriptionContentStyle}
-                cursorColor={palette.grey900}
-                dense={true}
-                multiline={true}
-                numberOfLines={10}
-                placeholder="Video Playback Error"
-                selectionColor={palette.grey900}
-                style={styles.issueDescription}
-                underlineColor={CombinedDefaultTheme.colors.background}
-                onSubmitEditing={() => Keyboard.dismiss()}
-              />
-            </Surface>
-          </View>
-          <View>
-            <Text>Upload additional file</Text>
-            <TouchableOpacity
-              style={styles.assignmentContainer}
-              onPress={() => {}}
-            >
-              <View style={styles.fileContent}>
-                <Image
-                  source={require("../../assets/icons/file.png")}
-                  style={styles.file}
-                />
-                <View style={styles.content}>
-                  <View>
-                    <View style={styles.checkIconContainer}>
-                      <Text numberOfLines={1} variant="labelSmall">
-                        {/* {fileName} */}
-                        kit_cover.jpg
-                      </Text>
-                      <Image
-                        source={require("../../assets/icons/check.png")}
-                        style={styles.backIcon}
-                      />
-                    </View>
-                    <Text numberOfLines={1} variant="labelSmall">
-                      {/* {fileSize} */}
-                      200KB
-                    </Text>
-                    <View style={styles.progress}>
-                      <ProgressBar
-                        color={palette.success600}
-                        progress={100 / 100}
-                        style={styles.progressBar}
-                      />
-                      <Text style={styles.progressText} variant="labelSmall">
-                        {100} %
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
+
+        <FlatList
+          contentContainerStyle={styles.arrowIndicator}
+          data={[1]}
+          ItemSeparatorComponent={itemSeperator}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          style={styles.ongoingCardList}
+        />
         <View style={styles.bottomContainer}>
           <View style={styles.attendanceContainer}>
             <PrimaryButton
@@ -227,7 +294,7 @@ const AddIssue = ({ visible, hideModal }) => {
               borderColor={palette.purple600}
               content={"Add issue"}
               textColor={CombinedDefaultTheme.colors.background}
-              //   onPress={onPress}
+              onPress={() => hideModal(true)}
             />
           </View>
         </View>
@@ -237,6 +304,12 @@ const AddIssue = ({ visible, hideModal }) => {
 };
 
 const styles = StyleSheet.create({
+  addFileContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: Dimensions.margin / 4,
+    paddingVertical: Dimensions.padding / 1.6,
+  },
   appBarContainer: {
     backgroundColor: CombinedDefaultTheme.colors.background,
     borderBottomWidth: 1,

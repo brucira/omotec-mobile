@@ -157,8 +157,6 @@ been posted.`
   );
 };
 
-export default NotificationCard;
-
 const styles = StyleSheet.create({
   assignmentContainer: {
     borderColor: palette.grey200,
@@ -253,3 +251,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
+
+export default NotificationCard;

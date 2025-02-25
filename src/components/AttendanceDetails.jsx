@@ -10,10 +10,10 @@ import {
 import { Dropdown } from "react-native-element-dropdown";
 import { Appbar, DataTable, Searchbar, Switch, Text } from "react-native-paper";
 
-import Tag from "../../components/Tag";
-import palette from "../../styles/palette";
-import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions, dropdownData } from "../../utils/constant";
+import palette from "../styles/palette";
+import { CombinedDefaultTheme } from "../styles/theme";
+import { Dimensions, dropdownData } from "../utils/constant";
+import Tag from "./Tag";
 
 const PRESENT = "present";
 const AttendanceDetails = ({
@@ -29,39 +29,11 @@ const AttendanceDetails = ({
   const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState();
   const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState();
   const [isProgressSubjectFocus, setIsProgressSubjectFocus] = useState(false);
-  const [items] = useState([
-    {
-      calories: 356,
-      fat: 16,
-      key: 1,
-      name: "Cupcake",
-    },
-    {
-      calories: 262,
-      fat: 16,
-      key: 2,
-      name: "Eclair",
-    },
-    {
-      calories: 159,
-      fat: 6,
-      key: 3,
-      name: "Frozen yogurt",
-    },
-    {
-      calories: 305,
-      fat: 3.7,
-      key: 4,
-      name: "Gingerbread",
-    },
-  ]);
+  const [items] = useState([]);
   const handleSearch = () => {};
   const handleSearchSubmit = () => {};
   const renderSearchIcon = () => (
-    <Image
-      source={require("../../assets/icons/search.png")}
-      style={styles.lens}
-    />
+    <Image source={require("../assets/icons/search.png")} style={styles.lens} />
   );
   const renderTableData = (item, index) => (
     <DataTable.Row
@@ -103,7 +75,7 @@ const AttendanceDetails = ({
             }
           />
           <Appbar.Action
-            icon={require("../../assets/icons/close.png")}
+            icon={require("../assets/icons/close.png")}
             style={styles.backIcon}
             onPress={hideModal}
           />
@@ -147,7 +119,7 @@ const AttendanceDetails = ({
                 <Image
                   color={focusOfFirstDropdown ? "blue" : "black"}
                   // name="Safety"
-                  source={require("../../assets/icons/chevron_down.png")}
+                  source={require("../assets/icons/chevron_down.png")}
                   // size={20}
                   style={styles.dropDownIcon}
                 />
@@ -181,7 +153,7 @@ const AttendanceDetails = ({
                 <View style={styles.headingContainer}>
                   <Text>Student Name</Text>
                   <Image
-                    source={require("../../assets/icons/sorting.png")}
+                    source={require("../assets/icons/sorting.png")}
                     style={styles.sort}
                   />
                 </View>
@@ -190,7 +162,7 @@ const AttendanceDetails = ({
                 <View style={styles.headingContainer}>
                   <Text>Attendance</Text>
                   <Image
-                    source={require("../../assets/icons/sorting.png")}
+                    source={require("../assets/icons/sorting.png")}
                     style={styles.sort}
                   />
                 </View>
