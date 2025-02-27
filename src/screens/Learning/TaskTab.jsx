@@ -74,7 +74,6 @@ const TaskTab = ({ activeTab }) => {
   //   const showModal = () => setVisible(true);
   //   const hideModal = () => setVisible(false);
 
-  //   // console.log(event);
   //   return (
   //     <Pressable onPress={showModal}>
   //       <FullEventDetails hideModal={hideModal} visible={visible} />
@@ -673,7 +672,8 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     borderColor: palette.grey300,
-    borderRadius: Dimensions.margin / 2,
+    borderRadius: Dimensions.margin / 4,
+    borderWidth: 1,
   },
   contentContainer: {
     flex: 1,

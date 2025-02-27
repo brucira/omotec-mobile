@@ -24,7 +24,6 @@ const TaskCard = ({
   const COURSE = "course";
   const navigation = useNavigation();
   const TAB_USER = "Users";
-  console.log(avatar, remark, title);
 
   return (
     <Card

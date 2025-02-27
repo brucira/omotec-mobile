@@ -42,7 +42,6 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
   //   const showModal = () => setVisible(true);
   //   const hideModal = () => setVisible(false);
 
-  //   // console.log(event);
   //   return (
   //     <Pressable onPress={showModal}>
   //       <FullEventDetails hideModal={hideModal} visible={visible} />
