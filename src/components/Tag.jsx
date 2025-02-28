@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: Dimensions.padding / 2.66,
     paddingHorizontal: Dimensions.padding / 1.6,
-    paddingVertical: Dimensions.padding / 4,
+    paddingVertical: Dimensions.padding / 5.33,
   },
 });
 

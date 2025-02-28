@@ -11,6 +11,7 @@ export default function PrimaryButton({
   content,
   textColor,
   onPress,
+  style,
 }) {
   return (
     <View>

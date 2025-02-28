@@ -254,6 +254,148 @@ export const projectDetailUserTabData = [
   },
 ];
 
+export const testData = [
+  {
+    id: 1,
+    options: [
+      {
+        correct: false,
+        id: 1,
+        option: "Video",
+      },
+      {
+        correct: false,
+        id: 2,
+        option: "Audio",
+      },
+      {
+        correct: true,
+        id: 3,
+        option: "Presentaion and documents",
+      },
+      {
+        correct: false,
+        id: 4,
+        option: "Assessment",
+      },
+    ],
+    question: "Content type TalentLMS support inculude",
+    type: "mcq",
+    weightage: 1,
+  },
+  {
+    id: 2,
+    options: [
+      {
+        correct: false,
+        id: 1,
+        option: "Video",
+      },
+      {
+        correct: false,
+        id: 2,
+        option: "Audio",
+      },
+      {
+        correct: true,
+        id: 3,
+        option: "Presentaion and documents",
+      },
+      {
+        correct: false,
+        id: 4,
+        option: "Assessment",
+      },
+    ],
+    question:
+      '"Introduction to Python" serves as a _________ for individuals stepping into the realm of programming. Python, known for its simplicity and versatility, has become a popular choice for beginners and professionals alike.',
+    type: "mcq",
+    weightage: 1,
+  },
+  {
+    id: 3,
+    options: [
+      {
+        correct_order_number: 2,
+        id: 1,
+        option: 21,
+      },
+      {
+        correct_order_number: 1,
+        id: 2,
+        option: 9,
+      },
+      {
+        correct_order_number: 4,
+        id: 3,
+        option: 42,
+      },
+      {
+        correct_order_number: 3,
+        id: 4,
+        option: 28,
+      },
+    ],
+    question: "Arrange the number in ascending order.",
+    type: "arrange",
+    weightage: 1,
+  },
+  {
+    id: 4,
+    options: [
+      {
+        correct_order_number: 3,
+        id: 1,
+        img: require("../assets/js.png"),
+        option: "Javascript",
+      },
+      {
+        correct_order_number: 1,
+        id: 2,
+        img: require("../assets/html.png"),
+        option: "HTML",
+      },
+      {
+        correct_order_number: 2,
+        id: 3,
+        img: require("../assets/css.png"),
+        option: "CSS",
+      },
+    ],
+    question: "Arrange the number in ascending order.",
+    type: "arrange",
+    weightage: 1,
+  },
+  {
+    id: 5,
+    options: [
+      {
+        correct: false,
+        id: 1,
+        option: "Video",
+      },
+      {
+        correct: false,
+        id: 2,
+        option: "Audio",
+      },
+      {
+        correct: true,
+        id: 3,
+        option: "Presentaion and documents",
+      },
+      {
+        correct: false,
+        id: 4,
+        option: "Assessment",
+      },
+    ],
+    question: "Content type TalentLMS support inculude",
+    type: "mcq",
+    weightage: 1,
+  },
+];
+
 export const projectDetailTaskTabData = [
   {
     avatar: require("../assets/icons/animated_cal.png"),
@@ -276,7 +418,7 @@ export const projectDetailTaskTabData = [
     remark: null,
     start_date: "3 May, 2024",
     status: "under_review",
-    taskType: "schedule_call",
+    taskType: "assignment",
     title: "Final Report Submission",
   },
   {
@@ -289,136 +431,7 @@ export const projectDetailTaskTabData = [
     start_date: "3 May, 2024",
     status: "completed",
     taskType: "test",
-    test: {
-      current_attempt: 2,
-      current_grade: null,
-      difficulty_level: "Medium",
-      due_date: "Nov 4",
-      due_time: "11:59 PM",
-      passing_criteria: 75,
-      questions: [
-        {
-          id: 1,
-          options: [
-            {
-              correct: false,
-              id: 1,
-              option: "Video",
-            },
-            {
-              correct: false,
-              id: 2,
-              option: "Audio",
-            },
-            {
-              correct: true,
-              id: 3,
-              option: "Presentaion and documents",
-            },
-            {
-              correct: false,
-              id: 4,
-              option: "Assessment",
-            },
-          ],
-          question: "Content type TalentLMS support inculude",
-          type: "mcq",
-          weightage: 1,
-        },
-        {
-          id: 2,
-          options: [
-            {
-              correct: false,
-              id: 1,
-              option: "Video",
-            },
-            {
-              correct: false,
-              id: 2,
-              option: "Audio",
-            },
-            {
-              correct: true,
-              id: 3,
-              option: "Presentaion and documents",
-            },
-            {
-              correct: false,
-              id: 4,
-              option: "Assessment",
-            },
-          ],
-          question:
-            '"Introduction to Python" serves as a /$/ for individuals stepping into the realm of programming. Python, known for its simplicity and versatility, has become a popular choice for beginners and professionals alike.',
-          type: "dropdown_mcq",
-          weightage: 1,
-        },
-        {
-          id: 3,
-          options: [
-            {
-              correct_order_number: 2,
-              id: 1,
-              option: 21,
-            },
-            {
-              correct_order_number: 1,
-              id: 2,
-              option: 9,
-            },
-            {
-              correct_order_number: 4,
-              id: 3,
-              option: 42,
-            },
-            {
-              correct_order_number: 3,
-              id: 4,
-              option: 28,
-            },
-          ],
-          question: "Arrange the number in ascending order.",
-          type: "arrange",
-          weightage: 1,
-        },
-        {
-          id: 4,
-          options: [
-            {
-              correct_order_number: 3,
-              id: 1,
-              option: {
-                img: require("../assets/js.png"),
-                title: "Javascript",
-              },
-            },
-            {
-              correct_order_number: 1,
-              id: 2,
-              option: {
-                img: require("../assets/html.png"),
-                title: "HTML",
-              },
-            },
-            {
-              correct_order_number: 2,
-              id: 3,
-              option: {
-                img: require("../assets/css.png"),
-                title: "CSS",
-              },
-            },
-          ],
-          question: "Arrange the number in ascending order.",
-          type: "arrange",
-          weightage: 1,
-        },
-      ],
-      time_zone: "PDT",
-      total_attempt: 3,
-      total_marks: 50,
-    },
+
     title: "Initial Design Brainstorm",
   },
   {
@@ -442,7 +455,7 @@ export const projectDetailTaskTabData = [
     remark: null,
     start_date: "3 May, 2024",
     status: "under_review",
-    taskType: "schedule_call",
+    taskType: "assignment",
     title: "Initial Design Brainstorm",
   },
 ];

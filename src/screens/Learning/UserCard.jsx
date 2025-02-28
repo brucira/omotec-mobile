@@ -28,11 +28,11 @@ const UserCard = ({
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
       style={styles.container}
-      onPress={() =>
-        navigation.navigate(RouteNames.ProjectDetail, {
-          title,
-        })
-      }
+      // onPress={() =>
+      //   navigation.navigate(RouteNames.ProjectDetail, {
+      //     title,
+      //   })
+      // }
     >
       <View style={styles.headerContainer}>
         <Image source={avatar} style={styles.banner} />

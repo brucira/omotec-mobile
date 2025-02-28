@@ -1,131 +1,147 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Card, Divider, Text } from "react-native-paper";
 
+import AssignmentModal from "../../components/AssignmentModal";
 import Tag from "../../components/Tag";
+import TestModal from "../../components/TestModal";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions, RouteNames } from "../../utils/constant";
 
-const TaskCard = ({
-  avatar,
-  end_date,
-  id,
-  remark,
-  start_date,
-  status,
-  taskType,
-  test,
-  title,
-}) => {
+const TaskCard = ({ ...items }) => {
+  const [scheduleCallVisible, setScheduleCallVisible] = useState(false);
+  const [testVisible, setTestVisible] = useState(false);
+  const [assignmentVisible, setAssignmentVisible] = useState(false);
   const calendarSource = require("../../assets/icons/calender.png");
   const clockSource = require("../../assets/icons/clock_five.png");
   const COURSE = "course";
   const navigation = useNavigation();
   const TAB_USER = "Users";
+  const SCHEDULE_CALL = "schedule_call";
+  const TEST = "test";
+  const ASSIGNMMENT = "assignment";
+  const handleCardPress = (taskType) => {
+    if (taskType === SCHEDULE_CALL) {
+      setScheduleCallVisible(true);
+    }
+    if (taskType === ASSIGNMMENT) {
+      setAssignmentVisible(true);
+    }
+    if (taskType === TEST) {
+      setTestVisible(true);
+    }
+  };
 
   return (
-    <Card
-      contentStyle={styles.contentStyleContainer}
-      mode="outlined"
-      style={styles.container}
-      //   onPress={() =>
-      //     navigation.navigate(RouteNames.ProjectDetail, {
-      //       title,
-      //     })
-      //   }
-    >
-      <View style={styles.headerContainer}>
-        <Image source={avatar} style={styles.banner} />
-        <View style={styles.headerContentContainer}>
-          <View style={styles.cardContent}>
+    <>
+      <Card
+        contentStyle={styles.contentStyleContainer}
+        mode="outlined"
+        style={styles.container}
+        onPress={() => handleCardPress(items.taskType)}
+      >
+        <View style={styles.headerContainer}>
+          <Image source={items.avatar} style={styles.banner} />
+          <View style={styles.headerContentContainer}>
+            <View style={styles.cardContent}>
+              <Text
+                numberOfLines={1}
+                style={{ marginBottom: Dimensions.margin / 4 }}
+                variant="labelLarge"
+              >
+                {items.title}
+              </Text>
+              <Tag
+                backgroundColor={palette.tintPurple}
+                label={items.status}
+                textColor={CombinedDefaultTheme.colors.primary}
+              />
+            </View>
             <Text
               numberOfLines={1}
-              style={{ marginBottom: Dimensions.margin / 4 }}
-              variant="labelLarge"
+              style={{ color: palette.grey600 }}
+              variant={"labelLarge"}
             >
-              {title}
+              {items.taskType}
             </Text>
-            <Tag
-              backgroundColor={palette.tintPurple}
-              label={status}
-              textColor={CombinedDefaultTheme.colors.primary}
-            />
           </View>
-          <Text
-            numberOfLines={1}
-            style={{ color: palette.grey600 }}
-            variant={"labelLarge"}
-          >
-            {taskType}
-          </Text>
         </View>
-      </View>
-      <Divider style={styles.divider} />
-      <View
-        style={[
-          styles.statsContainer,
-          {
-            flexDirection: "row",
-            justifyContent: "space-between",
-          },
-        ]}
-      >
-        <View style={styles.singleItemContainer}>
-          <Image
-            source={calendarSource}
-            style={styles.endIcons}
-            tintColor={palette.grey700}
-          />
-          <Text style={{ color: palette.grey700 }} variant="bodySmall">
-            {"Start:"}
-          </Text>
-          <Text style={{ color: palette.grey900 }} variant="bodySmall">
-            {start_date}
-          </Text>
+        <Divider style={styles.divider} />
+        <View
+          style={[
+            styles.statsContainer,
+            {
+              flexDirection: "row",
+              justifyContent: "space-between",
+            },
+          ]}
+        >
+          <View style={styles.singleItemContainer}>
+            <Image
+              source={calendarSource}
+              style={styles.endIcons}
+              tintColor={palette.grey700}
+            />
+            <Text style={{ color: palette.grey700 }} variant="bodySmall">
+              {"Start:"}
+            </Text>
+            <Text style={{ color: palette.grey900 }} variant="bodySmall">
+              {items.start_date}
+            </Text>
+          </View>
+
+          <View style={styles.singleItemContainer}>
+            <Image
+              source={calendarSource}
+              style={styles.endIcons}
+              tintColor={palette.grey700}
+            />
+            <Text style={{ color: palette.grey700 }} variant="bodySmall">
+              {"End:"}
+            </Text>
+            <Text style={{ color: palette.grey900 }} variant="bodySmall">
+              {items.end_date}
+            </Text>
+          </View>
         </View>
 
-        <View style={styles.singleItemContainer}>
-          <Image
-            source={calendarSource}
-            style={styles.endIcons}
-            tintColor={palette.grey700}
-          />
-          <Text style={{ color: palette.grey700 }} variant="bodySmall">
-            {"End:"}
-          </Text>
-          <Text style={{ color: palette.grey900 }} variant="bodySmall">
-            {end_date}
-          </Text>
-        </View>
-      </View>
+        <Divider style={styles.divider} />
 
-      <Divider style={styles.divider} />
-
-      <View style={styles.certificate}>
-        <View style={styles.singleItemContainer}>
-          <Text style={{ color: palette.grey700 }} variant="bodySmall">
-            {"Remark:"}
-          </Text>
-          <Text style={{ color: palette.grey900 }} variant="bodySmall">
-            {remark === null ? "No remarks" : remark}
-          </Text>
+        <View style={styles.certificate}>
+          <View style={styles.singleItemContainer}>
+            <Text style={{ color: palette.grey700 }} variant="bodySmall">
+              {"Remark:"}
+            </Text>
+            <Text style={{ color: palette.grey900 }} variant="bodySmall">
+              {items.remark === null ? "No remarks" : items.remark}
+            </Text>
+          </View>
+          <View style={styles.certificateContainer}>
+            <Image
+              source={require("../../assets/icons/eye.png")}
+              style={styles.download}
+            />
+            <Text
+              style={{ color: CombinedDefaultTheme.colors.primary }}
+              variant="labelMedium"
+            >
+              View Issue
+            </Text>
+          </View>
         </View>
-        <View style={styles.certificateContainer}>
-          <Image
-            source={require("../../assets/icons/eye.png")}
-            style={styles.download}
-          />
-          <Text
-            style={{ color: CombinedDefaultTheme.colors.primary }}
-            variant="labelMedium"
-          >
-            View Issue
-          </Text>
-        </View>
-      </View>
-    </Card>
+      </Card>
+      <TestModal
+        hideModal={() => setTestVisible(false)}
+        visible={testVisible}
+        {...items}
+      />
+      <AssignmentModal
+        hideModal={() => setAssignmentVisible(false)}
+        visible={assignmentVisible}
+      />
+    </>
   );
 };
 
