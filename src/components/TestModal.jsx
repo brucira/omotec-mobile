@@ -6,7 +6,7 @@ import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
 import { Dimensions } from "../utils/constant";
 import PrimaryButton from "./PrimaryButton";
-import Test from "./Test";
+import Quiz from "./Quiz";
 
 const TestModal = ({ visible, hideModal }) => {
   const [testQuestionVisible, setTestQuestionVisible] = useState(false);
@@ -116,7 +116,7 @@ const TestModal = ({ visible, hideModal }) => {
             </View>
           </View>
         </SafeAreaView>
-        <Test
+        <Quiz
           hideModal={() => setTestQuestionVisible(false)}
           visible={testQuestionVisible}
         />
@@ -142,8 +142,6 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: CombinedDefaultTheme.colors.background,
-    borderTopColor: palette.neutral100,
-    borderTopWidth: 1,
     flex: 1,
   },
   contentContainer: {

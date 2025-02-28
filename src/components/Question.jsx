@@ -20,43 +20,76 @@ const Question = ({ questionNumber, options, question, questionType }) => {
 
   const renderItem = useCallback(({ item, drag, isActive }) => {
     return (
-      <ScaleDecorator>
-        <View
-          style={{
-            alignItems: "center",
-            flex: 1,
-            flexDirection: "row",
-            gap: Dimensions.margin / 1.33,
-          }}
-        >
-          <View>
-            <Text>{item.id}.</Text>
-          </View>
-          <TouchableOpacity
-            style={[
-              styles.rowItem,
-              {
-                backgroundColor: isActive
-                  ? palette.grey25
-                  : item.backgroundColor,
-              },
-            ]}
-            onPressIn={drag} // Start dragging immediately when tapped
+      <ScaleDecorator activeScale={0.95}>
+        {item.img ? (
+          // <ScaleDecorator>
+          <View
+            style={{
+              alignItems: "center",
+              flex: 1,
+              gap: Dimensions.margin / 1.33,
+              justifyContent: "space-between",
+            }}
           >
-            <Text style={styles.text}>{item.option}</Text>
-            <Image
-              source={require("../assets/icons/ham_menu.png")}
-              style={styles.menuIcon}
-              tintColor={palette.grey700}
-            />
-          </TouchableOpacity>
-        </View>
+            <View>
+              <Text>{item.id}.</Text>
+            </View>
+            <Image source={item.img} style={styles.imageOption} />
+            <TouchableOpacity
+              style={[
+                styles.rowItem,
+                {
+                  backgroundColor: isActive
+                    ? palette.grey25
+                    : item.backgroundColor,
+                },
+              ]}
+              onLongPress={drag}
+            >
+              <Text style={styles.text}>{item.option}</Text>
+              <Image
+                source={require("../assets/icons/ham_menu.png")}
+                style={styles.menuIcon}
+                tintColor={palette.grey700}
+              />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          // </ScaleDecorator>
+          <View
+            style={{
+              alignItems: "center",
+              flex: 1,
+              flexDirection: "row",
+              gap: Dimensions.margin / 1.33,
+            }}
+          >
+            <View>
+              <Text>{item.id}.</Text>
+            </View>
+            <TouchableOpacity
+              style={[
+                styles.rowItem,
+                {
+                  backgroundColor: isActive
+                    ? palette.grey25
+                    : item.backgroundColor,
+                },
+              ]}
+              onLongPress={drag}
+            >
+              <Text style={styles.text}>{item.option}</Text>
+              <Image
+                source={require("../assets/icons/ham_menu.png")}
+                style={styles.menuIcon}
+                tintColor={palette.grey700}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </ScaleDecorator>
     );
   }, []);
-
-  // const options = ["Ongoing", "Completed", "Pending", "Cancelled"];
-  // console.log(items);
 
   return (
     <View>
@@ -111,10 +144,19 @@ const Question = ({ questionNumber, options, question, questionType }) => {
           <DraggableFlatList
             activationDistance={0}
             data={data}
+            horizontal={data.some((item) => item.img)}
             ItemSeparatorComponent={() => <View style={styles.seperator} />}
             keyExtractor={(item) => item.id}
             renderItem={renderItem}
-            onDragEnd={({ data }) => setData(data)}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            onDragEnd={({ data }) => {
+              const updatedData = data.map((item, index) => ({
+                ...item,
+                id: index + 1,
+              }));
+              setData(updatedData);
+            }}
           />
         )}
       </View>
@@ -126,6 +168,12 @@ const styles = StyleSheet.create({
   checkbox: {
     borderColor: palette.grey300,
     borderWidth: 1,
+  },
+  imageOption: {
+    height: Dimensions.margin * 5,
+    padding: Dimensions.padding / 1.33,
+    resizeMode: "contain",
+    width: Dimensions.margin * 5,
   },
   individualViewContainer: {
     flexDirection: "row",
@@ -161,6 +209,7 @@ const styles = StyleSheet.create({
   },
   seperator: {
     height: Dimensions.margin / 1.33,
+    width: Dimensions.margin / 1.33,
   },
 });
 
