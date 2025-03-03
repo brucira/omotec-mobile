@@ -130,9 +130,6 @@ const styles = StyleSheet.create({
     backgroundColor: CombinedDefaultTheme.colors.background,
     borderBottomWidth: 1,
     borderColor: palette.grey200,
-    shadowColor: "#000",
-    shadowOpacity: 0.3,
-    shadowRadius: 0,
   },
   backIcon: {
     height: Dimensions.margin * 1.25,

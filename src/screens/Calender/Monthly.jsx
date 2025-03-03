@@ -1,13 +1,29 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Calendar } from "react-native-big-calendar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import FullEventDetails from "../../components/FullEventDetails";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions, events } from "../../utils/constant";
+import { Dimensions, events, today } from "../../utils/constant";
 
 const Monthly = ({ selectedDate, setSelectedDate }) => {
+  const [selectedEvent, setSelectedEvent] = useState(today);
+  const [visible, setVisible] = useState(false);
+  const onPressEvent = (event) => {
+    setSelectedEvent(event);
+    setVisible(true);
+  };
+  const onSwipeEnd = (date) => {
+    setSelectedDate(date);
+  };
   const renderMontlyEvent = (event, touchableOpacityProps) => {
     return (
       <TouchableOpacity
@@ -24,50 +40,60 @@ const Monthly = ({ selectedDate, setSelectedDate }) => {
     );
   };
   return (
-    <View style={styles.contentContainer}>
+    <ScrollView style={styles.contentContainer}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Calendar
-          calendarCellStyle={{
-            backgroundColor: CombinedDefaultTheme.colors.background,
-            gap: Dimensions.margin / 4,
-          }}
-          eventCellStyle={(event) => ({
-            backgroundColor: event.specialDay
-              ? palette.success700
-              : event.background,
-            borderRadius: Dimensions.margin / 2.66,
-          })}
-          headerContainerStyle={{
-            backgroundColor: CombinedDefaultTheme.colors.background,
-          }}
+          calendarCellStyle={styles.calendarCellStyle}
           date={selectedDate}
+          eventCellStyle={eventCellStyle}
           events={events}
-          height={600}
+          headerContainerStyle={styles.headerContainerStyle}
+          height={Dimensions.screenHeight}
           hideNowIndicator={false}
           maxVisibleEventCount={3}
-          // renderCustomDateForMonth={(date) => <Text>{date.getDate()}</Text>}
           mode="month"
           overlapOffset={0}
           renderEvent={renderMontlyEvent}
+          sortedMonthView={true}
+          // bodyContainerStyle={{
+          //   flex: 1,
+          //   height: "100%",
+          // }}
           // showAllDayEventCell={true}
           // eventsAreSorted={true}
-          sortedMonthView={true}
+          // renderCustomDateForMonth={(date) => <Text>{date.getDate()}</Text>}
           weekStartsOn={0}
+          onPressEvent={onPressEvent}
           // weekDayHeaderHighlightColor={"red"}
-          onSwipeEnd={(date) => {
-            setSelectedDate(date);
-          }}
+          onSwipeEnd={onSwipeEnd}
         />
       </GestureHandlerRootView>
-    </View>
+      <FullEventDetails
+        event={selectedEvent}
+        hideModal={() => setVisible(false)}
+        showAttendance={true}
+        visible={visible}
+      />
+    </ScrollView>
   );
 };
 
+const eventCellStyle = (event) => ({
+  backgroundColor: event.specialDay ? palette.success700 : event.background,
+  borderRadius: Dimensions.margin / 2.66,
+});
 const styles = StyleSheet.create({
+  calendarCellStyle: {
+    backgroundColor: CombinedDefaultTheme.colors.background,
+    gap: Dimensions.margin / 4,
+  },
   contentContainer: {
     flex: 1,
     position: "relative",
     zIndex: 0,
+  },
+  headerContainerStyle: {
+    backgroundColor: CombinedDefaultTheme.colors.background,
   },
   monthVideoIcon: {
     height: Dimensions.margin / 1.33,

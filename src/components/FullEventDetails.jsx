@@ -285,7 +285,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: CombinedDefaultTheme.colors.background,
     borderTopColor: palette.neutral100,
-    borderTopWidth: 1,
     flex: 1,
   },
   contentContainer: {

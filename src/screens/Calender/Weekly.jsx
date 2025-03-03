@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Calendar } from "react-native-big-calendar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import FullEventDetails from "../../components/FullEventDetails";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import {
@@ -10,21 +11,100 @@ import {
   Dimensions,
   events,
   specialDays,
+  today,
 } from "../../utils/constant";
 
+const WEEK_DAY_WIDTH = 49.5;
 const session_line_width = Dimensions.screenWidth / 24;
 const session_duration = (Dimensions.screenWidth / 8) * 4;
 const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
   const selected = selectedDate.toISOString().split("T")[0];
+  const [selectedEvent, setSelectedEvent] = useState(today);
+  const [visible, setVisible] = useState(false);
 
-  const extractDateInfo = (dateString) => {
-    const date = new Date(dateString);
+  const handleDateRange = (date, hasSpecialDay) => {
+    const formattedDate = date.format("DD-MM");
+    const specialDay = specialDays[formattedDate];
+    const shouldHighlight = selected
+      ? date.isSame(selected, "date")
+      : isToday(date);
+    return (
+      <TouchableOpacity
+        key={date.toString()}
+        style={{
+          // backgroundColor: "red",
+          borderColor: palette.grey200,
+          flex: 1,
+          gap: 12,
+          paddingTop: 2,
+        }}
+      >
+        <View
+          style={[
+            styles.weekDay,
+            {
+              backgroundColor: !shouldHighlight
+                ? CombinedDefaultTheme.colors.background
+                : CombinedDefaultTheme.colors.primary,
+            },
+          ]}
+        >
+          <Text
+            style={{
+              color: !shouldHighlight
+                ? palette.grey500
+                : CombinedDefaultTheme.colors.background,
+              textAlign: "center",
+            }}
+          >
+            {date.format("dd")}
+          </Text>
+          <View style={styles.weekDates}>
+            <Text
+              style={[
+                {
+                  color: !shouldHighlight
+                    ? palette.grey700
+                    : CombinedDefaultTheme.colors.background,
+                  textAlign: "center",
+                },
+              ]}
+            >
+              {date.format("D")}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={[
+            styles.videoContainer,
+            {
+              // backgroundColor: "red",
+              marginTop: hasSpecialDay ? Dimensions.margin : 0,
+            },
+          ]}
+        >
+          {specialDay && (
+            <TouchableOpacity
+              style={[styles.eventCellCss, "red", { bottom: 4 }]}
+            >
+              <Text
+                numberOfLines={1}
+                style={styles.specialDay}
+                variant="labelSmall"
+              >
+                {specialDay}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+  const onPressEvent = (event) => {
+    console.log("in event");
 
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const dayName = date.toLocaleString("en-US", { weekday: "short" });
-
-    return { day, dayName, month };
+    setSelectedEvent(event);
+    setVisible(true);
   };
   const renderWeekEvent = (event, touchableOpacityProps) => {
     return (
@@ -37,11 +117,6 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
   };
   const renderWeekHeader = (prop) => {
     if (!prop.dateRange || prop.dateRange.length === 0) return null;
-    const { day, month, dayName } = extractDateInfo(prop.dateRange[0]);
-    const formattedDate = `${day.toString().padStart(2, "0")}-${month
-      .toString()
-      .padStart(2, "0")}`;
-    const specialDay = specialDays[formattedDate];
     const hasSpecialDay = prop.dateRange.some((date) => {
       const formattedDate = date.format("DD-MM");
       return specialDays[formattedDate];
@@ -52,108 +127,7 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
           <View style={styles.weekNumberContainer}>
             <View></View>
           </View>
-          {prop.dateRange.map((date) => {
-            const formattedDate = date.format("DD-MM");
-            const specialDay = specialDays[formattedDate];
-            const shouldHighlight = selected
-              ? date.isSame(selected, "date")
-              : isToday(date);
-            return (
-              <TouchableOpacity
-                key={date.toString()}
-                style={{
-                  // backgroundColor: "red",
-                  borderColor: palette.grey200,
-                  flex: 1,
-                  gap: 12,
-                  paddingTop: 2,
-                }}
-              >
-                <View
-                  style={[
-                    {
-                      // backgroundColor: CombinedDefaultTheme.colors.primary,
-                      backgroundColor: !shouldHighlight
-                        ? CombinedDefaultTheme.colors.background
-                        : CombinedDefaultTheme.colors.primary,
-                      borderRadius: Dimensions.margin / 2,
-                      fontSize: 10,
-                      justifyContent: "space-between",
-                      marginHorizontal: Dimensions.margin / 3,
-                      paddingTop: Dimensions.padding / 2.66,
-                    },
-                  ]}
-                >
-                  <Text
-                    style={[
-                      { textAlign: "center" },
-                      {
-                        color: !shouldHighlight
-                          ? palette.grey500
-                          : CombinedDefaultTheme.colors.background,
-                      },
-                    ]}
-                  >
-                    {date.format("dd")}
-                  </Text>
-                  <View
-                    style={{
-                      alignItems: "center",
-                      alignSelf: "center",
-                      borderRadius: 40,
-                      height: 36,
-                      justifyContent: "center",
-                      width: 36,
-                      zIndex: 10,
-                    }}
-                  >
-                    <Text
-                      style={[
-                        {
-                          color: !shouldHighlight
-                            ? palette.grey700
-                            : CombinedDefaultTheme.colors.background,
-                          textAlign: "center",
-                        },
-                      ]}
-                    >
-                      {date.format("D")}
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    // backgroundColor: "red",
-                    borderColor: palette.grey200,
-                    borderLeftWidth: 1,
-                    height: 24,
-                    marginTop: hasSpecialDay ? Dimensions.margin : 0,
-                    position: "relative",
-                  }}
-                >
-                  {specialDay && (
-                    <TouchableOpacity
-                      style={[styles.eventCellCss, "red", { bottom: 4 }]}
-                    >
-                      <Text
-                        style={{
-                          backgroundColor: palette.success700,
-                          color: CombinedDefaultTheme.colors.background,
-                          height: 24,
-                          paddingLeft: Dimensions.padding / 2,
-                          paddingVertical: Dimensions.padding / 4,
-                        }}
-                        numberOfLines={1}
-                        variant="labelSmall"
-                      >
-                        {specialDay}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                </View>
-              </TouchableOpacity>
-            );
-          })}
+          {prop.dateRange.map((date) => handleDateRange(date, hasSpecialDay))}
           {/* </View> */}
         </View>
         <View
@@ -180,30 +154,18 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
       </View>
     );
   };
+  const onSwipeEnd = (date) => {
+    setSelectedDate(date);
+  };
   return (
     <View style={styles.contentContainer}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Calendar
-          bodyContainerStyle={{
-            backgroundColor: CombinedDefaultTheme.colors.background,
-            // marginTop: Dimensions.margin * 1.375,
-          }}
-          calendarCellStyle={{
-            backgroundColor: CombinedDefaultTheme.colors.background,
-            // left: 17,
-            position: "relative",
-            zIndex: -1,
-          }}
-          eventCellStyle={(event) => ({
-            backgroundColor: event.background,
-            borderRadius: Dimensions.margin / 2,
-            gap: Dimensions.margin / 2,
-            marginTop: 0,
-            // paddingHorizontal: Dimensions.padding / 1.33,
-            paddingVertical: Dimensions.padding / 2.66,
-          })}
           ampm={true}
+          bodyContainerStyle={styles.bodyContainerStyle}
+          calendarCellStyle={styles.calendarCellStyle}
           date={selectedDate}
+          eventCellStyle={eventCellStyle}
           events={events}
           headerContentStyle={{}}
           height={Dimensions.screenHeight}
@@ -215,16 +177,40 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
           showAllDayEventCell={true}
           swipeEnabled={true}
           theme={calendarTheme}
-          onSwipeEnd={(date) => {
-            setSelectedDate(date);
-          }}
+          onPressEvent={onPressEvent}
+          onSwipeEnd={onSwipeEnd}
         />
       </GestureHandlerRootView>
+      <FullEventDetails
+        event={selectedEvent}
+        hideModal={() => setVisible(false)}
+        showAttendance={true}
+        visible={visible}
+      />
     </View>
   );
 };
 
+const eventCellStyle = (event) => ({
+  backgroundColor: event.background,
+  borderRadius: Dimensions.margin / 2,
+  gap: Dimensions.margin / 2,
+  marginLeft: 1,
+  marginRight: 0,
+  marginTop: 0,
+  paddingVertical: Dimensions.padding / 2.66,
+});
+
 const styles = StyleSheet.create({
+  bodyContainerStyle: {
+    backgroundColor: CombinedDefaultTheme.colors.background,
+  },
+  calendarCellStyle: {
+    backgroundColor: CombinedDefaultTheme.colors.background,
+    // left: 17,
+    position: "relative",
+    zIndex: -1,
+  },
   contentContainer: {
     flex: 1,
   },
@@ -253,6 +239,35 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 7,
   },
+  specialDay: {
+    backgroundColor: palette.success700,
+    color: CombinedDefaultTheme.colors.background,
+    height: Dimensions.margin * 1.5,
+    paddingLeft: Dimensions.padding / 2,
+    paddingVertical: Dimensions.padding / 4,
+  },
+  videoContainer: {
+    borderColor: palette.grey200,
+    borderLeftWidth: 1,
+    height: Dimensions.margin * 1.5,
+    position: "relative",
+  },
+  weekDates: {
+    alignItems: "center",
+    alignSelf: "center",
+    borderRadius: Dimensions.margin * 2.5,
+    height: Dimensions.margin * 2.25,
+    justifyContent: "center",
+    width: Dimensions.margin * 2.25,
+    zIndex: 10,
+  },
+  weekDay: {
+    borderRadius: Dimensions.margin / 2,
+    fontSize: 10,
+    justifyContent: "space-between",
+    marginHorizontal: Dimensions.margin / 3,
+    paddingTop: Dimensions.padding / 2.66,
+  },
   weekEventContainer: {
     flex: 1,
     flexDirection: "row",
@@ -264,7 +279,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     borderColor: palette.grey200,
     // borderRightWidth: 1,
-    elevation: 4,
+    elevation: Dimensions.margin / 4,
     flexDirection: "row",
     // height: 56,
     paddingLeft: 0.5,
@@ -279,8 +294,8 @@ const styles = StyleSheet.create({
   weekNumberContainer: {
     borderColor: palette.grey200,
     // borderRightWidth: 1,
-    maxWidth: 49.5,
-    minWidth: 49.5,
+    maxWidth: WEEK_DAY_WIDTH,
+    minWidth: WEEK_DAY_WIDTH,
     zIndex: 10,
   },
   weekVideoIcon: {

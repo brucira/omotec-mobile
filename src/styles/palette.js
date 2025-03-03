@@ -15,6 +15,7 @@ const palette = {
   primaryStudent200: "#C586F9",
   primaryStudent300: "#B46CEF",
   primaryStudent400: "#9841E0",
+  primaryStudent500: "#852DCD ",
   primaryStudent900: "#2D0052",
   secondary50: "#FCE4EC",
   secondary100: "#F8BBD0",

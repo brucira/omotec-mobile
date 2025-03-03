@@ -13,10 +13,9 @@ import Tag from "./Tag";
 
 const Question = ({ questionNumber, options, question, questionType }) => {
   const [data, setData] = useState(options);
-  const [marked, setMarked] = useState(null);
-  const toggleStatusCheckbox = () => setMarked((prev) => !prev);
+  // const [marked, setMarked] = useState(null);
+  // const toggleStatusCheckbox = () => setMarked((prev) => !prev);
   const [selectedOption, setSelectedOption] = useState(null);
-  console.log(options, " : optionssss");
 
   const renderItem = useCallback(({ item, drag, isActive }) => {
     return (

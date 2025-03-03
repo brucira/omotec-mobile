@@ -575,7 +575,6 @@ export const events = [
     ),
     location: "Powai",
     notify: "10 minutes before",
-    specialDay: "Mahavir Jayanti",
     start: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -588,7 +587,65 @@ export const events = [
     trainer: "John Doe",
   },
   {
+    address: "Powai, Mumbai, Maharastra",
+    attachment: "Course Details",
+    attendance: [
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+      {
+        name: "Leslie Alexander",
+        status: "absent",
+      },
+      {
+        name: "Darlene Robertson",
+        status: "absent",
+      },
+      {
+        name: "Guy Hawkins",
+        status: "present",
+      },
+      {
+        name: "Devon Lane",
+        status: "present",
+      },
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+    ],
     background: palette.yellow700,
+    batchName: "B1",
+    batchStudents: [
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Leslie Alexander",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Darlene Robertson",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Guy Hawkins",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Devon Lane",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+    ],
+    course: "CS50",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     end: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -596,6 +653,8 @@ export const events = [
       12,
       0
     ),
+    location: "Powai",
+    notify: "10 minutes before",
     start: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -605,16 +664,78 @@ export const events = [
     ),
     subtitle: "Web Development Bootcamp · Mumbai",
     title: "Proposal Submission",
+    trainer: "John Doe",
   },
   {
+    address: "Powai, Mumbai, Maharastra",
+    attachment: "Course Details",
+    attendance: [
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+      {
+        name: "Leslie Alexander",
+        status: "absent",
+      },
+      {
+        name: "Darlene Robertson",
+        status: "absent",
+      },
+      {
+        name: "Guy Hawkins",
+        status: "present",
+      },
+      {
+        name: "Devon Lane",
+        status: "present",
+      },
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+    ],
     background: palette.pink700,
+    batchName: "B1",
+    batchStudents: [
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Leslie Alexander",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Darlene Robertson",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Guy Hawkins",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Devon Lane",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+    ],
+    course: "CS50",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     end: new Date(
       today.getFullYear(),
       today.getMonth(),
       today.getDate() + 7,
-      13,
+      8,
       0
     ),
+    location: "Powai",
+    notify: "10 minutes before",
+    // specialDay: "Mahavir Jayanti",
     start: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -624,9 +745,68 @@ export const events = [
     ),
     subtitle: "Web Development Bootcamp · Mumbai",
     title: "Proposal Submission",
+    trainer: "John Doe",
   },
   {
+    address: "Powai, Mumbai, Maharastra",
+    attachment: "Course Details",
+    attendance: [
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+      {
+        name: "Leslie Alexander",
+        status: "absent",
+      },
+      {
+        name: "Darlene Robertson",
+        status: "absent",
+      },
+      {
+        name: "Guy Hawkins",
+        status: "present",
+      },
+      {
+        name: "Devon Lane",
+        status: "present",
+      },
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+    ],
     background: palette.purple500,
+    batchName: "B1",
+    batchStudents: [
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Leslie Alexander",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Darlene Robertson",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Guy Hawkins",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Devon Lane",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+    ],
+    course: "CS50",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     end: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -634,6 +814,8 @@ export const events = [
       15,
       0
     ),
+    location: "Powai",
+    notify: "10 minutes before",
     start: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -643,9 +825,68 @@ export const events = [
     ),
     subtitle: "Web Development Bootcamp · Mumbai",
     title: "Proposal Submission",
+    trainer: "John Doe",
   },
   {
+    address: "Powai, Mumbai, Maharastra",
+    attachment: "Course Details",
+    attendance: [
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+      {
+        name: "Leslie Alexander",
+        status: "absent",
+      },
+      {
+        name: "Darlene Robertson",
+        status: "absent",
+      },
+      {
+        name: "Guy Hawkins",
+        status: "present",
+      },
+      {
+        name: "Devon Lane",
+        status: "present",
+      },
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+    ],
     background: palette.purple500,
+    batchName: "B1",
+    batchStudents: [
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Leslie Alexander",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Darlene Robertson",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Guy Hawkins",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Devon Lane",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+    ],
+    course: "CS50",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     end: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -653,6 +894,9 @@ export const events = [
       14,
       0
     ),
+    location: "Powai",
+    notify: "10 minutes before",
+    // specialDay: "Mahavir Jayanti",
     start: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -662,14 +906,87 @@ export const events = [
     ),
     subtitle: "Web Development Bootcamp · Mumbai",
     title: "Proposal Submission",
+    trainer: "John Doe",
   },
   {
-    background: palette.purple500,
-    end: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3),
-    specialDay: true,
-    start: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3),
+    address: "Powai, Mumbai, Maharastra",
+    attachment: "Course Details",
+    attendance: [
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+      {
+        name: "Leslie Alexander",
+        status: "absent",
+      },
+      {
+        name: "Darlene Robertson",
+        status: "absent",
+      },
+      {
+        name: "Guy Hawkins",
+        status: "present",
+      },
+      {
+        name: "Devon Lane",
+        status: "present",
+      },
+      {
+        name: "Ralph Edwards",
+        status: "present",
+      },
+    ],
+    background: palette.yellow700,
+    batchName: "B1",
+    batchStudents: [
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Leslie Alexander",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Darlene Robertson",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Guy Hawkins",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Devon Lane",
+      },
+      {
+        avatar: require("../assets/avatar.png"),
+        name: "Ralph Edwards",
+      },
+    ],
+    course: "CS50",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    end: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1,
+      14,
+      0
+    ),
+    location: "Powai",
+    notify: "10 minutes before",
+    start: new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 1,
+      11,
+      0
+    ),
     subtitle: "Web Development Bootcamp · Mumbai",
-    title: "Diwali",
+    title: "Proposal Submission",
+    trainer: "John Doe",
   },
 
   // {
@@ -1017,7 +1334,6 @@ export const weekEvents = [
       11,
       0
     ),
-    specialDay: "Mahavir Jayanti",
     start: new Date(
       today.getFullYear(),
       today.getMonth(),

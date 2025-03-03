@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Card, Divider, Text } from "react-native-paper";
@@ -8,17 +7,13 @@ import Tag from "../../components/Tag";
 import TestModal from "../../components/TestModal";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions, RouteNames } from "../../utils/constant";
+import { Dimensions } from "../../utils/constant";
 
 const TaskCard = ({ ...items }) => {
-  const [scheduleCallVisible, setScheduleCallVisible] = useState(false);
+  const [, setScheduleCallVisible] = useState(false);
   const [testVisible, setTestVisible] = useState(false);
   const [assignmentVisible, setAssignmentVisible] = useState(false);
   const calendarSource = require("../../assets/icons/calender.png");
-  const clockSource = require("../../assets/icons/clock_five.png");
-  const COURSE = "course";
-  const navigation = useNavigation();
-  const TAB_USER = "Users";
   const SCHEDULE_CALL = "schedule_call";
   const TEST = "test";
   const ASSIGNMMENT = "assignment";

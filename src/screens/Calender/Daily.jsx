@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Calendar } from "react-native-big-calendar";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Avatar } from "react-native-paper";
 
 import FullEventDetails from "../../components/FullEventDetails";
 import palette from "../../styles/palette";
@@ -37,17 +30,6 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
   const onSwipeEnd = (date) => {
     setSelectedDate(date);
   };
-
-  // const onPressEvent = (event) => {
-  //   const showModal = () => setVisible(true);
-  //   const hideModal = () => setVisible(false);
-
-  //   return (
-  //     <Pressable onPress={showModal}>
-  //       <FullEventDetails hideModal={hideModal} visible={visible} />
-  //     </Pressable>
-  //   );
-  // };
 
   const onPressEvent = (event) => {
     setSelectedEvent(event);
@@ -84,12 +66,19 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
                   ? CombinedDefaultTheme.colors.primary
                   : palette.grey900,
                 maxWidth: 36,
+                // minHeight: 36,
               }}
               variant="bodySmall"
             >
               {dayName}
             </Text>
-            <View
+            <Avatar.Text
+              labelStyle={{
+                color: isToday
+                  ? CombinedDefaultTheme.colors.background
+                  : palette.grey900,
+                fontSize: 18,
+              }}
               style={[
                 styles.dayContainer,
                 {
@@ -98,18 +87,9 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
                     : palette.transparent,
                 },
               ]}
-            >
-              <Text
-                style={{
-                  color: isToday
-                    ? CombinedDefaultTheme.colors.background
-                    : palette.grey900,
-                  fontSize: 18,
-                }}
-              >
-                {day}
-              </Text>
-            </View>
+              label={day}
+              size={36}
+            />
           </View>
         </View>
         <View style={styles.dayEventContainer}>
@@ -177,7 +157,7 @@ const eventCellStyle = (event) => ({
   backgroundColor: event.background,
   borderRadius: Dimensions.margin / 2,
   // marginBottom: 4,
-  marginLeft: 18,
+  marginLeft: Dimensions.margin * 1.125,
   marginTop: 0,
   maxWidth: "96%",
   paddingHorizontal: Dimensions.padding / 1.33,
@@ -203,8 +183,9 @@ const styles = StyleSheet.create({
   dayContainer: {
     alignItems: "center",
     borderRadius: Dimensions.margin * 4,
-    paddingVertical: Dimensions.margin / 3.5,
-    width: 32,
+    // maxWidth: 32,
+    // minWidth: 32,
+    // padding: Dimensions.margin / 3.5,
   },
   dayEventContainer: {
     flex: 1,
@@ -215,17 +196,23 @@ const styles = StyleSheet.create({
     backgroundColor: CombinedDefaultTheme.colors.background,
     borderColor: palette.grey200,
     // borderRightWidth: 1,
+    elevation: 3,
     flex: 1,
     flexDirection: "row",
     maxHeight: 70,
     position: "absolute",
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: { height: 4, width: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
     width: Dimensions.screenWidth,
     zIndex: 3,
   },
   headerContent: {
     alignItems: "center",
     gap: Dimensions.margin / 4,
-    width: 36,
+    maxWidth: Dimensions.margin * 2.25,
+    minWidth: Dimensions.margin * 2.25,
   },
   headerDateContainer: {
     // alignSelf: "baseline",
