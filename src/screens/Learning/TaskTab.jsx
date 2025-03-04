@@ -22,7 +22,6 @@ import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import {
   calendarTheme,
-  courseCardData,
   Dimensions,
   dropdownData,
   events,
@@ -625,7 +624,8 @@ const eventCellStyle = (event) => ({
   backgroundColor: event.background,
   borderRadius: Dimensions.margin / 2,
   // marginBottom: 4,
-  // marginLeft: 18,
+  marginLeft: 0,
+  marginRight: 1,
   marginTop: 0,
   // maxWidth: "96%",
   paddingHorizontal: Dimensions.padding / 1.33,
@@ -745,8 +745,8 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: "white",
-    borderRadius: 10,
-    padding: 20,
+    borderRadius: Dimensions.margin / 1.6,
+    padding: Dimensions.padding * 1.25,
   },
   rightIcon: {
     height: Dimensions.margin,

@@ -7,10 +7,10 @@ import { CombinedDefaultTheme } from "../styles/theme";
 
 export const allDayEvents = [
   {
-    background: "blue", // Ensure colors are correctly referenced
-    end: new Date(2025, 1, 12, 0, 0), // Corrected to February
+    background: "blue",
+    end: new Date(2025, 1, 12, 0, 0),
     specialDay: "Mahavir Jayanti",
-    start: new Date(2025, 1, 12, 23, 0), // Start of the day
+    start: new Date(2025, 1, 12, 23, 0),
     subtitle: "Web Development",
     title: "Holiday",
   },
@@ -462,24 +462,33 @@ export const projectDetailTaskTabData = [
 
 export const projectDetailDocumentTabData = [
   {
+    background: palette.primaryStudent50,
     cover: require("../assets/dummy_11.png"),
-    documentType: "video",
+    documentType: "Video",
+    documentTypeIcon: require("../assets/icons/play.png"),
+    iconColor: CombinedDefaultTheme.colors.primary,
     id: 1,
     lastModified: "2 May, 2024",
     modifiedBy: "John Doe",
     title: "Development of Online Learning Platform Proposal",
   },
   {
+    background: palette.tintOrange,
     cover: require("../assets/dummy_11.png"),
-    documentType: "video",
+    documentType: "PDF",
+    documentTypeIcon: require("../assets/icons/documents.png"),
+    iconColor: palette.error600,
     id: 2,
     lastModified: "2 May, 2024",
     modifiedBy: "John Doe",
     title: "Development of Online Learning Platform Proposal",
   },
   {
+    background: palette.primaryStudent50,
     cover: require("../assets/dummy_11.png"),
-    documentType: "video",
+    documentType: "Video",
+    documentTypeIcon: require("../assets/icons/play.png"),
+    iconColor: CombinedDefaultTheme.colors.primary,
     id: 3,
     lastModified: "2 May, 2024",
     modifiedBy: "John Doe",
@@ -1312,7 +1321,16 @@ export const specialDays = {
   "25-12": "Christmas",
   "26-01": "Republic Day",
 };
-
+export const STATUS_COLORS = {
+  cancelled: { background: palette.primaryStudent50, text: palette.purple600 },
+  completed: { background: palette.tintGreen, text: palette.success700 },
+  ongoing: { background: palette.primaryStudent50, text: palette.purple600 },
+  under_review: {
+    background: palette.tintWarningOrange,
+    text: palette.warning500,
+  },
+  upcoming: { background: palette.blueLight, text: palette.blueDark },
+};
 export const suggestions = [
   "Physics",
   "Maths",

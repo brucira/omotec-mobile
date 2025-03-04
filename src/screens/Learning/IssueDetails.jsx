@@ -17,7 +17,7 @@ import { Dimensions, issueData } from "../../utils/constant";
 import AddIssue from "./AddIssue";
 
 const IssueDetails = ({ visible, hideModal, event }) => {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded] = useState(true);
   const [addIssueVisible, setAddIssueVisible] = useState(false);
   const handleFileItem = (file, index) => (
     <TouchableOpacity
@@ -60,10 +60,6 @@ const IssueDetails = ({ visible, hideModal, event }) => {
               </Text>
             </View>
           </View>
-          {/* <Image
-                            source={require("../../assets/icons/check.png")}
-                            style={styles.check}
-                          /> */}
         </View>
       </View>
     </TouchableOpacity>
@@ -365,7 +361,7 @@ const styles = StyleSheet.create({
     // justifyContent: "space-between",
   },
   progressBar: {
-    borderRadius: 16,
+    borderRadius: Dimensions.margin,
     height: 6,
     width: 236,
     // paddingRight: 6,

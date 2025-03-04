@@ -16,7 +16,6 @@ import PrimaryButton from "../../components/PrimaryButton";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import {
-  courseCardData,
   Dimensions,
   dropdownData,
   projectDetailDocumentTabData,
@@ -42,18 +41,27 @@ const DocumentTab = ({ activeTab }) => {
     []
   );
 
+  const onDropdownChange = (item) => {
+    setValueOfFirstDropdown(item.value);
+    setFocusOfFirstDropdown(false);
+  };
+
+  const renderDropdownRightIcon = () => (
+    <Image
+      color={focusOfFirstDropdown ? "blue" : "black"}
+      // name="Safety"
+      source={require("../../assets/icons/chevron_down.png")}
+      // size={20}
+      style={styles.iconStyle}
+    />
+  );
   const renderSearchIcon = () => (
     <Image
       source={require("../../assets/icons/search.png")}
       style={styles.lens}
     />
   );
-  const renderRightIcon = () => (
-    <Image
-      source={require("../../assets/icons/mic.png")}
-      style={styles.rightIcon}
-    />
-  );
+
   return (
     <View style={{ flex: 1, marginBottom: Dimensions.margin * 1.5 }}>
       <View style={styles.searchContainer}>
@@ -159,15 +167,6 @@ const DocumentTab = ({ activeTab }) => {
                 >
                   <Dropdown
                     search
-                    renderRightIcon={() => (
-                      <Image
-                        color={focusOfFirstDropdown ? "blue" : "black"}
-                        // name="Safety"
-                        source={require("../../assets/icons/chevron_down.png")}
-                        // size={20}
-                        style={styles.iconStyle}
-                      />
-                    )}
                     style={[
                       styles.singleList,
                       focusOfFirstDropdown && { borderColor: "blue" },
@@ -180,15 +179,13 @@ const DocumentTab = ({ activeTab }) => {
                     maxHeight={300}
                     placeholder={!focusOfFirstDropdown ? "Select type" : "..."}
                     placeholderStyle={styles.placeholderStyle}
+                    renderRightIcon={renderDropdownRightIcon}
                     searchPlaceholder="Search..."
                     selectedTextStyle={styles.selectedTextStyle}
                     value={valueOfFirstDropdown}
                     valueField="value"
-                    onChange={(item) => {
-                      setValueOfFirstDropdown(item.value);
-                      setFocusOfFirstDropdown(false);
-                    }}
                     onBlur={() => setFocusOfFirstDropdown(false)}
+                    onChange={onDropdownChange}
                     onFocus={() => setFocusOfFirstDropdown(true)}
                   />
                 </Surface>
@@ -205,13 +202,6 @@ const DocumentTab = ({ activeTab }) => {
                     placeholder={
                       !focusOfFirstDropdown ? "Select uploaded by" : "..."
                     }
-                    renderRightIcon={() => (
-                      <Image
-                        color={focusOfFirstDropdown ? "blue" : "black"}
-                        source={require("../../assets/icons/chevron_down.png")}
-                        style={styles.iconStyle}
-                      />
-                    )}
                     style={[
                       styles.singleList,
                       focusOfFirstDropdown && { borderColor: "blue" },
@@ -223,15 +213,13 @@ const DocumentTab = ({ activeTab }) => {
                     labelField="label"
                     maxHeight={300}
                     placeholderStyle={styles.placeholderStyle}
+                    renderRightIcon={renderDropdownRightIcon}
                     searchPlaceholder="Search..."
                     selectedTextStyle={styles.selectedTextStyle}
                     value={valueOfFirstDropdown}
                     valueField="value"
-                    onChange={(item) => {
-                      setValueOfFirstDropdown(item.value);
-                      setFocusOfFirstDropdown(false);
-                    }}
                     onBlur={() => setFocusOfFirstDropdown(false)}
+                    onChange={onDropdownChange}
                     onFocus={() => setFocusOfFirstDropdown(true)}
                   />
                 </Surface>

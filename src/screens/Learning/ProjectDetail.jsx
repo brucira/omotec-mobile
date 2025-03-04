@@ -36,10 +36,6 @@ const ProjectDetail = ({ navigation }) => {
   const renderTab = (item, index) => (
     <View key={index}>
       <Button
-        labelStyle={{
-          marginHorizontal: Dimensions.margin / 1.33,
-          marginVertical: Dimensions.padding / 4,
-        }}
         style={[
           styles.tabButton,
           {
@@ -51,6 +47,7 @@ const ProjectDetail = ({ navigation }) => {
         ]}
         compact={true}
         contentStyle={styles.tabButtonContent}
+        labelStyle={styles.tabLabelStyle}
         mode="contained"
         onPress={() => setActiveTab(item.name)}
       >
@@ -102,7 +99,7 @@ const ProjectDetail = ({ navigation }) => {
         />
         <Appbar.Content
           title={
-            <Text numberOfLines={1} variant="titleMedium">
+            <Text numberOfLines={2} variant="titleMedium">
               {title}
             </Text>
           }
@@ -110,12 +107,7 @@ const ProjectDetail = ({ navigation }) => {
       </Appbar>
       <View>
         <ScrollView
-          contentContainerStyle={{
-            columnGap: 12,
-            flex: 1,
-            flexDirection: "row",
-            flexGrow: 1,
-          }}
+          contentContainerStyle={styles.tabContentContainerStyle}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           style={styles.tabContainer}
@@ -286,10 +278,20 @@ const styles = StyleSheet.create({
     paddingTop: Dimensions.padding * 1.25,
     // maxHeight: 28,
   },
+  tabContentContainerStyle: {
+    columnGap: 12,
+    flex: 1,
+    flexDirection: "row",
+    flexGrow: 1,
+  },
   tabIconImage: {
     color: palette.grey400,
     height: Dimensions.margin / 1.14,
     width: Dimensions.margin / 1.14,
+  },
+  tabLabelStyle: {
+    marginHorizontal: Dimensions.margin / 1.33,
+    marginVertical: Dimensions.padding / 4,
   },
   title: {},
 });

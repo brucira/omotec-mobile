@@ -25,6 +25,7 @@ import LargeCourseCard from "./LargeCourseCard";
 
 const Learning = ({ navigation }) => {
   const COURSES = "Courses";
+  const PROJECTS = "Projects";
   const [activeTab, setActiveTab] = useState(COURSES);
   const translateX = useSharedValue(0);
   const keyExtractor = (item) => item.id.toString();
@@ -90,13 +91,10 @@ const Learning = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.tab}
-            onPress={() => handleTabPress("Projects")}
+            onPress={() => handleTabPress(PROJECTS)}
           >
             <Text
-              style={[
-                styles.text,
-                activeTab === "Projects" && styles.activeText,
-              ]}
+              style={[styles.text, activeTab === PROJECTS && styles.activeText]}
               variant="labelLarge"
             >
               Projects
@@ -112,7 +110,7 @@ const Learning = ({ navigation }) => {
               }}
             >
               <Text variant="titleLarge">Ongoing courses</Text>
-              <Text variant="titleLarge"> (2)</Text>
+              <Text variant="titleLarge"> {`(${projectCardData.length})`}</Text>
             </View>
             <FlatList
               contentContainerStyle={styles.arrowIndicator}
@@ -133,7 +131,7 @@ const Learning = ({ navigation }) => {
               }}
             >
               <Text variant="titleLarge">Ongoing projects</Text>
-              <Text variant="titleLarge"> (2)</Text>
+              <Text variant="titleLarge"> {`(${projectCardData.length})`}</Text>
             </View>
             <FlatList
               contentContainerStyle={styles.arrowIndicator}
@@ -207,7 +205,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: palette.grey100,
     borderColor: palette.grey200,
-    borderRadius: 30,
+    borderRadius: Dimensions.margin * 1.875,
     borderWidth: 1,
     flexDirection: "row",
     height: 50,

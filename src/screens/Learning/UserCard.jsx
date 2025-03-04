@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Card, Divider, Text } from "react-native-paper";
@@ -6,7 +5,7 @@ import { Card, Divider, Text } from "react-native-paper";
 import Tag from "../../components/Tag";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions, RouteNames } from "../../utils/constant";
+import { Dimensions } from "../../utils/constant";
 
 const UserCard = ({
   avatar,
@@ -20,9 +19,6 @@ const UserCard = ({
 }) => {
   const calendarSource = require("../../assets/icons/calender.png");
   const clockSource = require("../../assets/icons/clock_five.png");
-  const COURSE = "course";
-  const navigation = useNavigation();
-  const TAB_USER = "Users";
   return (
     <Card
       contentStyle={styles.contentStyleContainer}
@@ -61,15 +57,7 @@ const UserCard = ({
         </View>
       </View>
       <Divider style={styles.divider} />
-      <View
-        style={[
-          styles.statsContainer,
-          {
-            flexDirection: "column",
-            justifyContent: null,
-          },
-        ]}
-      >
+      <View style={styles.statsContainer}>
         <View style={styles.singleItemContainer}>
           <Image
             source={clockSource}
@@ -79,7 +67,7 @@ const UserCard = ({
           <Text style={{ color: palette.grey700 }} variant="bodySmall">
             {"Last login:"}
           </Text>
-          <Text style={{ color: palette.grey900 }} variant="bodySmall">
+          <Text style={{ color: palette.grey900 }} variant="labelMedium">
             {lastLogin}
           </Text>
         </View>
@@ -95,7 +83,7 @@ const UserCard = ({
               {" "}
               {"Enrollment date:"}
             </Text>
-            <Text style={{ color: palette.grey900 }} variant="bodySmall">
+            <Text style={{ color: palette.grey900 }} variant="labelMedium">
               {enrollmentDate}
             </Text>
           </View>
@@ -196,6 +184,7 @@ const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: "column",
     gap: Dimensions.margin / 2,
+    justifyContent: null,
     // justifyContent: "space-between",
   },
   upcoming: {

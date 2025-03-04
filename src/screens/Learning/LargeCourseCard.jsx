@@ -35,29 +35,35 @@ const LargeCourseCard = ({
   const trendSource = require("../../assets/icons/trend_up.png");
   const COURSE = "course";
   const navigation = useNavigation();
-
+  const onCardPress = () =>
+    navigation.navigate(RouteNames.ProjectDetail, {
+      title,
+    });
   return (
     <Card
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
       style={styles.container}
-      onPress={() =>
-        navigation.navigate(RouteNames.ProjectDetail, {
-          title,
-        })
-      }
+      onPress={onCardPress}
     >
       <Image source={coverImage} style={styles.banner} />
       <View style={styles.cardContent}>
         <Text
-          style={{ marginBottom: Dimensions.margin / 4 }}
+          style={{
+            color: palette.grey600,
+            marginBottom: Dimensions.margin / 4,
+          }}
           variant="labelSmall"
         >
           {learningType === COURSE
             ? `${sessions + " Session •" + " Batch " + batch + " • " + location}`
             : `${tasks + " Tasks •" + " Batch " + batch + " • " + location}`}
         </Text>
-        <Text numberOfLines={2} variant="titleSmall">
+        <Text
+          numberOfLines={2}
+          style={{ color: palette.grey900 }}
+          variant="titleSmall"
+        >
           {title}
         </Text>
         <View style={{ paddingVertical: Dimensions.padding / 2 }}>

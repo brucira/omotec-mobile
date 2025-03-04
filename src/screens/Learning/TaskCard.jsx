@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from "react-native";
 import { Card, Divider, Text } from "react-native-paper";
 
 import AssignmentModal from "../../components/AssignmentModal";
-import Tag from "../../components/Tag";
+import StatusTag from "../../components/StatusTag";
 import TestModal from "../../components/TestModal";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
@@ -48,18 +48,25 @@ const TaskCard = ({ ...items }) => {
               >
                 {items.title}
               </Text>
-              <Tag
+              {/* <Tag
                 backgroundColor={palette.tintPurple}
                 label={items.status}
                 textColor={CombinedDefaultTheme.colors.primary}
-              />
+              /> */}
+              <StatusTag status={items.status} />
             </View>
             <Text
               numberOfLines={1}
               style={{ color: palette.grey600 }}
               variant={"labelLarge"}
             >
-              {items.taskType}
+              {items.taskType === SCHEDULE_CALL
+                ? "Schedule Call"
+                : items.taskType === ASSIGNMMENT
+                  ? "Assignment"
+                  : items.taskType === TEST
+                    ? "Test"
+                    : ""}
             </Text>
           </View>
         </View>

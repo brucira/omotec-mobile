@@ -3,6 +3,7 @@ import React, { useCallback, useState } from "react";
 import {
   Image,
   Modal,
+  Pressable,
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
@@ -13,15 +14,13 @@ import { Appbar, ProgressBar, Text } from "react-native-paper";
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
 import { Dimensions } from "../utils/constant";
+import { fileSchema } from "../utils/schema";
 import PrimaryButton from "./PrimaryButton";
 import Tag from "./Tag";
 
 const AssignmentModal = ({ visible, hideModal }) => {
-  const [allFiles, setAllFiles] = useState([]);
+  const [file, setFile] = useState(null);
 
-  const handleDelete = (fileId) => {
-    setAllFiles((prevFiles) => prevFiles.filter((file) => file.id !== fileId));
-  };
   const formatFileSize = useCallback((bytes) => {
     if (bytes < 1024) return `${bytes} B`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
@@ -29,6 +28,7 @@ const AssignmentModal = ({ visible, hideModal }) => {
       return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
     return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
   }, []);
+
   const pickDocument = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
@@ -36,6 +36,7 @@ const AssignmentModal = ({ visible, hideModal }) => {
       });
       if (result.canceled) return;
       const selectedFile = result.assets[0];
+
       const newFile = {
         fileName: selectedFile.name,
         fileSize: formatFileSize(selectedFile.size),
@@ -44,9 +45,24 @@ const AssignmentModal = ({ visible, hideModal }) => {
         progress: 0,
         uri: selectedFile.uri,
       };
-      setAllFiles((prevFiles) => [...prevFiles, newFile]);
+
+      const validationResult = fileSchema.safeParse(newFile);
+      if (validationResult.success) {
+        setFile(newFile);
+      } else {
+        console.log("Validation failed:", validationResult.error);
+      }
     } catch (error) {
-      console.log("error detail: ", error);
+      console.log("Error selecting file:", error);
+    }
+  };
+
+  const handleDelete = () => {
+    setFile(null);
+  };
+  const onSavePress = () => {
+    if (file) {
+      hideModal();
     }
   };
   return (
@@ -85,37 +101,39 @@ const AssignmentModal = ({ visible, hideModal }) => {
                 textColor={CombinedDefaultTheme.colors.primary}
               />
             </View>
-            <View>
-              <Text style={styles.uploadContaier} variant="labelLarge">
-                Upload your answer key here.
-              </Text>
-              <TouchableOpacity style={styles.upload} onPress={pickDocument}>
-                <View>
-                  <Image
-                    source={require("../assets/icons/upload.png")}
-                    style={styles.uploadIcon}
-                  />
-                  <View style={{ paddingTop: Dimensions.padding / 1.33 }}>
-                    <Text style={styles.uploadTitle} variant="bodyMedium">
-                      Click to upload{" "}
-                      <Text style={{ color: palette.grey600 }}>
-                        or drag and drop
-                      </Text>{" "}
-                    </Text>
-                    <Text style={styles.uploadDescription} variant="bodySmall">
-                      {" "}
-                      PNG, JPG, GIF upto 50MB
-                    </Text>
+
+            {!file && (
+              <View>
+                <Text style={styles.uploadContaier} variant="labelLarge">
+                  Upload your answer key here.
+                </Text>
+                <TouchableOpacity style={styles.upload} onPress={pickDocument}>
+                  <View>
+                    <Image
+                      source={require("../assets/icons/upload.png")}
+                      style={styles.uploadIcon}
+                    />
+                    <View style={{ paddingTop: Dimensions.padding / 1.33 }}>
+                      <Text style={styles.uploadTitle} variant="bodyMedium">
+                        Click to upload{" "}
+                        <Text style={{ color: palette.grey600 }}>
+                          or drag and drop
+                        </Text>
+                      </Text>
+                      <Text
+                        style={styles.uploadDescription}
+                        variant="bodySmall"
+                      >
+                        PNG, JPG, GIF up to 50MB
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-            {allFiles.map((file, index) => (
-              <TouchableOpacity
-                key={file.id}
-                style={styles.assignmentContainer}
-                onPress={() => {}}
-              >
+                </TouchableOpacity>
+              </View>
+            )}
+
+            {file && (
+              <TouchableOpacity style={styles.assignmentContainer}>
                 <View style={styles.fileContent}>
                   <Image
                     source={require("../assets/icons/file.png")}
@@ -130,9 +148,8 @@ const AssignmentModal = ({ visible, hideModal }) => {
                           variant="labelSmall"
                         >
                           {file.fileName}
-                          {/* kit_cover.jpg */}
                         </Text>
-                        <TouchableOpacity onPress={() => handleDelete(file.id)}>
+                        <TouchableOpacity onPress={handleDelete}>
                           <Image
                             source={require("../assets/icons/trash_bin.png")}
                             style={styles.backIcon}
@@ -141,7 +158,6 @@ const AssignmentModal = ({ visible, hideModal }) => {
                       </View>
                       <Text numberOfLines={1} variant="labelSmall">
                         {file.fileSize}
-                        {/* 200KB */}
                       </Text>
                       <View style={styles.progress}>
                         <ProgressBar
@@ -150,28 +166,35 @@ const AssignmentModal = ({ visible, hideModal }) => {
                           style={styles.progressBar}
                         />
                         <Text style={styles.progressText} variant="labelSmall">
-                          {100} %
+                          {100}%
                         </Text>
                       </View>
                     </View>
                   </View>
                 </View>
               </TouchableOpacity>
-            ))}
+            )}
           </View>
-          <PrimaryButton
-            backgroundColor={palette.primaryStudent200}
-            borderColor={palette.primaryStudent300}
-            content={"Save and Continue"}
-            textColor={CombinedDefaultTheme.colors.background}
-            onPress={() => {}}
-          />
+          <Pressable onPress={onSavePress}>
+            <PrimaryButton
+              backgroundColor={
+                !file
+                  ? palette.primaryStudent200
+                  : CombinedDefaultTheme.colors.primary
+              }
+              borderColor={
+                !file ? palette.primaryStudent300 : palette.purple600
+              }
+              content={"Save and Continue"}
+              disabled={!file}
+              textColor={CombinedDefaultTheme.colors.background}
+            />
+          </Pressable>
         </View>
       </SafeAreaView>
     </Modal>
   );
 };
-
 const styles = StyleSheet.create({
   appBarContainer: {
     backgroundColor: CombinedDefaultTheme.colors.background,
@@ -239,7 +262,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   progressBar: {
-    borderRadius: 16,
+    borderRadius: Dimensions.margin,
     height: 6,
     width: "236",
   },

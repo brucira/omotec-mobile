@@ -24,22 +24,80 @@ import PrimaryButton from "../../components/PrimaryButton";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions, dropdownData } from "../../utils/constant";
+import { issueSchema } from "../../utils/schema";
 
-const HIGH = "high";
 const MODERATE = "moderate";
-const LOW = "low";
 const AddIssue = ({ visible, hideModal }) => {
-  const [severityType, setSeverityType] = useState(MODERATE);
-  const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState();
-  const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState();
   const [allFiles, setAllFiles] = useState([]);
-  const [currentFile, setCurrentFile] = useState(null);
+  const [description, setDescription] = useState("");
+  const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState();
+  const [issueName, setIssueName] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
+  const [, setSeverityType] = useState(MODERATE);
+  const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState();
   const bottomDrawerRef = useRef(null);
+  const formatFileSize = useCallback((bytes) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+    if (bytes < 1024 * 1024 * 1024)
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+  }, []);
+  const itemSeperator = () => <View style={styles.itemSeparator} />;
+  const keyExtractor = (item) => item.toString();
   const handleDelete = (fileId) => {
     setAllFiles((prevFiles) => prevFiles.filter((file) => file.id !== fileId));
   };
-  const itemSeperator = () => <View style={styles.itemSeparator} />;
-  const keyExtractor = (item) => item.toString();
+  const handleSeverity = useCallback(() => {
+    bottomDrawerRef.current?.present();
+  }, []);
+
+  const onAddIssuePress = () => {
+    if (isValid) {
+      hideModal(true);
+    }
+  };
+  const onChangeIssueName = (text) => {
+    setIssueName(text);
+    validateInputs();
+  };
+  const onChangeIssueDescription = (text) => {
+    setDescription(text);
+    validateInputs();
+  };
+  const onClearPress = () => {
+    setAllFiles([]);
+    setDescription("");
+    setValueOfFirstDropdown();
+    setIssueName("");
+    setResetKey((prevKey) => prevKey + 1); // Changing key forces re-render
+  };
+  const onDropdownChange = (item) => {
+    setValueOfFirstDropdown(item.value);
+    setFocusOfFirstDropdown(false);
+    setSeverityType(valueOfFirstDropdown);
+  };
+  const pickDocument = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "*/*",
+      });
+      if (result.canceled) return;
+      const selectedFile = result.assets[0];
+      const newFile = {
+        fileName: selectedFile.name,
+        fileSize: formatFileSize(selectedFile.size),
+        fileType: selectedFile.mimeType,
+        id: Date.now(),
+        progress: 0,
+        uri: selectedFile.uri,
+      };
+      setAllFiles((prevFiles) => [...prevFiles, newFile]);
+    } catch (error) {
+      console.log("error detail: ", error);
+    }
+  };
   const renderItem = ({ file }) => (
     <View style={styles.contentContainer}>
       <View>
@@ -77,6 +135,7 @@ const AddIssue = ({ visible, hideModal }) => {
             selectionColor={palette.grey900}
             style={styles.issueInput}
             underlineColor={CombinedDefaultTheme.colors.background}
+            onChangeText={onChangeIssueName}
           />
         </Surface>
       </View>
@@ -87,26 +146,9 @@ const AddIssue = ({ visible, hideModal }) => {
           mode="flat"
           style={styles.surface}
         >
-          <TouchableOpacity
-            // activeUnderlineColor={palette.grey200}
-            // contentStyle={styles.issueContentStyle}
-            // dense={true}
-            style={styles.severity}
-            // underlineColor={CombinedDefaultTheme.colors.background}
-            // value={severityType}
-            onPress={handleSeverity}
-          >
+          <TouchableOpacity style={styles.severity} onPress={handleSeverity}>
             <Dropdown
               search
-              renderRightIcon={() => (
-                <Image
-                  color={focusOfFirstDropdown ? "blue" : "black"}
-                  // name="Safety"
-                  source={require("../../assets/icons/chevron_down.png")}
-                  // size={20}
-                  style={styles.dropDownIcon}
-                />
-              )}
               data={dropdownData}
               iconStyle={styles.iconStyle}
               inputSearchStyle={styles.inputSearchStyle}
@@ -114,16 +156,14 @@ const AddIssue = ({ visible, hideModal }) => {
               maxHeight={300}
               placeholder={!focusOfFirstDropdown ? "Status" : "..."}
               placeholderStyle={styles.placeholderStyle}
+              renderRightIcon={renderDropdownRightIcon}
               searchPlaceholder="Search..."
               selectedTextStyle={styles.selectedTextStyle}
               style={[styles.singleList, { borderColor: palette.transparent }]}
               value={valueOfFirstDropdown}
               valueField="value"
-              onChange={(item) => {
-                setValueOfFirstDropdown(item.value);
-                setFocusOfFirstDropdown(false);
-              }}
               onBlur={() => setFocusOfFirstDropdown(false)}
+              onChange={onDropdownChange}
               onFocus={() => setFocusOfFirstDropdown(true)}
             />
           </TouchableOpacity>
@@ -148,6 +188,7 @@ const AddIssue = ({ visible, hideModal }) => {
             selectionColor={palette.grey900}
             style={styles.issueDescription}
             underlineColor={CombinedDefaultTheme.colors.background}
+            onChangeText={onChangeIssueDescription}
             onSubmitEditing={() => Keyboard.dismiss()}
           />
         </Surface>
@@ -221,35 +262,22 @@ const AddIssue = ({ visible, hideModal }) => {
       </View>
     </View>
   );
-  const handleSeverity = useCallback(() => {
-    bottomDrawerRef.current?.present();
-  }, []);
-  const formatFileSize = useCallback((bytes) => {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
-    if (bytes < 1024 * 1024 * 1024)
-      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-    return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
-  }, []);
-  const pickDocument = async () => {
-    try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: "*/*",
-      });
-      if (result.canceled) return;
-      const selectedFile = result.assets[0];
-      const newFile = {
-        fileName: selectedFile.name,
-        fileSize: formatFileSize(selectedFile.size),
-        fileType: selectedFile.mimeType,
-        id: Date.now(),
-        progress: 0,
-        uri: selectedFile.uri,
-      };
-      setAllFiles((prevFiles) => [...prevFiles, newFile]);
-    } catch (error) {
-      console.log("error detail: ", error);
-    }
+
+  const renderDropdownRightIcon = () => (
+    <Image
+      color={focusOfFirstDropdown ? "blue" : "black"}
+      source={require("../../assets/icons/chevron_down.png")}
+      style={styles.dropDownIcon}
+    />
+  );
+
+  const validateInputs = () => {
+    const result = issueSchema.safeParse({
+      description,
+      issueName,
+      // severityType,
+    });
+    setIsValid(result.success);
   };
   return (
     <Modal
@@ -271,8 +299,10 @@ const AddIssue = ({ visible, hideModal }) => {
         </Appbar>
 
         <FlatList
+          key={resetKey}
           contentContainerStyle={styles.arrowIndicator}
           data={[1]}
+          extraData={{ description, issueName, valueOfFirstDropdown }}
           ItemSeparatorComponent={itemSeperator}
           keyExtractor={keyExtractor}
           renderItem={renderItem}
@@ -285,16 +315,24 @@ const AddIssue = ({ visible, hideModal }) => {
               borderColor={palette.grey200}
               content={"Clear"}
               textColor={palette.grey900}
-              //   onPress={onPress}
+              onPress={onClearPress}
             />
           </View>
           <View style={styles.attendanceContainer}>
             <PrimaryButton
-              backgroundColor={CombinedDefaultTheme.colors.primary}
-              borderColor={palette.purple600}
+              backgroundColor={
+                !isValid
+                  ? palette.primaryStudent200
+                  : CombinedDefaultTheme.colors.primary
+              }
+              borderColor={
+                !isValid ? palette.primaryStudent300 : palette.purple600
+              }
               content={"Add issue"}
+              disabled={isValid ? true : false}
               textColor={CombinedDefaultTheme.colors.background}
-              onPress={() => hideModal(true)}
+              // onPress={() => hideModal(true)}
+              onPress={onAddIssuePress}
             />
           </View>
         </View>
@@ -419,7 +457,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   progressBar: {
-    borderRadius: 16,
+    borderRadius: Dimensions.margin,
     height: 6,
     width: "236",
   },
@@ -435,7 +473,6 @@ const styles = StyleSheet.create({
     borderColor: palette.grey200,
     borderRadius: Dimensions.margin / 2,
     borderWidth: 1,
-
     height: 30,
   },
   surface: {

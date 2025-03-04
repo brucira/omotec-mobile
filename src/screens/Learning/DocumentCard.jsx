@@ -1,30 +1,23 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Card, ProgressBar, Text } from "react-native-paper";
+import { Card, Text } from "react-native-paper";
 
 import Tag from "../../components/Tag";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions, RouteNames } from "../../utils/constant";
+import { Dimensions } from "../../utils/constant";
 
 const DocumentCard = ({
   cover,
   documentType,
+  iconColor,
   id,
   lastModified,
   modifiedBy,
   title,
+  background,
+  documentTypeIcon,
 }) => {
-  const calendarSource = require("../../assets/icons/calender.png");
-  const userSource = require("../../assets/icons/user.png");
-  const bookSource = require("../../assets/icons/book.png");
-  const clockSource = require("../../assets/icons/clock_five.png");
-  const calendarRangeSource = require("../../assets/icons/calendar_range.png");
-  const trendSource = require("../../assets/icons/trend_up.png");
-  const COURSE = "course";
-  const navigation = useNavigation();
-
   return (
     <Card
       contentStyle={styles.contentStyleContainer}
@@ -39,10 +32,10 @@ const DocumentCard = ({
       <Image source={cover} style={styles.banner} />
       <View style={styles.cardContent}>
         <Tag
-          backgroundColor={palette.primaryStudent50}
-          iconSource={bookSource}
+          backgroundColor={background}
+          iconSource={documentTypeIcon}
           label={documentType}
-          textColor={CombinedDefaultTheme.colors.primary}
+          textColor={iconColor}
         />
         <Text
           numberOfLines={2}
@@ -52,16 +45,23 @@ const DocumentCard = ({
           {title}
         </Text>
         <View style={styles.cardFooter}>
-          <Text>
-            Last Modified on: <Text>{lastModified}</Text>
+          <Text style={{ color: palette.grey700 }} variant="bodySmall">
+            Last Modified on:{" "}
+            <Text style={{ color: palette.grey900 }} variant="labelMedium">
+              {lastModified}
+            </Text>
           </Text>
           <View style={styles.modified}>
-            <Text>{" by"}</Text>
+            <Text style={{ color: palette.grey700 }} variant="bodySmall">
+              {" by"}
+            </Text>
             <Image
               source={require("../../assets/avatar.png")}
               style={styles.modifiedBy}
             />
-            <Text>{modifiedBy}</Text>
+            <Text style={{ color: palette.grey900 }} variant="labelMedium">
+              {modifiedBy}
+            </Text>
           </View>
         </View>
       </View>
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     gap: Dimensions.margin / 4,
   },
   modifiedBy: {
+    alignSelf: "center",
     borderRadius: Dimensions.margin * 3,
     height: Dimensions.margin,
     resizeMode: "contain",

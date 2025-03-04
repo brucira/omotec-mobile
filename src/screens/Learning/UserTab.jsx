@@ -3,14 +3,10 @@ import { FlatList, Image, StyleSheet, View } from "react-native";
 import { Searchbar } from "react-native-paper";
 
 import palette from "../../styles/palette";
-import {
-  courseCardData,
-  Dimensions,
-  projectDetailUserTabData,
-} from "../../utils/constant";
+import { Dimensions, projectDetailUserTabData } from "../../utils/constant";
 import UserCard from "./UserCard";
 
-const UserTab = ({ activeTab }) => {
+const UserTab = () => {
   const keyExtractor = (item) => item.id.toString();
   const itemSeperator = () => <View style={styles.itemSeparator} />;
   const renderItem = useCallback(
