@@ -24,7 +24,7 @@ const CourseDetail = () => {
     navigation.navigate(RouteNames.CoursePreview, { type: type || null });
   };
 
-  const SessionItems = [
+  const SessionItems1 = [
     {
       descriptionIcon: ACCORDIOM_ITEM_ICON.text,
       leftIcon: checkCircle,
@@ -55,10 +55,41 @@ const CourseDetail = () => {
       type: ACCORDIOM_ITEM_TYPE.READING,
     },
     {
-      descriptionIcon: ACCORDIOM_ITEM_ICON.globel,
+      descriptionIcon: ACCORDIOM_ITEM_ICON.weblink,
       leftIcon: statusCircle,
       text: "Web link",
       title: "How to Set Up an Employee Training Plan",
+      type: ACCORDIOM_ITEM_TYPE.WEBLINK,
+    },
+  ];
+
+  const SessionItems2 = [
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.video,
+      leftIcon: statusCircle,
+      text: "6 Min",
+      title: "What is Employee Training?",
+      type: ACCORDIOM_ITEM_TYPE.VIDEO,
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.test,
+      leftIcon: statusCircle,
+      text: "15 Min",
+      title: "Test",
+      type: ACCORDIOM_ITEM_TYPE.TEST,
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.assignment,
+      leftIcon: statusCircle,
+      text: "45 Min",
+      title: "Assignment",
+      type: ACCORDIOM_ITEM_TYPE.ASSIGNMENT,
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.weblink,
+      leftIcon: statusCircle,
+      text: "45 Min",
+      title: "About the Critique Framework",
       type: ACCORDIOM_ITEM_TYPE.WEBLINK,
     },
   ];
@@ -91,14 +122,15 @@ const CourseDetail = () => {
         <ScrollView style={styles.sessionsContainer}>
           <ListAccordion
             description="1/4 | 28min"
-            listData={SessionItems}
+            listData={SessionItems1}
             title="Session 1"
             onItemPress={navigationHandler}
           ></ListAccordion>
           <ListAccordion
             description="1/4 | 28min"
-            listData={SessionItems}
+            listData={SessionItems2}
             title="Session 2"
+            onItemPress={navigationHandler}
           ></ListAccordion>
         </ScrollView>
       </View>

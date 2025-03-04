@@ -963,6 +963,149 @@ export const weekEvents = [
     title: "Meeting",
   },
 ];
+
+export const testData = [
+  {
+    id: 1,
+    options: [
+      {
+        correct: false,
+        id: 1,
+        option: "Video",
+      },
+      {
+        correct: false,
+        id: 2,
+        option: "Audio",
+      },
+      {
+        correct: true,
+        id: 3,
+        option: "Presentaion and documents",
+      },
+      {
+        correct: false,
+        id: 4,
+        option: "Assessment",
+      },
+    ],
+    question: "Content type TalentLMS support inculude",
+    type: "mcq",
+    weightage: 1,
+  },
+  {
+    id: 2,
+    options: [
+      {
+        correct: false,
+        id: 1,
+        option: "Video",
+      },
+      {
+        correct: false,
+        id: 2,
+        option: "Audio",
+      },
+      {
+        correct: true,
+        id: 3,
+        option: "Presentaion and documents",
+      },
+      {
+        correct: false,
+        id: 4,
+        option: "Assessment",
+      },
+    ],
+    question:
+      '"Introduction to Python" serves as a _________ for individuals stepping into the realm of programming. Python, known for its simplicity and versatility, has become a popular choice for beginners and professionals alike.',
+    type: "mcq",
+    weightage: 1,
+  },
+  {
+    id: 3,
+    options: [
+      {
+        correct_order_number: 2,
+        id: 1,
+        option: 21,
+      },
+      {
+        correct_order_number: 1,
+        id: 2,
+        option: 9,
+      },
+      {
+        correct_order_number: 4,
+        id: 3,
+        option: 42,
+      },
+      {
+        correct_order_number: 3,
+        id: 4,
+        option: 28,
+      },
+    ],
+    question: "Arrange the number in ascending order.",
+    type: "arrange",
+    weightage: 1,
+  },
+  {
+    id: 4,
+    options: [
+      {
+        correct_order_number: 3,
+        id: 1,
+        img: require("../assets/js.png"),
+        option: "Javascript",
+      },
+      {
+        correct_order_number: 1,
+        id: 2,
+        img: require("../assets/html.png"),
+        option: "HTML",
+      },
+      {
+        correct_order_number: 2,
+        id: 3,
+        img: require("../assets/css.png"),
+        option: "CSS",
+      },
+    ],
+    question: "Arrange the number in ascending order.",
+    type: "arrange",
+    weightage: 1,
+  },
+  {
+    id: 5,
+    options: [
+      {
+        correct: false,
+        id: 1,
+        option: "Video",
+      },
+      {
+        correct: false,
+        id: 2,
+        option: "Audio",
+      },
+      {
+        correct: true,
+        id: 3,
+        option: "Presentaion and documents",
+      },
+      {
+        correct: false,
+        id: 4,
+        option: "Assessment",
+      },
+    ],
+    question: "Content type TalentLMS support inculude",
+    type: "mcq",
+    weightage: 1,
+  },
+];
+
 export const RouteNames = {
   Calender: "Calender",
   Course: "CourseDetail",
@@ -977,15 +1120,19 @@ export const RouteNames = {
 };
 
 export const ACCORDIOM_ITEM_ICON = {
-  globel: "GLOBEL",
-  reading : "READING",
+  assignment: "ASSIGNMENT",
+  reading : "READING", 
+  test: "TEST",
   text: "TEXT",
   video: "VIDEO",
+  weblink: "WEBLINK",
 };
 
 export const ACCORDIOM_ITEM_TYPE = {
+  ASSIGNMENT: "ASSIGNMENT",
   OVERVIEW: "OVERVIEW",
   READING:"READING",
+  TEST: "TEST",
   VIDEO: "VIDEO",
   WEBLINK: "WEBLINK",
 };

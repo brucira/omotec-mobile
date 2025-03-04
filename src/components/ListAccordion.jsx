@@ -9,12 +9,16 @@ const ItemDescription = ({ text = "", showResource = false, icon }) => {
 
   const getIconImage = useCallback((icon) => {
     switch (icon) {
-      case "GLOBEL":
+      case "WEBLINK":
         return require("../../src/assets/icons/item_globe.png");
       case "VIDEO":
         return require("../../src/assets/icons/item_video.png");
       case "TEXT":
         return require("../../src/assets/icons/item_text.png");
+      case "TEST":
+        return require("../../src/assets/icons/pencil.png");
+      case "ASSIGNMENT":
+        return require("../../src/assets/icons/file_edit.png");
       case "READING":
         return require("../../src/assets/icons/book_1.png");
       default:

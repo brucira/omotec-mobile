@@ -1,24 +1,19 @@
-import React, { useCallback, useRef } from "react";
+import React from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Divider, Text } from "react-native-paper";
 
 import BottomDrawer from "../../components/BottomDrawer";
 import FeedbackForm from "../../components/FeedbackForm";
+import useModal from "../../hooks/useModal";
 
 export const OverviewContent = () => {
-  const eventBottomSheetModalRef = useRef(null);
-
-  const openModalHandler = useCallback(() => {
-    eventBottomSheetModalRef.current?.present();
-  }, []);
-
-  const closeModalHandler = useCallback(() => {
-    eventBottomSheetModalRef.current?.dismiss();
-  }, []);
+  const { modalRef, openModal, closeModal } = useModal();
+  const message =
+    "When talking about employee training, we’re basically referring to a program designed to increase employees’ technical skills and knowledge, so they can do their jobs in a better way. Employee training doesn’t only contribute to performance development, but also to the growth of the organization.   Employee training, however, is not only essential for new hires but also for existing employees as well. By investing in training, companies get the chance to keep employees updated about latest trends, company goals, productivity tips, etc.  Don’t think of training as a once-off, tick-the-box event. Rather, it’s periodical and given at regular intervals or when needs arise (i.e., employee relocation, new skill development). Topics include: Choosing the right typeface Designing with simple shapes Adding shine, texture, beveled edges, and transparency Designing with negative space Choosing logo colors Preparing final files Note: I have use used Adobe Illustrator cc version for this course. Design a logo that stands out from the crowd with the help of these video tutorials. * Fully explained tutorial from starting to end. * Provided you secret techniques of creation. You also get the Project file to enhance your work flow.. Contents and Overview This course, containing over 45 lectures and 2.5 hours of content, provides step-by-step instructions on logo design. Along with this you also get the AI. Working File to download and practice along the tutorials. No logo design experience is required; however, you should have a full or free trial version of Adobe Illustrator, even though you don't need prior knowledge working in this program. Upon completion of this course. You'll know how to create unique symbols, add elements to a word, use geometric shapes and initials, and position text properly. Students will nail the basics of Illustrator, and create logos in color, black and white, and in different formats. All of these skills will make you a more valuable designer or allow you to use your creativity to make your own logos. What you’ll learn Design a Professional Logo Design a logo that stand out from the croud Design a new logo for a real client Fine-tuning a design after client selection Understand the techniques used in logo creation Apply various new techniques to your own work Are there any course requirements or prerequisites? Have a Basic knowledge about illustrator, as this course is little advanced. Who this course is for: This course is for those how want to learn how to design a logo Want to know how different logos are design and what are the techniques used in their creation. Want to learn how to fine-tune your logo design";
 
   const onSubmitRatingHandler = (rating, feedback) => {
-    //API CALL for SAVE RATING
-    closeModalHandler();
+    //TODO API CALL for SAVE RATING
+    closeModal();
   };
 
   return (
@@ -76,7 +71,7 @@ export const OverviewContent = () => {
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             style={styles.ratingButtonStyle}
-            onPress={openModalHandler}
+            onPress={openModal}
           >
             <Image
               source={require("../../assets/icons/star_1.png")}
@@ -92,49 +87,10 @@ export const OverviewContent = () => {
           Description
         </Text>
         <Text style={{ color: "#344054" }} variant="bodyMedium">
-          When talking about employee training, we’re basically referring to a
-          program designed to increase employees’ technical skills and
-          knowledge, so they can do their jobs in a better way. Employee
-          training doesn’t only contribute to performance development, but also
-          to the growth of the organization.   Employee training, however, is
-          not only essential for new hires but also for existing employees as
-          well. By investing in training, companies get the chance to keep
-          employees updated about latest trends, company goals, productivity
-          tips, etc.  Don’t think of training as a once-off, tick-the-box
-          event. Rather, it’s periodical and given at regular intervals or when
-          needs arise (i.e., employee relocation, new skill development). Topics
-          include: Choosing the right typeface Designing with simple shapes
-          Adding shine, texture, beveled edges, and transparency Designing with
-          negative space Choosing logo colors Preparing final files Note: I have
-          use used Adobe Illustrator cc version for this course. Design a logo
-          that stands out from the crowd with the help of these video tutorials.
-          * Fully explained tutorial from starting to end. * Provided you secret
-          techniques of creation. You also get the Project file to enhance your
-          work flow.. Contents and Overview This course, containing over 45
-          lectures and 2.5 hours of content, provides step-by-step instructions
-          on logo design. Along with this you also get the AI. Working File to
-          download and practice along the tutorials. No logo design experience
-          is required; however, you should have a full or free trial version of
-          Adobe Illustrator, even though you don't need prior knowledge working
-          in this program. Upon completion of this course. You'll know how to
-          create unique symbols, add elements to a word, use geometric shapes
-          and initials, and position text properly. Students will nail the
-          basics of Illustrator, and create logos in color, black and white, and
-          in different formats. All of these skills will make you a more
-          valuable designer or allow you to use your creativity to make your own
-          logos. What you’ll learn Design a Professional Logo Design a logo that
-          stand out from the croud Design a new logo for a real client
-          Fine-tuning a design after client selection Understand the techniques
-          used in logo creation Apply various new techniques to your own work
-          Are there any course requirements or prerequisites? Have a Basic
-          knowledge about illustrator, as this course is little advanced. Who
-          this course is for: This course is for those how want to learn how to
-          design a logo Want to know how different logos are design and what are
-          the techniques used in their creation. Want to learn how to fine-tune
-          your logo design
+          {message}
         </Text>
       </View>
-      <BottomDrawer ref={eventBottomSheetModalRef} showIndicator={false}>
+      <BottomDrawer ref={modalRef} showIndicator={false}>
         <FeedbackForm onSubmit={onSubmitRatingHandler}></FeedbackForm>
       </BottomDrawer>
     </View>

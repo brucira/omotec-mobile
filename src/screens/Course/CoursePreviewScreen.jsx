@@ -4,7 +4,6 @@ import React from "react";
 import {
   Alert,
   Image,
-  KeyboardAvoidingView,
   Linking,
   Platform,
   StyleSheet,
@@ -12,18 +11,21 @@ import {
   View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Text } from "react-native-paper";
+import { Divider, Text } from "react-native-paper";
 import Pdf from "react-native-pdf";
 
+import CourseTabBack from "../../components/CourseTabBack";
 import { DiscussionsContent } from "../../components/CourseTabs/DiscussionsContent";
 import { KitContent } from "../../components/CourseTabs/KitContent";
 import NoteContent from "../../components/CourseTabs/NoteContent";
 import { OverviewContent } from "../../components/CourseTabs/OverviewContent";
+import RecordingsContent from "../../components/CourseTabs/RecordingsContent";
 import ReviewsContent from "../../components/CourseTabs/ReviewsContent";
 import { SessionsContent } from "../../components/CourseTabs/SessionsContent";
 import CustomMenu from "../../components/CustomMenu";
 import CustomTabs from "../../components/CustomTabs";
 import VideoPlayer from "../../components/VideoPlayer";
+import TestScreen from "./TestScreen";
 
 const HeaderContent = ({ type }) => {
   const [viewAllText, setViewAllText] = React.useState(7);
@@ -64,6 +66,8 @@ const HeaderContent = ({ type }) => {
       Alert.alert("Error", "Can't open this link.");
     }
   };
+
+  const startTestHandler = () => {};
 
   if (type === "OVERVIEW") {
     return (
@@ -166,6 +170,14 @@ const HeaderContent = ({ type }) => {
         </View>
       </View>
     );
+  } else if (type === "TEST") {
+    return <TestScreen />;
+  } else if (type === "ASSIGNMENT") {
+    return (
+      <View style={styles.webLinkContainer}>
+        <Text>assignment</Text>
+      </View>
+    );
   }
 };
 
@@ -203,6 +215,11 @@ export const CoursePreviewScreen = (props) => {
       content: <ReviewsContent />,
       key: "reviews",
       title: "Reviews",
+    },
+    {
+      content: <RecordingsContent />,
+      key: "recordings",
+      title: "Recordings",
     },
   ];
 
@@ -339,12 +356,34 @@ const styles = StyleSheet.create({
   playerStyle: {
     height: 222,
   },
+  ratingButtonStyle: {
+    alignItems: "center",
+    backgroundColor: "#852DCD",
+    borderColor: "#852DCD",
+    borderRadius: 14,
+    columnGap: 8,
+    elevation: 4,
+    height: 40,
+    justifyContent: "center",
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+    shadowColor: "#60179C",
+    shadowOffset: { height: 4, width: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+  },
   readingContainer: {
     marginBottom: 20,
     rowGap: 16,
   },
   tabContainer: {
     flex: 1,
+  },
+  testContainer: {
+    backgroundColor: "#F9FAFB",
+    paddingBottom: 20,
+    paddingTop: 12,
+    rowGap: 12,
   },
   textContainer: {
     paddingHorizontal: 16,
