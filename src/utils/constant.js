@@ -965,7 +965,8 @@ export const weekEvents = [
 ];
 export const RouteNames = {
   Calender: "Calender",
-  Course:"CourseDetail",
+  Course: "CourseDetail",
+  CoursePreview:"CoursePreviewScreen",
   Home: "Home",
   Learning: "My Learning",
   Notifications: "Notifications",
@@ -977,6 +978,14 @@ export const RouteNames = {
 
 export const ACCORDIOM_ITEM_ICON = {
   globel: "GLOBEL",
+  reading : "READING",
   text: "TEXT",
   video: "VIDEO",
+};
+
+export const ACCORDIOM_ITEM_TYPE = {
+  OVERVIEW: "OVERVIEW",
+  READING:"READING",
+  VIDEO: "VIDEO",
+  WEBLINK: "WEBLINK",
 };

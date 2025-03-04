@@ -1,48 +1,65 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import { Appbar } from "react-native-paper";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { Appbar, Text } from "react-native-paper";
 
 import ListAccordion from "../../components/ListAccordion";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { ACCORDIOM_ITEM_ICON, Dimensions } from "../../utils/constant";
+import {
+  ACCORDIOM_ITEM_ICON,
+  ACCORDIOM_ITEM_TYPE,
+  Dimensions,
+  RouteNames,
+} from "../../utils/constant";
 
-const CourseDetail = ({ navigation }) => {
+const CourseDetail = () => {
   const bannerImage = require("../../assets/course_details_banner.png");
   const checkCircle = require("../../assets/icons/check-circle.png");
   const statusCircle = require("../../assets/icons/status.png");
   const statusPurpleCircle = require("../../assets/icons/status_purple.png");
+  const navigation = useNavigation();
 
-  const navigationHandler = () => {
-    console.log("click");
+  const navigationHandler = (type) => {
+    navigation.navigate(RouteNames.CoursePreview, { type: type || null });
   };
 
   const SessionItems = [
     {
       descriptionIcon: ACCORDIOM_ITEM_ICON.text,
-      icon: checkCircle,
+      leftIcon: checkCircle,
       text: "5 Min",
       title: "Welcome to Employee Training 101",
+      type: ACCORDIOM_ITEM_TYPE.OVERVIEW,
     },
     {
       descriptionIcon: ACCORDIOM_ITEM_ICON.video,
-      icon: statusPurpleCircle,
+      leftIcon: statusPurpleCircle,
       selected: true,
       showResource: true,
       text: "5 Min",
       title: "Welcome to Employee Training?",
+      type: ACCORDIOM_ITEM_TYPE.VIDEO,
     },
     {
       descriptionIcon: ACCORDIOM_ITEM_ICON.video,
-      icon: statusCircle,
+      leftIcon: statusCircle,
       text: "5 Min",
-      title: "Benefits of Employee Training",
+      title: "Course Video",
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.reading,
+      leftIcon: statusCircle,
+      text: "Reading",
+      title: "Reading PDF",
+      type: ACCORDIOM_ITEM_TYPE.READING,
     },
     {
       descriptionIcon: ACCORDIOM_ITEM_ICON.globel,
-      icon: statusCircle,
+      leftIcon: statusCircle,
       text: "Web link",
       title: "How to Set Up an Employee Training Plan",
+      type: ACCORDIOM_ITEM_TYPE.WEBLINK,
     },
   ];
 
@@ -59,11 +76,15 @@ const CourseDetail = ({ navigation }) => {
       <View style={styles.detailsContainer}>
         <View style={styles.coursetitleContainer}>
           <Text style={styles.titleText}>Your Creative peak</Text>
-          <Text style={styles.subText}>
+          <Text style={styles.subText} variant="bodySmall">
             8 Sessions
-            <Text style={styles.spanDot}>•</Text>
+            <Text style={styles.spanDot} variant="labelMedium">
+              &nbsp;•&nbsp;
+            </Text>
             30 mins of video left
-            <Text style={styles.spanDot}>•</Text>
+            <Text style={styles.spanDot} variant="labelMedium">
+              &nbsp;•&nbsp;
+            </Text>
             40 mins of reading left
           </Text>
         </View>
@@ -123,27 +144,19 @@ const styles = StyleSheet.create({
   },
   spanDot: {
     color: "#475467",
-    fontFamily: "Inter",
-    fontSize: 12,
     fontWeight: 100,
-    letterSpacing: 0,
-    lineHeight: 16,
   },
   subText: {
     color: "#475467",
-    fontFamily: "Inter",
-    fontSize: 12,
-    fontWeight: 400,
     letterSpacing: 0,
-    lineHeight: 16,
   },
   titleText: {
     color: "#101828",
-    fontFamily: "Inter",
-    fontSize: 18,
-    fontWeight: 700,
-    letterSpacing: 0,
-    lineHeight: 28,
+    // fontFamily: "Inter",
+    // fontSize: 18,
+    // fontWeight: 700,
+    // letterSpacing: 0,
+    // lineHeight: 28,
   },
 });
 

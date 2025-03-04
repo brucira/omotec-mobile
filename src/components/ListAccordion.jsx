@@ -1,6 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { List } from "react-native-paper";
+
+import { ACCORDIOM_ITEM_TYPE } from "../utils/constant";
 
 const ItemDescription = ({ text = "", showResource = false, icon }) => {
   const folderClosed = require("../../src/assets/icons/folder_closed.png");
@@ -13,10 +15,13 @@ const ItemDescription = ({ text = "", showResource = false, icon }) => {
         return require("../../src/assets/icons/item_video.png");
       case "TEXT":
         return require("../../src/assets/icons/item_text.png");
+      case "READING":
+        return require("../../src/assets/icons/book_1.png");
       default:
         return require("../../src/assets/icons/item_text.png");
     }
   }, []);
+
   return (
     <View style={{ flex: 1, flexDirection: "row" }}>
       <View style={styles.itemDescriptionContainer}>
@@ -55,29 +60,42 @@ const ListAccordion = ({
   title = "",
   description = "",
   onItemPress,
+  expandedState = false,
+  rightIcon,
 }) => {
-  const listItemHandler = () => {
+  const [expanded, setExpanded] = useState(expandedState);
+
+  const upIcon = require("../../src/assets/icons/chevron_up.png");
+  const downIcon = require("../../src/assets/icons/chevron_down.png");
+
+  const listItemHandler = (type) => {
     if (onItemPress) {
-      onItemPress();
+      onItemPress(type || ACCORDIOM_ITEM_TYPE.OVERVIEW);
     }
   };
   return (
     <List.Accordion
-      right={(props) => (
-        <List.Icon
-          {...props}
-          icon={
-            props.isExpanded
-              ? require("../../src/assets/icons/chevron_up.png")
-              : require("../../src/assets/icons/chevron_down.png")
-          }
-        />
-      )}
+      right={(props) => {
+        const iconToShow = rightIcon
+          ? rightIcon
+          : props.isExpanded
+            ? upIcon
+            : downIcon;
+        return (
+          <List.Icon
+            {...props}
+            icon={iconToShow}
+            style={{ height: 20, width: 20 }}
+          />
+        );
+      }}
       description={description}
       descriptionStyle={styles.accordionDescriptionStyle}
+      expanded={expanded}
       style={styles.accordionStyle}
       title={title}
       titleStyle={styles.accordionTitleStyle}
+      onPress={() => setExpanded(!expanded)}
     >
       {listData.map((item, index) => (
         <List.Item
@@ -89,9 +107,22 @@ const ListAccordion = ({
               text={item.text}
             />
           }
-          left={() => (
-            <Image source={item?.icon} style={styles.itemImageStyle} />
-          )}
+          left={() =>
+            item?.leftIcon ? (
+              <Image
+                source={item?.leftIcon}
+                style={{ height: 24, width: 24 }}
+              />
+            ) : null
+          }
+          right={() =>
+            item?.rightIcon ? (
+              <Image
+                source={item?.rightIcon}
+                style={{ height: 24, width: 24 }}
+              />
+            ) : null
+          }
           style={[
             styles.accordionItemsStyle,
             item?.selected && styles.accordionSelectedItemsStyle,
@@ -99,10 +130,13 @@ const ListAccordion = ({
           ]}
           title={item.title}
           titleStyle={styles.itemTitleStyle}
-          onPress={
-            (item?.onClick && item?.onClick) ||
-            (listItemHandler && listItemHandler)
-          }
+          onPress={() => {
+            if (item?.onClick) {
+              item.onClick(item?.type);
+            } else if (listItemHandler) {
+              listItemHandler(item?.type);
+            }
+          }}
         />
       ))}
     </List.Accordion>
@@ -172,9 +206,8 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
   itemImageStyle: {
-    height: 18,
-    marginTop: 6,
-    width: 18,
+    height: 20,
+    width: 20,
   },
   itemTitleStyle: {
     color: "#101828",
