@@ -110,7 +110,7 @@ const Learning = ({ navigation }) => {
               }}
             >
               <Text variant="titleLarge">Ongoing courses</Text>
-              <Text variant="titleLarge"> {`(${projectCardData.length})`}</Text>
+              <Text variant="titleLarge"> {`(${courseCardData.length})`}</Text>
             </View>
             <FlatList
               contentContainerStyle={styles.arrowIndicator}

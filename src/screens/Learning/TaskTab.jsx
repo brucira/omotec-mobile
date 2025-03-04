@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { Calendar } from "react-native-big-calendar";
 import { Dropdown } from "react-native-element-dropdown";
-import { Button, Searchbar, Text } from "react-native-paper";
+import { Button, Searchbar, Surface, Text } from "react-native-paper";
 
 import BottomDrawer from "../../components/BottomDrawer";
 import FullEventDetails from "../../components/FullEventDetails";
@@ -37,8 +37,11 @@ const DELETE = "delete";
 const ISSUE = "issue";
 const TaskTab = ({ activeTab }) => {
   const [isStatusChecked, setIsStatusChecked] = useState(false);
+  const [isModifiedChecked, setIsModifiedChecked] = useState(false);
   const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState(false);
+  const [focusOfStatusDropdown, setFocusOfStatusDropdown] = useState(false);
   const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState(false);
+  const [valueOfStatusDropdown, setValueOfStatusDropdown] = useState(false);
   const [showCalendarLayout, setShowCalendarLayout] = useState(false);
   const [activeBottomItem, setActiveBottomItem] = useState(null);
   const [, setSelectedDate] = useState(false);
@@ -145,6 +148,7 @@ const TaskTab = ({ activeTab }) => {
   const keyExtractor = (item) => item.id.toString();
   const itemSeperator = () => <View style={styles.itemSeparator} />;
   const toggleStatusCheckbox = () => setIsStatusChecked((prev) => !prev);
+  const toggleModifyCheckbox = () => setIsModifiedChecked((prev) => !prev);
   const handleFilterModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -424,27 +428,27 @@ const TaskTab = ({ activeTab }) => {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   style={styles.individualViewContainer}
-                  onPress={toggleStatusCheckbox}
+                  onPress={toggleModifyCheckbox}
                 >
                   <Checkbox
                     color={
-                      isStatusChecked
+                      isModifiedChecked
                         ? CombinedDefaultTheme.colors.primary
                         : undefined
                     }
                     style={styles.checkbox}
-                    value={isStatusChecked}
-                    onValueChange={toggleStatusCheckbox}
+                    value={isModifiedChecked}
+                    onValueChange={toggleModifyCheckbox}
                   />
                   <Text
                     style={{
-                      color: isStatusChecked
+                      color: isModifiedChecked
                         ? CombinedDefaultTheme.colors.primary
                         : palette.grey900,
                     }}
                     variant="titleSmall"
                   >
-                    Ongoing
+                    Modified on
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -487,115 +491,145 @@ const TaskTab = ({ activeTab }) => {
 
               <Pressable onPress={() => showPicker("start")}>
                 <Text variant="titleSmall">Start Date</Text>
-                <View style={styles.calendarContainer}>
-                  <Image
-                    source={require("../../assets/icons/calender.png")}
-                    style={styles.calendarIcon}
-                    tintColor={palette.grey700}
-                  />
-                  <Text style={{ color: palette.grey400 }} variant="bodyMedium">
-                    {startDate
-                      ? startDate.toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })
-                      : "Start Date"}
-                  </Text>
-                </View>
+                <Surface
+                  elevation={Platform.OS === "ios" ? 6 : null}
+                  mode="flat"
+                  style={styles.surface}
+                >
+                  <View style={styles.calendarContainer}>
+                    <Image
+                      source={require("../../assets/icons/calender.png")}
+                      style={styles.calendarIcon}
+                      tintColor={palette.grey700}
+                    />
+                    <Text
+                      style={{ color: palette.grey400 }}
+                      variant="bodyMedium"
+                    >
+                      {startDate
+                        ? startDate.toLocaleDateString("en-GB", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          })
+                        : "Start Date"}
+                    </Text>
+                  </View>
+                </Surface>
               </Pressable>
 
               <Pressable onPress={() => showPicker("end")}>
                 <Text variant="titleSmall">Due Date</Text>
-                <View style={styles.calendarContainer}>
-                  <Image
-                    source={require("../../assets/icons/calender.png")}
-                    style={styles.calendarIcon}
-                    tintColor={palette.grey700}
-                  />
-                  <Text style={{ color: palette.grey400 }} variant="bodyMedium">
-                    {endDate
-                      ? endDate.toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })
-                      : "Due Date"}
-                  </Text>
-                </View>
+                <Surface
+                  elevation={Platform.OS === "ios" ? 6 : null}
+                  mode="flat"
+                  style={styles.surface}
+                >
+                  <View style={styles.calendarContainer}>
+                    <Image
+                      source={require("../../assets/icons/calender.png")}
+                      style={styles.calendarIcon}
+                      tintColor={palette.grey700}
+                    />
+                    <Text
+                      style={{ color: palette.grey400 }}
+                      variant="bodyMedium"
+                    >
+                      {endDate
+                        ? endDate.toLocaleDateString("en-GB", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          })
+                        : "Due Date"}
+                    </Text>
+                  </View>
+                </Surface>
               </Pressable>
 
               <View>
                 <Text variant="titleSmall">Task Name</Text>
-                <Dropdown
-                  search
-                  renderRightIcon={() => (
-                    <Image
-                      color={focusOfFirstDropdown ? "blue" : "black"}
-                      // name="Safety"
-                      source={require("../../assets/icons/chevron_down.png")}
-                      // size={20}
-                      style={styles.iconStyle}
-                    />
-                  )}
-                  style={[
-                    styles.singleList,
-                    focusOfFirstDropdown && { borderColor: "blue" },
-                    // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
-                  ]}
-                  data={dropdownData}
-                  iconStyle={styles.iconStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  labelField="label"
-                  maxHeight={300}
-                  placeholder={!focusOfFirstDropdown ? "Select item" : "..."}
-                  placeholderStyle={styles.placeholderStyle}
-                  searchPlaceholder="Search..."
-                  selectedTextStyle={styles.selectedTextStyle}
-                  value={valueOfFirstDropdown}
-                  valueField="value"
-                  onChange={(item) => {
-                    setValueOfFirstDropdown(item.value);
-                    setFocusOfFirstDropdown(false);
-                  }}
-                  onBlur={() => setFocusOfFirstDropdown(false)}
-                  onFocus={() => setFocusOfFirstDropdown(true)}
-                />
+                <Surface
+                  elevation={Platform.OS === "ios" ? 6 : null}
+                  mode="flat"
+                  style={styles.surface}
+                >
+                  <Dropdown
+                    search
+                    renderRightIcon={() => (
+                      <Image
+                        color={focusOfFirstDropdown ? "blue" : "black"}
+                        // name="Safety"
+                        source={require("../../assets/icons/chevron_down.png")}
+                        // size={20}
+                        style={styles.iconStyle}
+                      />
+                    )}
+                    style={[
+                      styles.singleList,
+                      focusOfFirstDropdown && { borderColor: "blue" },
+                      // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
+                    ]}
+                    data={dropdownData}
+                    iconStyle={styles.iconStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    labelField="label"
+                    maxHeight={300}
+                    placeholder={!focusOfFirstDropdown ? "Select item" : "..."}
+                    placeholderStyle={styles.placeholderStyle}
+                    searchPlaceholder="Search..."
+                    selectedTextStyle={styles.selectedTextStyle}
+                    value={valueOfFirstDropdown}
+                    valueField="value"
+                    onChange={(item) => {
+                      setValueOfFirstDropdown(item.value);
+                      setFocusOfFirstDropdown(false);
+                    }}
+                    onBlur={() => setFocusOfFirstDropdown(false)}
+                    onFocus={() => setFocusOfFirstDropdown(true)}
+                  />
+                </Surface>
               </View>
               <View>
                 <Text variant="titleSmall">Status</Text>
-                <Dropdown
-                  search
-                  renderRightIcon={() => (
-                    <Image
-                      color={focusOfFirstDropdown ? "blue" : "black"}
-                      source={require("../../assets/icons/chevron_down.png")}
-                      style={styles.iconStyle}
-                    />
-                  )}
-                  style={[
-                    styles.singleList,
-                    focusOfFirstDropdown && { borderColor: "blue" },
-                    // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
-                  ]}
-                  data={dropdownData}
-                  iconStyle={styles.iconStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  labelField="label"
-                  maxHeight={300}
-                  placeholder={!focusOfFirstDropdown ? "Select item" : "..."}
-                  placeholderStyle={styles.placeholderStyle}
-                  searchPlaceholder="Search..."
-                  selectedTextStyle={styles.selectedTextStyle}
-                  value={valueOfFirstDropdown}
-                  valueField="value"
-                  onChange={(item) => {
-                    setValueOfFirstDropdown(item.value);
-                    setFocusOfFirstDropdown(false);
-                  }}
-                  onBlur={() => setFocusOfFirstDropdown(false)}
-                  onFocus={() => setFocusOfFirstDropdown(true)}
-                />
+                <Surface
+                  elevation={Platform.OS === "ios" ? 6 : null}
+                  mode="flat"
+                  style={styles.surface}
+                >
+                  <Dropdown
+                    search
+                    renderRightIcon={() => (
+                      <Image
+                        color={focusOfStatusDropdown ? "blue" : "black"}
+                        source={require("../../assets/icons/chevron_down.png")}
+                        style={styles.iconStyle}
+                      />
+                    )}
+                    style={[
+                      styles.singleList,
+                      focusOfStatusDropdown && { borderColor: "blue" },
+                      // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
+                    ]}
+                    data={dropdownData}
+                    iconStyle={styles.iconStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    labelField="label"
+                    maxHeight={300}
+                    placeholder={!focusOfStatusDropdown ? "Select item" : "..."}
+                    placeholderStyle={styles.placeholderStyle}
+                    searchPlaceholder="Search..."
+                    selectedTextStyle={styles.selectedTextStyle}
+                    value={valueOfStatusDropdown}
+                    valueField="value"
+                    onChange={(item) => {
+                      setValueOfStatusDropdown(item.value);
+                      setFocusOfStatusDropdown(false);
+                    }}
+                    onBlur={() => setFocusOfStatusDropdown(false)}
+                    onFocus={() => setFocusOfStatusDropdown(true)}
+                  />
+                </Surface>
               </View>
             </View>
           </View>
@@ -663,7 +697,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: Dimensions.margin / 2,
     marginTop: Dimensions.padding / 2.66,
-    paddingHorizontal: Dimensions.padding / 1.33,
+    // paddingHorizontal: Dimensions.padding / 1.33,
     paddingVertical: Dimensions.padding / 2,
   },
   calendarIcon: {
@@ -748,6 +782,9 @@ const styles = StyleSheet.create({
     borderRadius: Dimensions.margin / 1.6,
     padding: Dimensions.padding * 1.25,
   },
+  placeholderStyle: {
+    fontSize: 14,
+  },
   rightIcon: {
     height: Dimensions.margin,
     marginLeft: 0,
@@ -785,6 +822,9 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     position: "relative",
   },
+  selectedTextStyle: {
+    fontSize: 14,
+  },
   singleList: {
     marginTop: Dimensions.margin / 2,
     paddingVertical: Dimensions.padding / 2,
@@ -792,6 +832,17 @@ const styles = StyleSheet.create({
   sortAndFilterContainer: {
     marginTop: Dimensions.margin / 2,
     paddingVertical: Dimensions.padding,
+  },
+  surface: {
+    backgroundColor: CombinedDefaultTheme.colors.background,
+    borderRadius: Dimensions.margin / 2,
+    elevation: 3,
+    marginTop: Dimensions.margin / 2.66,
+    paddingHorizontal: Dimensions.padding / 1.33,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: { height: 4, width: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
 });
 

@@ -23,11 +23,15 @@ import {
 import DocumentCard from "./DocumentCard";
 
 const DocumentTab = ({ activeTab }) => {
-  const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState();
-  const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState();
+  const [valueOfTypeDropdown, setValueOfTypeDropdown] = useState();
+  const [valueOfUploadedDropdown, setValueOfUploadedDropdown] = useState();
+  const [focusOfTypeDropdown, setFocusOfTypeDropdown] = useState();
+  const [focusOfUploadedDropdown, setFocusOfUploadedDropdown] = useState();
   const [isStatusChecked, setIsStatusChecked] = useState(false);
+  const [isModifiedChecked, setIsModifiedChecked] = useState(false);
   const keyExtractor = (item) => item.id.toString();
   const toggleStatusCheckbox = () => setIsStatusChecked((prev) => !prev);
+  const toggleModifiedCheckbox = () => setIsModifiedChecked((prev) => !prev);
   const bottomSheetModalRef = useRef(null);
   const handleFilterPress = useCallback(
     () => bottomSheetModalRef.current?.present(),
@@ -41,14 +45,19 @@ const DocumentTab = ({ activeTab }) => {
     []
   );
 
-  const onDropdownChange = (item) => {
-    setValueOfFirstDropdown(item.value);
-    setFocusOfFirstDropdown(false);
+  const onTypeDropdownChange = (item) => {
+    setValueOfTypeDropdown(item.value);
+    setFocusOfTypeDropdown(false);
+  };
+
+  const onUploadedDropdownChange = (item) => {
+    setValueOfUploadedDropdown(item.value);
+    setFocusOfUploadedDropdown(false);
   };
 
   const renderDropdownRightIcon = () => (
     <Image
-      color={focusOfFirstDropdown ? "blue" : "black"}
+      color={focusOfTypeDropdown ? "blue" : "black"}
       // name="Safety"
       source={require("../../assets/icons/chevron_down.png")}
       // size={20}
@@ -126,21 +135,21 @@ const DocumentTab = ({ activeTab }) => {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   style={styles.individualViewContainer}
-                  onPress={toggleStatusCheckbox}
+                  onPress={toggleModifiedCheckbox}
                 >
                   <Checkbox
                     color={
-                      isStatusChecked
+                      isModifiedChecked
                         ? CombinedDefaultTheme.colors.primary
                         : undefined
                     }
                     style={styles.checkbox}
-                    value={isStatusChecked}
-                    onValueChange={toggleStatusCheckbox}
+                    value={isModifiedChecked}
+                    onValueChange={toggleModifiedCheckbox}
                   />
                   <Text
                     style={{
-                      color: isStatusChecked
+                      color: isModifiedChecked
                         ? CombinedDefaultTheme.colors.primary
                         : palette.grey900,
                     }}
@@ -169,7 +178,7 @@ const DocumentTab = ({ activeTab }) => {
                     search
                     style={[
                       styles.singleList,
-                      focusOfFirstDropdown && { borderColor: "blue" },
+                      focusOfTypeDropdown && { borderColor: "blue" },
                       // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
                     ]}
                     data={dropdownData}
@@ -177,16 +186,16 @@ const DocumentTab = ({ activeTab }) => {
                     inputSearchStyle={styles.inputSearchStyle}
                     labelField="label"
                     maxHeight={300}
-                    placeholder={!focusOfFirstDropdown ? "Select type" : "..."}
+                    placeholder={!focusOfTypeDropdown ? "Select type" : "..."}
                     placeholderStyle={styles.placeholderStyle}
                     renderRightIcon={renderDropdownRightIcon}
                     searchPlaceholder="Search..."
                     selectedTextStyle={styles.selectedTextStyle}
-                    value={valueOfFirstDropdown}
+                    value={valueOfTypeDropdown}
                     valueField="value"
-                    onBlur={() => setFocusOfFirstDropdown(false)}
-                    onChange={onDropdownChange}
-                    onFocus={() => setFocusOfFirstDropdown(true)}
+                    onBlur={() => setFocusOfTypeDropdown(false)}
+                    onChange={onTypeDropdownChange}
+                    onFocus={() => setFocusOfTypeDropdown(true)}
                   />
                 </Surface>
               </View>
@@ -200,11 +209,11 @@ const DocumentTab = ({ activeTab }) => {
                   <Dropdown
                     search
                     placeholder={
-                      !focusOfFirstDropdown ? "Select uploaded by" : "..."
+                      !focusOfUploadedDropdown ? "Select uploaded by" : "..."
                     }
                     style={[
                       styles.singleList,
-                      focusOfFirstDropdown && { borderColor: "blue" },
+                      focusOfUploadedDropdown && { borderColor: "blue" },
                       // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
                     ]}
                     data={dropdownData}
@@ -216,11 +225,11 @@ const DocumentTab = ({ activeTab }) => {
                     renderRightIcon={renderDropdownRightIcon}
                     searchPlaceholder="Search..."
                     selectedTextStyle={styles.selectedTextStyle}
-                    value={valueOfFirstDropdown}
+                    value={valueOfUploadedDropdown}
                     valueField="value"
-                    onBlur={() => setFocusOfFirstDropdown(false)}
-                    onChange={onDropdownChange}
-                    onFocus={() => setFocusOfFirstDropdown(true)}
+                    onBlur={() => setFocusOfUploadedDropdown(false)}
+                    onChange={onUploadedDropdownChange}
+                    onFocus={() => setFocusOfUploadedDropdown(true)}
                   />
                 </Surface>
               </View>

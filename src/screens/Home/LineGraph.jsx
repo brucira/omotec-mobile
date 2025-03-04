@@ -118,7 +118,7 @@ const LineGraph = () => {
 const styles = StyleSheet.create({
   lineGraph: {
     borderRadius: 16,
-    paddingTop: Dimensions.margin * 1.5,
+    paddingTop: Dimensions.margin * 2.25,
   },
 });
 export default LineGraph;
