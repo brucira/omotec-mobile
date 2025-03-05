@@ -5,7 +5,7 @@ import ListAccordion from "../ListAccordion";
 const { ACCORDIOM_ITEM_ICON } = require("../../utils/constant");
 
 export const SessionsContent = () => {
-  const checkCircle = require("../../assets/icons/check-circle.png");
+  const checkCircle = require("../../assets/icons/check_circle.png");
   const statusCircle = require("../../assets/icons/status.png");
   const statusPurpleCircle = require("../../assets/icons/status_purple.png");
   const downloadIcon = require("../../assets/icons/arrow_circle_down.png");

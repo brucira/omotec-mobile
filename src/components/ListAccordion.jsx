@@ -61,8 +61,6 @@ const ItemDescription = ({ text = "", showResource = false, icon }) => {
 
 const ListAccordion = ({
   listData,
-  title = "",
-  description = "",
   onItemPress,
   expandedState = false,
   rightIcon,
@@ -93,15 +91,15 @@ const ListAccordion = ({
           />
         );
       }}
-      description={description}
+      description={listData?.description || null}
       descriptionStyle={styles.accordionDescriptionStyle}
       expanded={expanded}
       style={styles.accordionStyle}
-      title={title}
+      title={listData?.title || null}
       titleStyle={styles.accordionTitleStyle}
       onPress={() => setExpanded(!expanded)}
     >
-      {listData.map((item, index) => (
+      {listData?.items?.map((item, index) => (
         <List.Item
           key={index}
           description={

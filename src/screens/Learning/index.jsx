@@ -166,7 +166,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     backgroundColor: CombinedDefaultTheme.colors.background,
     flex: 1,
-    // padding: Dimensions.padding,
   },
   courseContainer: {
     flex: 1,
