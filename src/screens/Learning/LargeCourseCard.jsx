@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Card, ProgressBar, Text } from "react-native-paper";
@@ -5,7 +6,7 @@ import { Card, ProgressBar, Text } from "react-native-paper";
 import Tag from "../../components/Tag";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions } from "../../utils/constant";
+import { Dimensions, RouteNames } from "../../utils/constant";
 
 const LargeCourseCard = ({
   batch,
@@ -32,40 +33,51 @@ const LargeCourseCard = ({
   const clockSource = require("../../assets/icons/clock_five.png");
   const calendarRangeSource = require("../../assets/icons/calendar_range.png");
   const trendSource = require("../../assets/icons/trend_up.png");
-
+  const COURSE = "course";
+  const navigation = useNavigation();
+  const onCardPress = () =>
+    navigation.navigate(RouteNames.ProjectDetail, {
+      title,
+    });
   return (
     <Card
       contentStyle={styles.contentStyleContainer}
       mode="outlined"
       style={styles.container}
+      onPress={onCardPress}
     >
       <Image source={coverImage} style={styles.banner} />
       <View style={styles.cardContent}>
         <Text
-          style={{ marginBottom: Dimensions.margin / 4 }}
+          style={{
+            color: palette.grey600,
+            marginBottom: Dimensions.margin / 4,
+          }}
           variant="labelSmall"
         >
-          {learningType === "course"
+          {learningType === COURSE
             ? `${sessions + " Session •" + " Batch " + batch + " • " + location}`
             : `${tasks + " Tasks •" + " Batch " + batch + " • " + location}`}
         </Text>
-        <Text numberOfLines={2} variant="titleSmall">
+        <Text
+          numberOfLines={2}
+          style={{ color: palette.grey900 }}
+          variant="titleSmall"
+        >
           {title}
         </Text>
         <View style={{ paddingVertical: Dimensions.padding / 2 }}>
           <View style={{ flexDirection: "row", gap: Dimensions.padding / 2 }}>
             <Tag
-              iconSource={
-                learningType === "course" ? calendarSource : bookSource
-              }
               backgroundColor={palette.primaryStudent50}
-              label={learningType === "course" ? date : subject}
+              iconSource={learningType === COURSE ? calendarSource : bookSource}
+              label={learningType === COURSE ? date : subject}
               textColor={CombinedDefaultTheme.colors.primary}
             />
             <Tag
               backgroundColor={palette.error50}
-              iconSource={learningType === "course" ? userSource : clockSource}
-              label={learningType === "course" ? trainer : duration}
+              iconSource={learningType === COURSE ? userSource : clockSource}
+              label={learningType === COURSE ? trainer : duration}
               textColor={palette.error600}
             />
           </View>
@@ -84,32 +96,32 @@ const LargeCourseCard = ({
           <View style={styles.singleItemContainer}>
             <Image
               source={
-                learningType === "course" ? trendSource : calendarRangeSource
+                learningType === COURSE ? trendSource : calendarRangeSource
               }
               style={styles.endIcons}
               tintColor={palette.grey700}
             />
             <Text style={{ color: palette.grey700 }} variant="bodySmall">
-              {learningType === "course" ? "Avg. Performance:" : "Start Date"}
+              {learningType === COURSE ? "Avg. Performance:" : "Start Date"}
             </Text>
             <Text style={{ color: palette.grey900 }} variant="bodySmall">
-              {learningType === "course" ? avgPerformance : startDate}
+              {learningType === COURSE ? avgPerformance : startDate}
             </Text>
           </View>
           <View style={styles.singleItemContainer}>
             <Image
               source={
-                learningType === "course" ? trendSource : calendarRangeSource
+                learningType === COURSE ? trendSource : calendarRangeSource
               }
               style={styles.endIcons}
               tintColor={palette.grey700}
             />
             <Text style={{ color: palette.grey700 }} variant="bodySmall">
               {" "}
-              {learningType === "course" ? "Avg. Progress:" : "End Date"}
+              {learningType === COURSE ? "Avg. Progress:" : "End Date"}
             </Text>
             <Text style={{ color: palette.grey900 }} variant="bodySmall">
-              {learningType === "course" ? avgProgress : endDate}
+              {learningType === COURSE ? avgProgress : endDate}
             </Text>
           </View>
         </View>
