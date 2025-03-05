@@ -12,6 +12,7 @@ import {
 import { Text } from "react-native-paper";
 import Pdf from "react-native-pdf";
 
+import AssignmentScreen from "../screens/Course/AssignmentScreen";
 import TestScreen from "../screens/Course/TestScreen";
 import { DIRECTION, JUSTIFY, RESIZE_MODE, SIZE } from "../styles/constStyle";
 import palette from "../styles/palette";
@@ -148,11 +149,7 @@ const CourseHeaderContent = ({ type }) => {
   } else if (type === ACCORDIOM_ITEM_TYPE.TEST) {
     return <TestScreen />;
   } else if (type === ACCORDIOM_ITEM_TYPE.ASSIGNMENT) {
-    return (
-      <View style={styles.assignmentContainer}>
-        <Text>Assignment</Text>
-      </View>
-    );
+    return <AssignmentScreen />;
   }
 };
 

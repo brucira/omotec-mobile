@@ -14,7 +14,7 @@ export default function PrimaryButton({
   style,
 }) {
   return (
-    <View>
+    <View style={style}>
       <View
         style={[
           styles.gradientBackground,

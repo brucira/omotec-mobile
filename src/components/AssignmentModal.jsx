@@ -18,7 +18,7 @@ import { fileSchema } from "../utils/schema";
 import PrimaryButton from "./PrimaryButton";
 import Tag from "./Tag";
 
-const AssignmentModal = ({ visible, hideModal }) => {
+const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
   const [file, setFile] = useState(null);
 
   const formatFileSize = useCallback((bytes) => {
@@ -60,9 +60,9 @@ const AssignmentModal = ({ visible, hideModal }) => {
   const handleDelete = () => {
     setFile(null);
   };
-  const onSavePress = () => {
+  const onSavePressHandler = () => {
     if (file) {
-      hideModal();
+      onSavePress();
     }
   };
 
@@ -176,7 +176,7 @@ const AssignmentModal = ({ visible, hideModal }) => {
               </TouchableOpacity>
             )}
           </View>
-          <Pressable onPress={onSavePress}>
+          <Pressable onPress={onSavePressHandler}>
             <PrimaryButton
               backgroundColor={
                 !file
