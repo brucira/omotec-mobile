@@ -11,52 +11,66 @@ import DocumentTab from "./DocumentTab";
 import TaskTab from "./TaskTab";
 import UserTab from "./UserTab";
 
-const TABS = ["Users", "Task", "Document", "Details"];
+const TABS = [
+  {
+    icon: require("../../assets/icons/user.png"),
+    name: "Users",
+  },
+  {
+    icon: require("../../assets/icons/book.png"),
+    name: "Task",
+  },
+  {
+    icon: require("../../assets/icons/documents.png"),
+    name: "Document",
+  },
+  {
+    icon: require("../../assets/icons/folder_check.png"),
+    name: "Details",
+  },
+];
 const ProjectDetail = ({ navigation }) => {
   const { title } = useRoute().params;
-  const [activeTab, setActiveTab] = useState(TABS[0]);
+  const [activeTab, setActiveTab] = useState(TABS[0].name);
 
   const renderTab = (item, index) => (
     <View key={index}>
       <Button
-        labelStyle={{
-          marginHorizontal: Dimensions.margin / 1.33,
-          marginVertical: Dimensions.padding / 4,
-        }}
         style={[
           styles.tabButton,
           {
             backgroundColor:
-              activeTab === item
+              activeTab === item.name
                 ? CombinedDefaultTheme.colors.primary
                 : palette.grey100,
           },
         ]}
         compact={true}
         contentStyle={styles.tabButtonContent}
+        labelStyle={styles.tabLabelStyle}
         mode="contained"
-        onPress={() => setActiveTab(item)}
+        onPress={() => setActiveTab(item.name)}
       >
         <View style={styles.buttonContent}>
           <Image
             tintColor={
-              activeTab === item
+              activeTab === item.name
                 ? CombinedDefaultTheme.colors.background
                 : palette.grey600
             }
-            source={require("../../assets/icons/user.png")}
+            source={item.icon}
             style={styles.tabIconImage}
           />
           <Text
             style={{
               color:
-                activeTab === item
+                activeTab === item.name
                   ? CombinedDefaultTheme.colors.background
                   : palette.grey600,
             }}
             variant="labelLarge"
           >
-            {item}
+            {item.name}
           </Text>
         </View>
       </Button>
@@ -85,7 +99,7 @@ const ProjectDetail = ({ navigation }) => {
         />
         <Appbar.Content
           title={
-            <Text numberOfLines={1} variant="titleMedium">
+            <Text numberOfLines={2} variant="titleMedium">
               {title}
             </Text>
           }
@@ -93,13 +107,7 @@ const ProjectDetail = ({ navigation }) => {
       </Appbar>
       <View>
         <ScrollView
-          contentContainerStyle={{
-            columnGap: 12,
-            flex: 1,
-            flexDirection: "row",
-            flexGrow: 1,
-            minWidth: "100%",
-          }}
+          contentContainerStyle={styles.tabContentContainerStyle}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           style={styles.tabContainer}
@@ -266,14 +274,24 @@ const styles = StyleSheet.create({
     // row: Dimensions.margin / 1.33,
     // flex: 1,
     // flexDirection: "column",
-    paddingLeft: Dimensions.margin,
+    paddingHorizontal: Dimensions.margin,
     paddingTop: Dimensions.padding * 1.25,
     // maxHeight: 28,
+  },
+  tabContentContainerStyle: {
+    columnGap: 12,
+    flex: 1,
+    flexDirection: "row",
+    flexGrow: 1,
   },
   tabIconImage: {
     color: palette.grey400,
     height: Dimensions.margin / 1.14,
     width: Dimensions.margin / 1.14,
+  },
+  tabLabelStyle: {
+    marginHorizontal: Dimensions.margin / 1.33,
+    marginVertical: Dimensions.padding / 4,
   },
   title: {},
 });

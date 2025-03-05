@@ -59,7 +59,7 @@ const DetailTab = () => {
         </View>
       </View>
       <View style={{ paddingTop: Dimensions.margin * 1.5 }}>
-        <Text variant="titleMedium">Project Details</Text>
+        <Text variant="titleMedium">Other Details</Text>
         <Divider style={styles.divider} />
         <View>
           <View style={styles.otherContainer}>

@@ -134,6 +134,7 @@ const Home = ({ navigation }) => {
             ItemSeparatorComponent={itemSeperator}
             keyExtractor={keyExtractor}
             renderItem={(props) => renderItem({ ...props, data: [1, 2, 3] })}
+            showsHorizontalScrollIndicator={false}
             style={styles.ongoingCardList}
           />
         </View>
@@ -237,6 +238,17 @@ const Home = ({ navigation }) => {
       </ScrollView>
       {isSale && (
         <Chip
+          closeIcon={() => (
+            <Image
+              style={{
+                height: 20,
+                marginRight: 10,
+                width: 20,
+              }}
+              source={require("../../assets/icons/close.png")}
+              tintColor={CombinedDefaultTheme.colors.background}
+            />
+          )}
           icon={() => (
             <Image
               source={require("../../assets/icons/price_tag.png")}
@@ -244,12 +256,11 @@ const Home = ({ navigation }) => {
             />
           )}
           background={palette.transparent}
-          closeIcon={require("../../assets/icons/close.png")}
           style={styles.saleChip}
           onClose={() => setIsSale(false)}
         >
-          <View style={styles.saleIcon}>
-            <View>
+          <View style={{}}>
+            <View style={{}}>
               <Text
                 style={{ color: CombinedDefaultTheme.colors.background }}
                 variant="labelMedium"
@@ -261,21 +272,12 @@ const Home = ({ navigation }) => {
                   color: CombinedDefaultTheme.colors.background,
                   opacity: 0.8,
                 }}
+                numberOfLines={1}
                 variant="bodySmall"
               >
                 50% off on every course
               </Text>
             </View>
-            <TouchableOpacity
-              style={{ marginLeft: 8 }}
-              onPress={() => setIsSale(false)}
-            >
-              <Image
-                resizeMode="contain"
-                source={require("../../assets/icons/close.png")}
-                style={styles.closeIcon}
-              />
-            </TouchableOpacity>
           </View>
         </Chip>
       )}
@@ -351,21 +353,23 @@ const styles = StyleSheet.create({
     // marginRight: 16,
   },
   saleChip: {
+    // alignItems: "center",
     backgroundColor: palette.purple700,
     borderRadius: Dimensions.margin / 1.33,
     bottom: Dimensions.margin / 2,
     justifyContent: "center",
     marginHorizontal: Dimensions.margin,
-    paddingHorizontal: Dimensions.padding / 1.14,
-    paddingVertical: Dimensions.padding / 2.133,
+    paddingHorizontal: Dimensions.padding / 2,
+    paddingVertical: Dimensions.margin / 4,
+    // paddingVertical: Dimensions.padding / 2,
     position: "absolute",
     width: Dimensions.screenWidth - Dimensions.margin * 2,
   },
   saleIcon: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
+    // alignItems: "center",
+    // flexDirection: "row",
+    // justifyContent: "space-between",
+    // width: "100%",
   },
   todoContainer: {
     gap: Dimensions.padding / 1.3,

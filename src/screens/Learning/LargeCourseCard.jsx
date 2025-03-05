@@ -57,14 +57,21 @@ const LargeCourseCard = ({
       <Image source={coverImage} style={styles.banner} />
       <View style={styles.cardContent}>
         <Text
-          style={{ marginBottom: Dimensions.margin / 4 }}
+          style={{
+            color: palette.grey600,
+            marginBottom: Dimensions.margin / 4,
+          }}
           variant="labelSmall"
         >
           {learningType === COURSE
             ? `${sessions + " Session •" + " Batch " + batch + " • " + location}`
             : `${tasks + " Tasks •" + " Batch " + batch + " • " + location}`}
         </Text>
-        <Text numberOfLines={2} variant="titleSmall">
+        <Text
+          numberOfLines={2}
+          style={{ color: palette.grey900 }}
+          variant="titleSmall"
+        >
           {title}
         </Text>
         <View style={{ paddingVertical: Dimensions.padding / 2 }}>

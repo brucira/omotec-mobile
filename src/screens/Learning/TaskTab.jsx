@@ -1,6 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Checkbox from "expo-checkbox";
 import React, { useCallback, useRef, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import {
   FlatList,
   Image,
@@ -13,44 +15,38 @@ import {
 } from "react-native";
 import { Calendar } from "react-native-big-calendar";
 import { Dropdown } from "react-native-element-dropdown";
-import { Button, Searchbar, Text } from "react-native-paper";
+import { Button, Searchbar, Surface, Text } from "react-native-paper";
 
 import BottomDrawer from "../../components/BottomDrawer";
+import FullEventDetails from "../../components/FullEventDetails";
 import PrimaryButton from "../../components/PrimaryButton";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import {
   calendarTheme,
-  courseCardData,
   Dimensions,
   dropdownData,
   events,
+  projectDetailTaskTabData,
   today,
 } from "../../utils/constant";
-import FullEventDetails from "../Calender/FullEventDetails";
-import CourseTabCard from "./CourseTabCard";
+import { taskFilterSchema } from "../../utils/schema";
 import IssueDetails from "./IssueDetails";
+import TaskCard from "./TaskCard";
 
 const VIEW = "view";
 const DUPLICATE = "duplicate";
 const DELETE = "delete";
 const ISSUE = "issue";
 const TaskTab = ({ activeTab }) => {
-  const [isStatusChecked, setIsStatusChecked] = useState(false);
   const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState(false);
-  const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState(false);
+  const [focusOfStatusDropdown, setFocusOfStatusDropdown] = useState(false);
   const [showCalendarLayout, setShowCalendarLayout] = useState(false);
   const [activeBottomItem, setActiveBottomItem] = useState(null);
   const [, setSelectedDate] = useState(false);
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [pickerType, setPickerType] = useState(null);
-
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-
   const [tempDate, setTempDate] = useState(new Date());
-  const [, setSelectedStartDate] = useState(false);
-  const [, setSelectedEndDate] = useState(false);
   const [visible, setVisible] = useState(false);
   const [issueVisible, setIssueVisible] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(today);
@@ -69,17 +65,43 @@ const TaskTab = ({ activeTab }) => {
       eventBottomSheetModalRef.current?.close();
     }
   };
-  // const onPressEvent = (event) => {
-  //   const showModal = () => setVisible(true);
-  //   const hideModal = () => setVisible(false);
 
-  //   // console.log(event);
-  //   return (
-  //     <Pressable onPress={showModal}>
-  //       <FullEventDetails hideModal={hideModal} visible={visible} />
-  //     </Pressable>
-  //   );
-  // };
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      endDate: null,
+      modified: false,
+      // onGoing: false,
+      startDate: null,
+      status: false,
+      statusState: "",
+      taskName: "",
+    },
+    resolver: zodResolver(taskFilterSchema),
+  });
+
+  const onSubmit = (data) => console.log(data);
+  const watchFields = watch([
+    "endDate",
+    "modified",
+    "startDate",
+    "status",
+    "statusState",
+    "taskName",
+  ]);
+
+  const isFormChanged =
+    JSON.stringify(watchFields) !==
+    JSON.stringify([null, false, null, false, "", ""]);
+  const handleClear = () => {
+    reset();
+  };
 
   const onPressEvent = (event) => {
     setSelectedEvent(event);
@@ -98,159 +120,13 @@ const TaskTab = ({ activeTab }) => {
       </TouchableOpacity>
     );
   };
-  // const renderHeader = (prop) => {
-  //   if (!prop.dateRange || prop.dateRange.length === 0) return null;
-  //   const { day, month, dayName } = extractDateInfo(prop.dateRange[0]);
-  //   const formattedDate = `${day.toString().padStart(2, "0")}-${month
-  //     .toString()
-  //     .padStart(2, "0")}`;
-  //   const specialDay = specialDays[formattedDate];
-  //   const hasSpecialDay = prop.dateRange.some((date) => {
-  //     const formattedDate = date.format("DD-MM");
-  //     return specialDays[formattedDate];
-  //   });
-  //   return (
-  //     <View style={{ position: "relative" }}>
-  //       <View style={styles.weekHeaderContainer}>
-  //         <View style={styles.weekNumberContainer}>
-  //           <View></View>
-  //         </View>
-  //         {prop.dateRange.map((date) => {
-  //           const formattedDate = date.format("DD-MM");
-  //           const specialDay = specialDays[formattedDate];
-  //           const shouldHighlight = true;
-  //           return (
-  //             <TouchableOpacity
-  //               key={date.toString()}
-  //               style={{
-  //                 // backgroundColor: "red",
-  //                 borderColor: palette.grey200,
-  //                 flex: 1,
-  //                 gap: 12,
-  //                 paddingTop: 2,
-  //               }}
-  //             >
-  //               <View
-  //                 style={[
-  //                   {
-  //                     // backgroundColor: CombinedDefaultTheme.colors.primary,
-  //                     backgroundColor: !shouldHighlight
-  //                       ? CombinedDefaultTheme.colors.background
-  //                       : CombinedDefaultTheme.colors.primary,
-  //                     borderRadius: Dimensions.margin / 2,
-  //                     fontSize: 10,
-  //                     justifyContent: "space-between",
-  //                     marginHorizontal: Dimensions.margin / 3,
-  //                     paddingTop: Dimensions.padding / 2.66,
-  //                   },
-  //                 ]}
-  //               >
-  //                 <Text
-  //                   style={[
-  //                     { textAlign: "center" },
-  //                     {
-  //                       color: !shouldHighlight
-  //                         ? palette.grey500
-  //                         : CombinedDefaultTheme.colors.background,
-  //                     },
-  //                   ]}
-  //                 >
-  //                   {date.format("dd")}
-  //                 </Text>
-  //                 <View
-  //                   style={{
-  //                     alignItems: "center",
-  //                     alignSelf: "center",
-  //                     borderRadius: 40,
-  //                     height: 36,
-  //                     justifyContent: "center",
-  //                     width: 36,
-  //                     zIndex: 10,
-  //                   }}
-  //                 >
-  //                   <Text
-  //                     style={[
-  //                       {
-  //                         color: !shouldHighlight
-  //                           ? palette.grey700
-  //                           : CombinedDefaultTheme.colors.background,
-  //                         textAlign: "center",
-  //                       },
-  //                     ]}
-  //                   >
-  //                     {date.format("D")}
-  //                   </Text>
-  //                 </View>
-  //               </View>
-  //               <View
-  //                 style={{
-  //                   // backgroundColor: "red",
-  //                   borderColor: palette.grey200,
-  //                   borderLeftWidth: 1,
-  //                   height: 24,
-  //                   marginTop: hasSpecialDay ? Dimensions.margin : 0,
-  //                   position: "relative",
-  //                 }}
-  //               >
-  //                 {specialDay && (
-  //                   <TouchableOpacity
-  //                     style={[styles.eventCellCss, "red", { bottom: 4 }]}
-  //                   >
-  //                     <Text
-  //                       style={{
-  //                         backgroundColor: palette.success700,
-  //                         color: CombinedDefaultTheme.colors.background,
-  //                         height: 24,
-  //                         paddingLeft: Dimensions.padding / 2,
-  //                         paddingVertical: Dimensions.padding / 4,
-  //                       }}
-  //                       numberOfLines={1}
-  //                       variant="labelSmall"
-  //                     >
-  //                       {specialDay}
-  //                     </Text>
-  //                   </TouchableOpacity>
-  //                 )}
-  //               </View>
-  //             </TouchableOpacity>
-  //           );
-  //         })}
-  //         {/* </View> */}
-  //       </View>
-  //       <View
-  //         style={[
-  //           styles.sessionWeekIndicatorContainer,
-  //           {
-  //             bottom: hasSpecialDay
-  //               ? Dimensions.margin * 2
-  //               : Dimensions.margin / 4,
-  //           },
-  //         ]}
-  //       >
-  //         <View style={styles.weekVideoIconContainer}>
-  //           <Image
-  //             source={require("../../assets/icons/video.png")}
-  //             style={styles.weekVideoIcon}
-  //           />
-  //           <Image
-  //             source={require("../../assets/icons/session_line.png")}
-  //             style={styles.sessionLine}
-  //           />
-  //         </View>
-  //       </View>
-  //     </View>
-  //   );
-  // };
   const handleLayoutChange = () => {
     setShowCalendarLayout((prev) => !prev);
   };
 
   const showPicker = (type) => {
     setPickerType(type);
-    setTempDate(
-      // eslint-disable-next-line prettier/prettier
-      type === "start" ? startDate || new Date() : endDate || new Date()
-    );
+    setTempDate(watch(type) || new Date());
     setIsPickerShow(true);
   };
 
@@ -258,13 +134,7 @@ const TaskTab = ({ activeTab }) => {
     if (Platform.OS === "android") {
       setIsPickerShow(false);
       if (value) {
-        if (pickerType === "start") {
-          setStartDate(value);
-          setSelectedStartDate(true);
-        } else {
-          setEndDate(value);
-          setSelectedEndDate(true);
-        }
+        setValue(pickerType, value);
       }
     } else {
       if (value) {
@@ -274,13 +144,7 @@ const TaskTab = ({ activeTab }) => {
   };
 
   const confirmDate = () => {
-    if (pickerType === "start") {
-      setStartDate(tempDate);
-      setSelectedStartDate(true);
-    } else {
-      setEndDate(tempDate);
-      setSelectedEndDate(true);
-    }
+    setValue(pickerType, tempDate);
     setIsPickerShow(false);
   };
 
@@ -288,7 +152,6 @@ const TaskTab = ({ activeTab }) => {
   const eventBottomSheetModalRef = useRef(null);
   const keyExtractor = (item) => item.id.toString();
   const itemSeperator = () => <View style={styles.itemSeparator} />;
-  const toggleStatusCheckbox = () => setIsStatusChecked((prev) => !prev);
   const handleFilterModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -296,7 +159,7 @@ const TaskTab = ({ activeTab }) => {
     eventBottomSheetModalRef.current?.present();
   }, []);
   const renderTaskItem = useCallback(
-    ({ item }) => <CourseTabCard activeTab={"Task"} {...item} />,
+    ({ item }) => <TaskCard {...item} />,
     // eslint-disable-next-line prettier/prettier
     []
   );
@@ -318,7 +181,7 @@ const TaskTab = ({ activeTab }) => {
           style={styles.searchBar}
         />
         <View style={{ flexDirection: "row", gap: Dimensions.margin * 1.25 }}>
-          {!showCalendarLayout ? (
+          {showCalendarLayout ? (
             <TouchableOpacity onPress={handleLayoutChange}>
               <Image
                 source={require("../../assets/icons/table_grid.png")}
@@ -346,10 +209,10 @@ const TaskTab = ({ activeTab }) => {
         </View>
       </View>
 
-      {showCalendarLayout ? (
+      {!showCalendarLayout ? (
         <FlatList
           contentContainerStyle={styles.arrowIndicator}
-          data={courseCardData}
+          data={projectDetailTaskTabData}
           ItemSeparatorComponent={itemSeperator}
           keyExtractor={keyExtractor}
           renderItem={renderTaskItem}
@@ -521,6 +384,7 @@ const TaskTab = ({ activeTab }) => {
           <FullEventDetails
             event={selectedEvent}
             hideModal={() => setVisible(false)}
+            showAttendance={false}
             visible={visible}
           />
           <IssueDetails
@@ -537,59 +401,75 @@ const TaskTab = ({ activeTab }) => {
           <View style={styles.sortAndFilterContainer}>
             <View>
               <Text variant="labelSmall">SORT BY</Text>
-              <View>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={styles.individualViewContainer}
-                  onPress={toggleStatusCheckbox}
-                >
-                  <Checkbox
-                    color={
-                      isStatusChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : undefined
-                    }
-                    style={styles.checkbox}
-                    value={isStatusChecked}
-                    onValueChange={toggleStatusCheckbox}
-                  />
-                  <Text
-                    style={{
-                      color: isStatusChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : palette.grey900,
-                    }}
-                    variant="titleSmall"
-                  >
-                    Ongoing
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={styles.individualViewContainer}
-                  onPress={toggleStatusCheckbox}
-                >
-                  <Checkbox
-                    color={
-                      isStatusChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : undefined
-                    }
-                    style={styles.checkbox}
-                    value={isStatusChecked}
-                    onValueChange={toggleStatusCheckbox}
-                  />
-                  <Text
-                    style={{
-                      color: isStatusChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : palette.grey900,
-                    }}
-                    variant="titleSmall"
-                  >
-                    Ongoing
-                  </Text>
-                </TouchableOpacity>
+              <View
+                style={{
+                  marginTop: Dimensions.margin / 2.66,
+                }}
+              >
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={styles.individualViewContainer}
+                      onPress={() => onChange(!value)}
+                    >
+                      <Checkbox
+                        color={
+                          value
+                            ? CombinedDefaultTheme.colors.primary
+                            : undefined
+                        }
+                        style={styles.checkbox}
+                        value={value}
+                        onValueChange={onChange}
+                      />
+                      <Text
+                        style={{
+                          color: value
+                            ? CombinedDefaultTheme.colors.primary
+                            : palette.grey900,
+                        }}
+                        variant="titleSmall"
+                      >
+                        Status
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  control={control}
+                  name="status"
+                />
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={styles.individualViewContainer}
+                      onPress={() => onChange(!value)}
+                    >
+                      <Checkbox
+                        color={
+                          value
+                            ? CombinedDefaultTheme.colors.primary
+                            : undefined
+                        }
+                        style={styles.checkbox}
+                        value={value}
+                        onValueChange={onChange}
+                      />
+                      <Text
+                        style={{
+                          color: value
+                            ? CombinedDefaultTheme.colors.primary
+                            : palette.grey900,
+                        }}
+                        variant="titleSmall"
+                      >
+                        Modified on
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  control={control}
+                  name="modified"
+                />
               </View>
             </View>
             <View
@@ -627,117 +507,168 @@ const TaskTab = ({ activeTab }) => {
                   onChange={onChange}
                 />
               )}
-
-              <Pressable onPress={() => showPicker("start")}>
-                <Text variant="titleSmall">Start Date</Text>
-                <View style={styles.calendarContainer}>
-                  <Image
-                    source={require("../../assets/icons/calender.png")}
-                    style={styles.calendarIcon}
-                    tintColor={palette.grey700}
-                  />
-                  <Text style={{ color: palette.grey400 }} variant="bodyMedium">
-                    {startDate
-                      ? startDate.toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })
-                      : "Start Date"}
-                  </Text>
-                </View>
-              </Pressable>
-
-              <Pressable onPress={() => showPicker("end")}>
-                <Text variant="titleSmall">Due Date</Text>
-                <View style={styles.calendarContainer}>
-                  <Image
-                    source={require("../../assets/icons/calender.png")}
-                    style={styles.calendarIcon}
-                    tintColor={palette.grey700}
-                  />
-                  <Text style={{ color: palette.grey400 }} variant="bodyMedium">
-                    {endDate
-                      ? endDate.toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })
-                      : "Due Date"}
-                  </Text>
-                </View>
-              </Pressable>
-
+              <Controller
+                render={({ field: { value } }) => (
+                  <Pressable onPress={() => showPicker("startDate")}>
+                    <Text variant="titleSmall">Start Date</Text>
+                    <Surface
+                      elevation={Platform.OS === "ios" ? 6 : null}
+                      mode="flat"
+                      style={styles.surface}
+                    >
+                      <View style={styles.calendarContainer}>
+                        <Image
+                          source={require("../../assets/icons/calender.png")}
+                          style={styles.calendarIcon}
+                          tintColor={palette.grey700}
+                        />
+                        <Text
+                          style={{ color: palette.grey400 }}
+                          variant="bodyMedium"
+                        >
+                          {value
+                            ? value.toLocaleDateString("en-GB", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                              })
+                            : "Start Date"}
+                        </Text>
+                      </View>
+                    </Surface>
+                  </Pressable>
+                )}
+                control={control}
+                name="startDate"
+              />
+              <Controller
+                render={({ field: { value } }) => (
+                  <Pressable onPress={() => showPicker("endDate")}>
+                    <Text variant="titleSmall">Due Date</Text>
+                    <Surface
+                      elevation={Platform.OS === "ios" ? 6 : null}
+                      mode="flat"
+                      style={styles.surface}
+                    >
+                      <View style={styles.calendarContainer}>
+                        <Image
+                          source={require("../../assets/icons/calender.png")}
+                          style={styles.calendarIcon}
+                          tintColor={palette.grey700}
+                        />
+                        <Text
+                          style={{ color: palette.grey400 }}
+                          variant="bodyMedium"
+                        >
+                          {value
+                            ? value.toLocaleDateString("en-GB", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                              })
+                            : "Due Date"}
+                        </Text>
+                      </View>
+                    </Surface>
+                  </Pressable>
+                )}
+                control={control}
+                name="endDate"
+              />
               <View>
                 <Text variant="titleSmall">Task Name</Text>
-                <Dropdown
-                  search
-                  renderRightIcon={() => (
-                    <Image
-                      color={focusOfFirstDropdown ? "blue" : "black"}
-                      // name="Safety"
-                      source={require("../../assets/icons/chevron_down.png")}
-                      // size={20}
-                      style={styles.iconStyle}
-                    />
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <Surface
+                      elevation={Platform.OS === "ios" ? 6 : null}
+                      mode="flat"
+                      style={styles.surface}
+                    >
+                      <Dropdown
+                        search
+                        placeholder={
+                          !focusOfFirstDropdown ? "Select item" : "..."
+                        }
+                        renderRightIcon={() => (
+                          <Image
+                            color={focusOfFirstDropdown ? "blue" : "black"}
+                            // name="Safety"
+                            source={require("../../assets/icons/chevron_down.png")}
+                            // size={20}
+                            style={styles.iconStyle}
+                          />
+                        )}
+                        style={[
+                          styles.singleList,
+                          focusOfFirstDropdown && { borderColor: "blue" },
+                          // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
+                        ]}
+                        data={dropdownData}
+                        iconStyle={styles.iconStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        labelField="label"
+                        maxHeight={300}
+                        placeholderStyle={styles.placeholderStyle}
+                        searchPlaceholder="Search..."
+                        selectedTextStyle={styles.selectedTextStyle}
+                        value={value}
+                        valueField="value"
+                        onBlur={() => setFocusOfFirstDropdown(false)}
+                        onChange={(item) => onChange(item.value)}
+                        onFocus={() => setFocusOfFirstDropdown(true)}
+                      />
+                    </Surface>
                   )}
-                  style={[
-                    styles.singleList,
-                    focusOfFirstDropdown && { borderColor: "blue" },
-                    // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
-                  ]}
-                  data={dropdownData}
-                  iconStyle={styles.iconStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  labelField="label"
-                  maxHeight={300}
-                  placeholder={!focusOfFirstDropdown ? "Select item" : "..."}
-                  placeholderStyle={styles.placeholderStyle}
-                  searchPlaceholder="Search..."
-                  selectedTextStyle={styles.selectedTextStyle}
-                  value={valueOfFirstDropdown}
-                  valueField="value"
-                  onChange={(item) => {
-                    setValueOfFirstDropdown(item.value);
-                    setFocusOfFirstDropdown(false);
-                  }}
-                  onBlur={() => setFocusOfFirstDropdown(false)}
-                  onFocus={() => setFocusOfFirstDropdown(true)}
+                  control={control}
+                  name="taskName"
                 />
               </View>
               <View>
                 <Text variant="titleSmall">Status</Text>
-                <Dropdown
-                  search
-                  renderRightIcon={() => (
-                    <Image
-                      color={focusOfFirstDropdown ? "blue" : "black"}
-                      source={require("../../assets/icons/chevron_down.png")}
-                      style={styles.iconStyle}
-                    />
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <Surface
+                      elevation={Platform.OS === "ios" ? 6 : null}
+                      mode="flat"
+                      style={styles.surface}
+                    >
+                      <Dropdown
+                        search
+                        placeholder={
+                          !focusOfFirstDropdown ? "Select item" : "..."
+                        }
+                        renderRightIcon={() => (
+                          <Image
+                            color={focusOfStatusDropdown ? "blue" : "black"}
+                            // name="Safety"
+                            source={require("../../assets/icons/chevron_down.png")}
+                            // size={20}
+                            style={styles.iconStyle}
+                          />
+                        )}
+                        style={[
+                          styles.singleList,
+                          focusOfStatusDropdown && { borderColor: "blue" },
+                          // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
+                        ]}
+                        data={dropdownData}
+                        iconStyle={styles.iconStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        labelField="label"
+                        maxHeight={300}
+                        placeholderStyle={styles.placeholderStyle}
+                        searchPlaceholder="Search..."
+                        selectedTextStyle={styles.selectedTextStyle}
+                        value={value}
+                        valueField="value"
+                        onBlur={() => setFocusOfStatusDropdown(false)}
+                        onChange={(item) => onChange(item.value)}
+                        onFocus={() => setFocusOfStatusDropdown(true)}
+                      />
+                    </Surface>
                   )}
-                  style={[
-                    styles.singleList,
-                    focusOfFirstDropdown && { borderColor: "blue" },
-                    // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
-                  ]}
-                  data={dropdownData}
-                  iconStyle={styles.iconStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  labelField="label"
-                  maxHeight={300}
-                  placeholder={!focusOfFirstDropdown ? "Select item" : "..."}
-                  placeholderStyle={styles.placeholderStyle}
-                  searchPlaceholder="Search..."
-                  selectedTextStyle={styles.selectedTextStyle}
-                  value={valueOfFirstDropdown}
-                  valueField="value"
-                  onChange={(item) => {
-                    setValueOfFirstDropdown(item.value);
-                    setFocusOfFirstDropdown(false);
-                  }}
-                  onBlur={() => setFocusOfFirstDropdown(false)}
-                  onFocus={() => setFocusOfFirstDropdown(true)}
+                  control={control}
+                  name="statusState"
                 />
               </View>
             </View>
@@ -749,13 +680,21 @@ const TaskTab = ({ activeTab }) => {
             borderColor={palette.grey200}
             content={"Clear"}
             textColor={palette.grey900}
+            onPress={handleClear}
           />
 
           <PrimaryButton
-            backgroundColor={palette.primaryStudent200}
-            borderColor={palette.primaryStudent300}
+            backgroundColor={
+              isFormChanged
+                ? CombinedDefaultTheme.colors.primary
+                : palette.primaryStudent200
+            }
+            borderColor={
+              isFormChanged ? palette.purple600 : palette.primaryStudent300
+            }
             content={"Apply"}
             textColor={CombinedDefaultTheme.colors.background}
+            onPress={handleSubmit(onSubmit)}
           />
         </View>
       </BottomDrawer>
@@ -767,7 +706,8 @@ const eventCellStyle = (event) => ({
   backgroundColor: event.background,
   borderRadius: Dimensions.margin / 2,
   // marginBottom: 4,
-  // marginLeft: 18,
+  marginLeft: 0,
+  marginRight: 1,
   marginTop: 0,
   // maxWidth: "96%",
   paddingHorizontal: Dimensions.padding / 1.33,
@@ -805,7 +745,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: Dimensions.margin / 2,
     marginTop: Dimensions.padding / 2.66,
-    paddingHorizontal: Dimensions.padding / 1.33,
+    // paddingHorizontal: Dimensions.padding / 1.33,
     paddingVertical: Dimensions.padding / 2,
   },
   calendarIcon: {
@@ -814,7 +754,8 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     borderColor: palette.grey300,
-    borderRadius: Dimensions.margin / 2,
+    borderRadius: Dimensions.margin / 4,
+    borderWidth: 1,
   },
   contentContainer: {
     flex: 1,
@@ -886,8 +827,11 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: "white",
-    borderRadius: 10,
-    padding: 20,
+    borderRadius: Dimensions.margin / 1.6,
+    padding: Dimensions.padding * 1.25,
+  },
+  placeholderStyle: {
+    fontSize: 14,
   },
   rightIcon: {
     height: Dimensions.margin,
@@ -926,6 +870,9 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     position: "relative",
   },
+  selectedTextStyle: {
+    fontSize: 14,
+  },
   singleList: {
     marginTop: Dimensions.margin / 2,
     paddingVertical: Dimensions.padding / 2,
@@ -933,6 +880,17 @@ const styles = StyleSheet.create({
   sortAndFilterContainer: {
     marginTop: Dimensions.margin / 2,
     paddingVertical: Dimensions.padding,
+  },
+  surface: {
+    backgroundColor: CombinedDefaultTheme.colors.background,
+    borderRadius: Dimensions.margin / 2,
+    elevation: 3,
+    marginTop: Dimensions.margin / 2.66,
+    paddingHorizontal: Dimensions.padding / 1.33,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: { height: 4, width: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
 });
 

@@ -10,6 +10,8 @@ export default function PrimaryButton({
   borderColor,
   content,
   textColor,
+  onPress,
+  style,
 }) {
   return (
     <View>
@@ -33,6 +35,7 @@ export default function PrimaryButton({
             // borderColor: borderColor,
           },
         ]}
+        onPress={onPress}
       >
         <Text style={[styles.buttonText, { color: textColor }]}>{content}</Text>
       </Button>

@@ -3,14 +3,14 @@ import { FlatList, Image, StyleSheet, View } from "react-native";
 import { Searchbar } from "react-native-paper";
 
 import palette from "../../styles/palette";
-import { courseCardData, Dimensions } from "../../utils/constant";
-import CourseTabCard from "./CourseTabCard";
+import { Dimensions, projectDetailUserTabData } from "../../utils/constant";
+import UserCard from "./UserCard";
 
-const UserTab = ({ activeTab }) => {
+const UserTab = () => {
   const keyExtractor = (item) => item.id.toString();
   const itemSeperator = () => <View style={styles.itemSeparator} />;
   const renderItem = useCallback(
-    ({ item }) => <CourseTabCard activeTab={"Users"} {...item} />,
+    ({ item }) => <UserCard {...item} />,
     // eslint-disable-next-line prettier/prettier
     []
   );
@@ -44,7 +44,7 @@ const UserTab = ({ activeTab }) => {
       </View>
       <FlatList
         contentContainerStyle={styles.arrowIndicator}
-        data={courseCardData}
+        data={projectDetailUserTabData}
         ItemSeparatorComponent={itemSeperator}
         keyExtractor={keyExtractor}
         renderItem={renderItem}

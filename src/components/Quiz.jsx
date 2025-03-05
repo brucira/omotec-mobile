@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import React from "react";
 import { FlatList, Modal, SafeAreaView, StyleSheet, View } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";

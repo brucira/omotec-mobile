@@ -1,3 +1,4 @@
+import { useFocusEffect } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
@@ -12,8 +13,9 @@ import Daily from "./Daily";
 import Monthly from "./Monthly";
 import Weekly from "./Weekly";
 
-// const dayMap = ["S", "M", "T", "W", "T", "F", "S"];
-// const session_duration = 48 * 2;
+const MONTH_VIEW = "Month";
+const WEEK_VIEW = "Week";
+const DAILY_VIEW = "Day";
 const Calender = ({ navigation }) => {
   const viewData = [
     {
@@ -41,9 +43,7 @@ const Calender = ({ navigation }) => {
       title: "Month",
     },
   ];
-  const MONTH_VIEW = "Month";
-  const WEEK_VIEW = "Week";
-  const DAILY_VIEW = "Day";
+
   const [isUpcomingChecked, setIsUpcomingChecked] = useState(false);
   const [isOngoingChecked, setIsOngoingChecked] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -54,6 +54,10 @@ const Calender = ({ navigation }) => {
   const toggleOngoingCheckbox = () => setIsOngoingChecked((prev) => !prev);
   const toggleUpcomingCheckbox = () => setIsUpcomingChecked((prev) => !prev);
 
+  const onDayPress = (date) => {
+    setSelectedDate(new Date(date.dateString));
+    setShowDropdown(false);
+  };
   const isSameDate = (date1, date2) => {
     const d1 = new Date(date1).toISOString().split("T")[0];
     const d2 = new Date(date2).toISOString().split("T")[0];
@@ -61,6 +65,7 @@ const Calender = ({ navigation }) => {
     return setIsToday(d1 === d2);
   };
   const selected = selectedDate.toISOString().split("T")[0];
+  // console.log(selectedDate.toISOString().split("-")[0], "jiii");
 
   const getMonthName = (date) => {
     return date.toLocaleString("default", { month: "long" });
@@ -69,7 +74,6 @@ const Calender = ({ navigation }) => {
   const handleFilterModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-
   const handleViewMap = (item, index) => {
     return (
       <TouchableOpacity
@@ -106,23 +110,44 @@ const Calender = ({ navigation }) => {
       </TouchableOpacity>
     );
   };
+  const onMonthChange = (month) => {
+    setSelectedDate(
+      // eslint-disable-next-line prettier/prettier
+      new Date(month.year, month.month - 1, 1)
+    );
+  };
   useEffect(() => {
     if (selectedDate) {
       isSameDate(selectedDate, today);
     }
   }, [selectedDate]);
 
+  useFocusEffect(
+    useCallback(() => {
+      return () => setShowDropdown(false);
+      // eslint-disable-next-line prettier/prettier
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
       <Appbar style={styles.appBarContainer}>
         <Appbar.Content
           title={
-            <View style={{}}>
+            <View>
               <TouchableOpacity
                 style={styles.monthContainer}
                 onPress={() => setShowDropdown(!showDropdown)}
               >
-                <Text variant="titleMedium">{getMonthName(selectedDate)}</Text>
+                <Text variant="titleMedium">
+                  {getMonthName(selectedDate)}{" "}
+                  {calendarView === MONTH_VIEW && (
+                    <Text variant="titleMedium">
+                      {selectedDate.toISOString().split("-")[0]}
+                    </Text>
+                  )}
+                </Text>
+
                 <Image
                   style={[
                     styles.downIcon,
@@ -138,14 +163,7 @@ const Calender = ({ navigation }) => {
 
               {showDropdown && (
                 <Portal>
-                  <View
-                    style={{
-                      // position: "absolute",
-                      left: 0,
-                      right: 0,
-                      top: Dimensions.padding * 6.5,
-                    }}
-                  >
+                  <View style={styles.dropdownCalendar}>
                     <Calendars
                       hideArrows
                       markedDates={{
@@ -171,16 +189,8 @@ const Calender = ({ navigation }) => {
                       enableSwipeMonths={true}
                       firstDay={1}
                       renderHeader={() => null}
-                      onDayPress={(date) => {
-                        setSelectedDate(new Date(date.dateString));
-                        setShowDropdown(false);
-                      }}
-                      onMonthChange={(month) => {
-                        setSelectedDate(
-                          // eslint-disable-next-line prettier/prettier
-                          new Date(month.year, month.month - 1, 1)
-                        );
-                      }}
+                      onDayPress={onDayPress}
+                      onMonthChange={onMonthChange}
                     />
                   </View>
                 </Portal>
@@ -341,7 +351,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
   dateInCalendar: {
     alignSelf: "center",
     fontSize: 8,
@@ -358,6 +367,11 @@ const styles = StyleSheet.create({
     height: Dimensions.margin * 1.25,
     justifyContent: "center",
     width: Dimensions.margin * 1.25,
+  },
+  dropdownCalendar: {
+    left: 0,
+    right: 0,
+    top: Dimensions.padding * 6.5,
   },
   filterTitle: {
     paddingHorizontal: Dimensions.padding / 1.33,
