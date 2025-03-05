@@ -14,52 +14,53 @@ export const SessionsContent = () => {
     console.log("click");
   };
 
-  const SessionItems = [
-    {
-      descriptionIcon: ACCORDIOM_ITEM_ICON.text,
-      leftIcon: checkCircle,
-      rightIcon: downloadIcon,
-      text: "5 Min",
-      title: "Welcome to Employee Training 101",
-    },
-    {
-      descriptionIcon: ACCORDIOM_ITEM_ICON.video,
-      leftIcon: statusPurpleCircle,
-      rightIcon: downloadIcon,
-      selected: true,
-      text: "5 Min",
-      title: "Welcome to Employee Training?",
-    },
-    {
-      descriptionIcon: ACCORDIOM_ITEM_ICON.video,
-      leftIcon: statusCircle,
-      rightIcon: downloadIcon,
-      text: "5 Min",
-      title: "Benefits of Employee Training",
-    },
-    {
-      descriptionIcon: ACCORDIOM_ITEM_ICON.globel,
-      leftIcon: statusCircle,
-      rightIcon: downloadIcon,
-      text: "Web link",
-      title: "How to Set Up an Employee Training Plan",
-    },
-  ];
+  const SessionItems = {
+    description: "1/4 | 28min",
+    items: [
+      {
+        descriptionIcon: ACCORDIOM_ITEM_ICON.text,
+        leftIcon: checkCircle,
+        rightIcon: downloadIcon,
+        text: "5 Min",
+        title: "Welcome to Employee Training 101",
+      },
+      {
+        descriptionIcon: ACCORDIOM_ITEM_ICON.video,
+        leftIcon: statusPurpleCircle,
+        rightIcon: downloadIcon,
+        selected: true,
+        text: "5 Min",
+        title: "Welcome to Employee Training?",
+      },
+      {
+        descriptionIcon: ACCORDIOM_ITEM_ICON.video,
+        leftIcon: statusCircle,
+        rightIcon: downloadIcon,
+        text: "5 Min",
+        title: "Benefits of Employee Training",
+      },
+      {
+        descriptionIcon: ACCORDIOM_ITEM_ICON.globel,
+        leftIcon: statusCircle,
+        rightIcon: downloadIcon,
+        text: "Web link",
+        title: "How to Set Up an Employee Training Plan",
+      },
+    ],
+    title: "Session",
+  };
   return (
     <View>
       <ListAccordion
-        description="1/4 | 28min"
         expandedState={true}
         listData={SessionItems}
         rightIcon={downloadIcon}
-        title="Session 1"
         onItemPress={navigationHandler}
       ></ListAccordion>
       <ListAccordion
-        description="1/4 | 28min"
         listData={SessionItems}
         rightIcon={downloadIcon}
-        title="Session 2"
+        onItemPress={navigationHandler}
       ></ListAccordion>
     </View>
   );
