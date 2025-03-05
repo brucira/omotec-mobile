@@ -1,5 +1,6 @@
+import { Image } from "expo-image";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { ProgressBar, Text } from "react-native-paper";
 

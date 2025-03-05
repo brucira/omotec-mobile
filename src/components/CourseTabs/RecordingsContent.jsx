@@ -1,9 +1,9 @@
 import * as FileSystem from "expo-file-system";
+import { Image } from "expo-image";
 import * as MediaLibrary from "expo-media-library";
 import React from "react";
 import {
   Alert,
-  Image,
   Platform,
   StyleSheet,
   TouchableOpacity,

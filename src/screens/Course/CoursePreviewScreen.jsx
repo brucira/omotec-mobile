@@ -1,12 +1,12 @@
+import { Image } from "expo-image";
 import React from "react";
 import {
-  Image,
   Platform,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Text } from "react-native-paper";
 
 import CourseHeaderContent from "../../components/CourseHeaderContent";
@@ -90,7 +90,7 @@ export const CoursePreviewScreen = (props) => {
   };
 
   return (
-    <KeyboardAwareScrollView
+    <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
       enableOnAndroid={true}
       extraScrollHeight={Platform.OS === "ios" ? 0 : 100}
@@ -126,7 +126,7 @@ export const CoursePreviewScreen = (props) => {
           <CustomTabs tabs={tabs} />
         </View>
       </View>
-    </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
 

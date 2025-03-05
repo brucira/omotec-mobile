@@ -1,5 +1,6 @@
+import { Image } from "expo-image";
 import React, { useMemo, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { Divider, Text } from "react-native-paper";
 
