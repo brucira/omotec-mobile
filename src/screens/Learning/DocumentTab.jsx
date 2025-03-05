@@ -1,5 +1,7 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import Checkbox from "expo-checkbox";
 import React, { useCallback, useRef, useState } from "react";
+import { Controller, reset, useForm, useWatch } from "react-hook-form";
 import {
   FlatList,
   Image,
@@ -20,18 +22,38 @@ import {
   dropdownData,
   projectDetailDocumentTabData,
 } from "../../utils/constant";
+import { documentFilterSchema } from "../../utils/schema";
 import DocumentCard from "./DocumentCard";
 
 const DocumentTab = ({ activeTab }) => {
-  const [valueOfTypeDropdown, setValueOfTypeDropdown] = useState();
-  const [valueOfUploadedDropdown, setValueOfUploadedDropdown] = useState();
   const [focusOfTypeDropdown, setFocusOfTypeDropdown] = useState();
   const [focusOfUploadedDropdown, setFocusOfUploadedDropdown] = useState();
-  const [isStatusChecked, setIsStatusChecked] = useState(false);
-  const [isModifiedChecked, setIsModifiedChecked] = useState(false);
   const keyExtractor = (item) => item.id.toString();
-  const toggleStatusCheckbox = () => setIsStatusChecked((prev) => !prev);
-  const toggleModifiedCheckbox = () => setIsModifiedChecked((prev) => !prev);
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      modifiedBy: false,
+      status: false,
+      type: "",
+      uploadedBy: "",
+    },
+    resolver: zodResolver(documentFilterSchema),
+  });
+
+  const onSubmit = (data) => console.log(data);
+  const watchFields = watch(["modifiedBy", "status", "type", "uploadedBy"]);
+
+  const isFormChanged =
+    JSON.stringify(watchFields) !== JSON.stringify([false, false, "", ""]);
+  const handleClear = () => {
+    reset();
+  };
   const bottomSheetModalRef = useRef(null);
   const handleFilterPress = useCallback(
     () => bottomSheetModalRef.current?.present(),
@@ -44,16 +66,6 @@ const DocumentTab = ({ activeTab }) => {
     // eslint-disable-next-line prettier/prettier
     []
   );
-
-  const onTypeDropdownChange = (item) => {
-    setValueOfTypeDropdown(item.value);
-    setFocusOfTypeDropdown(false);
-  };
-
-  const onUploadedDropdownChange = (item) => {
-    setValueOfUploadedDropdown(item.value);
-    setFocusOfUploadedDropdown(false);
-  };
 
   const renderDropdownRightIcon = () => (
     <Image
@@ -106,58 +118,71 @@ const DocumentTab = ({ activeTab }) => {
             <View style={{ gap: Dimensions.margin / 2 }}>
               <Text variant="labelSmall">SORT BY</Text>
               <View>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={styles.individualViewContainer}
-                  onPress={toggleStatusCheckbox}
-                >
-                  <Checkbox
-                    color={
-                      isStatusChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : undefined
-                    }
-                    style={styles.checkbox}
-                    value={isStatusChecked}
-                    onValueChange={toggleStatusCheckbox}
-                  />
-                  <Text
-                    style={{
-                      color: isStatusChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : palette.grey900,
-                    }}
-                    variant="titleSmall"
-                  >
-                    Status
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={styles.individualViewContainer}
-                  onPress={toggleModifiedCheckbox}
-                >
-                  <Checkbox
-                    color={
-                      isModifiedChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : undefined
-                    }
-                    style={styles.checkbox}
-                    value={isModifiedChecked}
-                    onValueChange={toggleModifiedCheckbox}
-                  />
-                  <Text
-                    style={{
-                      color: isModifiedChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : palette.grey900,
-                    }}
-                    variant="titleSmall"
-                  >
-                    Modified on
-                  </Text>
-                </TouchableOpacity>
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={styles.individualViewContainer}
+                      onPress={() => onChange(!value)}
+                    >
+                      <Checkbox
+                        color={
+                          value
+                            ? CombinedDefaultTheme.colors.primary
+                            : undefined
+                        }
+                        style={styles.checkbox}
+                        value={value}
+                        onValueChange={onChange}
+                      />
+                      <Text
+                        style={{
+                          color: value
+                            ? CombinedDefaultTheme.colors.primary
+                            : palette.grey900,
+                        }}
+                        variant="titleSmall"
+                      >
+                        Status
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  control={control}
+                  name="status"
+                />
+
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={styles.individualViewContainer}
+                      onPress={() => onChange(!value)}
+                    >
+                      <Checkbox
+                        color={
+                          value
+                            ? CombinedDefaultTheme.colors.primary
+                            : undefined
+                        }
+                        style={styles.checkbox}
+                        value={value}
+                        onValueChange={onChange}
+                      />
+                      <Text
+                        style={{
+                          color: value
+                            ? CombinedDefaultTheme.colors.primary
+                            : palette.grey900,
+                        }}
+                        variant="titleSmall"
+                      >
+                        Modified on
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  control={control}
+                  name="modifiedBy"
+                />
               </View>
             </View>
             <View
@@ -169,69 +194,85 @@ const DocumentTab = ({ activeTab }) => {
               <Text variant="labelSmall">FILTERS</Text>
               <View>
                 <Text variant="titleSmall">Type</Text>
-                <Surface
-                  elevation={Platform.OS === "ios" ? 6 : null}
-                  mode="flat"
-                  style={styles.surface}
-                >
-                  <Dropdown
-                    search
-                    style={[
-                      styles.singleList,
-                      focusOfTypeDropdown && { borderColor: "blue" },
-                      // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
-                    ]}
-                    data={dropdownData}
-                    iconStyle={styles.iconStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    labelField="label"
-                    maxHeight={300}
-                    placeholder={!focusOfTypeDropdown ? "Select type" : "..."}
-                    placeholderStyle={styles.placeholderStyle}
-                    renderRightIcon={renderDropdownRightIcon}
-                    searchPlaceholder="Search..."
-                    selectedTextStyle={styles.selectedTextStyle}
-                    value={valueOfTypeDropdown}
-                    valueField="value"
-                    onBlur={() => setFocusOfTypeDropdown(false)}
-                    onChange={onTypeDropdownChange}
-                    onFocus={() => setFocusOfTypeDropdown(true)}
-                  />
-                </Surface>
+
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <Surface
+                      elevation={Platform.OS === "ios" ? 6 : null}
+                      mode="flat"
+                      style={styles.surface}
+                    >
+                      <Dropdown
+                        search
+                        placeholder={
+                          !focusOfTypeDropdown ? "Select type" : "..."
+                        }
+                        style={[
+                          styles.singleList,
+                          focusOfTypeDropdown && { borderColor: "blue" },
+                        ]}
+                        data={dropdownData}
+                        iconStyle={styles.iconStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        labelField="label"
+                        maxHeight={300}
+                        placeholderStyle={styles.placeholderStyle}
+                        renderRightIcon={renderDropdownRightIcon}
+                        searchPlaceholder="Search..."
+                        selectedTextStyle={styles.selectedTextStyle}
+                        value={value} // Use React Hook Form's value
+                        valueField="value"
+                        onBlur={() => setFocusOfTypeDropdown(false)}
+                        onChange={(item) => onChange(item.value)} // Update form state
+                        onFocus={() => setFocusOfTypeDropdown(true)}
+                      />
+                    </Surface>
+                  )}
+                  control={control}
+                  name="type"
+                />
               </View>
               <View>
                 <Text variant="titleSmall">Uploaded by</Text>
-                <Surface
-                  elevation={Platform.OS === "ios" ? 6 : null}
-                  mode="flat"
-                  style={styles.surface}
-                >
-                  <Dropdown
-                    search
-                    placeholder={
-                      !focusOfUploadedDropdown ? "Select uploaded by" : "..."
-                    }
-                    style={[
-                      styles.singleList,
-                      focusOfUploadedDropdown && { borderColor: "blue" },
-                      // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
-                    ]}
-                    data={dropdownData}
-                    iconStyle={styles.iconStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    labelField="label"
-                    maxHeight={300}
-                    placeholderStyle={styles.placeholderStyle}
-                    renderRightIcon={renderDropdownRightIcon}
-                    searchPlaceholder="Search..."
-                    selectedTextStyle={styles.selectedTextStyle}
-                    value={valueOfUploadedDropdown}
-                    valueField="value"
-                    onBlur={() => setFocusOfUploadedDropdown(false)}
-                    onChange={onUploadedDropdownChange}
-                    onFocus={() => setFocusOfUploadedDropdown(true)}
-                  />
-                </Surface>
+
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <Surface
+                      elevation={Platform.OS === "ios" ? 6 : null}
+                      mode="flat"
+                      style={styles.surface}
+                    >
+                      <Dropdown
+                        search
+                        placeholder={
+                          !focusOfUploadedDropdown
+                            ? "Select uploaded by"
+                            : "..."
+                        }
+                        style={[
+                          styles.singleList,
+                          focusOfUploadedDropdown && { borderColor: "blue" },
+                        ]}
+                        data={dropdownData}
+                        iconStyle={styles.iconStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        labelField="label"
+                        maxHeight={300}
+                        placeholderStyle={styles.placeholderStyle}
+                        renderRightIcon={renderDropdownRightIcon}
+                        searchPlaceholder="Search..."
+                        selectedTextStyle={styles.selectedTextStyle}
+                        value={value}
+                        valueField="value"
+                        onBlur={() => setFocusOfUploadedDropdown(false)}
+                        onChange={(item) => onChange(item.value)}
+                        onFocus={() => setFocusOfUploadedDropdown(true)}
+                      />
+                    </Surface>
+                  )}
+                  control={control}
+                  name="uploadedBy"
+                />
               </View>
             </View>
           </View>
@@ -242,13 +283,21 @@ const DocumentTab = ({ activeTab }) => {
             borderColor={palette.grey200}
             content={"Clear"}
             textColor={palette.grey900}
+            onPress={handleClear}
           />
 
           <PrimaryButton
-            backgroundColor={palette.primaryStudent200}
-            borderColor={palette.primaryStudent300}
+            backgroundColor={
+              isFormChanged
+                ? CombinedDefaultTheme.colors.primary
+                : palette.primaryStudent200
+            }
+            borderColor={
+              isFormChanged ? palette.purple600 : palette.primaryStudent300
+            }
             content={"Apply"}
             textColor={CombinedDefaultTheme.colors.background}
+            onPress={handleSubmit(onSubmit)}
           />
         </View>
       </BottomDrawer>

@@ -1,6 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Checkbox from "expo-checkbox";
 import React, { useCallback, useRef, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import {
   FlatList,
   Image,
@@ -28,6 +30,7 @@ import {
   projectDetailTaskTabData,
   today,
 } from "../../utils/constant";
+import { taskFilterSchema } from "../../utils/schema";
 import IssueDetails from "./IssueDetails";
 import TaskCard from "./TaskCard";
 
@@ -36,24 +39,14 @@ const DUPLICATE = "duplicate";
 const DELETE = "delete";
 const ISSUE = "issue";
 const TaskTab = ({ activeTab }) => {
-  const [isStatusChecked, setIsStatusChecked] = useState(false);
-  const [isModifiedChecked, setIsModifiedChecked] = useState(false);
   const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState(false);
   const [focusOfStatusDropdown, setFocusOfStatusDropdown] = useState(false);
-  const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState(false);
-  const [valueOfStatusDropdown, setValueOfStatusDropdown] = useState(false);
   const [showCalendarLayout, setShowCalendarLayout] = useState(false);
   const [activeBottomItem, setActiveBottomItem] = useState(null);
   const [, setSelectedDate] = useState(false);
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [pickerType, setPickerType] = useState(null);
-
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-
   const [tempDate, setTempDate] = useState(new Date());
-  const [, setSelectedStartDate] = useState(false);
-  const [, setSelectedEndDate] = useState(false);
   const [visible, setVisible] = useState(false);
   const [issueVisible, setIssueVisible] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(today);
@@ -72,16 +65,43 @@ const TaskTab = ({ activeTab }) => {
       eventBottomSheetModalRef.current?.close();
     }
   };
-  // const onPressEvent = (event) => {
-  //   const showModal = () => setVisible(true);
-  //   const hideModal = () => setVisible(false);
 
-  //   return (
-  //     <Pressable onPress={showModal}>
-  //       <FullEventDetails hideModal={hideModal} visible={visible} />
-  //     </Pressable>
-  //   );
-  // };
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      endDate: null,
+      modified: false,
+      // onGoing: false,
+      startDate: null,
+      status: false,
+      statusState: "",
+      taskName: "",
+    },
+    resolver: zodResolver(taskFilterSchema),
+  });
+
+  const onSubmit = (data) => console.log(data);
+  const watchFields = watch([
+    "endDate",
+    "modified",
+    "startDate",
+    "status",
+    "statusState",
+    "taskName",
+  ]);
+
+  const isFormChanged =
+    JSON.stringify(watchFields) !==
+    JSON.stringify([null, false, null, false, "", ""]);
+  const handleClear = () => {
+    reset();
+  };
 
   const onPressEvent = (event) => {
     setSelectedEvent(event);
@@ -106,10 +126,7 @@ const TaskTab = ({ activeTab }) => {
 
   const showPicker = (type) => {
     setPickerType(type);
-    setTempDate(
-      // eslint-disable-next-line prettier/prettier
-      type === "start" ? startDate || new Date() : endDate || new Date()
-    );
+    setTempDate(watch(type) || new Date());
     setIsPickerShow(true);
   };
 
@@ -117,13 +134,7 @@ const TaskTab = ({ activeTab }) => {
     if (Platform.OS === "android") {
       setIsPickerShow(false);
       if (value) {
-        if (pickerType === "start") {
-          setStartDate(value);
-          setSelectedStartDate(true);
-        } else {
-          setEndDate(value);
-          setSelectedEndDate(true);
-        }
+        setValue(pickerType, value);
       }
     } else {
       if (value) {
@@ -133,13 +144,7 @@ const TaskTab = ({ activeTab }) => {
   };
 
   const confirmDate = () => {
-    if (pickerType === "start") {
-      setStartDate(tempDate);
-      setSelectedStartDate(true);
-    } else {
-      setEndDate(tempDate);
-      setSelectedEndDate(true);
-    }
+    setValue(pickerType, tempDate);
     setIsPickerShow(false);
   };
 
@@ -147,8 +152,6 @@ const TaskTab = ({ activeTab }) => {
   const eventBottomSheetModalRef = useRef(null);
   const keyExtractor = (item) => item.id.toString();
   const itemSeperator = () => <View style={styles.itemSeparator} />;
-  const toggleStatusCheckbox = () => setIsStatusChecked((prev) => !prev);
-  const toggleModifyCheckbox = () => setIsModifiedChecked((prev) => !prev);
   const handleFilterModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -398,59 +401,75 @@ const TaskTab = ({ activeTab }) => {
           <View style={styles.sortAndFilterContainer}>
             <View>
               <Text variant="labelSmall">SORT BY</Text>
-              <View>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={styles.individualViewContainer}
-                  onPress={toggleStatusCheckbox}
-                >
-                  <Checkbox
-                    color={
-                      isStatusChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : undefined
-                    }
-                    style={styles.checkbox}
-                    value={isStatusChecked}
-                    onValueChange={toggleStatusCheckbox}
-                  />
-                  <Text
-                    style={{
-                      color: isStatusChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : palette.grey900,
-                    }}
-                    variant="titleSmall"
-                  >
-                    Ongoing
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={styles.individualViewContainer}
-                  onPress={toggleModifyCheckbox}
-                >
-                  <Checkbox
-                    color={
-                      isModifiedChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : undefined
-                    }
-                    style={styles.checkbox}
-                    value={isModifiedChecked}
-                    onValueChange={toggleModifyCheckbox}
-                  />
-                  <Text
-                    style={{
-                      color: isModifiedChecked
-                        ? CombinedDefaultTheme.colors.primary
-                        : palette.grey900,
-                    }}
-                    variant="titleSmall"
-                  >
-                    Modified on
-                  </Text>
-                </TouchableOpacity>
+              <View
+                style={{
+                  marginTop: Dimensions.margin / 2.66,
+                }}
+              >
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={styles.individualViewContainer}
+                      onPress={() => onChange(!value)}
+                    >
+                      <Checkbox
+                        color={
+                          value
+                            ? CombinedDefaultTheme.colors.primary
+                            : undefined
+                        }
+                        style={styles.checkbox}
+                        value={value}
+                        onValueChange={onChange}
+                      />
+                      <Text
+                        style={{
+                          color: value
+                            ? CombinedDefaultTheme.colors.primary
+                            : palette.grey900,
+                        }}
+                        variant="titleSmall"
+                      >
+                        Status
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  control={control}
+                  name="status"
+                />
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={styles.individualViewContainer}
+                      onPress={() => onChange(!value)}
+                    >
+                      <Checkbox
+                        color={
+                          value
+                            ? CombinedDefaultTheme.colors.primary
+                            : undefined
+                        }
+                        style={styles.checkbox}
+                        value={value}
+                        onValueChange={onChange}
+                      />
+                      <Text
+                        style={{
+                          color: value
+                            ? CombinedDefaultTheme.colors.primary
+                            : palette.grey900,
+                        }}
+                        variant="titleSmall"
+                      >
+                        Modified on
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  control={control}
+                  name="modified"
+                />
               </View>
             </View>
             <View
@@ -488,148 +507,169 @@ const TaskTab = ({ activeTab }) => {
                   onChange={onChange}
                 />
               )}
-
-              <Pressable onPress={() => showPicker("start")}>
-                <Text variant="titleSmall">Start Date</Text>
-                <Surface
-                  elevation={Platform.OS === "ios" ? 6 : null}
-                  mode="flat"
-                  style={styles.surface}
-                >
-                  <View style={styles.calendarContainer}>
-                    <Image
-                      source={require("../../assets/icons/calender.png")}
-                      style={styles.calendarIcon}
-                      tintColor={palette.grey700}
-                    />
-                    <Text
-                      style={{ color: palette.grey400 }}
-                      variant="bodyMedium"
+              <Controller
+                render={({ field: { value } }) => (
+                  <Pressable onPress={() => showPicker("startDate")}>
+                    <Text variant="titleSmall">Start Date</Text>
+                    <Surface
+                      elevation={Platform.OS === "ios" ? 6 : null}
+                      mode="flat"
+                      style={styles.surface}
                     >
-                      {startDate
-                        ? startDate.toLocaleDateString("en-GB", {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric",
-                          })
-                        : "Start Date"}
-                    </Text>
-                  </View>
-                </Surface>
-              </Pressable>
-
-              <Pressable onPress={() => showPicker("end")}>
-                <Text variant="titleSmall">Due Date</Text>
-                <Surface
-                  elevation={Platform.OS === "ios" ? 6 : null}
-                  mode="flat"
-                  style={styles.surface}
-                >
-                  <View style={styles.calendarContainer}>
-                    <Image
-                      source={require("../../assets/icons/calender.png")}
-                      style={styles.calendarIcon}
-                      tintColor={palette.grey700}
-                    />
-                    <Text
-                      style={{ color: palette.grey400 }}
-                      variant="bodyMedium"
+                      <View style={styles.calendarContainer}>
+                        <Image
+                          source={require("../../assets/icons/calender.png")}
+                          style={styles.calendarIcon}
+                          tintColor={palette.grey700}
+                        />
+                        <Text
+                          style={{ color: palette.grey400 }}
+                          variant="bodyMedium"
+                        >
+                          {value
+                            ? value.toLocaleDateString("en-GB", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                              })
+                            : "Start Date"}
+                        </Text>
+                      </View>
+                    </Surface>
+                  </Pressable>
+                )}
+                control={control}
+                name="startDate"
+              />
+              <Controller
+                render={({ field: { value } }) => (
+                  <Pressable onPress={() => showPicker("endDate")}>
+                    <Text variant="titleSmall">Due Date</Text>
+                    <Surface
+                      elevation={Platform.OS === "ios" ? 6 : null}
+                      mode="flat"
+                      style={styles.surface}
                     >
-                      {endDate
-                        ? endDate.toLocaleDateString("en-GB", {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric",
-                          })
-                        : "Due Date"}
-                    </Text>
-                  </View>
-                </Surface>
-              </Pressable>
-
+                      <View style={styles.calendarContainer}>
+                        <Image
+                          source={require("../../assets/icons/calender.png")}
+                          style={styles.calendarIcon}
+                          tintColor={palette.grey700}
+                        />
+                        <Text
+                          style={{ color: palette.grey400 }}
+                          variant="bodyMedium"
+                        >
+                          {value
+                            ? value.toLocaleDateString("en-GB", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                              })
+                            : "Due Date"}
+                        </Text>
+                      </View>
+                    </Surface>
+                  </Pressable>
+                )}
+                control={control}
+                name="endDate"
+              />
               <View>
                 <Text variant="titleSmall">Task Name</Text>
-                <Surface
-                  elevation={Platform.OS === "ios" ? 6 : null}
-                  mode="flat"
-                  style={styles.surface}
-                >
-                  <Dropdown
-                    search
-                    renderRightIcon={() => (
-                      <Image
-                        color={focusOfFirstDropdown ? "blue" : "black"}
-                        // name="Safety"
-                        source={require("../../assets/icons/chevron_down.png")}
-                        // size={20}
-                        style={styles.iconStyle}
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <Surface
+                      elevation={Platform.OS === "ios" ? 6 : null}
+                      mode="flat"
+                      style={styles.surface}
+                    >
+                      <Dropdown
+                        search
+                        placeholder={
+                          !focusOfFirstDropdown ? "Select item" : "..."
+                        }
+                        renderRightIcon={() => (
+                          <Image
+                            color={focusOfFirstDropdown ? "blue" : "black"}
+                            // name="Safety"
+                            source={require("../../assets/icons/chevron_down.png")}
+                            // size={20}
+                            style={styles.iconStyle}
+                          />
+                        )}
+                        style={[
+                          styles.singleList,
+                          focusOfFirstDropdown && { borderColor: "blue" },
+                          // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
+                        ]}
+                        data={dropdownData}
+                        iconStyle={styles.iconStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        labelField="label"
+                        maxHeight={300}
+                        placeholderStyle={styles.placeholderStyle}
+                        searchPlaceholder="Search..."
+                        selectedTextStyle={styles.selectedTextStyle}
+                        value={value}
+                        valueField="value"
+                        onBlur={() => setFocusOfFirstDropdown(false)}
+                        onChange={(item) => onChange(item.value)}
+                        onFocus={() => setFocusOfFirstDropdown(true)}
                       />
-                    )}
-                    style={[
-                      styles.singleList,
-                      focusOfFirstDropdown && { borderColor: "blue" },
-                      // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
-                    ]}
-                    data={dropdownData}
-                    iconStyle={styles.iconStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    labelField="label"
-                    maxHeight={300}
-                    placeholder={!focusOfFirstDropdown ? "Select item" : "..."}
-                    placeholderStyle={styles.placeholderStyle}
-                    searchPlaceholder="Search..."
-                    selectedTextStyle={styles.selectedTextStyle}
-                    value={valueOfFirstDropdown}
-                    valueField="value"
-                    onChange={(item) => {
-                      setValueOfFirstDropdown(item.value);
-                      setFocusOfFirstDropdown(false);
-                    }}
-                    onBlur={() => setFocusOfFirstDropdown(false)}
-                    onFocus={() => setFocusOfFirstDropdown(true)}
-                  />
-                </Surface>
+                    </Surface>
+                  )}
+                  control={control}
+                  name="taskName"
+                />
               </View>
               <View>
                 <Text variant="titleSmall">Status</Text>
-                <Surface
-                  elevation={Platform.OS === "ios" ? 6 : null}
-                  mode="flat"
-                  style={styles.surface}
-                >
-                  <Dropdown
-                    search
-                    renderRightIcon={() => (
-                      <Image
-                        color={focusOfStatusDropdown ? "blue" : "black"}
-                        source={require("../../assets/icons/chevron_down.png")}
-                        style={styles.iconStyle}
+                <Controller
+                  render={({ field: { onChange, value } }) => (
+                    <Surface
+                      elevation={Platform.OS === "ios" ? 6 : null}
+                      mode="flat"
+                      style={styles.surface}
+                    >
+                      <Dropdown
+                        search
+                        placeholder={
+                          !focusOfFirstDropdown ? "Select item" : "..."
+                        }
+                        renderRightIcon={() => (
+                          <Image
+                            color={focusOfStatusDropdown ? "blue" : "black"}
+                            // name="Safety"
+                            source={require("../../assets/icons/chevron_down.png")}
+                            // size={20}
+                            style={styles.iconStyle}
+                          />
+                        )}
+                        style={[
+                          styles.singleList,
+                          focusOfStatusDropdown && { borderColor: "blue" },
+                          // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
+                        ]}
+                        data={dropdownData}
+                        iconStyle={styles.iconStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        labelField="label"
+                        maxHeight={300}
+                        placeholderStyle={styles.placeholderStyle}
+                        searchPlaceholder="Search..."
+                        selectedTextStyle={styles.selectedTextStyle}
+                        value={value}
+                        valueField="value"
+                        onBlur={() => setFocusOfStatusDropdown(false)}
+                        onChange={(item) => onChange(item.value)}
+                        onFocus={() => setFocusOfStatusDropdown(true)}
                       />
-                    )}
-                    style={[
-                      styles.singleList,
-                      focusOfStatusDropdown && { borderColor: "blue" },
-                      // { minWidth: dropdownNumber > 1 ? "49%" : "100%" },
-                    ]}
-                    data={dropdownData}
-                    iconStyle={styles.iconStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    labelField="label"
-                    maxHeight={300}
-                    placeholder={!focusOfStatusDropdown ? "Select item" : "..."}
-                    placeholderStyle={styles.placeholderStyle}
-                    searchPlaceholder="Search..."
-                    selectedTextStyle={styles.selectedTextStyle}
-                    value={valueOfStatusDropdown}
-                    valueField="value"
-                    onChange={(item) => {
-                      setValueOfStatusDropdown(item.value);
-                      setFocusOfStatusDropdown(false);
-                    }}
-                    onBlur={() => setFocusOfStatusDropdown(false)}
-                    onFocus={() => setFocusOfStatusDropdown(true)}
-                  />
-                </Surface>
+                    </Surface>
+                  )}
+                  control={control}
+                  name="statusState"
+                />
               </View>
             </View>
           </View>
@@ -640,13 +680,21 @@ const TaskTab = ({ activeTab }) => {
             borderColor={palette.grey200}
             content={"Clear"}
             textColor={palette.grey900}
+            onPress={handleClear}
           />
 
           <PrimaryButton
-            backgroundColor={palette.primaryStudent200}
-            borderColor={palette.primaryStudent300}
+            backgroundColor={
+              isFormChanged
+                ? CombinedDefaultTheme.colors.primary
+                : palette.primaryStudent200
+            }
+            borderColor={
+              isFormChanged ? palette.purple600 : palette.primaryStudent300
+            }
             content={"Apply"}
             textColor={CombinedDefaultTheme.colors.background}
+            onPress={handleSubmit(onSubmit)}
           />
         </View>
       </BottomDrawer>

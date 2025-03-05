@@ -17,15 +17,15 @@ export const issueSchema = z.object({
 export const taskFilterSchema = z.object({
   endDate: z.string().nullable().default(null),
   modified: z.boolean().default(false),
-  onGoing: z.boolean().default(false),
   startDate: z.string().nullable().default(null),
-  status: z.string().default(""),
+  status: z.boolean().default(false),
+  statusState: z.string().default(""),
   taskName: z.string().default(""),
 });
 
 export const documentFilterSchema = z.object({
-  modified: z.boolean().default(false),
-  status: z.boolean().default(false),
-  type: z.string().default(""),
-  uploadBy: z.string().default(""),
+  modifiedBy: z.boolean(),
+  status: z.boolean(),
+  type: z.string().min(1, "Type is required"),
+  uploadedBy: z.string().min(1, "Uploaded by is required"),
 });
