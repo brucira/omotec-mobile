@@ -314,8 +314,8 @@ const styles = StyleSheet.create({
     backgroundColor: CombinedDefaultTheme.colors.background,
     shadowColor: "#000",
     shadowOffset: { height: 4, width: 0 },
-    shadowOpacity: 0.3,
     shadowRadius: 0,
+    shadowOpacity: 0.3,
   },
   attendanceContainer: {
     flexDirection: "row",
