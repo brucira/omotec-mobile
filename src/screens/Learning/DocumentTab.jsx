@@ -84,7 +84,14 @@ const DocumentTab = ({ activeTab }) => {
   );
 
   return (
-    <View style={{ flex: 1, marginBottom: Dimensions.margin * 1.5 }}>
+    <View
+      style={{
+        flex: 1,
+        marginBottom: Dimensions.margin * 1.5,
+
+        paddingHorizontal: Dimensions.padding,
+      }}
+    >
       <View style={styles.searchContainer}>
         <Searchbar
           icon={renderSearchIcon}

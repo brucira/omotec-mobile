@@ -596,7 +596,7 @@ export const events = [
     trainer: "John Doe",
   },
   {
-    address: "Powai, Mumbai, Maharastra",
+    // address: "Powai, Mumbai, Maharastra",
     attachment: "Course Details",
     attendance: [
       {
@@ -624,6 +624,7 @@ export const events = [
         status: "present",
       },
     ],
+    awaiting: 17,
     background: palette.yellow700,
     batchName: "B1",
     batchStudents: [
@@ -662,8 +663,10 @@ export const events = [
       12,
       0
     ),
-    location: "Powai",
+    // location: "Powai",
+    link: "https://meet.google.com/tsb-tttc-nvq",
     notify: "10 minutes before",
+    rsvp: 13,
     start: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -674,6 +677,7 @@ export const events = [
     subtitle: "Web Development Bootcamp · Mumbai",
     title: "Proposal Submission",
     trainer: "John Doe",
+    virtually: 2,
   },
   {
     address: "Powai, Mumbai, Maharastra",
@@ -1439,7 +1443,7 @@ export const weekEvents = [
 export const RouteNames = {
   Calender: "Calender",
   Course: "CourseDetail",
-  CoursePreview:"CoursePreviewScreen",
+  CoursePreview: "CoursePreviewScreen",
   Home: "Home",
   Learning: "My Learning",
   Notifications: "Notifications",
@@ -1451,7 +1455,7 @@ export const RouteNames = {
 
 export const ACCORDIOM_ITEM_ICON = {
   assignment: "ASSIGNMENT",
-  reading : "READING", 
+  reading: "READING",
   test: "TEST",
   text: "TEXT",
   video: "VIDEO",
@@ -1461,7 +1465,7 @@ export const ACCORDIOM_ITEM_ICON = {
 export const ACCORDIOM_ITEM_TYPE = {
   ASSIGNMENT: "ASSIGNMENT",
   OVERVIEW: "OVERVIEW",
-  READING:"READING",
+  READING: "READING",
   TEST: "TEST",
   VIDEO: "VIDEO",
   WEBLINK: "WEBLINK",
