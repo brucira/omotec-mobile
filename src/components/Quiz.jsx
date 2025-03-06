@@ -2,6 +2,7 @@ import React from "react";
 import {
   FlatList,
   Modal,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -62,7 +63,7 @@ const Quiz = ({ visible, hideModal, submitMoal }) => {
             </Text>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{ paddingVertical: Dimensions.padding * 1.5, rowGap: 16 }}
+              style={{ rowGap: 16 }}
             >
               <FlatList
                 data={testData}
@@ -73,10 +74,13 @@ const Quiz = ({ visible, hideModal, submitMoal }) => {
                 showsVerticalScrollIndicator={false}
               />
               <PrimaryButton
+                style={{
+                  marginBottom: 12,
+                  marginTop: 32,
+                }}
                 backgroundColor={CombinedDefaultTheme.colors.primary}
                 borderColor={palette.purple600}
                 content={"Submit"}
-                style={{ marginBottom: 12, marginTop: 32 }}
                 textColor={CombinedDefaultTheme.colors.background}
                 onPress={submitMoal}
               />
@@ -134,6 +138,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     backgroundColor: CombinedDefaultTheme.colors.background,
+    borderWidth: 1,
     flex: 1,
     paddingHorizontal: Dimensions.padding,
   },

@@ -6,6 +6,7 @@ import { Divider, Text } from "react-native-paper";
 import BottomDrawer from "../../components/BottomDrawer";
 import FeedbackForm from "../../components/FeedbackForm";
 import useModal from "../../hooks/useModal";
+import palette from "../../styles/palette";
 
 export const OverviewContent = () => {
   const { modalRef, openModal, closeModal } = useModal();
@@ -87,7 +88,7 @@ export const OverviewContent = () => {
         <Text style={{ color: "#101828" }} variant="titleSmall">
           Description
         </Text>
-        <Text style={{ color: "#344054" }} variant="bodyMedium">
+        <Text style={{ color: palette.grey700 }} variant="bodyMedium">
           {message}
         </Text>
       </View>

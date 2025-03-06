@@ -9,7 +9,7 @@ import { Dimensions } from "../../utils/constant";
 const SIZE_16 = Dimensions.margin;
 const SIZE_20 = SIZE_16 * 1.25;
 
-const VideoScreen = ({ url, containerStyle = {}, playerStyle = {} }) => {
+const VideoPlayer = ({ url, containerStyle = {}, playerStyle = {} }) => {
   const player = useVideoPlayer(url, (player) => {
     player.loop = true;
     player.play();
@@ -32,7 +32,7 @@ const VideoScreen = ({ url, containerStyle = {}, playerStyle = {} }) => {
   );
 };
 
-export default VideoScreen;
+export default VideoPlayer;
 
 const styles = StyleSheet.create({
   contentContainer: {

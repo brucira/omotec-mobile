@@ -1465,3 +1465,5 @@ export const ACCORDIOM_ITEM_TYPE = {
   VIDEO: "VIDEO",
   WEBLINK: "WEBLINK",
 };
+
+export const TEMP_VIDEO_URL = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
