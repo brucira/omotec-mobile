@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 
+import palette from "../../styles/palette";
 import { Dimensions } from "../../utils/constant";
 
 export const DiscussionsContent = () => {
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   noteText: {
-    color: "#344054",
+    color: palette.grey700,
     textAlign: "justify",
   },
 });

@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import AssignmentModal from "../../components/AssignmentModal";
-import CourseTabBack from "../../components/CourseTabBack";
+import AssignmentModal from "../AssignmentModal";
+import CourseTabBack from "../CourseTabBack";
 
-const AssignmentScreen = () => {
+const AssignmentHeader = () => {
   const [showModal, setShowModal] = React.useState(false);
   const submitHandler = () => {
     setShowModal(true);
@@ -78,7 +78,7 @@ const AssignmentScreen = () => {
   );
 };
 
-export default AssignmentScreen;
+export default AssignmentHeader;
 
 const styles = StyleSheet.create({
   ratingButtonStyle: {

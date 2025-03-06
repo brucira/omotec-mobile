@@ -9,7 +9,12 @@ import {
 } from "react-native";
 import { Text } from "react-native-paper";
 
-import CourseHeaderContent from "../../components/CourseHeaderContent";
+import AssignmentHeader from "../../components/CourseHeader/AssignmentHeader";
+import OverView from "../../components/CourseHeader/OverView";
+import PDFViewer from "../../components/CourseHeader/PDFViewer";
+import TestHeader from "../../components/CourseHeader/TestHeader";
+import VideoPlayer from "../../components/CourseHeader/VideoPlayer";
+import WebLink from "../../components/CourseHeader/WebLink";
 import { DiscussionsContent } from "../../components/CourseTabs/DiscussionsContent";
 import { KitContent } from "../../components/CourseTabs/KitContent";
 import NoteContent from "../../components/CourseTabs/NoteContent";
@@ -19,6 +24,23 @@ import ReviewsContent from "../../components/CourseTabs/ReviewsContent";
 import { SessionsContent } from "../../components/CourseTabs/SessionsContent";
 import CustomMenu from "../../components/CustomMenu";
 import CustomTabs from "../../components/CustomTabs";
+import { ACCORDIOM_ITEM_TYPE, TEMP_VIDEO_URL } from "../../utils/constant";
+
+const CourseHeaderContent = ({ type }) => {
+  if (type === ACCORDIOM_ITEM_TYPE.OVERVIEW) {
+    return <OverView />;
+  } else if (type === ACCORDIOM_ITEM_TYPE.VIDEO) {
+    return <VideoPlayer url={TEMP_VIDEO_URL} />;
+  } else if (type === ACCORDIOM_ITEM_TYPE.READING) {
+    return <PDFViewer />;
+  } else if (type === ACCORDIOM_ITEM_TYPE.WEBLINK) {
+    return <WebLink />;
+  } else if (type === ACCORDIOM_ITEM_TYPE.TEST) {
+    return <TestHeader />;
+  } else if (type === ACCORDIOM_ITEM_TYPE.ASSIGNMENT) {
+    return <AssignmentHeader />;
+  }
+};
 
 export const CoursePreviewScreen = (props) => {
   const { type } = props?.route?.params;

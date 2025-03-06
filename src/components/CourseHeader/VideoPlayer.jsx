@@ -1,14 +1,18 @@
 import { useEvent } from "expo";
 import { useVideoPlayer, VideoView } from "expo-video";
 import React from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-const { width, height } = Dimensions.get("window");
+import { JUSTIFY, RESIZE_MODE } from "../../styles/constStyle";
+import { Dimensions } from "../../utils/constant";
 
-const VideoScreen = ({ url, containerStyle = {}, playerStyle = {} }) => {
+const SIZE_16 = Dimensions.margin;
+const SIZE_20 = SIZE_16 * 1.25;
+
+const VideoPlayer = ({ url, containerStyle = {}, playerStyle = {} }) => {
   const player = useVideoPlayer(url, (player) => {
     player.loop = true;
-    // player.play();
+    player.play();
   });
 
   const { isPlaying, oldIsPlaying } = useEvent(player, "playingChange", {
@@ -21,22 +25,23 @@ const VideoScreen = ({ url, containerStyle = {}, playerStyle = {} }) => {
         allowsFullscreen
         allowsPictureInPicture
         player={player}
-        resizeMode="contain"
+        resizeMode={RESIZE_MODE.COVER}
         style={[styles.video, playerStyle]}
       />
     </View>
   );
 };
 
-export default VideoScreen;
+export default VideoPlayer;
 
 const styles = StyleSheet.create({
   contentContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: JUSTIFY.CENTER,
+    justifyContent: JUSTIFY.CENTER,
+    marginBottom: SIZE_20,
   },
   video: {
-    height: height * 0.4,
-    width: width,
+    height: SIZE_16 * 13.875,
+    width: Dimensions?.screenWidth,
   },
 });
