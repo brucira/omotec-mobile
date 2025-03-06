@@ -60,7 +60,7 @@ const NoteItem = ({ item }) => (
         </Text>
         <Text
           style={{
-            color: "#101828",
+            color: palette.grey900,
             flex: 1,
             flexWrap: "wrap",
             wordWrap: "wrap",
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 12,
     paddingVertical: 8,
-    shadowColor: "#101828",
+    shadowColor: palette.grey900,
     shadowOffset: { height: 1, width: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   messageText: {
-    color: "#101828",
+    color: palette.grey900,
   },
   noteListContainer: {
     borderWidth: 1,
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   selectedTextStyle: {
-    color: "#101828",
+    color: palette.grey900,
     fontFamily: "Inter",
     fontSize: 14,
     fontWeight: "400",
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     padding: (Dimensions.margin * 3) / 4,
-    shadowColor: "#101828",
+    shadowColor: palette.grey900,
     shadowOffset: { height: 1, width: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 2,

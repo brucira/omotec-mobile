@@ -89,7 +89,7 @@ export default function FeedbackForm({ onSubmit }) {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.buttonStyle}>
             <Text
-              style={[styles.buttonText, { color: "#101828" }]}
+              style={[styles.buttonText, { color: palette.grey900 }]}
               variant="labelMedium"
               onPress={handleCancel}
             >
@@ -148,7 +148,7 @@ export default function FeedbackForm({ onSubmit }) {
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.buttonStyle} onPress={handleCancel}>
           <Text
-            style={[styles.buttonText, { color: "#101828" }]}
+            style={[styles.buttonText, { color: palette.grey900 }]}
             variant="labelMedium"
           >
             Cancel
@@ -177,12 +177,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flex: 1,
     padding: 16,
-  },
-  backButtonText: {
-    color: "#000",
-    fontSize: 16,
-    fontWeight: "500",
-    textAlign: "center",
   },
   buttonContainer: {
     flexDirection: "row",
