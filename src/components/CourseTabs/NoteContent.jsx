@@ -4,52 +4,18 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { Divider, Text } from "react-native-paper";
 
+import { RESIZE_MODE } from "../../styles/constStyle";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions } from "../../utils/constant";
+import {
+  Dimensions,
+  LECTURE_SELECT,
+  NOTE_ITEM,
+  SORT_SELECT,
+} from "../../utils/constant";
 import CustomButton from "../CustomButton";
 import Editor from "../dom-components/hello-dom";
 import DropDownRightIcon from "../DropDownRightIcon";
-
-export const lectureDropdownData = [
-  { label: "All Lecture", value: "all" },
-  { label: "Recorded", value: "recorded" },
-  { label: "Live", value: "live" },
-];
-
-export const sortDropdownData = [
-  { label: "Sort By Most Recent", value: "recent" },
-  { label: "Oldest", value: "oldest" },
-  { label: "Name (A-Z)", value: "name_asc" },
-  { label: "Name (Z-A)", value: "name_desc" },
-];
-
-const itemData = [
-  {
-    des: "What is Employee Training?",
-    heading: "Section 1",
-    message: "How?",
-    time: "00:02",
-  },
-  {
-    des: "Why is Training Important?",
-    heading: "Section 2",
-    message: "Why?",
-    time: "00:10",
-  },
-  {
-    des: "Types of Employee Training",
-    heading: "Section 3",
-    message: "What types? ",
-    time: "00:25",
-  },
-  {
-    des: "Best Practices for Training",
-    heading: "Section 4",
-    message: "How to improve?",
-    time: "00:40",
-  },
-];
 
 const NoteItem = ({ item }) => (
   <View style={{ marginBottom: 20, rowGap: 8 }}>
@@ -113,7 +79,7 @@ const NoteContent = () => {
     setAddingNote(false);
   };
 
-  const emptyNotes = useMemo(() => itemData?.length === 0, []);
+  const emptyNotes = useMemo(() => NOTE_ITEM?.length === 0, []);
 
   return (
     <View style={styles.container}>
@@ -121,7 +87,7 @@ const NoteContent = () => {
         <View style={{ columnGap: 12, flexDirection: "row" }}>
           <Dropdown
             search
-            data={lectureDropdownData}
+            data={LECTURE_SELECT}
             itemTextStyle={{ color: "black" }}
             labelField="label"
             maxHeight={300}
@@ -139,7 +105,7 @@ const NoteContent = () => {
 
           <Dropdown
             search
-            data={sortDropdownData}
+            data={SORT_SELECT}
             itemTextStyle={{ color: "black" }}
             labelField="label"
             maxHeight={300}
@@ -212,13 +178,13 @@ const NoteContent = () => {
                 }}
               >
                 <Image
-                  resizeMode="contain"
+                  contentFit={RESIZE_MODE.CONTAIN}
                   source={require("../../assets/empty_notes.png")}
                   style={{ height: 186, width: 172 }}
                 />
               </View>
             ) : (
-              itemData?.map((item, index) => {
+              NOTE_ITEM?.map((item, index) => {
                 return <NoteItem key={index} item={item}></NoteItem>;
               })
             )}
