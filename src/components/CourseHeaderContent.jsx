@@ -14,10 +14,10 @@ import Pdf from "react-native-pdf";
 
 import AssignmentScreen from "../screens/Course/AssignmentScreen";
 import TestScreen from "../screens/Course/TestScreen";
-import { DIRECTION, JUSTIFY, RESIZE_MODE, SIZE } from "../styles/constStyle";
+import { DIRECTION, JUSTIFY, SIZE } from "../styles/constStyle";
 import palette from "../styles/palette";
-import { CombinedDefaultTheme } from "../styles/theme";
 import { ACCORDIOM_ITEM_TYPE, Dimensions } from "../utils/constant";
+import OverView from "./CourseHeader/OverView";
 import VideoPlayer from "./VideoPlayer";
 
 const SIZE_8 = Dimensions.margin * 0.5;
@@ -27,12 +27,10 @@ const SIZE_20 = Dimensions.margin * 1.25;
 const SIZE_24 = Dimensions.margin * 1.5;
 
 const CourseHeaderContent = ({ type }) => {
-  const [viewAllText, setViewAllText] = React.useState(7);
   const [urlCopy, setUrlCopy] = React.useState(false);
   const copyIcon = require("../assets/icons/copy_1.png");
   const copiedIcon = require("../assets/icons/copy.png");
   const externalIcon = require("../assets/icons/external_link.png");
-  const thumbnailImage = require("../assets/thumbnail.png");
   const workingCopyLink = urlCopy ? copyIcon : copiedIcon;
 
   const url =
@@ -41,10 +39,6 @@ const CourseHeaderContent = ({ type }) => {
   const source = {
     cache: true,
     uri: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-  };
-
-  const viewMoreHandler = () => {
-    setViewAllText(null);
   };
 
   const copyHandler = async (url) => {
@@ -67,35 +61,7 @@ const CourseHeaderContent = ({ type }) => {
   };
 
   if (type === ACCORDIOM_ITEM_TYPE.OVERVIEW) {
-    return (
-      <View style={styles.readingContainer}>
-        <Image
-          resizeMode={RESIZE_MODE.COVER}
-          source={thumbnailImage}
-          style={styles.thumbnail}
-        />
-        <View style={styles.textContainer}>
-          <Text
-            numberOfLines={viewAllText}
-            style={styles.bodyText}
-            variant="bodyMedium"
-          >
-            No matter what technical level your employees are at, there's always
-            some room for improvement...
-          </Text>
-          {viewAllText && (
-            <TouchableOpacity
-              style={styles.viewMoreButton}
-              onPress={viewMoreHandler}
-            >
-              <Text style={styles.viewMoreText} variant="labelMedium">
-                View More
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
-      </View>
-    );
+    return <OverView />;
   } else if (type === ACCORDIOM_ITEM_TYPE.VIDEO) {
     return (
       <VideoPlayer
@@ -156,14 +122,6 @@ const CourseHeaderContent = ({ type }) => {
 export default CourseHeaderContent;
 
 const styles = StyleSheet.create({
-  assignmentContainer: {
-    marginBottom: SIZE_20,
-    paddingHorizontal: SIZE_12,
-    paddingTop: SIZE_12,
-  },
-  bodyText: {
-    color: palette.grey900,
-  },
   copyHeadingText: {
     color: palette.grey900,
     fontWeight: "600",
@@ -211,27 +169,10 @@ const styles = StyleSheet.create({
   playerStyle: {
     height: SIZE_16 * 13.875,
   },
-  readingContainer: {
-    marginBottom: SIZE_20,
-    rowGap: SIZE_16,
-  },
-  textContainer: {
-    paddingHorizontal: SIZE_16,
-  },
-  thumbnail: {
-    height: SIZE_16 * 13.75,
-    width: SIZE.FULL,
-  },
   viewLinkContainer: {
     alignItems: JUSTIFY.CENTER,
     columnGap: SIZE_8,
     flexDirection: DIRECTION.ROW,
-  },
-  viewMoreButton: {
-    paddingVertical: SIZE_8,
-  },
-  viewMoreText: {
-    color: CombinedDefaultTheme?.colors?.primary,
   },
   webLinkContainer: {
     marginBottom: SIZE_20,
