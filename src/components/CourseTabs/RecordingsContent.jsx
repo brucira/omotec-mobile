@@ -12,6 +12,7 @@ import {
 import { Text } from "react-native-paper";
 
 import useModal from "../../hooks/useModal";
+import { CombinedDefaultTheme } from "../../styles/theme";
 import BottomDrawer from "../BottomDrawer";
 import FeedbackForm from "../FeedbackForm";
 
@@ -103,6 +104,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   videoText: {
-    color: "#852DCD",
+    color: CombinedDefaultTheme.colors.primary,
   },
 });

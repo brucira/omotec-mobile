@@ -4,6 +4,8 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { Divider, Text } from "react-native-paper";
 
+import palette from "../../styles/palette";
+import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions } from "../../utils/constant";
 import CustomButton from "../CustomButton";
 import Editor from "../dom-components/hello-dom";
@@ -274,10 +276,10 @@ const styles = StyleSheet.create({
     rowGap: 12,
   },
   messageContainer: {
-    backgroundColor: "#F9FAFB",
+    backgroundColor: palette.grey50,
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
-    borderColor: "#F9FAFB",
+    borderColor: palette.grey50,
     borderTopRightRadius: 12,
     borderWidth: 1,
     paddingHorizontal: 12,
@@ -301,7 +303,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   seconds: {
-    backgroundColor: "#852DCD",
+    backgroundColor: CombinedDefaultTheme.colors.primary,
     borderRadius: 40,
     color: "white",
     paddingHorizontal: 8,

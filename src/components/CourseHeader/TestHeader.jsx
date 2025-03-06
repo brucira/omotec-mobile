@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     rowGap: SIZE_16,
   },
   testContainer: {
-    backgroundColor: "#F9FAFB",
+    backgroundColor: palette.grey50,
     paddingBottom: SIZE_20,
     paddingTop: SIZE_12,
     rowGap: SIZE_12,

@@ -2,6 +2,8 @@ import React, { useCallback, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { List } from "react-native-paper";
 
+import palette from "../styles/palette";
+import { CombinedDefaultTheme } from "../styles/theme";
 import { ACCORDIOM_ITEM_TYPE } from "../utils/constant";
 
 const ItemDescription = ({ text = "", showResource = false, icon }) => {
@@ -162,12 +164,12 @@ const styles = StyleSheet.create({
   },
   accordionSelectedItemsStyle: {
     backgroundColor: "#FDFAFF",
-    borderLeftColor: "#852DCD",
+    borderLeftColor: CombinedDefaultTheme.colors.primary,
     borderLeftWidth: 4,
     paddingLeft: 12,
   },
   accordionStyle: {
-    backgroundColor: "#F9FAFB",
+    backgroundColor: palette.grey50,
     marginTop: -8,
   },
   accordionTitleStyle: {

@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { Text } from "react-native-paper";
 
+import { CombinedDefaultTheme } from "../styles/theme";
+
 export default function FeedbackForm({ onSubmit }) {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
@@ -306,8 +308,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   submitButton: {
-    backgroundColor: "#852DcD",
-    borderColor: "#852DcD",
+    backgroundColor: CombinedDefaultTheme.colors.primary,
+    borderColor: CombinedDefaultTheme.colors.primary,
     shadowColor: "#60179C",
   },
   subtitle: {

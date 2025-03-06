@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 
+import { CombinedDefaultTheme } from "../styles/theme";
+
 const CustomButton = ({
   variant = "primary",
   onPress,
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
   },
   primaryButton: {
-    backgroundColor: "#852DCD",
+    backgroundColor: CombinedDefaultTheme.colors.primary,
     borderColor: "#60179C",
     shadowColor: "#60179C",
   },

@@ -1,8 +1,19 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import { DIRECTION, JUSTIFY } from "../../styles/constStyle";
+import palette from "../../styles/palette";
+import { Dimensions } from "../../utils/constant";
 import AssignmentModal from "../AssignmentModal";
 import CourseTabBack from "../CourseTabBack";
+import { CombinedDefaultTheme } from "../../styles/theme";
+
+const SIZE_16 = Dimensions.margin;
+const SIZE_8 = SIZE_16 / 2;
+const SIZE_12 = SIZE_16 * 0.75;
+const SIZE_14 = SIZE_16 * 0.875;
+const SIZE_20 = SIZE_16 * 1.25;
+const SIZE_24 = SIZE_16 * 1.5;
 
 const AssignmentHeader = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -14,64 +25,35 @@ const AssignmentHeader = () => {
     setShowModal(false);
   };
 
-  if (showModal) {
-    return (
+  return (
+    <View style={styles.container}>
+      <CourseTabBack />
       <AssignmentModal
         hideModal={() => setShowModal(false)}
         visible={showModal}
         onSavePress={onFileSaveHandler}
       />
-    );
-  }
-
-  return (
-    <View
-      style={{
-        backgroundColor: "#F9FAFB",
-        paddingBottom: 24,
-        paddingTop: 12,
-        rowGap: 24,
-      }}
-    >
-      <CourseTabBack />
-      <View style={{ paddingHorizontal: 16, rowGap: 16 }}>
-        <View
-          style={{
-            alignItems: "center",
-            flex: 1,
-            flexDirection: "row",
-          }}
-        >
-          <Text style={{ color: "#101828", flex: 1 }} variant="bodyMedium">
+      <View style={styles.contentContainer}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.questionText} variant="bodyMedium">
             How can I create and organize robotics course materials on an LMS?
           </Text>
-          <View
-            style={{
-              backgroundColor: "#F6EBFF",
-              borderRadius: 40,
-              columnGap: 8,
-              paddingHorizontal: 8,
-              paddingVertical: 3,
-            }}
-          >
-            <Text style={{ color: "#852DCD" }} variant="labelMedium">
+          <View style={styles.marksContainer}>
+            <Text style={styles.marksText} variant="labelMedium">
               10 Marks
             </Text>
           </View>
         </View>
-        <View style={{ flex: 1, flexDirection: "row" }}>
+        <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.ratingButtonStyle}
             onPress={submitHandler}
           >
-            <Text
-              style={{ color: "#FFFFFF", textAlign: "center" }}
-              variant="labelLarge"
-            >
+            <Text style={styles.submitText} variant="labelLarge">
               Submit
             </Text>
           </TouchableOpacity>
-          <View style={{ flex: 1 }}></View>
+          <View style={styles.flexOne} />
         </View>
       </View>
     </View>
@@ -81,10 +63,46 @@ const AssignmentHeader = () => {
 export default AssignmentHeader;
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    flex: 1,
+    flexDirection: DIRECTION.ROW,
+  },
+  container: {
+    backgroundColor: palette.grey50,
+    paddingBottom: SIZE_24,
+    paddingTop: SIZE_12,
+    rowGap: SIZE_24,
+  },
+  contentContainer: {
+    paddingHorizontal: SIZE_16,
+    rowGap: SIZE_16,
+  },
+  flexOne: {
+    flex: 1,
+  },
+  headerContainer: {
+    alignItems: JUSTIFY.CENTER,
+    flex: 1,
+    flexDirection: DIRECTION.ROW,
+  },
+  marksContainer: {
+    backgroundColor: palette.primaryStudent50,
+    borderRadius: SIZE_20 * 2,
+    columnGap: SIZE_8,
+    paddingHorizontal: SIZE_8,
+    paddingVertical: 3,
+  },
+  marksText: {
+    color: CombinedDefaultTheme.colors.primary,
+  },
+  questionText: {
+    color: "#101828",
+    flex: 1,
+  },
   ratingButtonStyle: {
     alignItems: "center",
-    backgroundColor: "#852DCD",
-    borderColor: "#852DCD",
+    backgroundColor: CombinedDefaultTheme.colors.primary,
+    borderColor: CombinedDefaultTheme.colors.primary,
     borderRadius: 14,
     columnGap: 8,
     elevation: 4,
@@ -96,5 +114,9 @@ const styles = StyleSheet.create({
     shadowOffset: { height: 4, width: 0 },
     shadowOpacity: 1,
     shadowRadius: 0,
+  },
+  submitText: {
+    color: "#FFFFFF",
+    textAlign: "center",
   },
 });

@@ -4,6 +4,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 
 import palette from "../../styles/palette";
+import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions } from "../../utils/constant";
 
 export const DiscussionsContent = () => {
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   linkTextStyle: {
-    color: "#852DCD",
+    color: CombinedDefaultTheme.colors.primary,
     textAlign: "justify",
   },
   noteText: {

@@ -4,6 +4,8 @@ import { StyleSheet, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { ProgressBar, Text } from "react-native-paper";
 
+import palette from "../../styles/palette";
+import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions } from "../../utils/constant";
 import CommentView from "../CommentView";
 
@@ -133,11 +135,11 @@ const styles = StyleSheet.create({
     width: Dimensions.margin * 1.25,
   },
   excellentText: {
-    color: "#852DCD",
+    color: CombinedDefaultTheme.colors.primary,
     textAlign: "center",
   },
   rating: {
-    color: "#852DCD",
+    color: CombinedDefaultTheme.colors.primary,
     fontFamily: "Inter",
     fontSize: 28,
     fontWeight: "700",
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   ratingBox: {
-    backgroundColor: "#F6EBFF",
+    backgroundColor: palette.primaryStudent50,
     borderRadius: 8,
     padding: 16,
     rowGap: 4,
