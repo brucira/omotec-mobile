@@ -122,8 +122,6 @@ const TestHeader = () => {
   );
 };
 
-export default TestHeader;
-
 const styles = StyleSheet.create({
   backButtton: {
     paddingHorizontal: 8,
@@ -201,3 +199,5 @@ const styles = StyleSheet.create({
     color: palette.blue800,
   },
 });
+
+export default TestHeader;

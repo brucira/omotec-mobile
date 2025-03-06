@@ -121,6 +121,15 @@ export const cardData = [
     title: "UI Research Design Course",
   },
 ];
+export const reviewData = {
+  date: "2 May,2025",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+  name: "John Doe",
+  profilePicture: require("../assets/male.png"),
+  rating: 4,
+  remark: "Very Good!",
+};
 
 export const courseCardData = [
   {
@@ -1470,4 +1479,5 @@ export const ACCORDIOM_ITEM_TYPE = {
   WEBLINK: "WEBLINK",
 };
 
-export const TEMP_VIDEO_URL = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+export const TEMP_VIDEO_URL =
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
