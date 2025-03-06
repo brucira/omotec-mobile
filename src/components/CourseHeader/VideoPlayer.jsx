@@ -3,8 +3,8 @@ import { useVideoPlayer, VideoView } from "expo-video";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-import { JUSTIFY, RESIZE_MODE } from "../styles/constStyle";
-import { Dimensions } from "../utils/constant";
+import { JUSTIFY, RESIZE_MODE } from "../../styles/constStyle";
+import { Dimensions } from "../../utils/constant";
 
 const SIZE_16 = Dimensions.margin;
 const SIZE_20 = SIZE_16 * 1.25;
