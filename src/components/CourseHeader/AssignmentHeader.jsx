@@ -64,7 +64,6 @@ export default AssignmentHeader;
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    flex: 1,
     flexDirection: DIRECTION.ROW,
   },
   container: {
@@ -82,7 +81,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: JUSTIFY.CENTER,
-    flex: 1,
     flexDirection: DIRECTION.ROW,
   },
   marksContainer: {
