@@ -6,20 +6,20 @@ import {
   Alert,
   Linking,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { Text } from "react-native-paper";
 
 import { DIRECTION, JUSTIFY } from "../../styles/constStyle";
 import palette from "../../styles/palette";
 import { Dimensions } from "../../utils/constant";
+import CourseTabBack from "../CourseTabBack";
 
 const SIZE_16 = Dimensions.margin;
 const SIZE_8 = SIZE_16 * 0.5;
 const SIZE_12 = SIZE_16 * 0.75;
 const SIZE_20 = SIZE_16 * 1.25;
-const SIZE_24 = SIZE_16 * 1.5;
 
 const WebLink = () => {
   const [urlCopy, setUrlCopy] = React.useState(false);
@@ -27,9 +27,10 @@ const WebLink = () => {
   const copiedIcon = require("../../assets/icons/copy.png");
   const externalIcon = require("../../assets/icons/external_link.png");
   const workingCopyLink = urlCopy ? copyIcon : copiedIcon;
+  const link = "https://onmyowntechnology.com/";
 
-  const copyHandler = async (url) => {
-    Clipboard.setString(url);
+  const copyHandler = async () => {
+    Clipboard.setString(link);
     setUrlCopy(true);
     const timeout = setTimeout(() => {
       setUrlCopy(false);
@@ -37,11 +38,11 @@ const WebLink = () => {
     return () => clearTimeout(timeout);
   };
 
-  const externalLinkHandler = async (url) => {
-    const supported = await Linking.canOpenURL(url);
+  const externalLinkHandler = async () => {
+    const supported = await Linking.canOpenURL(link);
 
     if (supported) {
-      await Linking.openURL(url);
+      await Linking.openURL(link);
     } else {
       Alert.alert("Error", "Can't open this link.");
     }
@@ -49,26 +50,24 @@ const WebLink = () => {
 
   return (
     <View style={styles.webLinkContainer}>
-      <View style={styles.emptySpace} />
+      <CourseTabBack />
       <View style={styles.webLinkContent}>
         <View style={styles.webLinkTextContainer}>
-          <Text style={styles.copyHeadingText} variant="bodyMedium">
+          <Text style={styles.copyHeadingText} variant="titleSmall">
             URL of webpage
           </Text>
           <View style={styles.copyLinkContainer}>
             <Text style={styles.copyLinkText} variant="bodyMedium">
-              https://onmyowntechnology.com/
+              {link}
             </Text>
-            <TouchableOpacity
-              onPress={() => copyHandler("https://onmyowntechnology.com")}
-            >
+            <TouchableOpacity onPress={copyHandler}>
               <Image source={workingCopyLink} style={styles.menuImage} />
             </TouchableOpacity>
           </View>
         </View>
         <TouchableOpacity
           style={styles.viewLinkContainer}
-          onPress={() => externalLinkHandler("https://onmyowntechnology.com")}
+          onPress={externalLinkHandler}
         >
           <Image source={externalIcon} style={styles.menuImage} />
           <Text style={styles.viewLinkText} variant="labelMedium">
@@ -106,9 +105,6 @@ const styles = StyleSheet.create({
     color: palette.grey900,
     flex: 1,
   },
-  emptySpace: {
-    height: SIZE_24,
-  },
   menuImage: {
     height: SIZE_20,
     width: SIZE_20,
@@ -122,6 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: SIZE_20,
     paddingHorizontal: SIZE_16,
     paddingTop: SIZE_12,
+    rowGap: SIZE_20,
   },
   webLinkContent: {
     rowGap: SIZE_12,

@@ -41,7 +41,7 @@ const TestHeader = () => {
         visible={openQuiz && !isSubmittedQuiz}
       />
 
-      <CourseTabBack />
+      <CourseTabBack style={styles.backButtton} />
       <View style={styles.contentContainer}>
         <View style={styles.sectionContainer}>
           <View style={styles.headerContainer}>
@@ -125,6 +125,9 @@ const TestHeader = () => {
 export default TestHeader;
 
 const styles = StyleSheet.create({
+  backButtton: {
+    paddingHorizontal: 8,
+  },
   bodySmallText: {
     color: palette.grey500,
   },

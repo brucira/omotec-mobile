@@ -79,9 +79,9 @@ const styles = StyleSheet.create({
     width: SIZE_24,
   },
   backIconContainer: {
-    left: SIZE_16,
+    left: SIZE_16 / 2,
     position: "absolute",
-    top: SIZE_16,
+    top: SIZE_16 * 0.75,
     zIndex: 1,
   },
   bodyText: {
