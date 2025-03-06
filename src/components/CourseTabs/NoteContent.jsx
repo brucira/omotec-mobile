@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
   dropDownContainer: { columnGap: SIZE_12, flexDirection: DIRECTION.ROW },
   dropDownIcon: {
     height: SIZE_20,
-    resizeMode: RESIZE_MODE.COVER,
     width: SIZE_20,
   },
   editorContainer: {

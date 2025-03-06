@@ -108,11 +108,6 @@ const styles = StyleSheet.create({
     flexDirection: DIRECTION.ROW,
     justifyContent: JUSTIFY.SPACE_BETWEEN,
   },
-  dropDownIcon: {
-    height: SIZE_20,
-    resizeMode: RESIZE_MODE.COVER,
-    width: SIZE_20,
-  },
   excellentText: {
     color: CombinedDefaultTheme.colors.primary,
     textAlign: JUSTIFY.CENTER,
