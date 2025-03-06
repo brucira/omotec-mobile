@@ -11,7 +11,7 @@ export const SessionsContent = () => {
   const downloadIcon = require("../../assets/icons/arrow_circle_down.png");
 
   const navigationHandler = () => {
-    console.log("click");
+    console.log("session Item click");
   };
 
   const SessionItems = {

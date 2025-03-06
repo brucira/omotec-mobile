@@ -2,6 +2,8 @@ import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 
+import palette from "../styles/palette";
+
 export const CommentView = () => {
   const star = 2;
   const comment =
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
     paddingLeft: 64,
   },
   commentText: {
-    color: "#101828",
+    color: palette.grey900,
   },
   container: {
     rowGap: 12,
@@ -92,10 +94,10 @@ const styles = StyleSheet.create({
     width: 16,
   },
   timeAgo: {
-    color: "#475467",
+    color: palette.grey600,
   },
   userName: {
-    color: "#101828",
+    color: palette.grey900,
   },
   userRow: {
     alignItems: "center",

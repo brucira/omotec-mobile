@@ -70,7 +70,7 @@ const NoteItem = ({ item }) => (
           {item.heading}: &nbsp;
           <Text
             style={{
-              color: "#475467",
+              color: palette.grey600,
               flex: 1,
               flexWrap: "wrap",
               wordWrap: "wrap",

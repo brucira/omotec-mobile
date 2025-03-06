@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     marginTop: -8,
   },
   accordionTitleStyle: {
-    color: "#101828",
+    color: palette.grey900,
     fontFamily: "Inter",
     fontSize: 14,
     fontWeight: 600,
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
   },
   itemDescriptionText: {
-    color: "#475467",
+    color: palette.grey600,
     fontFamily: "Inter",
     fontSize: 12,
     fontWeight: 400,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     width: 20,
   },
   itemTitleStyle: {
-    color: "#101828",
+    color: palette.grey900,
     fontFamily: "Inter",
     fontSize: 14,
     fontWeight: 500,

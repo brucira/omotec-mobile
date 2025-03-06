@@ -25,10 +25,10 @@ const RatingRow = ({ color = "#0064D6", star }) => {
   return (
     <View style={styles.ratingRow}>
       <View style={styles.ratingLabel}>
-        <Text style={{ color: "#475467" }} variant="bodySmall">
+        <Text style={{ color: palette.grey600 }} variant="bodySmall">
           {star?.no}-star
         </Text>
-        <Text style={{ color: "#475467" }} variant="bodySmall">
+        <Text style={{ color: "#" }} variant="bodySmall">
           {star?.parcentage}%
         </Text>
       </View>
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     rowGap: 4,
   },
   ratingCount: {
-    color: "#101828",
+    color: palette.grey900,
     fontFamily: "Inter",
     fontSize: 18,
     fontWeight: "600",
@@ -171,11 +171,11 @@ const styles = StyleSheet.create({
     rowGap: 5,
   },
   ratingText: {
-    color: "#475467",
+    color: palette.grey600,
     textAlign: "center",
   },
   selectedTextStyle: {
-    color: "#101828",
+    color: palette.grey900,
     flex: 1,
     fontFamily: "Inter",
     fontSize: 14,
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     padding: (Dimensions.margin * 3) / 4,
-    shadowColor: "#101828",
+    shadowColor: palette.grey900,
     shadowOffset: { height: 1, width: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 2,

@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     shadowColor: "#EAECF0",
   },
   secondaryText: {
-    color: "##101828",
+    color: palette.grey900,
   },
   text: {
     fontSize: 16,
