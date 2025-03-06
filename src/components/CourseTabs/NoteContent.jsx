@@ -18,38 +18,22 @@ import Editor from "../dom-components/hello-dom";
 import DropDownRightIcon from "../DropDownRightIcon";
 
 const NoteItem = ({ item }) => (
-  <View style={{ marginBottom: 20, rowGap: 8 }}>
+  <View style={styles.noteItemContainer}>
     <View style={styles.timelineContainer}>
       <View style={styles.timeLine}>
         <Text style={styles.seconds} variant="labelMedium">
           {item?.time}
         </Text>
-        <Text
-          style={{
-            color: palette.grey900,
-            flex: 1,
-            flexWrap: "wrap",
-            wordWrap: "wrap",
-          }}
-          variant="labelMedium"
-        >
+        <Text style={styles.headingText} variant="labelMedium">
           {item.heading}: &nbsp;
-          <Text
-            style={{
-              color: palette.grey600,
-              flex: 1,
-              flexWrap: "wrap",
-              wordWrap: "wrap",
-            }}
-            variant="bodySmall"
-          >
+          <Text style={styles.descriptionText} variant="bodySmall">
             {item.des}
           </Text>
         </Text>
       </View>
       <Image
         source={require("../../assets/icons/more_vertical.png")}
-        style={{ height: 20, width: 20 }}
+        style={styles.moreIcon}
       />
     </View>
     <View style={styles.messageContainer}>
@@ -64,6 +48,7 @@ const NoteContent = () => {
   const [lectureSelect, setLectureSelect] = useState("all");
   const [sortBy, setSortBy] = useState("recent");
   const [addingNote, setAddingNote] = useState(false);
+  const plusIcon = require("../../assets/icons/plus.png");
   const [editorState, setEditorState] = useState(null);
   const [plainText, setPlainText] = useState("");
 
@@ -84,11 +69,11 @@ const NoteContent = () => {
   return (
     <View style={styles.container}>
       <View style={styles.headerSection}>
-        <View style={{ columnGap: 12, flexDirection: "row" }}>
+        <View style={styles.dropDownContainer}>
           <Dropdown
             search
             data={LECTURE_SELECT}
-            itemTextStyle={{ color: "black" }}
+            itemTextStyle={styles.itemText}
             labelField="label"
             maxHeight={300}
             renderRightIcon={DropDownRightIcon}
@@ -106,7 +91,7 @@ const NoteContent = () => {
           <Dropdown
             search
             data={SORT_SELECT}
-            itemTextStyle={{ color: "black" }}
+            itemTextStyle={styles.itemText}
             labelField="label"
             maxHeight={300}
             renderRightIcon={DropDownRightIcon}
@@ -133,10 +118,7 @@ const NoteContent = () => {
             >
               Create a new note at 0:02
             </Text>
-            <Image
-              source={require("../../assets/icons/plus.png")}
-              style={styles.dropDownIcon}
-            />
+            <Image source={plusIcon} style={styles.dropDownIcon} />
           </TouchableOpacity>
         )}
       </View>
@@ -166,27 +148,20 @@ const NoteContent = () => {
       )}
       {!addingNote && (
         <>
-          {!emptyNotes && <Divider style={{ marginHorizontal: 16 }} />}
-          <View style={{ paddingHorizontal: Dimensions.padding }}>
+          {!emptyNotes && <Divider style={styles.divider} />}
+          <View style={styles.noteListContainer}>
             {emptyNotes ? (
-              <View
-                style={{
-                  alignItems: "center",
-                  height: "100%",
-                  justifyContent: "center",
-                  width: "100%",
-                }}
-              >
+              <View style={styles.emptyNotesContainer}>
                 <Image
                   contentFit={RESIZE_MODE.CONTAIN}
                   source={require("../../assets/empty_notes.png")}
-                  style={{ height: 186, width: 172 }}
+                  style={styles.emptyNotesImage}
                 />
               </View>
             ) : (
-              NOTE_ITEM?.map((item, index) => {
-                return <NoteItem key={index} item={item}></NoteItem>;
-              })
+              NOTE_ITEM?.map((item, index) => (
+                <NoteItem key={index} item={item} />
+              ))
             )}
           </View>
         </>
@@ -214,14 +189,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
   },
-  addNoteText: {
-    color: "#98A2B3",
+  addNoteText: { color: "#98A2B3", flex: 1 },
+  container: { paddingVertical: 16, rowGap: 24 },
+  descriptionText: {
+    color: palette.grey600,
     flex: 1,
+    flexWrap: "wrap",
+    wordWrap: "wrap",
   },
-  container: {
-    paddingVertical: Dimensions.padding,
-    rowGap: 24,
-  },
+  divider: { marginHorizontal: 16 },
+  dropDownContainer: { columnGap: 12, flexDirection: "row" },
   dropDownIcon: {
     height: Dimensions.margin * 1.25,
     resizeMode: "cover",
@@ -231,16 +208,27 @@ const styles = StyleSheet.create({
     borderColor: palette.grey200,
     borderRadius: 8,
     borderWidth: 1,
-    display: "flex",
     flex: 1,
-    flexDirection: "column",
     height: 250,
     minHeight: 50,
   },
+  emptyNotesContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+  },
+  emptyNotesImage: { height: 186, width: 172 },
   headerSection: {
     paddingHorizontal: Dimensions.padding,
     rowGap: 12,
   },
+  headingText: {
+    color: palette.grey900,
+    flex: 1,
+    flexWrap: "wrap",
+    wordWrap: "wrap",
+  },
+  itemText: { color: "black" },
   messageContainer: {
     backgroundColor: palette.grey50,
     borderBottomLeftRadius: 12,
@@ -251,12 +239,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
-  messageText: {
-    color: palette.grey900,
-  },
+  messageText: { color: palette.grey900 },
+  moreIcon: { height: 20, width: 20 },
+  noteItemContainer: { marginBottom: 20, rowGap: 8 },
   noteListContainer: {
-    borderWidth: 1,
-    paddingVertical: Dimensions.padding,
+    paddingHorizontal: 16,
     rowGap: 12,
   },
   richTextContainer: {
