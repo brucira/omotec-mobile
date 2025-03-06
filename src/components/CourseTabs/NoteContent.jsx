@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { Divider, Text } from "react-native-paper";
 
-import { RESIZE_MODE } from "../../styles/constStyle";
+import { DIRECTION, JUSTIFY, RESIZE_MODE, SIZE } from "../../styles/constStyle";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import {
@@ -16,6 +16,12 @@ import {
 import CustomButton from "../CustomButton";
 import Editor from "../dom-components/hello-dom";
 import DropDownRightIcon from "../DropDownRightIcon";
+
+const SIZE_16 = Dimensions.margin;
+const SIZE_12 = SIZE_16 * 0.75;
+const SIZE_14 = SIZE_16 * 0.875;
+const SIZE_20 = SIZE_16 * 1.25;
+const SIZE_24 = SIZE_16 * 1.5;
 
 const NoteItem = ({ item }) => (
   <View style={styles.noteItemContainer}>
@@ -44,6 +50,24 @@ const NoteItem = ({ item }) => (
   </View>
 );
 
+const DropdownSelector = ({ data, value, setValue, placeholder }) => (
+  <Dropdown
+    search
+    data={data}
+    itemTextStyle={styles.itemText}
+    labelField="label"
+    maxHeight={300}
+    renderRightIcon={DropDownRightIcon}
+    searchPlaceholder={placeholder}
+    selectedTextProps={{ ellipsizeMode: "tail", numberOfLines: 1 }}
+    selectedTextStyle={styles.selectedTextStyle}
+    style={styles.singleList}
+    value={value}
+    valueField="value"
+    onChange={(item) => setValue(item.value)}
+  />
+);
+
 const NoteContent = () => {
   const [lectureSelect, setLectureSelect] = useState("all");
   const [sortBy, setSortBy] = useState("recent");
@@ -70,40 +94,17 @@ const NoteContent = () => {
     <View style={styles.container}>
       <View style={styles.headerSection}>
         <View style={styles.dropDownContainer}>
-          <Dropdown
-            search
+          <DropdownSelector
             data={LECTURE_SELECT}
-            itemTextStyle={styles.itemText}
-            labelField="label"
-            maxHeight={300}
-            renderRightIcon={DropDownRightIcon}
-            searchPlaceholder="Search..."
-            selectedTextProps={{ ellipsizeMode: "tail", numberOfLines: 1 }}
-            selectedTextStyle={styles.selectedTextStyle}
-            style={styles.singleList}
+            placeholder="Search..."
+            setValue={setLectureSelect}
             value={lectureSelect}
-            valueField="value"
-            onChange={(item) => {
-              setLectureSelect(item.value);
-            }}
           />
-
-          <Dropdown
-            search
+          <DropdownSelector
             data={SORT_SELECT}
-            itemTextStyle={styles.itemText}
-            labelField="label"
-            maxHeight={300}
-            renderRightIcon={DropDownRightIcon}
-            searchPlaceholder="Sort By"
-            selectedTextProps={{ ellipsizeMode: "tail", numberOfLines: 1 }}
-            selectedTextStyle={styles.selectedTextStyle}
-            style={styles.singleList}
+            placeholder="Sort By"
+            setValue={setSortBy}
             value={sortBy}
-            valueField="value"
-            onChange={(item) => {
-              setSortBy(item.value);
-            }}
           />
         </View>
         {!addingNote && (
@@ -122,7 +123,7 @@ const NoteContent = () => {
           </TouchableOpacity>
         )}
       </View>
-      {addingNote && (
+      {addingNote ? (
         <View style={styles.richTextContainer}>
           <View style={styles.editorContainer}>
             <Editor
@@ -132,21 +133,19 @@ const NoteContent = () => {
           </View>
           <View style={styles.richTextFooter}>
             <CustomButton
-              style={{ marginBottom: 10 }} // Additional styling if needed
+              style={{ marginBottom: 10 }}
               title="Save Note"
               onPress={saveNoteHandler}
             />
-
             <CustomButton
-              style={{ marginBottom: 10 }} // Additional styling if needed
+              style={{ marginBottom: 10 }}
               title="Back"
               variant="secondary"
               onPress={cancelNoteHandler}
             />
           </View>
         </View>
-      )}
-      {!addingNote && (
+      ) : (
         <>
           {!emptyNotes && <Divider style={styles.divider} />}
           <View style={styles.noteListContainer}>
@@ -174,15 +173,15 @@ export default NoteContent;
 
 const styles = StyleSheet.create({
   addNoteButton: {
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    alignItems: JUSTIFY.CENTER,
+    backgroundColor: CombinedDefaultTheme.colors.background,
     borderColor: palette.grey200,
-    borderRadius: 12,
+    borderRadius: SIZE_12,
     borderWidth: 1,
     columnGap: 8,
     elevation: 2,
-    flexDirection: "row",
-    paddingHorizontal: 12,
+    flexDirection: DIRECTION.ROW,
+    paddingHorizontal: SIZE_12,
     paddingVertical: 8,
     shadowColor: palette.grey900,
     shadowOffset: { height: 1, width: 0 },
@@ -190,19 +189,19 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   addNoteText: { color: "#98A2B3", flex: 1 },
-  container: { paddingVertical: 16, rowGap: 24 },
+  container: { paddingVertical: SIZE_16, rowGap: SIZE_24 },
   descriptionText: {
     color: palette.grey600,
     flex: 1,
     flexWrap: "wrap",
     wordWrap: "wrap",
   },
-  divider: { marginHorizontal: 16 },
-  dropDownContainer: { columnGap: 12, flexDirection: "row" },
+  divider: { marginHorizontal: SIZE_16 },
+  dropDownContainer: { columnGap: SIZE_12, flexDirection: DIRECTION.ROW },
   dropDownIcon: {
-    height: Dimensions.margin * 1.25,
-    resizeMode: "cover",
-    width: Dimensions.margin * 1.25,
+    height: SIZE_20,
+    resizeMode: RESIZE_MODE.COVER,
+    width: SIZE_20,
   },
   editorContainer: {
     borderColor: palette.grey200,
@@ -213,14 +212,14 @@ const styles = StyleSheet.create({
     minHeight: 50,
   },
   emptyNotesContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
+    alignItems: JUSTIFY.CENTER,
+    justifyContent: JUSTIFY.CENTER,
+    width: SIZE.FULL,
   },
   emptyNotesImage: { height: 186, width: 172 },
   headerSection: {
     paddingHorizontal: Dimensions.padding,
-    rowGap: 12,
+    rowGap: SIZE_12,
   },
   headingText: {
     color: palette.grey900,
@@ -228,71 +227,71 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     wordWrap: "wrap",
   },
-  itemText: { color: "black" },
+  itemText: { color: palette.transparent },
   messageContainer: {
     backgroundColor: palette.grey50,
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
+    borderBottomLeftRadius: SIZE_12,
+    borderBottomRightRadius: SIZE_12,
     borderColor: palette.grey50,
-    borderTopRightRadius: 12,
+    borderTopRightRadius: SIZE_12,
     borderWidth: 1,
-    paddingHorizontal: 12,
+    paddingHorizontal: SIZE_12,
     paddingVertical: 10,
   },
   messageText: { color: palette.grey900 },
-  moreIcon: { height: 20, width: 20 },
-  noteItemContainer: { marginBottom: 20, rowGap: 8 },
+  moreIcon: { height: SIZE_20, width: SIZE_20 },
+  noteItemContainer: { marginBottom: SIZE_20, rowGap: 8 },
   noteListContainer: {
-    paddingHorizontal: 16,
-    rowGap: 12,
+    paddingHorizontal: SIZE_16,
+    rowGap: SIZE_12,
   },
   richTextContainer: {
     flex: 1,
-    marginHorizontal: 16,
-    rowGap: 20,
+    marginHorizontal: SIZE_16,
+    rowGap: SIZE_20,
   },
   richTextFooter: {
-    columnGap: 12,
-    flexDirection: "row",
+    columnGap: SIZE_12,
+    flexDirection: DIRECTION.ROW,
   },
   seconds: {
     backgroundColor: CombinedDefaultTheme.colors.primary,
-    borderRadius: 40,
-    color: "white",
+    borderRadius: SIZE_20 * 2,
+    color: CombinedDefaultTheme.colors.background,
     paddingHorizontal: 8,
     paddingVertical: 3,
   },
   selectedTextStyle: {
     color: palette.grey900,
     fontFamily: "Inter",
-    fontSize: 14,
+    fontSize: SIZE_14,
     fontWeight: "400",
     letterSpacing: 0,
-    lineHeight: 20,
+    lineHeight: SIZE_20,
   },
   singleList: {
     backgroundColor: "#FFFFFF",
     borderColor: palette.grey200,
-    borderRadius: (Dimensions.margin * 3) / 4,
+    borderRadius: SIZE_12,
     borderWidth: 1,
     elevation: 2,
     flex: 1,
-    height: 40,
-    padding: (Dimensions.margin * 3) / 4,
+    height: SIZE_20 * 2,
+    padding: SIZE_12,
     shadowColor: palette.grey900,
     shadowOffset: { height: 1, width: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
   },
   timeLine: {
-    alignItems: "center",
-    columnGap: 12,
+    alignItems: JUSTIFY.CENTER,
+    columnGap: SIZE_12,
     flex: 1,
-    flexDirection: "row",
+    flexDirection: DIRECTION.ROW,
   },
   timelineContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    alignItems: JUSTIFY.CENTER,
+    flexDirection: DIRECTION.ROW,
+    justifyContent: JUSTIFY.SPACE_BETWEEN,
   },
 });
