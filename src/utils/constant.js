@@ -1509,3 +1509,21 @@ export const NOTE_ITEM = [
 ];
 
 export const DOWNLOAD_URL = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
+
+export const STAR_LIST = [
+  { color: "#0064D6", no: 5, parcentage: 90 },
+  { color: "#039855", no: 4, parcentage: 70 },
+  { color: "#FDB022", no: 3, parcentage: 50 },
+  { color: "#DC6803", no: 2, parcentage: 30 },
+  { color: "#D92D20", no: 1, parcentage: 10 },
+];
+
+export const REVIEW_LIST = [
+  { label: "All Reviews", value: "all" },
+  { label: "Most Recent", value: "recent" },
+  { label: "Oldest First", value: "oldest" },
+  { label: "Highest Rated", value: "highest" },
+  { label: "Lowest Rated", value: "lowest" },
+  { label: "With Comments", value: "comments" },
+  { label: "Without Comments", value: "no_comments" },
+];

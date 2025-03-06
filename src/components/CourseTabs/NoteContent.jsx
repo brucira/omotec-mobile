@@ -1,7 +1,6 @@
 import { Image } from "expo-image";
 import React, { useMemo, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
 import { Divider, Text } from "react-native-paper";
 
 import { DIRECTION, JUSTIFY, RESIZE_MODE, SIZE } from "../../styles/constStyle";
@@ -15,11 +14,10 @@ import {
 } from "../../utils/constant";
 import CustomButton from "../CustomButton";
 import Editor from "../dom-components/hello-dom";
-import DropDownRightIcon from "../DropDownRightIcon";
+import DropdownSelector from "../DropdownSelector";
 
 const SIZE_16 = Dimensions.margin;
 const SIZE_12 = SIZE_16 * 0.75;
-const SIZE_14 = SIZE_16 * 0.875;
 const SIZE_20 = SIZE_16 * 1.25;
 const SIZE_24 = SIZE_16 * 1.5;
 
@@ -48,24 +46,6 @@ const NoteItem = ({ item }) => (
       </Text>
     </View>
   </View>
-);
-
-const DropdownSelector = ({ data, value, setValue, placeholder }) => (
-  <Dropdown
-    search
-    data={data}
-    itemTextStyle={styles.itemText}
-    labelField="label"
-    maxHeight={300}
-    renderRightIcon={DropDownRightIcon}
-    searchPlaceholder={placeholder}
-    selectedTextProps={{ ellipsizeMode: "tail", numberOfLines: 1 }}
-    selectedTextStyle={styles.selectedTextStyle}
-    style={styles.singleList}
-    value={value}
-    valueField="value"
-    onChange={(item) => setValue(item.value)}
-  />
 );
 
 const NoteContent = () => {
@@ -227,7 +207,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     wordWrap: "wrap",
   },
-  itemText: { color: palette.transparent },
   messageContainer: {
     backgroundColor: palette.grey50,
     borderBottomLeftRadius: SIZE_12,
@@ -260,28 +239,6 @@ const styles = StyleSheet.create({
     color: CombinedDefaultTheme.colors.background,
     paddingHorizontal: 8,
     paddingVertical: 3,
-  },
-  selectedTextStyle: {
-    color: palette.grey900,
-    fontFamily: "Inter",
-    fontSize: SIZE_14,
-    fontWeight: "400",
-    letterSpacing: 0,
-    lineHeight: SIZE_20,
-  },
-  singleList: {
-    backgroundColor: "#FFFFFF",
-    borderColor: palette.grey200,
-    borderRadius: SIZE_12,
-    borderWidth: 1,
-    elevation: 2,
-    flex: 1,
-    height: SIZE_20 * 2,
-    padding: SIZE_12,
-    shadowColor: palette.grey900,
-    shadowOffset: { height: 1, width: 0 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
   },
   timeLine: {
     alignItems: JUSTIFY.CENTER,
