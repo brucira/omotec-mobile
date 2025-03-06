@@ -151,7 +151,7 @@ export default ListAccordion;
 
 const styles = StyleSheet.create({
   accordionDescriptionStyle: {
-    color: "#667085",
+    color: palette.grey500,
     fontFamily: "Inter",
     fontSize: 12,
     fontWeight: 400,

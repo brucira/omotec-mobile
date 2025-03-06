@@ -192,14 +192,14 @@ const styles = StyleSheet.create({
   buttonStyle: {
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
+    borderColor: palette.grey200,
     borderRadius: 12,
     borderWidth: 1,
     elevation: 2, // For Android
     flex: 1,
     height: 40,
     justifyContent: "center",
-    shadowColor: "#EAECF0",
+    shadowColor: palette.grey200,
     shadowOffset: { height: 2, width: 0 },
     shadowOpacity: 1,
     shadowRadius: 0,
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
+    borderColor: palette.grey200,
     borderRadius: 8,
     borderWidth: 1,
     color: palette.grey900,

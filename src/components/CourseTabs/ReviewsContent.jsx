@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   singleList: {
     backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
+    borderColor: palette.grey200,
     borderRadius: 12,
     borderWidth: 1,
     elevation: 2,

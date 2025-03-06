@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
   addNoteButton: {
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
+    borderColor: palette.grey200,
     borderRadius: 12,
     borderWidth: 1,
     columnGap: 8,
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     width: Dimensions.margin * 1.25,
   },
   editorContainer: {
-    borderColor: "#EAECF0",
+    borderColor: palette.grey200,
     borderRadius: 8,
     borderWidth: 1,
     display: "flex",
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
   },
   singleList: {
     backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
+    borderColor: palette.grey200,
     borderRadius: (Dimensions.margin * 3) / 4,
     borderWidth: 1,
     elevation: 2,

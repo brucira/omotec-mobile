@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Divider, Text } from "react-native-paper";
 
+import palette from "../../styles/palette";
 import { Dimensions } from "../../utils/constant";
 
 const DescriptionItem = ({ title = "", description = "", iconURL = null }) => {
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   desItemContainer: {
-    borderColor: "#EAECF0",
+    borderColor: palette.grey200,
     borderRadius: 8,
     borderWidth: 1,
     padding: 12,

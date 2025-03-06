@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
   },
   secondaryButton: {
     backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
-    shadowColor: "#EAECF0",
+    borderColor: palette.grey200,
+    shadowColor: palette.grey200,
   },
   secondaryText: {
     color: palette.grey900,
