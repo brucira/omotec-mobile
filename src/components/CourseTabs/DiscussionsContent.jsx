@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 
-import { JUSTIFY } from "../../styles/constStyle";
+import { DIRECTION, JUSTIFY } from "../../styles/constStyle";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions } from "../../utils/constant";
@@ -37,9 +37,9 @@ const styles = StyleSheet.create({
   },
   icon: { height: SIZE_20, width: SIZE_20 },
   linkContainer: {
-    alignItems: JUSTIFY.CENTER,
+    alignItems: JUSTIFY.FLEX_START,
     columnGap: 8,
-    flexDirection: JUSTIFY.ROW,
+    flexDirection: DIRECTION.ROW,
     paddingVertical: 10,
   },
   linkTextStyle: {
