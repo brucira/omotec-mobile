@@ -20,11 +20,11 @@ import { ACCORDIOM_ITEM_TYPE, Dimensions } from "../utils/constant";
 import OverView from "./CourseHeader/OverView";
 import VideoPlayer from "./VideoPlayer";
 
-const SIZE_8 = Dimensions.margin * 0.5;
-const SIZE_12 = Dimensions.margin * 0.75;
 const SIZE_16 = Dimensions.margin;
-const SIZE_20 = Dimensions.margin * 1.25;
-const SIZE_24 = Dimensions.margin * 1.5;
+const SIZE_8 = SIZE_16 * 0.5;
+const SIZE_12 = SIZE_16 * 0.75;
+const SIZE_20 = SIZE_16 * 1.25;
+const SIZE_24 = SIZE_16 * 1.5;
 
 const CourseHeaderContent = ({ type }) => {
   const [urlCopy, setUrlCopy] = React.useState(false);
@@ -63,13 +63,7 @@ const CourseHeaderContent = ({ type }) => {
   if (type === ACCORDIOM_ITEM_TYPE.OVERVIEW) {
     return <OverView />;
   } else if (type === ACCORDIOM_ITEM_TYPE.VIDEO) {
-    return (
-      <VideoPlayer
-        containerStyle={styles.playerContainerStyle}
-        playerStyle={styles.playerStyle}
-        url={url}
-      />
-    );
+    return <VideoPlayer url={url} />;
   } else if (type === ACCORDIOM_ITEM_TYPE.READING) {
     return (
       <View style={styles.pdfContainer}>
@@ -162,12 +156,6 @@ const styles = StyleSheet.create({
     justifyContent: JUSTIFY.FLEX_START,
     marginBottom: SIZE_20,
     marginTop: SIZE_24,
-  },
-  playerContainerStyle: {
-    marginBottom: SIZE_20,
-  },
-  playerStyle: {
-    height: SIZE_16 * 13.875,
   },
   viewLinkContainer: {
     alignItems: JUSTIFY.CENTER,

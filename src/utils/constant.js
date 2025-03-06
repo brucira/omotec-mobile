@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import dayjs from "dayjs";
 import { Dimensions as NativeDimensions } from "react-native";
 
 import palette from "../styles/palette";
