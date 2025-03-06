@@ -10,15 +10,15 @@ import {
   View,
 } from "react-native";
 import { Text } from "react-native-paper";
-import Pdf from "react-native-pdf";
 
 import AssignmentScreen from "../screens/Course/AssignmentScreen";
 import TestScreen from "../screens/Course/TestScreen";
-import { DIRECTION, JUSTIFY, SIZE } from "../styles/constStyle";
+import { DIRECTION, JUSTIFY } from "../styles/constStyle";
 import palette from "../styles/palette";
 import { ACCORDIOM_ITEM_TYPE, Dimensions } from "../utils/constant";
 import OverView from "./CourseHeader/OverView";
-import VideoPlayer from "./VideoPlayer";
+import PDFViewer from "./CourseHeader/PDFViewer";
+import VideoPlayer from "./CourseHeader/VideoPlayer";
 
 const SIZE_16 = Dimensions.margin;
 const SIZE_8 = SIZE_16 * 0.5;
@@ -35,11 +35,6 @@ const CourseHeaderContent = ({ type }) => {
 
   const url =
     "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
-
-  const source = {
-    cache: true,
-    uri: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-  };
 
   const copyHandler = async (url) => {
     Clipboard.setString(url);
@@ -65,15 +60,7 @@ const CourseHeaderContent = ({ type }) => {
   } else if (type === ACCORDIOM_ITEM_TYPE.VIDEO) {
     return <VideoPlayer url={url} />;
   } else if (type === ACCORDIOM_ITEM_TYPE.READING) {
-    return (
-      <View style={styles.pdfContainer}>
-        <Pdf
-          source={source}
-          style={styles.pdf}
-          onError={(error) => console.log(error)}
-        />
-      </View>
-    );
+    return <PDFViewer />;
   } else if (type === ACCORDIOM_ITEM_TYPE.WEBLINK) {
     return (
       <View style={styles.webLinkContainer}>
@@ -146,16 +133,6 @@ const styles = StyleSheet.create({
   menuImage: {
     height: SIZE_20,
     width: SIZE_20,
-  },
-  pdf: {
-    height: SIZE_16 * 12.5,
-    width: SIZE.FULL,
-  },
-  pdfContainer: {
-    alignItems: JUSTIFY.CENTER,
-    justifyContent: JUSTIFY.FLEX_START,
-    marginBottom: SIZE_20,
-    marginTop: SIZE_24,
   },
   viewLinkContainer: {
     alignItems: JUSTIFY.CENTER,
