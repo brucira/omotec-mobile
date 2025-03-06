@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Text } from "react-native-paper";
 
+import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
 
 export default function FeedbackForm({ onSubmit }) {
@@ -310,7 +311,7 @@ const styles = StyleSheet.create({
   submitButton: {
     backgroundColor: CombinedDefaultTheme.colors.primary,
     borderColor: CombinedDefaultTheme.colors.primary,
-    shadowColor: "#60179C",
+    shadowColor: palette.purple600,
   },
   subtitle: {
     color: "#101828",

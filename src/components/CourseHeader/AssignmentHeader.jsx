@@ -3,20 +3,20 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { DIRECTION, JUSTIFY } from "../../styles/constStyle";
 import palette from "../../styles/palette";
+import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions } from "../../utils/constant";
 import AssignmentModal from "../AssignmentModal";
 import CourseTabBack from "../CourseTabBack";
-import { CombinedDefaultTheme } from "../../styles/theme";
 
 const SIZE_16 = Dimensions.margin;
 const SIZE_8 = SIZE_16 / 2;
 const SIZE_12 = SIZE_16 * 0.75;
-const SIZE_14 = SIZE_16 * 0.875;
 const SIZE_20 = SIZE_16 * 1.25;
 const SIZE_24 = SIZE_16 * 1.5;
 
 const AssignmentHeader = () => {
   const [showModal, setShowModal] = React.useState(false);
+
   const submitHandler = () => {
     setShowModal(true);
   };
@@ -96,27 +96,27 @@ const styles = StyleSheet.create({
     color: CombinedDefaultTheme.colors.primary,
   },
   questionText: {
-    color: "#101828",
+    color: palette.grey900,
     flex: 1,
   },
   ratingButtonStyle: {
-    alignItems: "center",
+    alignItems: JUSTIFY.CENTER,
     backgroundColor: CombinedDefaultTheme.colors.primary,
     borderColor: CombinedDefaultTheme.colors.primary,
     borderRadius: 14,
-    columnGap: 8,
+    columnGap: SIZE_8,
     elevation: 4,
     height: 40,
-    justifyContent: "center",
-    paddingHorizontal: 24,
+    justifyContent: JUSTIFY.CENTER,
+    paddingHorizontal: SIZE_24,
     paddingVertical: 10,
-    shadowColor: "#60179C",
+    shadowColor: palette.purple600,
     shadowOffset: { height: 4, width: 0 },
     shadowOpacity: 1,
     shadowRadius: 0,
   },
   submitText: {
-    color: "#FFFFFF",
-    textAlign: "center",
+    color: CombinedDefaultTheme.colors.background,
+    textAlign: JUSTIFY.CENTER,
   },
 });

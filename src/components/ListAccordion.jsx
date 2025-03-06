@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     width: 16,
   },
   itemDescriptionResourcesText: {
-    color: "#60179C",
+    color: palette.purple600,
     fontWeight: 500,
   },
   itemDescriptionText: {
