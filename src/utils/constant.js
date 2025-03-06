@@ -1438,7 +1438,7 @@ export const weekEvents = [
 export const RouteNames = {
   Calender: "Calender",
   Course: "CourseDetail",
-  CoursePreview:"CoursePreviewScreen",
+  CoursePreview: "CoursePreviewScreen",
   Home: "Home",
   Learning: "My Learning",
   Notifications: "Notifications",
@@ -1450,7 +1450,7 @@ export const RouteNames = {
 
 export const ACCORDIOM_ITEM_ICON = {
   assignment: "ASSIGNMENT",
-  reading : "READING", 
+  reading: "READING",
   test: "TEST",
   text: "TEXT",
   video: "VIDEO",
@@ -1460,13 +1460,14 @@ export const ACCORDIOM_ITEM_ICON = {
 export const ACCORDIOM_ITEM_TYPE = {
   ASSIGNMENT: "ASSIGNMENT",
   OVERVIEW: "OVERVIEW",
-  READING:"READING",
+  READING: "READING",
   TEST: "TEST",
   VIDEO: "VIDEO",
   WEBLINK: "WEBLINK",
 };
 
-export const TEMP_VIDEO_URL = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+export const TEMP_VIDEO_URL =
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
 export const LECTURE_SELECT = [
   { label: "All Lecture", value: "all" },
@@ -1475,11 +1476,11 @@ export const LECTURE_SELECT = [
 ];
 
 export const SORT_SELECT = [
-    { label: "Sort By Most Recent", value: "recent" },
-    { label: "Oldest", value: "oldest" },
-    { label: "Name (A-Z)", value: "name_asc" },
-    { label: "Name (Z-A)", value: "name_desc" },
-]
+  { label: "Sort By Most Recent", value: "recent" },
+  { label: "Oldest", value: "oldest" },
+  { label: "Name (A-Z)", value: "name_asc" },
+  { label: "Name (Z-A)", value: "name_desc" },
+];
 
 export const NOTE_ITEM = [
   {
@@ -1508,7 +1509,8 @@ export const NOTE_ITEM = [
   },
 ];
 
-export const DOWNLOAD_URL = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
+export const DOWNLOAD_URL =
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
 
 export const STAR_LIST = [
   { color: "#0064D6", no: 5, parcentage: 90 },
@@ -1526,4 +1528,14 @@ export const REVIEW_LIST = [
   { label: "Lowest Rated", value: "lowest" },
   { label: "With Comments", value: "comments" },
   { label: "Without Comments", value: "no_comments" },
+];
+
+export const DOWNLOAD_LIST = [
+  { name: "Session1", url: DOWNLOAD_URL },
+  {
+    name: "Session II video (mp4)",
+    url: DOWNLOAD_URL,
+  },
+  { name: "Session III video (mp4)", url: DOWNLOAD_URL },
+  { name: "Session IV video (mp4)", url: DOWNLOAD_URL },
 ];

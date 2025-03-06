@@ -14,7 +14,7 @@ import { Text } from "react-native-paper";
 import useModal from "../../hooks/useModal";
 import { DIRECTION, JUSTIFY } from "../../styles/constStyle";
 import { CombinedDefaultTheme } from "../../styles/theme";
-import { Dimensions, DOWNLOAD_URL } from "../../utils/constant";
+import { Dimensions, DOWNLOAD_LIST } from "../../utils/constant";
 import BottomDrawer from "../BottomDrawer";
 import FeedbackForm from "../FeedbackForm";
 
@@ -24,16 +24,6 @@ const SIZE_20 = SIZE_16 * 1.25;
 export const RecordingsContent = () => {
   const { modalRef, openModal, closeModal } = useModal();
   const imageurl = require("../../assets/icons/download.png");
-
-  const arrayList = [
-    { name: "Session1", url: DOWNLOAD_URL },
-    {
-      name: "Session II video (mp4)",
-      url: DOWNLOAD_URL,
-    },
-    { name: "Session III video (mp4)", url: DOWNLOAD_URL },
-    { name: "Session IV video (mp4)", url: DOWNLOAD_URL },
-  ];
 
   const downloadFile = async (url, fileName) => {
     try {
@@ -74,7 +64,7 @@ export const RecordingsContent = () => {
 
   return (
     <View style={styles.container}>
-      {arrayList.map((video, index) => (
+      {DOWNLOAD_LIST.map((video, index) => (
         <TouchableOpacity
           key={index}
           style={styles.videoItem}
