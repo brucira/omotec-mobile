@@ -7,24 +7,24 @@ import { CombinedDefaultTheme } from "../styles/theme";
 import { ACCORDIOM_ITEM_TYPE } from "../utils/constant";
 
 const ItemDescription = ({ text = "", showResource = false, icon }) => {
-  const folderClosed = require("../../src/assets/icons/folder_closed.png");
+  const folderClosed = require("../assets/icons/folder_closed.png");
 
   const getIconImage = useCallback((icon) => {
     switch (icon) {
       case "WEBLINK":
-        return require("../../src/assets/icons/item_globe.png");
+        return require("../assets/icons/item_globe.png");
       case "VIDEO":
-        return require("../../src/assets/icons/item_video.png");
+        return require("../assets/icons/item_video.png");
       case "TEXT":
-        return require("../../src/assets/icons/item_text.png");
+        return require("../assets/icons/item_text.png");
       case "TEST":
-        return require("../../src/assets/icons/pencil.png");
+        return require("../assets/icons/pencil.png");
       case "ASSIGNMENT":
-        return require("../../src/assets/icons/file_edit.png");
+        return require("../assets/icons/file_edit.png");
       case "READING":
-        return require("../../src/assets/icons/book_1.png");
+        return require("../assets/icons/book_1.png");
       default:
-        return require("../../src/assets/icons/item_text.png");
+        return require("../assets/icons/item_text.png");
     }
   }, []);
 
@@ -38,7 +38,7 @@ const ItemDescription = ({ text = "", showResource = false, icon }) => {
           />
           <Text style={styles.itemDescriptionText}>{text}</Text>
         </View>
-        {!!showResource && (
+        {showResource && (
           <View
             style={[
               styles.itemDescription,

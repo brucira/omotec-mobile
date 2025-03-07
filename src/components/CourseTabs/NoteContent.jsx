@@ -55,12 +55,21 @@ const NoteContent = () => {
   const plusIcon = require("../../assets/icons/plus.png");
   const [editorState, setEditorState] = useState(null);
   const [plainText, setPlainText] = useState("");
+  const [noteList, setNoteList] = useState(NOTE_ITEM);
 
   const addNoteHandler = () => {
     setAddingNote(true);
   };
 
   const saveNoteHandler = () => {
+    const messageObj = {
+      des: "What is Employee Training?",
+      heading: "Section 1",
+      message: plainText,
+      time: "00:02",
+    };
+    setNoteList([...noteList, messageObj]);
+    setPlainText("");
     setAddingNote(false);
   };
 
@@ -68,7 +77,7 @@ const NoteContent = () => {
     setAddingNote(false);
   };
 
-  const emptyNotes = useMemo(() => NOTE_ITEM?.length === 0, []);
+  const emptyNotes = useMemo(() => noteList?.length === 0, []);
 
   return (
     <View style={styles.container}>
@@ -138,7 +147,7 @@ const NoteContent = () => {
                 />
               </View>
             ) : (
-              NOTE_ITEM?.map((item, index) => (
+              noteList?.map((item, index) => (
                 <NoteItem key={index} item={item} />
               ))
             )}
