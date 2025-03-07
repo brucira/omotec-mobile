@@ -123,7 +123,7 @@ const Tabs = () => (
       />
     )}
     id="tabs"
-    initialRouteName={RouteNames.Learning}
+    initialRouteName={RouteNames.Home}
   >
     <Tab.Screen
       options={{
