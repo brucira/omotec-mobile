@@ -1,57 +1,51 @@
-import { Image } from "expo-image";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
 import { ProgressBar, Text } from "react-native-paper";
 
-import { Dimensions } from "../../utils/constant";
+import { DIRECTION, JUSTIFY, RESIZE_MODE } from "../../styles/constStyle";
+import palette from "../../styles/palette";
+import { CombinedDefaultTheme } from "../../styles/theme";
+import { Dimensions, REVIEW_LIST, STAR_LIST } from "../../utils/constant";
 import CommentView from "../CommentView";
+import DropdownSelector from "../DropdownSelector";
 
-const startArray = [
-  { color: "#0064D6", no: 5, parcentage: 90 },
-  { color: "#039855", no: 4, parcentage: 70 },
-  { color: "#FDB022", no: 3, parcentage: 50 },
-  { color: "#DC6803", no: 2, parcentage: 30 },
-  { color: "#D92D20", no: 1, parcentage: 10 },
-];
-
-const reviewArray = [{ label: "All Review", value: "all" }];
+const SIZE_16 = Dimensions.margin;
+const SIZE_20 = SIZE_16 * 1.25;
+const SIZE_24 = SIZE_16 * 1.5;
 
 const RatingRow = ({ color = "#0064D6", star }) => {
   const progress = star?.parcentage / 100;
-
   return (
     <View style={styles.ratingRow}>
       <View style={styles.ratingLabel}>
-        <Text style={{ color: "#475467" }} variant="bodySmall">
+        <Text style={{ color: palette.grey600 }} variant="bodySmall">
           {star?.no}-star
         </Text>
-        <Text style={{ color: "#475467" }} variant="bodySmall">
+        <Text style={{ color: palette.grey900 }} variant="bodySmall">
           {star?.parcentage}%
         </Text>
       </View>
       <ProgressBar
         color={star?.color}
         progress={progress}
-        style={{ borderRadius: 10, height: 8 }}
+        style={styles.progressBar}
       />
     </View>
   );
 };
 
-const DropDownRightIcon = () => (
-  <Image
-    source={require("../../assets/icons/chevron_down.png")}
-    style={styles.dropDownIcon}
-  />
-);
-
 const ReviewsContent = () => {
   const [reviewSelect, setReviewSelect] = React.useState("all");
 
   const randerStars = () => {
-    return startArray.map((item, index) => (
+    return STAR_LIST.map((item, index) => (
       <RatingRow key={index} percentage={90} star={item} />
+    ));
+  };
+
+  const randerComment = () => {
+    return [1, 2, 3].map((item, index) => (
+      <CommentView key={index} item={item}></CommentView>
     ));
   };
 
@@ -76,32 +70,19 @@ const ReviewsContent = () => {
       </View>
       <View style={styles.bottomContainer}>
         <View style={styles.dropDownContainer}>
-          <Text style={styles.ratingCount} variant="">
+          <Text style={styles.ratingCount} variant="titleLarge">
             56 Reviews
           </Text>
           <View style={{ flex: 1 }}></View>
-          <Dropdown
-            data={reviewArray}
-            itemTextStyle={{ color: "black" }}
-            labelField="label"
-            maxHeight={300}
-            renderRightIcon={DropDownRightIcon}
+          <DropdownSelector
+            data={REVIEW_LIST}
+            search={false}
             searchPlaceholder="Search..."
-            selectedTextProps={{ ellipsizeMode: "tail", numberOfLines: 1 }}
-            selectedTextStyle={styles.selectedTextStyle}
-            style={styles.singleList}
+            setValue={setReviewSelect}
             value={reviewSelect}
-            valueField="value"
-            onChange={(item) => {
-              setReviewSelect(item.value);
-            }}
-          />
+          ></DropdownSelector>
         </View>
-        <View style={styles.commentContainer}>
-          {[1, 2, 3].map((item, index) => (
-            <CommentView key={index} item={item}></CommentView>
-          ))}
-        </View>
+        <View style={styles.commentContainer}>{randerComment()}</View>
       </View>
     </View>
   );
@@ -111,48 +92,44 @@ export default ReviewsContent;
 
 const styles = StyleSheet.create({
   bottomContainer: {
-    rowGap: 24,
+    rowGap: SIZE_24,
   },
   commentContainer: {
-    rowGap: 24,
+    rowGap: SIZE_24,
   },
   containers: {
-    paddingHorizontal: 16,
-    paddingVertical: 20,
+    paddingHorizontal: SIZE_16,
+    paddingVertical: SIZE_20,
     rowGap: 32,
   },
   dropDownContainer: {
-    alignItems: "center",
+    alignItems: JUSTIFY.CENTER,
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  dropDownIcon: {
-    height: Dimensions.margin * 1.25,
-    resizeMode: "cover",
-    width: Dimensions.margin * 1.25,
+    flexDirection: DIRECTION.ROW,
+    justifyContent: JUSTIFY.SPACE_BETWEEN,
   },
   excellentText: {
-    color: "#852DCD",
-    textAlign: "center",
+    color: CombinedDefaultTheme.colors.primary,
+    textAlign: JUSTIFY.CENTER,
   },
+  progressBar: { borderRadius: 10, height: 8 },
   rating: {
-    color: "#852DCD",
+    color: CombinedDefaultTheme.colors.primary,
     fontFamily: "Inter",
     fontSize: 28,
     fontWeight: "700",
     letterSpacing: 0,
     lineHeight: 36,
-    textAlign: "center",
+    textAlign: JUSTIFY.CENTER,
   },
   ratingBox: {
-    backgroundColor: "#F6EBFF",
-    borderRadius: 8,
-    padding: 16,
+    backgroundColor: palette.primaryStudent50,
+    borderRadius: SIZE_16 / 2,
+    padding: SIZE_16,
     rowGap: 4,
   },
   ratingCount: {
-    color: "#101828",
+    color: palette.grey900,
     fontFamily: "Inter",
     fontSize: 18,
     fontWeight: "600",
@@ -162,47 +139,24 @@ const styles = StyleSheet.create({
   },
   ratingLabel: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: DIRECTION.ROW,
+    justifyContent: JUSTIFY.SPACE_BETWEEN,
   },
   ratingRow: {
     rowGap: 5,
   },
   ratingText: {
-    color: "#475467",
-    textAlign: "center",
-  },
-  selectedTextStyle: {
-    color: "#101828",
-    flex: 1,
-    fontFamily: "Inter",
-    fontSize: 14,
-    fontWeight: "400",
-    letterSpacing: 0,
-    lineHeight: 20,
-  },
-  singleList: {
-    backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
-    borderRadius: 12,
-    borderWidth: 1,
-    elevation: 2,
-    flex: 1,
-    height: 40,
-    padding: (Dimensions.margin * 3) / 4,
-    shadowColor: "#101828",
-    shadowOffset: { height: 1, width: 0 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    color: palette.grey600,
+    textAlign: JUSTIFY.CENTER,
   },
   starBox: {
     flex: 1,
-    rowGap: 16,
+    rowGap: SIZE_16,
   },
   topContainer: {
-    columnGap: 24,
+    columnGap: SIZE_24,
     flex: 1,
-    flexDirection: "row",
+    flexDirection: DIRECTION.ROW,
     height: "auto",
   },
 });

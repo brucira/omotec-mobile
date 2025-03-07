@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Menu } from "react-native-paper";
 
+import palette from "../styles/palette";
+import { CombinedDefaultTheme } from "../styles/theme";
+
 const CustomMenu = ({ anchor, children, menuStyle = {} }) => {
   const [visible, setVisible] = useState(false);
 
@@ -13,7 +16,7 @@ const CustomMenu = ({ anchor, children, menuStyle = {} }) => {
         <TouchableOpacity onPress={toggleMenu}>{anchor}</TouchableOpacity>
       }
       contentStyle={[styles.menuContainer, menuStyle]}
-      style={{ paddingRight: 4, paddingTop: 32 }}
+      style={styles.menuContent}
       visible={visible}
       onDismiss={toggleMenu}
     >
@@ -24,11 +27,12 @@ const CustomMenu = ({ anchor, children, menuStyle = {} }) => {
 
 const styles = StyleSheet.create({
   menuContainer: {
-    backgroundColor: "white",
-    borderColor: "#EAECF0",
+    backgroundColor: CombinedDefaultTheme.colors.background,
+    borderColor: palette.grey200,
     borderRadius: 8,
     width: 164,
   },
+  menuContent: { paddingRight: 4, paddingTop: 32 },
 });
 
 export default CustomMenu;

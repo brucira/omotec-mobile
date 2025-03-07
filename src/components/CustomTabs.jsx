@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     minWidth: "100%",
+    paddingRight: 24,
   },
   scrollView: {
     flexGrow: 0,

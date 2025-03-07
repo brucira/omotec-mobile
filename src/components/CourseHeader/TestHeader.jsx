@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
     color: palette.grey500,
   },
   buttonRowContainer: {
-    flex: 1,
     flexDirection: DIRECTION.ROW,
   },
   buttonText: {
@@ -183,14 +182,13 @@ const styles = StyleSheet.create({
   rowContainer: {
     alignItems: JUSTIFY.CENTER,
     columnGap: SIZE_12,
-    flex: 1,
     flexDirection: DIRECTION.ROW,
   },
   sectionContainer: {
     rowGap: SIZE_16,
   },
   testContainer: {
-    backgroundColor: "#F9FAFB",
+    backgroundColor: palette.grey50,
     paddingBottom: SIZE_20,
     paddingTop: SIZE_12,
     rowGap: SIZE_12,

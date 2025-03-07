@@ -90,7 +90,6 @@ export default function Editor({
           {/* <TreeViewPlugin /> */}
         </div>
       </LexicalComposer>
-      {/* </View> */}
     </View>
   );
 }

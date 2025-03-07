@@ -2,27 +2,29 @@ import React, { useCallback, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { List } from "react-native-paper";
 
+import palette from "../styles/palette";
+import { CombinedDefaultTheme } from "../styles/theme";
 import { ACCORDIOM_ITEM_TYPE } from "../utils/constant";
 
 const ItemDescription = ({ text = "", showResource = false, icon }) => {
-  const folderClosed = require("../../src/assets/icons/folder_closed.png");
+  const folderClosed = require("../assets/icons/folder_closed.png");
 
   const getIconImage = useCallback((icon) => {
     switch (icon) {
       case "WEBLINK":
-        return require("../../src/assets/icons/item_globe.png");
+        return require("../assets/icons/item_globe.png");
       case "VIDEO":
-        return require("../../src/assets/icons/item_video.png");
+        return require("../assets/icons/item_video.png");
       case "TEXT":
-        return require("../../src/assets/icons/item_text.png");
+        return require("../assets/icons/item_text.png");
       case "TEST":
-        return require("../../src/assets/icons/pencil.png");
+        return require("../assets/icons/pencil.png");
       case "ASSIGNMENT":
-        return require("../../src/assets/icons/file_edit.png");
+        return require("../assets/icons/file_edit.png");
       case "READING":
-        return require("../../src/assets/icons/book_1.png");
+        return require("../assets/icons/book_1.png");
       default:
-        return require("../../src/assets/icons/item_text.png");
+        return require("../assets/icons/item_text.png");
     }
   }, []);
 
@@ -36,7 +38,7 @@ const ItemDescription = ({ text = "", showResource = false, icon }) => {
           />
           <Text style={styles.itemDescriptionText}>{text}</Text>
         </View>
-        {!!showResource && (
+        {showResource && (
           <View
             style={[
               styles.itemDescription,
@@ -149,7 +151,7 @@ export default ListAccordion;
 
 const styles = StyleSheet.create({
   accordionDescriptionStyle: {
-    color: "#667085",
+    color: palette.grey500,
     fontFamily: "Inter",
     fontSize: 12,
     fontWeight: 400,
@@ -162,16 +164,16 @@ const styles = StyleSheet.create({
   },
   accordionSelectedItemsStyle: {
     backgroundColor: "#FDFAFF",
-    borderLeftColor: "#852DCD",
+    borderLeftColor: CombinedDefaultTheme.colors.primary,
     borderLeftWidth: 4,
     paddingLeft: 12,
   },
   accordionStyle: {
-    backgroundColor: "#F9FAFB",
+    backgroundColor: palette.grey50,
     marginTop: -8,
   },
   accordionTitleStyle: {
-    color: "#101828",
+    color: palette.grey900,
     fontFamily: "Inter",
     fontSize: 14,
     fontWeight: 600,
@@ -196,11 +198,11 @@ const styles = StyleSheet.create({
     width: 16,
   },
   itemDescriptionResourcesText: {
-    color: "#60179C",
+    color: palette.purple600,
     fontWeight: 500,
   },
   itemDescriptionText: {
-    color: "#475467",
+    color: palette.grey600,
     fontFamily: "Inter",
     fontSize: 12,
     fontWeight: 400,
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     width: 20,
   },
   itemTitleStyle: {
-    color: "#101828",
+    color: palette.grey900,
     fontFamily: "Inter",
     fontSize: 14,
     fontWeight: 500,

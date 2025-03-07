@@ -12,21 +12,18 @@ import {
 import { Text } from "react-native-paper";
 
 import useModal from "../../hooks/useModal";
+import { DIRECTION, JUSTIFY } from "../../styles/constStyle";
+import { CombinedDefaultTheme } from "../../styles/theme";
+import { Dimensions, DOWNLOAD_LIST } from "../../utils/constant";
 import BottomDrawer from "../BottomDrawer";
 import FeedbackForm from "../FeedbackForm";
+
+const SIZE_16 = Dimensions.margin;
+const SIZE_20 = SIZE_16 * 1.25;
 
 export const RecordingsContent = () => {
   const { modalRef, openModal, closeModal } = useModal();
   const imageurl = require("../../assets/icons/download.png");
-  const downloadURL =
-    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
-
-  const arrayList = [
-    { name: "Session1", url: downloadURL },
-    { name: "Session II video (mp4)", url: downloadURL },
-    { name: "Session III video (mp4)", url: downloadURL },
-    { name: "Session IV video (mp4)", url: downloadURL },
-  ];
 
   const downloadFile = async (url, fileName) => {
     try {
@@ -67,7 +64,7 @@ export const RecordingsContent = () => {
 
   return (
     <View style={styles.container}>
-      {arrayList.map((video, index) => (
+      {DOWNLOAD_LIST.map((video, index) => (
         <TouchableOpacity
           key={index}
           style={styles.videoItem}
@@ -90,19 +87,19 @@ export default RecordingsContent;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    rowGap: 20,
+    padding: SIZE_16,
+    rowGap: SIZE_20,
   },
   icon: {
-    height: 20,
-    width: 20,
+    height: SIZE_20,
+    width: SIZE_20,
   },
   videoItem: {
-    alignItems: "center",
+    alignItems: JUSTIFY.CENTER,
     columnGap: 8,
-    flexDirection: "row",
+    flexDirection: DIRECTION.ROW,
   },
   videoText: {
-    color: "#852DCD",
+    color: CombinedDefaultTheme.colors.primary,
   },
 });

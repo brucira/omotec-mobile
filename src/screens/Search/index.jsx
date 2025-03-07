@@ -267,11 +267,11 @@ const styles = StyleSheet.create({
   },
   popularSearches: {
     paddingLeft: Dimensions.padding,
-    paddingTop: Dimensions.padding * 1.25,
+    // paddingTop: Dimensions.padding * 1.25,
   },
   recentSearches: {
     paddingHorizontal: Dimensions.padding,
-    paddingTop: Dimensions.padding * 1.25,
+    paddingVertical: Dimensions.padding * 1.25,
   },
   searchBar: {
     backgroundColor: palette.grey25,

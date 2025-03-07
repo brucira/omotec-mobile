@@ -1,6 +1,6 @@
 import { useRoute } from "@react-navigation/native";
 import React, { useMemo, useState } from "react";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, View } from "react-native";
 import { Appbar, Button, Text } from "react-native-paper";
 
 import palette from "../../styles/palette";
@@ -279,9 +279,10 @@ const styles = StyleSheet.create({
   },
   tabContentContainerStyle: {
     columnGap: 12,
-    flex: 1,
-    flexDirection: "row",
+    // flex: 1,
+    // flexDirection: "row",
     flexGrow: 1,
+    paddingRight: 32,
   },
   tabIconImage: {
     color: palette.grey400,

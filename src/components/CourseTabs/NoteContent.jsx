@@ -1,87 +1,43 @@
 import { Image } from "expo-image";
 import React, { useMemo, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
 import { Divider, Text } from "react-native-paper";
 
-import { Dimensions } from "../../utils/constant";
+import { DIRECTION, JUSTIFY, RESIZE_MODE, SIZE } from "../../styles/constStyle";
+import palette from "../../styles/palette";
+import { CombinedDefaultTheme } from "../../styles/theme";
+import {
+  Dimensions,
+  LECTURE_SELECT,
+  NOTE_ITEM,
+  SORT_SELECT,
+} from "../../utils/constant";
 import CustomButton from "../CustomButton";
 import Editor from "../dom-components/hello-dom";
-import DropDownRightIcon from "../DropDownRightIcon";
+import DropdownSelector from "../DropdownSelector";
 
-export const lectureDropdownData = [
-  { label: "All Lecture", value: "all" },
-  { label: "Recorded", value: "recorded" },
-  { label: "Live", value: "live" },
-];
-
-export const sortDropdownData = [
-  { label: "Sort By Most Recent", value: "recent" },
-  { label: "Oldest", value: "oldest" },
-  { label: "Name (A-Z)", value: "name_asc" },
-  { label: "Name (Z-A)", value: "name_desc" },
-];
-
-const itemData = [
-  {
-    des: "What is Employee Training?",
-    heading: "Section 1",
-    message: "How?",
-    time: "00:02",
-  },
-  {
-    des: "Why is Training Important?",
-    heading: "Section 2",
-    message: "Why?",
-    time: "00:10",
-  },
-  {
-    des: "Types of Employee Training",
-    heading: "Section 3",
-    message: "What types? ",
-    time: "00:25",
-  },
-  {
-    des: "Best Practices for Training",
-    heading: "Section 4",
-    message: "How to improve?",
-    time: "00:40",
-  },
-];
+const SIZE_16 = Dimensions.margin;
+const SIZE_12 = SIZE_16 * 0.75;
+const SIZE_20 = SIZE_16 * 1.25;
+const SIZE_24 = SIZE_16 * 1.5;
 
 const NoteItem = ({ item }) => (
-  <View style={{ marginBottom: 20, rowGap: 8 }}>
+  <View style={styles.noteItemContainer}>
     <View style={styles.timelineContainer}>
       <View style={styles.timeLine}>
         <Text style={styles.seconds} variant="labelMedium">
           {item?.time}
         </Text>
-        <Text
-          style={{
-            color: "#101828",
-            flex: 1,
-            flexWrap: "wrap",
-            wordWrap: "wrap",
-          }}
-          variant="labelMedium"
-        >
+        <Text style={styles.headingText} variant="labelMedium">
           {item.heading}: &nbsp;
-          <Text
-            style={{
-              color: "#475467",
-              flex: 1,
-              flexWrap: "wrap",
-              wordWrap: "wrap",
-            }}
-            variant="bodySmall"
-          >
+          <Text style={styles.descriptionText} variant="bodySmall">
             {item.des}
           </Text>
         </Text>
       </View>
       <Image
         source={require("../../assets/icons/more_vertical.png")}
-        style={{ height: 20, width: 20 }}
+        style={styles.moreIcon}
       />
     </View>
     <View style={styles.messageContainer}>
@@ -96,14 +52,24 @@ const NoteContent = () => {
   const [lectureSelect, setLectureSelect] = useState("all");
   const [sortBy, setSortBy] = useState("recent");
   const [addingNote, setAddingNote] = useState(false);
+  const plusIcon = require("../../assets/icons/plus.png");
   const [editorState, setEditorState] = useState(null);
   const [plainText, setPlainText] = useState("");
+  const [noteList, setNoteList] = useState(NOTE_ITEM);
 
   const addNoteHandler = () => {
     setAddingNote(true);
   };
 
   const saveNoteHandler = () => {
+    const messageObj = {
+      des: "What is Employee Training?",
+      heading: "Section 1",
+      message: plainText,
+      time: "00:02",
+    };
+    setNoteList([...noteList, messageObj]);
+    setPlainText("");
     setAddingNote(false);
   };
 
@@ -111,46 +77,23 @@ const NoteContent = () => {
     setAddingNote(false);
   };
 
-  const emptyNotes = useMemo(() => itemData?.length === 0, []);
+  const emptyNotes = useMemo(() => noteList?.length === 0, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.headerSection}>
-        <View style={{ columnGap: 12, flexDirection: "row" }}>
-          <Dropdown
-            search
-            data={lectureDropdownData}
-            itemTextStyle={{ color: "black" }}
-            labelField="label"
-            maxHeight={300}
-            renderRightIcon={DropDownRightIcon}
-            searchPlaceholder="Search..."
-            selectedTextProps={{ ellipsizeMode: "tail", numberOfLines: 1 }}
-            selectedTextStyle={styles.selectedTextStyle}
-            style={styles.singleList}
+        <View style={styles.dropDownContainer}>
+          <DropdownSelector
+            data={LECTURE_SELECT}
+            placeholder="Search..."
+            setValue={setLectureSelect}
             value={lectureSelect}
-            valueField="value"
-            onChange={(item) => {
-              setLectureSelect(item.value);
-            }}
           />
-
-          <Dropdown
-            search
-            data={sortDropdownData}
-            itemTextStyle={{ color: "black" }}
-            labelField="label"
-            maxHeight={300}
-            renderRightIcon={DropDownRightIcon}
-            searchPlaceholder="Sort By"
-            selectedTextProps={{ ellipsizeMode: "tail", numberOfLines: 1 }}
-            selectedTextStyle={styles.selectedTextStyle}
-            style={styles.singleList}
+          <DropdownSelector
+            data={SORT_SELECT}
+            placeholder="Sort By"
+            setValue={setSortBy}
             value={sortBy}
-            valueField="value"
-            onChange={(item) => {
-              setSortBy(item.value);
-            }}
           />
         </View>
         {!addingNote && (
@@ -165,14 +108,11 @@ const NoteContent = () => {
             >
               Create a new note at 0:02
             </Text>
-            <Image
-              source={require("../../assets/icons/plus.png")}
-              style={styles.dropDownIcon}
-            />
+            <Image source={plusIcon} style={styles.dropDownIcon} />
           </TouchableOpacity>
         )}
       </View>
-      {addingNote && (
+      {addingNote ? (
         <View style={styles.richTextContainer}>
           <View style={styles.editorContainer}>
             <Editor
@@ -182,43 +122,34 @@ const NoteContent = () => {
           </View>
           <View style={styles.richTextFooter}>
             <CustomButton
-              style={{ marginBottom: 10 }} // Additional styling if needed
+              style={{ marginBottom: 10 }}
               title="Save Note"
               onPress={saveNoteHandler}
             />
-
             <CustomButton
-              style={{ marginBottom: 10 }} // Additional styling if needed
+              style={{ marginBottom: 10 }}
               title="Back"
               variant="secondary"
               onPress={cancelNoteHandler}
             />
           </View>
         </View>
-      )}
-      {!addingNote && (
+      ) : (
         <>
-          {!emptyNotes && <Divider style={{ marginHorizontal: 16 }} />}
-          <View style={{ paddingHorizontal: Dimensions.padding }}>
+          {!emptyNotes && <Divider style={styles.divider} />}
+          <View style={styles.noteListContainer}>
             {emptyNotes ? (
-              <View
-                style={{
-                  alignItems: "center",
-                  height: "100%",
-                  justifyContent: "center",
-                  width: "100%",
-                }}
-              >
+              <View style={styles.emptyNotesContainer}>
                 <Image
-                  resizeMode="contain"
+                  contentFit={RESIZE_MODE.CONTAIN}
                   source={require("../../assets/empty_notes.png")}
-                  style={{ height: 186, width: 172 }}
+                  style={styles.emptyNotesImage}
                 />
               </View>
             ) : (
-              itemData?.map((item, index) => {
-                return <NoteItem key={index} item={item}></NoteItem>;
-              })
+              noteList?.map((item, index) => (
+                <NoteItem key={index} item={item} />
+              ))
             )}
           </View>
         </>
@@ -231,113 +162,101 @@ export default NoteContent;
 
 const styles = StyleSheet.create({
   addNoteButton: {
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
-    borderRadius: 12,
+    alignItems: JUSTIFY.CENTER,
+    backgroundColor: CombinedDefaultTheme.colors.background,
+    borderColor: palette.grey200,
+    borderRadius: SIZE_12,
     borderWidth: 1,
     columnGap: 8,
     elevation: 2,
-    flexDirection: "row",
-    paddingHorizontal: 12,
+    flexDirection: DIRECTION.ROW,
+    paddingHorizontal: SIZE_12,
     paddingVertical: 8,
-    shadowColor: "#101828",
+    shadowColor: palette.grey900,
     shadowOffset: { height: 1, width: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
   },
-  addNoteText: {
-    color: "#98A2B3",
+  addNoteText: { color: "#98A2B3", flex: 1 },
+  container: { paddingVertical: SIZE_16, rowGap: SIZE_24 },
+  descriptionText: {
+    color: palette.grey600,
     flex: 1,
+    flexWrap: "wrap",
+    wordWrap: "wrap",
   },
-  container: {
-    paddingVertical: Dimensions.padding,
-    rowGap: 24,
-  },
+  divider: { marginHorizontal: SIZE_16 },
+  dropDownContainer: { columnGap: SIZE_12, flexDirection: DIRECTION.ROW },
   dropDownIcon: {
-    height: Dimensions.margin * 1.25,
-    resizeMode: "cover",
-    width: Dimensions.margin * 1.25,
+    height: SIZE_20,
+    width: SIZE_20,
   },
   editorContainer: {
-    borderColor: "#EAECF0",
+    borderColor: palette.grey200,
     borderRadius: 8,
     borderWidth: 1,
-    display: "flex",
     flex: 1,
-    flexDirection: "column",
     height: 250,
     minHeight: 50,
   },
+  emptyNotesContainer: {
+    alignItems: JUSTIFY.CENTER,
+    justifyContent: JUSTIFY.CENTER,
+    width: SIZE.FULL,
+  },
+  emptyNotesImage: { height: 186, width: 172 },
   headerSection: {
     paddingHorizontal: Dimensions.padding,
-    rowGap: 12,
+    rowGap: SIZE_12,
+  },
+  headingText: {
+    color: palette.grey900,
+    flex: 1,
+    flexWrap: "wrap",
+    wordWrap: "wrap",
   },
   messageContainer: {
-    backgroundColor: "#F9FAFB",
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
-    borderColor: "#F9FAFB",
-    borderTopRightRadius: 12,
+    backgroundColor: palette.grey50,
+    borderBottomLeftRadius: SIZE_12,
+    borderBottomRightRadius: SIZE_12,
+    borderColor: palette.grey50,
+    borderTopRightRadius: SIZE_12,
     borderWidth: 1,
-    paddingHorizontal: 12,
+    paddingHorizontal: SIZE_12,
     paddingVertical: 10,
   },
-  messageText: {
-    color: "#101828",
-  },
+  messageText: { color: palette.grey900 },
+  moreIcon: { height: SIZE_20, width: SIZE_20 },
+  noteItemContainer: { marginBottom: SIZE_20, rowGap: 8 },
   noteListContainer: {
-    borderWidth: 1,
-    paddingVertical: Dimensions.padding,
-    rowGap: 12,
+    paddingHorizontal: SIZE_16,
+    rowGap: SIZE_12,
   },
   richTextContainer: {
     flex: 1,
-    marginHorizontal: 16,
-    rowGap: 20,
+    marginHorizontal: SIZE_16,
+    rowGap: SIZE_20,
   },
   richTextFooter: {
-    columnGap: 12,
-    flexDirection: "row",
+    columnGap: SIZE_12,
+    flexDirection: DIRECTION.ROW,
   },
   seconds: {
-    backgroundColor: "#852DCD",
-    borderRadius: 40,
-    color: "white",
+    backgroundColor: CombinedDefaultTheme.colors.primary,
+    borderRadius: SIZE_20 * 2,
+    color: CombinedDefaultTheme.colors.background,
     paddingHorizontal: 8,
     paddingVertical: 3,
   },
-  selectedTextStyle: {
-    color: "#101828",
-    fontFamily: "Inter",
-    fontSize: 14,
-    fontWeight: "400",
-    letterSpacing: 0,
-    lineHeight: 20,
-  },
-  singleList: {
-    backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
-    borderRadius: (Dimensions.margin * 3) / 4,
-    borderWidth: 1,
-    elevation: 2,
-    flex: 1,
-    height: 40,
-    padding: (Dimensions.margin * 3) / 4,
-    shadowColor: "#101828",
-    shadowOffset: { height: 1, width: 0 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-  },
   timeLine: {
-    alignItems: "center",
-    columnGap: 12,
+    alignItems: JUSTIFY.CENTER,
+    columnGap: SIZE_12,
     flex: 1,
-    flexDirection: "row",
+    flexDirection: DIRECTION.ROW,
   },
   timelineContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    alignItems: JUSTIFY.CENTER,
+    flexDirection: DIRECTION.ROW,
+    justifyContent: JUSTIFY.SPACE_BETWEEN,
   },
 });

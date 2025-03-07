@@ -8,6 +8,9 @@ import {
 } from "react-native";
 import { Text } from "react-native-paper";
 
+import palette from "../styles/palette";
+import { CombinedDefaultTheme } from "../styles/theme";
+
 export default function FeedbackForm({ onSubmit }) {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
@@ -86,7 +89,7 @@ export default function FeedbackForm({ onSubmit }) {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.buttonStyle}>
             <Text
-              style={[styles.buttonText, { color: "#101828" }]}
+              style={[styles.buttonText, { color: palette.grey900 }]}
               variant="labelMedium"
               onPress={handleCancel}
             >
@@ -145,7 +148,7 @@ export default function FeedbackForm({ onSubmit }) {
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.buttonStyle} onPress={handleCancel}>
           <Text
-            style={[styles.buttonText, { color: "#101828" }]}
+            style={[styles.buttonText, { color: palette.grey900 }]}
             variant="labelMedium"
           >
             Cancel
@@ -175,12 +178,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
-  backButtonText: {
-    color: "#000",
-    fontSize: 16,
-    fontWeight: "500",
-    textAlign: "center",
-  },
   buttonContainer: {
     flexDirection: "row",
     gap: 12,
@@ -189,14 +186,14 @@ const styles = StyleSheet.create({
   buttonStyle: {
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
+    borderColor: palette.grey200,
     borderRadius: 12,
     borderWidth: 1,
     elevation: 2, // For Android
     flex: 1,
     height: 40,
     justifyContent: "center",
-    shadowColor: "#EAECF0",
+    shadowColor: palette.grey200,
     shadowOffset: { height: 2, width: 0 },
     shadowOpacity: 1,
     shadowRadius: 0,
@@ -254,10 +251,10 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
+    borderColor: palette.grey200,
     borderRadius: 8,
     borderWidth: 1,
-    color: "#101828",
+    color: palette.grey900,
     elevation: 2,
     fontSize: 14,
     fontWeight: "400",
@@ -265,13 +262,13 @@ const styles = StyleSheet.create({
     minHeight: 76,
     paddingHorizontal: 12,
     paddingVertical: 8,
-    shadowColor: "#101828",
+    shadowColor: palette.grey900,
     shadowOffset: { height: 1, width: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
   },
   rating: {
-    color: "#101828",
+    color: palette.grey900,
     fontSize: 18,
     textAlign: "center",
   },
@@ -306,16 +303,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   submitButton: {
-    backgroundColor: "#852DcD",
-    borderColor: "#852DcD",
-    shadowColor: "#60179C",
+    backgroundColor: CombinedDefaultTheme.colors.primary,
+    borderColor: CombinedDefaultTheme.colors.primary,
+    shadowColor: palette.purple600,
   },
   subtitle: {
-    color: "#101828",
+    color: palette.grey900,
     textAlign: "center",
   },
   title: {
-    color: "#101828",
+    color: palette.grey900,
     fontSize: 18,
     textAlign: "center",
   },

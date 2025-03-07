@@ -1481,3 +1481,74 @@ export const ACCORDIOM_ITEM_TYPE = {
 
 export const TEMP_VIDEO_URL =
   "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+
+export const LECTURE_SELECT = [
+  { label: "All Lecture", value: "all" },
+  { label: "Recorded", value: "recorded" },
+  { label: "Live", value: "live" },
+];
+
+export const SORT_SELECT = [
+  { label: "Sort By Most Recent", value: "recent" },
+  { label: "Oldest", value: "oldest" },
+  { label: "Name (A-Z)", value: "name_asc" },
+  { label: "Name (Z-A)", value: "name_desc" },
+];
+
+export const NOTE_ITEM = [
+  {
+    des: "What is Employee Training?",
+    heading: "Section 1",
+    message: "How?",
+    time: "00:02",
+  },
+  {
+    des: "Why is Training Important?",
+    heading: "Section 2",
+    message: "Why?",
+    time: "00:10",
+  },
+  {
+    des: "Types of Employee Training",
+    heading: "Section 3",
+    message: "What types? ",
+    time: "00:25",
+  },
+  {
+    des: "Best Practices for Training",
+    heading: "Section 4",
+    message: "How to improve?",
+    time: "00:40",
+  },
+];
+
+export const DOWNLOAD_URL =
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
+
+export const STAR_LIST = [
+  { color: "#0064D6", no: 5, parcentage: 90 },
+  { color: "#039855", no: 4, parcentage: 70 },
+  { color: "#FDB022", no: 3, parcentage: 50 },
+  { color: "#DC6803", no: 2, parcentage: 30 },
+  { color: "#D92D20", no: 1, parcentage: 10 },
+];
+
+export const REVIEW_LIST = [
+  { label: "All Reviews", value: "all" },
+  { label: "Most Recent", value: "recent" },
+  { label: "Oldest First", value: "oldest" },
+  { label: "Highest Rated", value: "highest" },
+  { label: "Lowest Rated", value: "lowest" },
+  { label: "With Comments", value: "comments" },
+  { label: "Without Comments", value: "no_comments" },
+];
+
+export const DOWNLOAD_LIST = [
+  { name: "Session1", url: DOWNLOAD_URL },
+  {
+    name: "Session II video (mp4)",
+    url: DOWNLOAD_URL,
+  },
+  { name: "Session III video (mp4)", url: DOWNLOAD_URL },
+  { name: "Session IV video (mp4)", url: DOWNLOAD_URL },
+];

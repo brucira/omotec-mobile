@@ -2,6 +2,9 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 
+import palette from "../styles/palette";
+import { CombinedDefaultTheme } from "../styles/theme";
+
 const CustomButton = ({
   variant = "primary",
   onPress,
@@ -48,20 +51,20 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
   },
   primaryButton: {
-    backgroundColor: "#852DCD",
-    borderColor: "#60179C",
-    shadowColor: "#60179C",
+    backgroundColor: CombinedDefaultTheme.colors.primary,
+    borderColor: palette.purple600,
+    shadowColor: palette.purple600,
   },
   primaryText: {
     color: "#FFFFFF",
   },
   secondaryButton: {
     backgroundColor: "#FFFFFF",
-    borderColor: "#EAECF0",
-    shadowColor: "#EAECF0",
+    borderColor: palette.grey200,
+    shadowColor: palette.grey200,
   },
   secondaryText: {
-    color: "##101828",
+    color: palette.grey900,
   },
   text: {
     fontSize: 16,

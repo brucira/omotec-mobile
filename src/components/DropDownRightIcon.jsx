@@ -1,4 +1,4 @@
-import React, { Dimensions, Image, StyleSheet } from "react-native";
+import React, { Image, StyleSheet } from "react-native";
 
 export const DropDownRightIcon = () => (
   <Image
@@ -11,8 +11,8 @@ export default DropDownRightIcon;
 
 const styles = StyleSheet.create({
   dropDownIcon: {
-    height: Dimensions.margin * 1.25,
-    resizeMode: "cover",
-    width: Dimensions.margin * 1.25,
+    height: 20,
+    resizeMode: "contain",
+    width: 20,
   },
 });
