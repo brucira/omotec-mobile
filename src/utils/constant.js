@@ -121,6 +121,15 @@ export const cardData = [
     title: "UI Research Design Course",
   },
 ];
+export const reviewData = {
+  date: "2 May,2025",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+  name: "John Doe",
+  profilePicture: require("../assets/male.png"),
+  rating: 4,
+  remark: "Very Good!",
+};
 
 export const courseCardData = [
   {
@@ -595,7 +604,7 @@ export const events = [
     trainer: "John Doe",
   },
   {
-    address: "Powai, Mumbai, Maharastra",
+    // address: "Powai, Mumbai, Maharastra",
     attachment: "Course Details",
     attendance: [
       {
@@ -623,6 +632,7 @@ export const events = [
         status: "present",
       },
     ],
+    awaiting: 17,
     background: palette.yellow700,
     batchName: "B1",
     batchStudents: [
@@ -661,8 +671,10 @@ export const events = [
       12,
       0
     ),
-    location: "Powai",
+    // location: "Powai",
+    link: "https://meet.google.com/tsb-tttc-nvq",
     notify: "10 minutes before",
+    rsvp: 13,
     start: new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -673,6 +685,7 @@ export const events = [
     subtitle: "Web Development Bootcamp · Mumbai",
     title: "Proposal Submission",
     trainer: "John Doe",
+    virtually: 2,
   },
   {
     address: "Powai, Mumbai, Maharastra",
@@ -1483,30 +1496,30 @@ export const SORT_SELECT = [
 ];
 
 export const NOTE_ITEM = [
-  {
-    des: "What is Employee Training?",
-    heading: "Section 1",
-    message: "How?",
-    time: "00:02",
-  },
-  {
-    des: "Why is Training Important?",
-    heading: "Section 2",
-    message: "Why?",
-    time: "00:10",
-  },
-  {
-    des: "Types of Employee Training",
-    heading: "Section 3",
-    message: "What types? ",
-    time: "00:25",
-  },
-  {
-    des: "Best Practices for Training",
-    heading: "Section 4",
-    message: "How to improve?",
-    time: "00:40",
-  },
+  // {
+  //   des: "What is Employee Training?",
+  //   heading: "Section 1",
+  //   message: "How?",
+  //   time: "00:02",
+  // },
+  // {
+  //   des: "Why is Training Important?",
+  //   heading: "Section 2",
+  //   message: "Why?",
+  //   time: "00:10",
+  // },
+  // {
+  //   des: "Types of Employee Training",
+  //   heading: "Section 3",
+  //   message: "What types? ",
+  //   time: "00:25",
+  // },
+  // {
+  //   des: "Best Practices for Training",
+  //   heading: "Section 4",
+  //   message: "How to improve?",
+  //   time: "00:40",
+  // },
 ];
 
 export const DOWNLOAD_URL =

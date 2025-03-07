@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Calendar } from "react-native-big-calendar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Avatar } from "react-native-paper";
 
 import FullEventDetails from "../../components/FullEventDetails";
 import palette from "../../styles/palette";
@@ -39,10 +40,30 @@ const Monthly = ({ selectedDate, setSelectedDate }) => {
       </TouchableOpacity>
     );
   };
+  const renderCustomDateForMonth = (props) => {
+    const activeDate =
+      today.toISOString().split("T")[0] === props.toISOString().split("T")[0];
+    const dateObj = new Date(props);
+    const dayNumber = dateObj.getUTCDate();
+    return (
+      <View style={{ alignSelf: "center" }}>
+        <Avatar.Text
+          style={{
+            backgroundColor: activeDate
+              ? CombinedDefaultTheme.colors.primary
+              : CombinedDefaultTheme.colors.background,
+          }}
+          label={dayNumber}
+          size={24}
+        />
+      </View>
+    );
+  };
   return (
     <ScrollView style={styles.contentContainer}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Calendar
+          activeDate={today}
           calendarCellStyle={styles.calendarCellStyle}
           date={selectedDate}
           eventCellStyle={eventCellStyle}
@@ -53,6 +74,7 @@ const Monthly = ({ selectedDate, setSelectedDate }) => {
           maxVisibleEventCount={3}
           mode="month"
           overlapOffset={0}
+          renderCustomDateForMonth={renderCustomDateForMonth}
           renderEvent={renderMontlyEvent}
           sortedMonthView={true}
           // bodyContainerStyle={{

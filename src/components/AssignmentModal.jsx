@@ -13,9 +13,10 @@ import { Appbar, ProgressBar, Text } from "react-native-paper";
 
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
-import { Dimensions } from "../utils/constant";
+import { Dimensions, reviewData } from "../utils/constant";
 import { fileSchema } from "../utils/schema";
 import PrimaryButton from "./PrimaryButton";
+import Review from "./Review";
 import Tag from "./Tag";
 
 const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
@@ -175,6 +176,17 @@ const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
                 </View>
               </TouchableOpacity>
             )}
+            <View>
+              <Text variant="labelLarge">Remarks</Text>
+              <Review
+                date={reviewData.date}
+                description={reviewData.description}
+                name={reviewData.name}
+                profilePicture={reviewData.profilePicture}
+                rating={reviewData.rating}
+                remark={reviewData.remark}
+              />
+            </View>
           </View>
           <Pressable onPress={onSavePressHandler}>
             <PrimaryButton

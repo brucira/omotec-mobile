@@ -85,8 +85,19 @@ const Home = ({ navigation }) => {
         <Appbar.Content
           title={
             <View>
-              <Text variant="headlineSmall">Hi Julian, 👋</Text>
-              <Text variant="labelMedium">Keep up the good work!</Text>
+              <View style={{ alignItems: "center", flexDirection: "row" }}>
+                <Text
+                  numberOfLines={1}
+                  style={{ maxWidth: "70%" }}
+                  variant="headlineSmall"
+                >
+                  Hi Julian
+                </Text>
+                <Text variant="headlineSmall">, 👋</Text>
+              </View>
+              <Text numberOfLines={1} variant="labelMedium">
+                Keep up the good work!
+              </Text>
             </View>
           }
         />

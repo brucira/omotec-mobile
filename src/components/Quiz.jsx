@@ -2,7 +2,6 @@ import React from "react";
 import {
   FlatList,
   Modal,
-  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -118,8 +117,6 @@ const Quiz = ({ visible, hideModal, submitMoal }) => {
 const styles = StyleSheet.create({
   appBarContainer: {
     backgroundColor: palette.primaryStudent900,
-    borderBottomWidth: 1,
-    borderColor: palette.grey200,
     shadowColor: "#000",
     shadowOpacity: 0.3,
     shadowRadius: 0,

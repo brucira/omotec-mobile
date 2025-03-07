@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {
+  Alert,
   Image,
+  Linking,
   Modal,
   SafeAreaView,
   StyleSheet,
@@ -13,6 +15,7 @@ import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
 import { Dimensions } from "../utils/constant";
 import AttendanceDetails from "./AttendanceDetails";
+import PrimaryButton from "./PrimaryButton";
 import StudentList from "./StudentList";
 
 const formatDateTimeRange = (startISO, endISO) => {
@@ -62,6 +65,17 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
   const onShowStudentPress = (event) => {
     setStudentListVisible(true);
   };
+
+  const externalLinkHandler = async (url) => {
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert("Error", "Can't open this link.");
+    }
+  };
+
   return (
     <>
       <Modal
@@ -112,26 +126,27 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
                 <Text variant="bodyMedium">{event.course}</Text>
               </View>
             </View>
-            <View style={styles.contentSeperator}>
+            <View style={styles.contentSeperatorMultiple}>
               <Image
                 source={require("../assets/icons/users.png")}
                 style={[styles.badge]}
                 tintColor={palette.grey700}
               />
-              <View style={{ alignItems: "center", flexDirection: "row" }}>
-                <Text variant="bodyMedium">Batch: </Text>
-                <Text variant="bodyMedium">{event.batchName} -</Text>
-                {studentCount > 0 && (
-                  <TouchableOpacity
-                    onPress={(event) => onShowStudentPress(event)}
-                  >
-                    <Text style={styles.studentCount}>
-                      {" "}
-                      {studentCount > 1
-                        ? studentCount + " students"
-                        : studentCount + "student"}{" "}
-                    </Text>
-                    {/* <Modal
+              <View>
+                <View style={{ alignItems: "center", flexDirection: "row" }}>
+                  <Text variant="bodyMedium">Batch: </Text>
+                  <Text variant="bodyMedium">{event.batchName} -</Text>
+                  {studentCount > 0 && (
+                    <TouchableOpacity
+                      onPress={(event) => onShowStudentPress(event)}
+                    >
+                      <Text style={styles.studentCount}>
+                        {" "}
+                        {studentCount > 1
+                          ? studentCount + " students"
+                          : studentCount + "student"}{" "}
+                      </Text>
+                      {/* <Modal
                       transparent={true}
                       visible={studentVisible}
                       onRequestClose={hideStudentHandler}
@@ -147,23 +162,65 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
                         <Text>Hii</Text>
                       </View>
                     </Modal> */}
-                  </TouchableOpacity>
+                    </TouchableOpacity>
+                  )}
+                </View>
+                {event.link && (
+                  <View>
+                    <Text
+                      style={{ color: palette.grey600 }}
+                      variant="bodySmall"
+                    >{`${event.rsvp} yes (${event.virtually} virtually)`}</Text>
+                    <Text
+                      style={{ color: palette.grey600 }}
+                      variant="bodySmall"
+                    >{`${event.awaiting} awaiting`}</Text>
+                  </View>
                 )}
               </View>
             </View>
-            <View style={styles.contentSeperator}>
-              <Image
-                source={require("../assets/icons/map.png")}
-                style={[styles.badge]}
-                tintColor={palette.grey700}
-              />
-              <View>
-                <Text variant="bodyMedium">{event.location}</Text>
-                <Text style={styles.subDescription} variant="bodySmall">
-                  {event.address}
-                </Text>
+            {event.link ? (
+              <View style={styles.contentSeperator}>
+                <Image
+                  source={require("../assets/icons/video.png")}
+                  style={[styles.badge]}
+                  tintColor={palette.grey700}
+                />
+                <View style={{ flex: 1 }}>
+                  <PrimaryButton
+                    backgroundColor={CombinedDefaultTheme.colors.primary}
+                    borderColor={palette.purple600}
+                    content={"Start the session"}
+                    textColor={CombinedDefaultTheme.colors.background}
+                    onPress={() => externalLinkHandler("https://google.com")}
+                  />
+                  <View style={styles.link}>
+                    <Text style={styles.subDescription} variant="bodySmall">
+                      {event.link}
+                    </Text>
+                    <Image
+                      source={require("../assets/icons/copy.png")}
+                      style={styles.badge}
+                    />
+                  </View>
+                </View>
               </View>
-            </View>
+            ) : (
+              <View style={styles.contentSeperator}>
+                <Image
+                  source={require("../assets/icons/map.png")}
+                  style={[styles.badge]}
+                  tintColor={palette.grey700}
+                />
+                <View>
+                  <Text variant="bodyMedium">{event.location}</Text>
+                  <Text style={styles.subDescription} variant="bodySmall">
+                    {event.address}
+                  </Text>
+                </View>
+              </View>
+            )}
+
             <View style={styles.contentSeperatorMultiple}>
               <Image
                 source={require("../assets/icons/menu.png")}
@@ -312,6 +369,11 @@ const styles = StyleSheet.create({
     gap: Dimensions.margin / 2,
     paddingHorizontal: Dimensions.padding / 1.33,
     paddingVertical: Dimensions.padding / 2,
+  },
+  link: {
+    flexDirection: "row",
+    gap: Dimensions.margin / 1.6,
+    paddingTop: Dimensions.padding / 4,
   },
   presentMarkingContainer: {
     alignItems: "center",

@@ -21,7 +21,13 @@ const SIZE_20 = SIZE_16 * 1.25;
 const SIZE_24 = SIZE_16 * 1.5;
 
 // eslint-disable-next-line prettier/prettier
-const AbsoluteMenu = ({ currentPage, scale, setCurrentPage,setScale, totalPages }) => {
+const AbsoluteMenu = ({
+  currentPage,
+  scale,
+  setCurrentPage,
+  setScale,
+  totalPages,
+}) => {
   const zoomIn = require("../../assets/icons/zoom_in.png");
   const zoomOut = require("../../assets/icons/zoom_out.png");
   const upIcon = require("../../assets/icons/chevron_up1.png");
@@ -129,7 +135,8 @@ const PDFViewer = ({ customBackNavigate }) => {
         if (Platform.Version >= 33) {
           // Android 13+ (API 33+)
           const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+            // eslint-disable-next-line prettier/prettier
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
           );
           if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
             console.log("Storage permission denied for Android 13+");
@@ -137,12 +144,14 @@ const PDFViewer = ({ customBackNavigate }) => {
         } else if (Platform.Version >= 30) {
           // Android 11-12 (Scoped Storage)
           console.log(
-            "No need to request permission for Scoped Storage (Android 11+)",
+            // eslint-disable-next-line prettier/prettier
+            "No need to request permission for Scoped Storage (Android 11+)"
           );
         } else {
           // Android 10 and below
           const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+            // eslint-disable-next-line prettier/prettier
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
           );
           if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
             console.log("Storage permission denied for Android 10 and below");
@@ -156,7 +165,8 @@ const PDFViewer = ({ customBackNavigate }) => {
 
   const checkPermissionStatus = async () => {
     const status = await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+      // eslint-disable-next-line prettier/prettier
+      PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
     );
     console.log("Permission status:", status ? "Granted" : "Denied");
   };

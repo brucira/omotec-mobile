@@ -170,7 +170,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     backgroundColor: CombinedDefaultTheme.colors.background,
     flex: 1,
-    paddingHorizontal: Dimensions.padding,
   },
   customizeIcon: {
     height: Dimensions.margin * 1.5,

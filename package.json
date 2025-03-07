@@ -13,6 +13,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@10play/tentap-editor": "^0.6.1",
     "@expo-google-fonts/inter": "^0.2.3",
     "@expo/metro-runtime": "~4.0.1",
     "@gorhom/bottom-sheet": "^5.1.1",
@@ -57,7 +58,7 @@
     "react-native-svg": "15.8.0",
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "~0.19.13",
-    "react-native-webview": "13.12.5",
+    "react-native-webview": "^13.12.5",
     "zod": "^3.24.2"
   },
   "devDependencies": {

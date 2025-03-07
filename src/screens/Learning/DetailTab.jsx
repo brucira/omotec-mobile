@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     gap: Dimensions.margin * 1.5,
     marginTop: Dimensions.margin * 1.25,
+    paddingHorizontal: Dimensions.padding,
   },
   content: {
     color: palette.grey900,
