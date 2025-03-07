@@ -20,7 +20,6 @@ const SIZE_16 = Dimensions.margin;
 const SIZE_20 = SIZE_16 * 1.25;
 const SIZE_24 = SIZE_16 * 1.5;
 
-// eslint-disable-next-line prettier/prettier
 const AbsoluteMenu = ({
   currentPage,
   scale,
@@ -238,9 +237,9 @@ const styles = StyleSheet.create({
   },
   backIconContainer: {
     left: SIZE_16 / 2,
-    zIndex: 1,
     position: "absolute",
     top: SIZE_16 * 0.75,
+    zIndex: 1,
   },
   iconContainer: {
     alignItems: "center",
