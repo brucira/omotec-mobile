@@ -156,8 +156,11 @@ export default function FeedbackForm({ onSubmit }) {
         </TouchableOpacity>
 
         <TouchableOpacity
+          style={[
+            styles.buttonStyle,
+            !rating ? styles.disableSubmitButton : styles.primaryButton,
+          ]}
           disabled={!rating}
-          style={[styles.buttonStyle, styles.disableSubmitButton]}
           onPress={handleSaveAndContinue}
         >
           <Text style={styles.buttonText} variant="labelLarge">
@@ -189,7 +192,7 @@ const styles = StyleSheet.create({
     borderColor: palette.grey200,
     borderRadius: 12,
     borderWidth: 1,
-    elevation: 2, // For Android
+    elevation: 2,
     flex: 1,
     height: 40,
     justifyContent: "center",
@@ -266,6 +269,11 @@ const styles = StyleSheet.create({
     shadowOffset: { height: 1, width: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
+  },
+  primaryButton: {
+    backgroundColor: "#8B5CF6",
+    borderColor: "#8B5CF6",
+    shadowColor: "#60179C",
   },
   rating: {
     color: palette.grey900,
