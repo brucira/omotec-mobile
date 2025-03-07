@@ -13,8 +13,6 @@ const Review = ({
   name,
   date,
 }) => {
-  console.log(remark);
-
   const renderStar = () => {
     return [1, 2, 3, 4, 5].map((_, index) => {
       return (

@@ -1,6 +1,12 @@
+import { RichText, Toolbar, useEditorBridge } from "@10play/tentap-editor";
 import { Image } from "expo-image";
 import React, { useMemo, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Divider, Text } from "react-native-paper";
 
 import { DIRECTION, JUSTIFY, RESIZE_MODE, SIZE } from "../../styles/constStyle";
@@ -13,7 +19,6 @@ import {
   SORT_SELECT,
 } from "../../utils/constant";
 import CustomButton from "../CustomButton";
-import Editor from "../dom-components/hello-dom";
 import DropdownSelector from "../DropdownSelector";
 
 const SIZE_16 = Dimensions.margin;
@@ -56,19 +61,43 @@ const NoteContent = () => {
   const [editorState, setEditorState] = useState(null);
   const [plainText, setPlainText] = useState("");
   const [noteList, setNoteList] = useState(NOTE_ITEM);
+  const handleEditorChange = async () => {
+    try {
+      const text = await editor.getText();
+      setPlainText(text);
+    } catch (error) {
+      console.error("Error fetching editor text:", error);
+    }
+  };
+
+  const editor = useEditorBridge({
+    autofocus: true,
+    onChange: handleEditorChange,
+    theme: {
+      toolbar: {
+        toolbarBody: {
+          maxHeight: 32,
+          paddingVertical: 0,
+        },
+      },
+    },
+  });
 
   const addNoteHandler = () => {
     setAddingNote(true);
   };
 
   const saveNoteHandler = () => {
+    if (!plainText.trim()) return;
+
     const messageObj = {
       des: "What is Employee Training?",
       heading: "Section 1",
       message: plainText,
       time: "00:02",
     };
-    setNoteList([...noteList, messageObj]);
+
+    setNoteList((prevNotes) => [...prevNotes, messageObj]);
     setPlainText("");
     setAddingNote(false);
   };
@@ -77,83 +106,87 @@ const NoteContent = () => {
     setAddingNote(false);
   };
 
-  const emptyNotes = useMemo(() => noteList?.length === 0, []);
+  const emptyNotes = useMemo(() => noteList.length === 0, [noteList]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerSection}>
-        <View style={styles.dropDownContainer}>
-          <DropdownSelector
-            data={LECTURE_SELECT}
-            placeholder="Search..."
-            setValue={setLectureSelect}
-            value={lectureSelect}
-          />
-          <DropdownSelector
-            data={SORT_SELECT}
-            placeholder="Sort By"
-            setValue={setSortBy}
-            value={sortBy}
-          />
-        </View>
-        {!addingNote && (
-          <TouchableOpacity
-            style={styles.addNoteButton}
-            onPress={addNoteHandler}
-          >
-            <Text
-              numberOfLines={1}
-              style={styles.addNoteText}
-              variant="bodyMedium"
+      <KeyboardAvoidingView>
+        <View style={styles.headerSection}>
+          <View style={styles.dropDownContainer}>
+            <DropdownSelector
+              data={LECTURE_SELECT}
+              placeholder="Search..."
+              setValue={setLectureSelect}
+              value={lectureSelect}
+            />
+            <DropdownSelector
+              data={SORT_SELECT}
+              placeholder="Sort By"
+              setValue={setSortBy}
+              value={sortBy}
+            />
+          </View>
+          {!addingNote && (
+            <TouchableOpacity
+              style={styles.addNoteButton}
+              onPress={addNoteHandler}
             >
-              Create a new note at 0:02
-            </Text>
-            <Image source={plusIcon} style={styles.dropDownIcon} />
-          </TouchableOpacity>
-        )}
-      </View>
-      {addingNote ? (
-        <View style={styles.richTextContainer}>
-          <View style={styles.editorContainer}>
-            <Editor
-              setEditorState={setEditorState}
-              setPlainText={setPlainText}
-            />
-          </View>
-          <View style={styles.richTextFooter}>
-            <CustomButton
-              style={{ marginBottom: 10 }}
-              title="Save Note"
-              onPress={saveNoteHandler}
-            />
-            <CustomButton
-              style={{ marginBottom: 10 }}
-              title="Back"
-              variant="secondary"
-              onPress={cancelNoteHandler}
-            />
-          </View>
+              <Text
+                numberOfLines={1}
+                style={styles.addNoteText}
+                variant="bodyMedium"
+              >
+                Create a new note at 0:02
+              </Text>
+              <Image source={plusIcon} style={styles.dropDownIcon} />
+            </TouchableOpacity>
+          )}
         </View>
-      ) : (
-        <>
-          {!emptyNotes && <Divider style={styles.divider} />}
-          <View style={styles.noteListContainer}>
-            {emptyNotes ? (
-              <View style={styles.emptyNotesContainer}>
-                <Image
-                  contentFit={RESIZE_MODE.CONTAIN}
-                  source={require("../../assets/empty_notes.png")}
-                  style={styles.emptyNotesImage}
-                />
-              </View>
-            ) : (
-              noteList?.map((item, index) => (
-                <NoteItem key={index} item={item} />
-              ))
-            )}
+        {addingNote ? (
+          <View style={styles.richTextContainer}>
+            <View style={styles.editorContainer}>
+              <Toolbar editor={editor} />
+              <RichText
+                containerStyle={{ paddingHorizontal: SIZE_16 }}
+                editor={editor}
+                // onSourceChanged={on}
+              />
+            </View>
+            <View style={styles.richTextFooter}>
+              <CustomButton
+                style={{ marginBottom: 10 }}
+                title="Save Note"
+                onPress={saveNoteHandler}
+              />
+              <CustomButton
+                style={{ marginBottom: 10 }}
+                title="Back"
+                variant="secondary"
+                onPress={cancelNoteHandler}
+              />
+            </View>
           </View>
-        </>
-      )}
+        ) : (
+          <>
+            {!emptyNotes && <Divider style={styles.divider} />}
+            <View style={styles.noteListContainer}>
+              {emptyNotes ? (
+                <View style={styles.emptyNotesContainer}>
+                  <Image
+                    contentFit={RESIZE_MODE.CONTAIN}
+                    source={require("../../assets/empty/empty_notes.png")}
+                    style={styles.emptyNotesImage}
+                  />
+                </View>
+              ) : (
+                noteList?.map((item, index) => (
+                  <NoteItem key={index} item={item} />
+                ))
+              )}
+            </View>
+          </>
+        )}
+      </KeyboardAvoidingView>
     </View>
   );
 };
@@ -170,6 +203,7 @@ const styles = StyleSheet.create({
     columnGap: 8,
     elevation: 2,
     flexDirection: DIRECTION.ROW,
+    // marginBottom: 16,
     paddingHorizontal: SIZE_12,
     paddingVertical: 8,
     shadowColor: palette.grey900,
@@ -185,7 +219,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     wordWrap: "wrap",
   },
-  divider: { marginHorizontal: SIZE_16 },
+  divider: { marginHorizontal: SIZE_16, marginTop: SIZE_16 },
   dropDownContainer: { columnGap: SIZE_12, flexDirection: DIRECTION.ROW },
   dropDownIcon: {
     height: SIZE_20,
@@ -197,11 +231,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flex: 1,
     height: 250,
-    minHeight: 50,
+    // minHeight: 50,
+    marginTop: SIZE_12,
   },
   emptyNotesContainer: {
     alignItems: JUSTIFY.CENTER,
     justifyContent: JUSTIFY.CENTER,
+    marginTop: Dimensions.margin * 2.625,
     width: SIZE.FULL,
   },
   emptyNotesImage: { height: 186, width: 172 },
@@ -229,6 +265,7 @@ const styles = StyleSheet.create({
   moreIcon: { height: SIZE_20, width: SIZE_20 },
   noteItemContainer: { marginBottom: SIZE_20, rowGap: 8 },
   noteListContainer: {
+    marginTop: SIZE_16,
     paddingHorizontal: SIZE_16,
     rowGap: SIZE_12,
   },

@@ -1496,30 +1496,30 @@ export const SORT_SELECT = [
 ];
 
 export const NOTE_ITEM = [
-  {
-    des: "What is Employee Training?",
-    heading: "Section 1",
-    message: "How?",
-    time: "00:02",
-  },
-  {
-    des: "Why is Training Important?",
-    heading: "Section 2",
-    message: "Why?",
-    time: "00:10",
-  },
-  {
-    des: "Types of Employee Training",
-    heading: "Section 3",
-    message: "What types? ",
-    time: "00:25",
-  },
-  {
-    des: "Best Practices for Training",
-    heading: "Section 4",
-    message: "How to improve?",
-    time: "00:40",
-  },
+  // {
+  //   des: "What is Employee Training?",
+  //   heading: "Section 1",
+  //   message: "How?",
+  //   time: "00:02",
+  // },
+  // {
+  //   des: "Why is Training Important?",
+  //   heading: "Section 2",
+  //   message: "Why?",
+  //   time: "00:10",
+  // },
+  // {
+  //   des: "Types of Employee Training",
+  //   heading: "Section 3",
+  //   message: "What types? ",
+  //   time: "00:25",
+  // },
+  // {
+  //   des: "Best Practices for Training",
+  //   heading: "Section 4",
+  //   message: "How to improve?",
+  //   time: "00:40",
+  // },
 ];
 
 export const DOWNLOAD_URL =

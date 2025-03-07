@@ -101,8 +101,6 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
     );
   };
   const onPressEvent = (event) => {
-    console.log("in event");
-
     setSelectedEvent(event);
     setVisible(true);
   };
