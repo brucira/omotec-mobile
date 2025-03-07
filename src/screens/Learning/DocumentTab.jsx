@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Checkbox from "expo-checkbox";
 import React, { useCallback, useRef, useState } from "react";
-import { Controller, reset, useForm, useWatch } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
   FlatList,
   Image,
@@ -84,7 +84,14 @@ const DocumentTab = ({ activeTab }) => {
   );
 
   return (
-    <View style={{ flex: 1, marginBottom: Dimensions.margin * 1.5 }}>
+    <View
+      style={{
+        flex: 1,
+        marginBottom: Dimensions.margin * 1.5,
+
+        paddingHorizontal: Dimensions.padding,
+      }}
+    >
       <View style={styles.searchContainer}>
         <Searchbar
           icon={renderSearchIcon}

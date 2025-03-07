@@ -15,7 +15,7 @@ const CalendarCard = ({ item }) => {
         <Image source={item.gradient} style={styles.gradient} />
         <View style={styles.dailyCourseCardContent}>
           <View>
-            <Text style={styles.title} variant="titleMedium">
+            <Text numberOfLines={1} style={styles.title} variant="titleMedium">
               UI/UX Design Course
             </Text>
             <View style={styles.subHeading}>

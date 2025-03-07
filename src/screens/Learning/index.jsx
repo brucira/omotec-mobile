@@ -34,9 +34,9 @@ const Learning = ({ navigation }) => {
     <LargeCourseCard key={item.id} {...item} />
   );
 
-  const renderItemForProject = ({ index, item }) => (
-    <LargeCourseCard key={item.id} {...item} />
-  );
+  const renderItemForProject = ({ index, item }) => {
+    return <LargeCourseCard key={item.id} {...item} isProjectCard={true} />;
+  };
 
   const handleTabPress = (tab) => {
     setActiveTab(tab);
@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     backgroundColor: CombinedDefaultTheme.colors.background,
     flex: 1,
-    // padding: Dimensions.padding,
   },
   courseContainer: {
     flex: 1,

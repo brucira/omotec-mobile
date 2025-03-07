@@ -1,15 +1,23 @@
 import React from "react";
-import { FlatList, Modal, SafeAreaView, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { Appbar, Text } from "react-native-paper";
 
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
 import { Dimensions, testData } from "../utils/constant";
+import PrimaryButton from "./PrimaryButton";
 import Question from "./Question";
 import Tag from "./Tag";
 
-const Quiz = ({ visible, hideModal }) => {
+const Quiz = ({ visible, hideModal, submitMoal }) => {
   const keyExtractor = (item) => item.id.toString();
   const itemSeperatorComponent = () => <View style={styles.seperator} />;
   const TestContent = gestureHandlerRootHOC(() => {
@@ -52,17 +60,30 @@ const Quiz = ({ visible, hideModal }) => {
                 description. Then, answer the question that follows:
               </Text>
             </Text>
-            <View style={{ paddingVertical: Dimensions.padding * 1.5 }}>
-              {/* <Question questionNumber={1} questionType={"mcq"} /> */}
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={{ rowGap: 16 }}
+            >
               <FlatList
                 data={testData}
                 ItemSeparatorComponent={itemSeperatorComponent}
                 keyExtractor={keyExtractor}
                 renderItem={renderQuestion}
+                scrollEnabled={false}
                 showsVerticalScrollIndicator={false}
-                style={{}}
               />
-            </View>
+              <PrimaryButton
+                style={{
+                  marginBottom: 12,
+                  marginTop: 32,
+                }}
+                backgroundColor={CombinedDefaultTheme.colors.primary}
+                borderColor={palette.purple600}
+                content={"Submit"}
+                textColor={CombinedDefaultTheme.colors.background}
+                onPress={submitMoal}
+              />
+            </ScrollView>
           </View>
         </View>
       </SafeAreaView>
@@ -96,8 +117,6 @@ const Quiz = ({ visible, hideModal }) => {
 const styles = StyleSheet.create({
   appBarContainer: {
     backgroundColor: palette.primaryStudent900,
-    borderBottomWidth: 1,
-    borderColor: palette.grey200,
     shadowColor: "#000",
     shadowOpacity: 0.3,
     shadowRadius: 0,
@@ -116,6 +135,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     backgroundColor: CombinedDefaultTheme.colors.background,
+    borderWidth: 1,
     flex: 1,
     paddingHorizontal: Dimensions.padding,
   },

@@ -62,6 +62,14 @@ const themeObj = {
   dark: false,
   fonts: configureFonts({
     config: {
+      bodySmall: {
+        fontFamily: Platform.select({
+          android: "Inter_400Regular",
+          ios: "Inter-Regular",
+        }),
+        fontWeight: "400",
+        letterSpacing: 0.5,
+      },
       default: {
         fontFamily: Platform.select({
           android: "Inter_400Regular",

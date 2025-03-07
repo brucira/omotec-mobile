@@ -148,6 +148,79 @@ const TaskTab = ({ activeTab }) => {
     setIsPickerShow(false);
   };
 
+  const dayMap = {
+    0: "S", // Sunday
+    1: "M", // Monday
+    2: "T", // Tuesday
+    3: "W", // Wednesday
+    4: "T", // Thursday (same as Tuesday)
+    5: "F", // Friday
+    6: "S", // Saturday
+  };
+  const monthMap = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const renderHeader = (prop) => {
+    const firstDateObj = new Date(prop.dateRange[0]);
+    const monthName = monthMap[firstDateObj.getUTCMonth()];
+    const year = firstDateObj.getUTCFullYear();
+    return (
+      <View style={styles.headerContainer}>
+        <View>
+          <Text
+            style={{ color: palette.grey900 }}
+            variant="labelMedium"
+          >{`${monthName} ${year}`}</Text>
+        </View>
+        <View style={styles.individualDateHeaderContainer}>
+          {prop.dateRange.map((item, index) => {
+            const dateObj = new Date(item);
+            const dayLetter = dayMap[dateObj.getUTCDay()];
+            const dayNumber = dateObj.getUTCDate();
+
+            const activeDate =
+              prop.activeDate.toISOString().split("T")[0] ===
+              item.toISOString().split("T")[0];
+            return (
+              <View key={index} style={styles.individualDateHeader}>
+                <Text
+                  style={{
+                    color: activeDate
+                      ? CombinedDefaultTheme.colors.primary
+                      : palette.grey500,
+                  }}
+                  variant="bodySmall"
+                >
+                  {`${dayLetter}`}{" "}
+                  <Text
+                    style={{
+                      color: activeDate
+                        ? CombinedDefaultTheme.colors.primary
+                        : palette.grey800,
+                    }}
+                    variant="bodySmall"
+                  >{`${dayNumber}`}</Text>{" "}
+                </Text>
+              </View>
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
+
   const bottomSheetModalRef = useRef(null);
   const eventBottomSheetModalRef = useRef(null);
   const keyExtractor = (item) => item.id.toString();
@@ -159,7 +232,15 @@ const TaskTab = ({ activeTab }) => {
     eventBottomSheetModalRef.current?.present();
   }, []);
   const renderTaskItem = useCallback(
-    ({ item }) => <TaskCard {...item} />,
+    ({ item }) => (
+      <View
+        style={{
+          paddingHorizontal: Dimensions.padding,
+        }}
+      >
+        <TaskCard {...item} />
+      </View>
+    ),
     // eslint-disable-next-line prettier/prettier
     []
   );
@@ -222,7 +303,9 @@ const TaskTab = ({ activeTab }) => {
       ) : (
         <View style={styles.contentContainer}>
           <Calendar
+            activeDate={today}
             ampm={true}
+            bodyContainerStyle={styles.calendarBodyContainerStyle}
             calendarCellStyle={{ borderBottomWidth: 0 }}
             date={today}
             eventCellStyle={eventCellStyle}
@@ -232,12 +315,12 @@ const TaskTab = ({ activeTab }) => {
             mode="custom"
             overlapOffset={0}
             renderEvent={renderEvent}
+            renderHeader={renderHeader}
             showAllDayEventCell={false}
             swipeEnabled={true}
             theme={calendarTheme}
             weekEndsOn={5}
             weekStartsOn={1}
-            // renderHeader={renderHeader}
             onPressEvent={onPressEvent}
             onSwipeEnd={onSwipeEnd}
           />
@@ -733,6 +816,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dimensions.padding / 2,
     paddingVertical: Dimensions.padding / 2,
   },
+  calendarBodyContainerStyle: {
+    paddingHorizontal: Dimensions.padding,
+  },
   calendarCellStyle: {
     backgroundColor: CombinedDefaultTheme.colors.background,
     left: 17,
@@ -771,7 +857,7 @@ const styles = StyleSheet.create({
     fontSize: 8,
     // left: "38%",
     position: "absolute",
-    top: "45%",
+    top: "40%",
   },
   datePicker: {
     // backgroundColor: "red",
@@ -791,9 +877,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dimensions.padding,
     paddingVertical: Dimensions.padding * 1.25,
   },
+  headerContainer: {
+    // backgroundColor: "red",
+    borderBottomWidth: 1,
+    borderColor: palette.grey200,
+    gap: Dimensions.margin / 2,
+    paddingHorizontal: Dimensions.padding,
+    paddingVertical: Dimensions.padding,
+  },
   iconStyle: {
     height: Dimensions.margin * 1.25,
     width: Dimensions.margin * 1.25,
+  },
+  individualDateHeader: {
+    flex: 1,
+  },
+  individualDateHeaderContainer: {
+    // backgroundColor: "red",
+    flexDirection: "row",
+    // minWidth: 50,
   },
   individualViewContainer: {
     borderRadius: Dimensions.margin / 2,
@@ -859,6 +961,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: Dimensions.margin * 1.25,
     justifyContent: "space-between",
+    paddingHorizontal: Dimensions.padding,
   },
   searchInput: {
     color: palette.grey900,

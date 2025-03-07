@@ -30,7 +30,11 @@ const UserTab = () => {
   return (
     <View
       // showsVerticalScrollIndicator={false}
-      style={{ flex: 1, marginBottom: Dimensions.margin * 1.5 }}
+      style={{
+        flex: 1,
+        marginBottom: Dimensions.margin * 1.5,
+        paddingHorizontal: Dimensions.padding,
+      }}
     >
       <View style={styles.searchContainer}>
         <Searchbar

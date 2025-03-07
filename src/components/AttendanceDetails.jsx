@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Image,
-  Modal,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, Modal, SafeAreaView, StyleSheet, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { Appbar, DataTable, Searchbar, Switch, Text } from "react-native-paper";
 
@@ -28,9 +21,10 @@ const AttendanceDetails = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [valueOfFirstDropdown, setValueOfFirstDropdown] = useState();
   const [focusOfFirstDropdown, setFocusOfFirstDropdown] = useState();
-  const [isProgressSubjectFocus, setIsProgressSubjectFocus] = useState(false);
   const [items] = useState([]);
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    setSearchQuery(searchQuery);
+  };
   const handleSearchSubmit = () => {};
   const renderSearchIcon = () => (
     <Image source={require("../assets/icons/search.png")} style={styles.lens} />

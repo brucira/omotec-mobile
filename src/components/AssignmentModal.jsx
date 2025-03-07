@@ -13,12 +13,13 @@ import { Appbar, ProgressBar, Text } from "react-native-paper";
 
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
-import { Dimensions } from "../utils/constant";
+import { Dimensions, reviewData } from "../utils/constant";
 import { fileSchema } from "../utils/schema";
 import PrimaryButton from "./PrimaryButton";
+import Review from "./Review";
 import Tag from "./Tag";
 
-const AssignmentModal = ({ visible, hideModal }) => {
+const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
   const [file, setFile] = useState(null);
 
   const formatFileSize = useCallback((bytes) => {
@@ -60,11 +61,12 @@ const AssignmentModal = ({ visible, hideModal }) => {
   const handleDelete = () => {
     setFile(null);
   };
-  const onSavePress = () => {
+  const onSavePressHandler = () => {
     if (file) {
-      hideModal();
+      onSavePress();
     }
   };
+
   return (
     <Modal
       animationType="slide"
@@ -174,8 +176,19 @@ const AssignmentModal = ({ visible, hideModal }) => {
                 </View>
               </TouchableOpacity>
             )}
+            <View>
+              <Text variant="labelLarge">Remarks</Text>
+              <Review
+                date={reviewData.date}
+                description={reviewData.description}
+                name={reviewData.name}
+                profilePicture={reviewData.profilePicture}
+                rating={reviewData.rating}
+                remark={reviewData.remark}
+              />
+            </View>
           </View>
-          <Pressable onPress={onSavePress}>
+          <Pressable onPress={onSavePressHandler}>
             <PrimaryButton
               backgroundColor={
                 !file

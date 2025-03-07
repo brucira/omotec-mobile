@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, View } from "react-native";
 import { Appbar, Avatar, Badge, Chip, Text } from "react-native-paper";
 
 import CourseCard from "../../components/CourseCard";
@@ -85,8 +78,19 @@ const Home = ({ navigation }) => {
         <Appbar.Content
           title={
             <View>
-              <Text variant="headlineSmall">Hi Julian, 👋</Text>
-              <Text variant="labelMedium">Keep up the good work!</Text>
+              <View style={{ alignItems: "center", flexDirection: "row" }}>
+                <Text
+                  numberOfLines={1}
+                  style={{ maxWidth: "70%" }}
+                  variant="headlineSmall"
+                >
+                  Hi Julian
+                </Text>
+                <Text variant="headlineSmall">, 👋</Text>
+              </View>
+              <Text numberOfLines={1} variant="labelMedium">
+                Keep up the good work!
+              </Text>
             </View>
           }
         />

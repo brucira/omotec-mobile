@@ -13,7 +13,6 @@ import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
 import { Dimensions } from "../utils/constant";
 
-const PRESENT = "present";
 const StudentList = ({
   formattedDateTime,
   studentList,

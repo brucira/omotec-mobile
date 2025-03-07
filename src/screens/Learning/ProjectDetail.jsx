@@ -170,7 +170,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     backgroundColor: CombinedDefaultTheme.colors.background,
     flex: 1,
-    paddingHorizontal: Dimensions.padding,
   },
   customizeIcon: {
     height: Dimensions.margin * 1.5,
@@ -280,9 +279,10 @@ const styles = StyleSheet.create({
   },
   tabContentContainerStyle: {
     columnGap: 12,
-    flex: 1,
-    flexDirection: "row",
+    // flex: 1,
+    // flexDirection: "row",
     flexGrow: 1,
+    paddingRight: 32,
   },
   tabIconImage: {
     color: palette.grey400,

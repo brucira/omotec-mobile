@@ -142,6 +142,7 @@ const TaskCard = ({ ...items }) => {
       <AssignmentModal
         hideModal={() => setAssignmentVisible(false)}
         visible={assignmentVisible}
+        onSavePress={() => setAssignmentVisible(false)}
       />
     </>
   );

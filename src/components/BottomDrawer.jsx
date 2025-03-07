@@ -9,23 +9,33 @@ import { Image, StyleSheet, View } from "react-native";
 import { CombinedDefaultTheme } from "../styles/theme";
 import { Dimensions } from "../utils/constant";
 
-function RenderBackdropComponent({ backgroundColor }) {
+function RenderBackdropComponent({ backgroundColor, showIndicator }) {
   return (
     <View
       style={[styles.handleIndicator, { backgroundColor: backgroundColor }]}
     >
-      <Image
-        source={require("../assets/icons/handle_indicator.png")}
-        style={styles.indicatorIcon}
-      />
+      {showIndicator && (
+        <Image
+          source={require("../assets/icons/handle_indicator.png")}
+          style={styles.indicatorIcon}
+        />
+      )}
     </View>
   );
 }
 
 const BottomDrawer = forwardRef(
-  ({ children, onDismiss, backgroundColor, snapPoints }, ref) => {
+  (
+    { children, onDismiss, backgroundColor, snapPoints, showIndicator = true },
+    ref,
+  ) => {
     const HandleIndicator = () => {
-      return <RenderBackdropComponent backgroundColor={backgroundColor} />;
+      return (
+        <RenderBackdropComponent
+          backgroundColor={backgroundColor}
+          showIndicator={showIndicator}
+        />
+      );
     };
 
     return (
@@ -42,14 +52,14 @@ const BottomDrawer = forwardRef(
         )}
         enablePanDownToClose={true}
         handleComponent={HandleIndicator}
+        index={0}
         snapPoints={snapPoints}
         onDismiss={onDismiss}
       >
         <BottomSheetView>{children}</BottomSheetView>
       </BottomSheetModal>
     );
-    // eslint-disable-next-line prettier/prettier
-  }
+  },
 );
 
 const styles = StyleSheet.create({

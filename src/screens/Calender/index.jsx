@@ -72,6 +72,7 @@ const Calender = ({ navigation }) => {
   };
 
   const handleFilterModalPress = useCallback(() => {
+    setShowDropdown(false);
     bottomSheetModalRef.current?.present();
   }, []);
   const handleViewMap = (item, index) => {
@@ -356,7 +357,7 @@ const styles = StyleSheet.create({
     fontSize: 8,
     // left: "38%",
     position: "absolute",
-    top: "45%",
+    top: "40%",
   },
   divider: {
     marginVertical: Dimensions.margin,
