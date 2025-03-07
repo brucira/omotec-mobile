@@ -238,8 +238,8 @@ const styles = StyleSheet.create({
   backIconContainer: {
     left: SIZE_16 / 2,
     position: "absolute",
-    zIndex: 1,
     top: SIZE_16 * 0.75,
+    zIndex: 1,
   },
   iconContainer: {
     alignItems: "center",
