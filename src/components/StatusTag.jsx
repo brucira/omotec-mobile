@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-import palette from "../styles/palette";
 import { STATUS_COLORS } from "../utils/constant";
 import Tag from "./Tag";
 

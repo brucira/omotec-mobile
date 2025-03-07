@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Checkbox from "expo-checkbox";
 import React, { useCallback, useRef, useState } from "react";
-import { Controller, reset, useForm, useWatch } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
   FlatList,
   Image,

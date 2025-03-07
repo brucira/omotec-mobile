@@ -1,10 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   PermissionsAndroid,
   Platform,
-  Pressable,
   StyleSheet,
   TextInput,
   TouchableOpacity,

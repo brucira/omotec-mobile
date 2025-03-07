@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Appbar, Portal, Switch, Text } from "react-native-paper";
+import { Appbar, Switch, Text } from "react-native-paper";
 
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
@@ -51,9 +51,6 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
   const [attendanceVisible, setAttendanceVisible] = useState(false);
   const [studentListVisible, setStudentListVisible] = useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-  const hideAttendanceModal = () => setAttendanceVisible(false);
-  const [studentVisible, setStudentVisible] = useState(true);
-  const hideStudentHandler = () => setStudentVisible(false);
   const studentCount = Array.isArray(event.batchStudents)
     ? event.batchStudents.length
     : 0;

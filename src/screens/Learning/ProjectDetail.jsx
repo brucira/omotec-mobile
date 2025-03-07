@@ -1,6 +1,6 @@
 import { useRoute } from "@react-navigation/native";
 import React, { useMemo, useState } from "react";
-import { FlatList, Image, ScrollView, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { Appbar, Button, Text } from "react-native-paper";
 
 import palette from "../../styles/palette";

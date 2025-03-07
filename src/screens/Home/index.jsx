@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, View } from "react-native";
 import { Appbar, Avatar, Badge, Chip, Text } from "react-native-paper";
 
 import CourseCard from "../../components/CourseCard";

@@ -58,7 +58,6 @@ const NoteContent = () => {
   const [sortBy, setSortBy] = useState("recent");
   const [addingNote, setAddingNote] = useState(false);
   const plusIcon = require("../../assets/icons/plus.png");
-  const [editorState, setEditorState] = useState(null);
   const [plainText, setPlainText] = useState("");
   const [noteList, setNoteList] = useState(NOTE_ITEM);
   const handleEditorChange = async () => {

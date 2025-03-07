@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ProgressBar, Text } from "react-native-paper";
 
-import { DIRECTION, JUSTIFY, RESIZE_MODE } from "../../styles/constStyle";
+import { DIRECTION, JUSTIFY } from "../../styles/constStyle";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import { Dimensions, REVIEW_LIST, STAR_LIST } from "../../utils/constant";

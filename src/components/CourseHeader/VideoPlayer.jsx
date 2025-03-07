@@ -1,4 +1,4 @@
-import { useEvent } from "expo";
+// import { useEvent } from "expo";
 import { useVideoPlayer, VideoView } from "expo-video";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -15,9 +15,9 @@ const VideoPlayer = ({ url, containerStyle = {}, playerStyle = {} }) => {
     player.play();
   });
 
-  const { isPlaying, oldIsPlaying } = useEvent(player, "playingChange", {
-    isPlaying: player.playing,
-  });
+  // const { isPlaying, oldIsPlaying } = useEvent(player, "playingChange", {
+  //   isPlaying: player.playing,
+  // });
 
   return (
     <View style={[styles.contentContainer, containerStyle]}>
