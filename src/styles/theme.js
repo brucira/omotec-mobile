@@ -12,6 +12,42 @@ const fontConfig = {
     latterSpacing: 0,
     lineHeight: 16,
   },
+  custom500_10: {
+    fontFamily: Platform.select({
+      android: "Inter_500Medium",
+      ios: "Inter-Medium",
+    }),
+    fontSize: 10,
+    latterSpacing: 0,
+    lineHeight: 12,
+  },
+  custom600_12: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 12,
+    latterSpacing: -0.5,
+    lineHeight: 20,
+  },
+  custom600_16: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 16,
+    letterSpacing: 0,
+    lineHeight: 24,
+  },
+  custom600_24: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 24,
+    letterSpacing: 0,
+    lineHeight: 32,
+  },
   custom700: {
     fontFamily: Platform.select({
       android: "Inter_700Bold",

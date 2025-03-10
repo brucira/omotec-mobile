@@ -21,6 +21,7 @@ const TopTab = ({ activeTab, setActiveTab, tabData }) => {
             style={
               activeTab === tab.city ? styles.activeTabText : styles.tabText
             }
+            variant="labelLarge"
           >
             {tab.city}
           </Text>
@@ -59,6 +60,7 @@ const styles = StyleSheet.create({
     color: CombinedDefaultTheme.colors.primary,
     fontSize: 16,
     fontWeight: "bold",
+    letterSpacing: 0,
   },
   inactiveTab: {
     borderBottomWidth: 0,
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
   tabText: {
     color: CombinedDefaultTheme.colors.tertiary,
     fontSize: Dimensions.margin,
+    letterSpacing: 0,
   },
   tabs: {
     backgroundColor: CombinedDefaultTheme.colors.background,

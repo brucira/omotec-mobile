@@ -26,7 +26,7 @@ const chartConfig = {
   propsForHorizontalLabels: {
     fill: palette.grey500,
     fontSize: 10,
-    fontWeight: "bold",
+    fontWeight: "500",
     rotation: 0,
   },
   propsForVerticalLabels: {
@@ -34,7 +34,7 @@ const chartConfig = {
     // dx: 34,
     fill: palette.grey500,
     fontSize: 10,
-    fontWeight: "bold",
+    fontWeight: "500",
     rotation: 0,
   },
   strokeWidth: 3,

@@ -82,14 +82,17 @@ const Home = ({ navigation }) => {
               <View style={{ alignItems: "center", flexDirection: "row" }}>
                 <Text
                   numberOfLines={1}
-                  style={{ maxWidth: "70%" }}
-                  variant="headlineSmall"
+                  style={{ color: palette.grey900, maxWidth: "70%" }}
+                  variant="custom600_24"
                 >
-                  Hi Julian
+                  <Text variant="headlineSmall">Hi,</Text> Julian 👋
                 </Text>
-                <Text variant="headlineSmall">, 👋</Text>
               </View>
-              <Text numberOfLines={1} variant="labelMedium">
+              <Text
+                numberOfLines={1}
+                style={{ color: palette.grey600, letterSpacing: 0 }}
+                variant="bodySmall"
+              >
                 Keep up the good work!
               </Text>
             </View>
@@ -124,11 +127,10 @@ const Home = ({ navigation }) => {
         </View>
         <View style={styles.containerBox}>
           <View style={styles.contentHeadingContainer}>
-            <Text variant="titleLarge">Ongoing courses</Text>
-            <Text
-              style={{ color: CombinedDefaultTheme.colors.primary }}
-              variant="titleSmall"
-            >
+            <Text style={{ color: palette.grey900 }} variant="custom700_18">
+              Ongoing courses
+            </Text>
+            <Text style={styles.viewAll} variant="labelLarge">
               View all
             </Text>
           </View>
@@ -145,11 +147,10 @@ const Home = ({ navigation }) => {
         </View>
         <View style={styles.containerBox}>
           <View style={styles.calendarHeadingContainer}>
-            <Text variant="titleLarge">Daily Calendar</Text>
-            <Text
-              style={{ color: CombinedDefaultTheme.colors.primary }}
-              variant="titleSmall"
-            >
+            <Text style={{ color: palette.grey900 }} variant="custom700_18">
+              Daily Calendar
+            </Text>
+            <Text style={styles.viewAll} variant="labelLarge">
               View all
             </Text>
           </View>
@@ -171,11 +172,10 @@ const Home = ({ navigation }) => {
         </View>
         <View style={styles.containerBox}>
           <View style={styles.contentHeadingContainer}>
-            <Text variant="titleLarge">To-do List</Text>
-            <Text
-              style={{ color: CombinedDefaultTheme.colors.primary }}
-              variant="titleSmall"
-            >
+            <Text style={{ color: palette.grey900 }} variant="custom700_18">
+              To-do List
+            </Text>
+            <Text style={styles.viewAll} variant="labelLarge">
               View all
             </Text>
           </View>
@@ -185,11 +185,10 @@ const Home = ({ navigation }) => {
         </View>
         <View style={styles.containerBox}>
           <View style={styles.calendarHeadingContainer}>
-            <Text variant="titleLarge">Analytics</Text>
-            <Text
-              style={{ color: CombinedDefaultTheme.colors.primary }}
-              variant="titleSmall"
-            >
+            <Text style={{ color: palette.grey900 }} variant="custom700_18">
+              Analytics
+            </Text>
+            <Text style={styles.viewAll} variant="labelLarge">
               View all
             </Text>
           </View>
@@ -267,8 +266,11 @@ const Home = ({ navigation }) => {
           <View style={{}}>
             <View style={{}}>
               <Text
-                style={{ color: CombinedDefaultTheme.colors.background }}
-                variant="labelMedium"
+                style={{
+                  color: CombinedDefaultTheme.colors.background,
+                  lineHeight: Dimensions.margin,
+                }}
+                variant="custom600_12"
               >
                 Offer Alert!
               </Text>
@@ -379,6 +381,10 @@ const styles = StyleSheet.create({
   todoContainer: {
     gap: Dimensions.padding / 1.3,
     paddingRight: Dimensions.padding,
+  },
+  viewAll: {
+    color: CombinedDefaultTheme.colors.primary,
+    letterSpacing: 0,
   },
 });
 

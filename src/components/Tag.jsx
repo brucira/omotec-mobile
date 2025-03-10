@@ -16,7 +16,7 @@ const Tag = ({ iconSource, label, backgroundColor, textColor }) => {
           tintColor={textColor}
         />
       )}
-      <Text style={[{ color: textColor }]} variant="labelSmall">
+      <Text style={[{ color: textColor }]} variant="custom500_10">
         {label}
       </Text>
     </View>

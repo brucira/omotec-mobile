@@ -15,7 +15,7 @@ const CalendarCard = ({ item }) => {
         <Image source={item.gradient} style={styles.gradient} />
         <View style={styles.dailyCourseCardContent}>
           <View>
-            <Text numberOfLines={1} style={styles.title} variant="titleMedium">
+            <Text numberOfLines={1} style={styles.title} variant="custom600_16">
               UI/UX Design Course
             </Text>
             <View style={styles.subHeading}>
@@ -54,7 +54,10 @@ const CalendarCard = ({ item }) => {
                 style={styles.avatarOverlap}
               />
             </View>
-            <Text style={{ color: palette.grey700 }} variant="bodySmall">
+            <Text
+              style={{ color: palette.grey700, letterSpacing: 0 }}
+              variant="bodySmall"
+            >
               {" "}
               + 57 Others
             </Text>
@@ -138,6 +141,7 @@ const styles = StyleSheet.create({
   },
   timeAndLocation: {
     color: palette.grey600,
+    letterSpacing: 0,
   },
   title: {
     color: palette.grey900,
