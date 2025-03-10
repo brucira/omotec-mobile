@@ -3,7 +3,32 @@ import { Platform } from "react-native";
 import { configureFonts, MD3LightTheme } from "react-native-paper";
 
 const fontConfig = {
-  customVariant900: {
+  custom100_12: {
+    fontFamily: Platform.select({
+      android: "Inter_100Thin",
+      ios: "Inter-Thin",
+    }),
+    fontSize: 12,
+    latterSpacing: 0,
+    lineHeight: 16,
+  },
+  custom700: {
+    fontFamily: Platform.select({
+      android: "Inter_700Bold",
+      ios: "Inter-Bold",
+    }),
+    latterSpacing: 0,
+  },
+  custom700_18: {
+    fontFamily: Platform.select({
+      android: "Inter_700Bold",
+      ios: "Inter-Bold",
+    }),
+    fontSize: 18,
+    latterSpacing: 0,
+    lineHeight: 28,
+  },
+  custom900: {
     fontFamily: Platform.select({
       android: "Inter_900Black",
       ios: "Inter-Black",

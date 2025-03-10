@@ -116,14 +116,16 @@ const CourseDetail = () => {
       <Image source={bannerImage} style={styles.bannerImage} />
       <View style={styles.detailsContainer}>
         <View style={styles.coursetitleContainer}>
-          <Text style={styles.titleText}>Your Creative peak</Text>
+          <Text style={styles.titleText} variant="custom700_18">
+            Your Creative peak
+          </Text>
           <Text style={styles.subText} variant="bodySmall">
             8 Sessions
-            <Text style={styles.spanDot} variant="labelMedium">
+            <Text style={styles.spanDot} variant="custom100_12">
               &nbsp;•&nbsp;
             </Text>
             30 mins of video left
-            <Text style={styles.spanDot} variant="labelMedium">
+            <Text style={styles.spanDot} variant="custom100_12">
               &nbsp;•&nbsp;
             </Text>
             40 mins of reading left
@@ -182,7 +184,6 @@ const styles = StyleSheet.create({
   },
   spanDot: {
     color: palette.grey600,
-    fontWeight: 100,
   },
   subText: {
     color: palette.grey600,
