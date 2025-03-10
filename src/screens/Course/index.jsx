@@ -8,101 +8,23 @@ import { RESIZE_MODE, SIZE } from "../../styles/constStyle";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
 import {
-  ACCORDIOM_ITEM_ICON,
-  ACCORDIOM_ITEM_TYPE,
   Dimensions,
   RouteNames,
+  SESSION_1,
+  SESSION_2,
 } from "../../utils/constant";
 
 const CourseDetail = () => {
   const bannerImage = require("../../assets/course_details_banner.png");
-  const checkCircle = require("../../assets/icons/check_circle.png");
-  const statusCircle = require("../../assets/icons/status.png");
   const backIcon = require("../../assets/icons/chevron_left.png");
-  const statusPurpleCircle = require("../../assets/icons/status_purple.png");
   const navigation = useNavigation();
 
   const navigationHandler = (type) => {
     navigation.navigate(RouteNames.CoursePreview, { type: type || null });
   };
 
-  const SessionItems1 = {
-    description: "1/4 | 28min",
-    items: [
-      {
-        descriptionIcon: ACCORDIOM_ITEM_ICON.text,
-        leftIcon: checkCircle,
-        text: "5 Min",
-        title: "Welcome to Employee Training 101",
-        type: ACCORDIOM_ITEM_TYPE.OVERVIEW,
-      },
-      {
-        descriptionIcon: ACCORDIOM_ITEM_ICON.video,
-        leftIcon: statusPurpleCircle,
-        selected: true,
-        showResource: true,
-        text: "5 Min",
-        title: "Welcome to Employee Training?",
-        type: ACCORDIOM_ITEM_TYPE.VIDEO,
-      },
-      {
-        descriptionIcon: ACCORDIOM_ITEM_ICON.video,
-        leftIcon: statusCircle,
-        text: "5 Min",
-        title: "Course Video",
-      },
-      {
-        descriptionIcon: ACCORDIOM_ITEM_ICON.reading,
-        leftIcon: statusCircle,
-        text: "Reading",
-        title: "Reading PDF",
-        type: ACCORDIOM_ITEM_TYPE.READING,
-      },
-      {
-        descriptionIcon: ACCORDIOM_ITEM_ICON.weblink,
-        leftIcon: statusCircle,
-        text: "Web link",
-        title: "How to Set Up an Employee Training Plan",
-        type: ACCORDIOM_ITEM_TYPE.WEBLINK,
-      },
-    ],
-    title: "Session 1",
-  };
-
-  const SessionItems2 = {
-    description: "1/4 | 28min",
-    items: [
-      {
-        descriptionIcon: ACCORDIOM_ITEM_ICON.video,
-        leftIcon: statusCircle,
-        text: "6 Min",
-        title: "What is Employee Training?",
-        type: ACCORDIOM_ITEM_TYPE.VIDEO,
-      },
-      {
-        descriptionIcon: ACCORDIOM_ITEM_ICON.test,
-        leftIcon: statusCircle,
-        text: "15 Min",
-        title: "Test",
-        type: ACCORDIOM_ITEM_TYPE.TEST,
-      },
-      {
-        descriptionIcon: ACCORDIOM_ITEM_ICON.assignment,
-        leftIcon: statusCircle,
-        text: "45 Min",
-        title: "Assignment",
-        type: ACCORDIOM_ITEM_TYPE.ASSIGNMENT,
-      },
-      {
-        descriptionIcon: ACCORDIOM_ITEM_ICON.weblink,
-        leftIcon: statusCircle,
-        text: "45 Min",
-        title: "About the Critique Framework",
-        type: ACCORDIOM_ITEM_TYPE.WEBLINK,
-      },
-    ],
-    title: "Session 2",
-  };
+  const [session1, setSession1] = React.useState(SESSION_1);
+  const [session2, setSession2] = React.useState(SESSION_2);
 
   return (
     <View style={styles.container}>
@@ -133,11 +55,13 @@ const CourseDetail = () => {
         </View>
         <ScrollView style={styles.sessionsContainer}>
           <ListAccordion
-            listData={SessionItems1}
+            listData={session1}
+            updateData={setSession1}
             onItemPress={navigationHandler}
           ></ListAccordion>
           <ListAccordion
-            listData={SessionItems2}
+            listData={session2}
+            updateData={setSession2}
             onItemPress={navigationHandler}
           ></ListAccordion>
         </ScrollView>
