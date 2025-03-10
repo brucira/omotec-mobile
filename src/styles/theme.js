@@ -2,6 +2,16 @@ import merge from "deepmerge";
 import { Platform } from "react-native";
 import { configureFonts, MD3LightTheme } from "react-native-paper";
 
+const fontConfig = {
+  customVariant900: {
+    fontFamily: Platform.select({
+      android: "Inter_900Black",
+      ios: "Inter-Black",
+    }),
+    lineHeight: 42,
+  },
+};
+
 const themeObj = {
   animation: {
     scale: 1.0,
@@ -61,72 +71,7 @@ const themeObj = {
   },
   dark: false,
   fonts: configureFonts({
-    config: {
-      bodySmall: {
-        fontFamily: Platform.select({
-          android: "Inter_400Regular",
-          ios: "Inter-Regular",
-        }),
-        fontWeight: "400",
-        letterSpacing: 0.5,
-      },
-      default: {
-        fontFamily: Platform.select({
-          android: "Inter_400Regular",
-          ios: "Inter-Regular",
-        }),
-        fontWeight: "400",
-      },
-      headlineLarge: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter_500Medium",
-        }),
-        fontWeight: "700",
-        letterSpacing: 0,
-      },
-      headlineMedium: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter_500Medium",
-        }),
-        fontWeight: "800",
-        letterSpacing: 0,
-      },
-      headlineSmall: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter_500Medium",
-        }),
-        fontWeight: "800",
-        letterSpacing: 0,
-        lineHeight: 42,
-      },
-      labelMedium: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter-Medium",
-        }),
-        fontWeight: "500",
-        letterSpacing: 0,
-      },
-      titleLarge: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter_500Medium",
-        }),
-        fontWeight: "700",
-        letterSpacing: 0,
-      },
-      titleMedium: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter-Medium",
-        }),
-        fontWeight: "500",
-        letterSpacing: 0,
-      },
-    },
+    config: fontConfig,
   }),
   isV3: true,
   roundness: 4,

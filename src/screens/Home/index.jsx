@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { Appbar, Avatar, Badge, Chip } from "react-native-paper";
+import { FlatList, Image, ScrollView, StyleSheet, View } from "react-native";
+import { Appbar, Avatar, Badge, Chip, Text } from "react-native-paper";
 
 import CourseCard from "../../components/CourseCard";
+import CustomText from "../../components/CustomText";
 import TopTab from "../../components/TopTab";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";
@@ -86,11 +80,10 @@ const Home = ({ navigation }) => {
           title={
             <View>
               <View style={{ alignItems: "center", flexDirection: "row" }}>
-                //TODO chnage font to paper font & varient same figma
                 <Text
                   numberOfLines={1}
-                  style={{ fontFamily: "Inter_900Black", maxWidth: "70%" }}
-                  // variant="headlineSmall"
+                  style={{ maxWidth: "70%" }}
+                  variant="headlineSmall"
                 >
                   Hi Julian
                 </Text>
