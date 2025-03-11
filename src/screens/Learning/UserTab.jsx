@@ -8,7 +8,7 @@ import UserCard from "./UserCard";
 
 const UserTab = () => {
   const keyExtractor = (item) => item.id.toString();
-  const itemSeperator = () => <View style={styles.itemSeparator} />;
+  // const itemSeperator = () => <View style={styles.itemSeparator} />;
   const renderItem = useCallback(
     ({ item }) => <UserCard {...item} />,
     // eslint-disable-next-line prettier/prettier
@@ -32,7 +32,6 @@ const UserTab = () => {
       // showsVerticalScrollIndicator={false}
       style={{
         flex: 1,
-        marginBottom: Dimensions.margin * 1.5,
         paddingHorizontal: Dimensions.padding,
       }}
     >
@@ -49,7 +48,7 @@ const UserTab = () => {
       <FlatList
         contentContainerStyle={styles.arrowIndicator}
         data={projectDetailUserTabData}
-        ItemSeparatorComponent={itemSeperator}
+        // ItemSeparatorComponent={itemSeperator}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         // scrollEnabled={false}

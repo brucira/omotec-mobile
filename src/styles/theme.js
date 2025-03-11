@@ -2,6 +2,194 @@ import merge from "deepmerge";
 import { Platform } from "react-native";
 import { configureFonts, MD3LightTheme } from "react-native-paper";
 
+const fontConfig = {
+  custom100_12: {
+    fontFamily: Platform.select({
+      android: "Inter_100Thin",
+      ios: "Inter-Thin",
+    }),
+    fontSize: 12,
+    latterSpacing: 0,
+    lineHeight: 16,
+  },
+  custom400_10: {
+    fontFamily: Platform.select({
+      android: "Inter_400Regular",
+      ios: "Inter-Regular",
+    }),
+    fontSize: 10,
+    latterSpacing: 0,
+    lineHeight: 16,
+  },
+  custom400_12: {
+    fontFamily: Platform.select({
+      android: "Inter_400Regular",
+      ios: "Inter-Regular",
+    }),
+    fontSize: 12,
+    latterSpacing: 0,
+    lineHeight: 16,
+  },
+  custom400_14: {
+    fontFamily: Platform.select({
+      android: "Inter_400Regular",
+      ios: "Inter-Regular",
+    }),
+    fontSize: 14,
+    latterSpacing: 0,
+    lineHeight: 20,
+  },
+  custom400_18: {
+    fontFamily: Platform.select({
+      android: "Inter_400Regular",
+      ios: "Inter-Regular",
+    }),
+    fontSize: 18,
+    latterSpacing: 0,
+    lineHeight: 28,
+  },
+  custom500_10: {
+    fontFamily: Platform.select({
+      android: "Inter_500Medium",
+      ios: "Inter-Medium",
+    }),
+    fontSize: 10,
+    latterSpacing: 0,
+    lineHeight: 12,
+  },
+  custom500_12: {
+    fontFamily: Platform.select({
+      android: "Inter_500Medium",
+      ios: "Inter-Medium",
+    }),
+    fontSize: 12,
+    latterSpacing: 0,
+    lineHeight: 14,
+  },
+  custom500_14: {
+    fontFamily: Platform.select({
+      android: "Inter_500Medium",
+      ios: "Inter-Medium",
+    }),
+    fontSize: 14,
+    latterSpacing: 0,
+    lineHeight: 20,
+  },
+  custom500_18: {
+    fontFamily: Platform.select({
+      android: "Inter_500Medium",
+      ios: "Inter-Medium",
+    }),
+    fontSize: 18,
+    latterSpacing: 0,
+    lineHeight: 28,
+  },
+  custom600_10: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 10,
+    latterSpacing: -0.5,
+    lineHeight: 12,
+  },
+  custom600_12: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 12,
+    latterSpacing: -0.5,
+    lineHeight: 20,
+  },
+  custom600_14: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 14,
+    latterSpacing: 0,
+    lineHeight: 20,
+  },
+  custom600_16: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 16,
+    letterSpacing: 0,
+    lineHeight: 24,
+  },
+  custom600_18: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 18,
+    letterSpacing: 0,
+    lineHeight: 28,
+  },
+  custom600_20: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 20,
+    letterSpacing: 0,
+    lineHeight: 32,
+  },
+  custom600_24: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 24,
+    letterSpacing: 0,
+    lineHeight: 32,
+  },
+  custom600_8: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 8,
+    letterSpacing: 0,
+    lineHeight: 8,
+  },
+  custom700: {
+    fontFamily: Platform.select({
+      android: "Inter_700Bold",
+      ios: "Inter-Bold",
+    }),
+    latterSpacing: 0,
+  },
+  custom700_18: {
+    fontFamily: Platform.select({
+      android: "Inter_700Bold",
+      ios: "Inter-Bold",
+    }),
+    fontSize: 18,
+    latterSpacing: 0,
+    lineHeight: 28,
+  },
+  custom700_28: {
+    fontFamily: Platform.select({
+      android: "Inter_700Bold",
+      ios: "Inter-Bold",
+    }),
+    fontSize: 28,
+    latterSpacing: 0,
+    lineHeight: 36,
+  },
+  custom900: {
+    fontFamily: Platform.select({
+      android: "Inter_900Black",
+      ios: "Inter-Black",
+    }),
+    lineHeight: 42,
+  },
+};
+
 const themeObj = {
   animation: {
     scale: 1.0,
@@ -61,72 +249,7 @@ const themeObj = {
   },
   dark: false,
   fonts: configureFonts({
-    config: {
-      bodySmall: {
-        fontFamily: Platform.select({
-          android: "Inter_400Regular",
-          ios: "Inter-Regular",
-        }),
-        fontWeight: "400",
-        letterSpacing: 0.5,
-      },
-      default: {
-        fontFamily: Platform.select({
-          android: "Inter_400Regular",
-          ios: "Inter-Regular",
-        }),
-        fontWeight: "400",
-      },
-      headlineLarge: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter_500Medium",
-        }),
-        fontWeight: "700",
-        letterSpacing: 0,
-      },
-      headlineMedium: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter_500Medium",
-        }),
-        fontWeight: "800",
-        letterSpacing: 0,
-      },
-      headlineSmall: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter_500Medium",
-        }),
-        fontWeight: "800",
-        letterSpacing: 0,
-        lineHeight: 42,
-      },
-      labelMedium: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter-Medium",
-        }),
-        fontWeight: "500",
-        letterSpacing: 0,
-      },
-      titleLarge: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter_500Medium",
-        }),
-        fontWeight: "700",
-        letterSpacing: 0,
-      },
-      titleMedium: {
-        fontFamily: Platform.select({
-          android: "Inter_500Medium",
-          ios: "Inter-Medium",
-        }),
-        fontWeight: "500",
-        letterSpacing: 0,
-      },
-    },
+    config: fontConfig,
   }),
   isV3: true,
   roundness: 4,

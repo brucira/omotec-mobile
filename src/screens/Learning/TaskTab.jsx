@@ -111,11 +111,14 @@ const TaskTab = ({ activeTab }) => {
   const renderEvent = (event, touchableOpacityProps) => {
     return (
       <TouchableOpacity {...touchableOpacityProps} key={event}>
-        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
+        <Text
+          style={{
+            color: CombinedDefaultTheme.colors.background,
+            lineHeight: Dimensions.margin,
+          }}
+          variant="custom600_12"
+        >
           {event.title}
-        </Text>
-        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
-          {event.subtitle}
         </Text>
       </TouchableOpacity>
     );
@@ -196,20 +199,26 @@ const TaskTab = ({ activeTab }) => {
             return (
               <View key={index} style={styles.individualDateHeader}>
                 <Text
-                  style={{
-                    color: activeDate
-                      ? CombinedDefaultTheme.colors.primary
-                      : palette.grey500,
-                  }}
+                  style={[
+                    {
+                      color: activeDate
+                        ? CombinedDefaultTheme.colors.primary
+                        : palette.grey500,
+                    },
+                    styles.headerCalendarHeader,
+                  ]}
                   variant="bodySmall"
                 >
                   {`${dayLetter}`}{" "}
                   <Text
-                    style={{
-                      color: activeDate
-                        ? CombinedDefaultTheme.colors.primary
-                        : palette.grey800,
-                    }}
+                    style={[
+                      {
+                        color: activeDate
+                          ? CombinedDefaultTheme.colors.primary
+                          : palette.grey800,
+                      },
+                      styles.headerCalendarHeader,
+                    ]}
                     variant="bodySmall"
                   >{`${dayNumber}`}</Text>{" "}
                 </Text>
@@ -244,21 +253,28 @@ const TaskTab = ({ activeTab }) => {
     // eslint-disable-next-line prettier/prettier
     []
   );
+  const renderRightIcon = () => (
+    <Image
+      source={require("../../assets/icons/mic.png")}
+      style={styles.lens}
+      tintColor={palette.grey500}
+    />
+  );
   const renderSearchIcon = () => (
     <Image
       source={require("../../assets/icons/search.png")}
-      style={styles.lens}
+      style={styles.searchLens}
     />
   );
   return (
-    <View style={{ flex: 1, marginBottom: Dimensions.margin * 1.5 }}>
+    <View style={{ flex: 1 }}>
       <View style={styles.searchContainer}>
         <Searchbar
           icon={renderSearchIcon}
           inputStyle={styles.searchInput}
           placeholder="Search"
           placeholderTextColor={palette.grey400}
-          //   right={renderRightIcon}
+          right={showCalendarLayout ? renderRightIcon : null}
           style={styles.searchBar}
         />
         <View style={{ flexDirection: "row", gap: Dimensions.margin * 1.25 }}>
@@ -271,7 +287,7 @@ const TaskTab = ({ activeTab }) => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={handleLayoutChange}>
-              <Text style={styles.dateInCalendar}>
+              <Text style={styles.dateInCalendar} variant="custom600_8">
                 {new Date(today).getUTCDate()}
               </Text>
               <Image
@@ -294,7 +310,7 @@ const TaskTab = ({ activeTab }) => {
         <FlatList
           contentContainerStyle={styles.arrowIndicator}
           data={projectDetailTaskTabData}
-          ItemSeparatorComponent={itemSeperator}
+          // ItemSeparatorComponent={itemSeperator}
           keyExtractor={keyExtractor}
           renderItem={renderTaskItem}
           showsVerticalScrollIndicator={false}
@@ -353,9 +369,10 @@ const TaskTab = ({ activeTab }) => {
                       color:
                         activeBottomItem === VIEW
                           ? CombinedDefaultTheme.colors.primary
-                          : palette.grey700,
+                          : palette.grey900,
                     },
                   ]}
+                  variant="labelLarge"
                 >
                   View
                 </Text>
@@ -387,9 +404,10 @@ const TaskTab = ({ activeTab }) => {
                       color:
                         activeBottomItem === DELETE
                           ? CombinedDefaultTheme.colors.primary
-                          : palette.grey700,
+                          : palette.grey900,
                     },
                   ]}
+                  variant="labelLarge"
                 >
                   Delete
                 </Text>
@@ -421,9 +439,10 @@ const TaskTab = ({ activeTab }) => {
                       color:
                         activeBottomItem === DUPLICATE
                           ? CombinedDefaultTheme.colors.primary
-                          : palette.grey700,
+                          : palette.grey900,
                     },
                   ]}
+                  variant="labelLarge"
                 >
                   Duplicate
                 </Text>
@@ -455,9 +474,10 @@ const TaskTab = ({ activeTab }) => {
                       color:
                         activeBottomItem === ISSUE
                           ? CombinedDefaultTheme.colors.primary
-                          : palette.grey700,
+                          : palette.grey900,
                     },
                   ]}
+                  variant="labelLarge"
                 >
                   Issue
                 </Text>
@@ -480,10 +500,14 @@ const TaskTab = ({ activeTab }) => {
 
       <BottomDrawer ref={bottomSheetModalRef}>
         <View style={styles.bottomSheetContainer}>
-          <Text variant="titleMedium">Sort & Filters</Text>
+          <Text style={{ color: palette.grey900 }} variant="custom600_18">
+            Sort & Filters
+          </Text>
           <View style={styles.sortAndFilterContainer}>
             <View>
-              <Text variant="labelSmall">SORT BY</Text>
+              <Text style={styles.subHeading} variant="labelSmall">
+                SORT BY
+              </Text>
               <View
                 style={{
                   marginTop: Dimensions.margin / 2.66,
@@ -512,7 +536,7 @@ const TaskTab = ({ activeTab }) => {
                             ? CombinedDefaultTheme.colors.primary
                             : palette.grey900,
                         }}
-                        variant="titleSmall"
+                        variant="labelLarge"
                       >
                         Status
                       </Text>
@@ -544,7 +568,7 @@ const TaskTab = ({ activeTab }) => {
                             ? CombinedDefaultTheme.colors.primary
                             : palette.grey900,
                         }}
-                        variant="titleSmall"
+                        variant="labelLarge"
                       >
                         Modified on
                       </Text>
@@ -561,7 +585,9 @@ const TaskTab = ({ activeTab }) => {
                 paddingTop: Dimensions.margin * 1.25,
               }}
             >
-              <Text variant="labelSmall">FILTERS</Text>
+              <Text style={styles.subHeading} variant="labelSmall">
+                FILTERS
+              </Text>
 
               {Platform.OS === "ios" && isPickerShow && (
                 <Modal transparent animationType="fade" visible={isPickerShow}>
@@ -593,7 +619,7 @@ const TaskTab = ({ activeTab }) => {
               <Controller
                 render={({ field: { value } }) => (
                   <Pressable onPress={() => showPicker("startDate")}>
-                    <Text variant="titleSmall">Start Date</Text>
+                    <Text variant="labelLarge">Start Date</Text>
                     <Surface
                       elevation={Platform.OS === "ios" ? 6 : null}
                       mode="flat"
@@ -627,7 +653,7 @@ const TaskTab = ({ activeTab }) => {
               <Controller
                 render={({ field: { value } }) => (
                   <Pressable onPress={() => showPicker("endDate")}>
-                    <Text variant="titleSmall">Due Date</Text>
+                    <Text variant="labelLarge">Due Date</Text>
                     <Surface
                       elevation={Platform.OS === "ios" ? 6 : null}
                       mode="flat"
@@ -707,7 +733,7 @@ const TaskTab = ({ activeTab }) => {
                 />
               </View>
               <View>
-                <Text variant="titleSmall">Status</Text>
+                <Text variant="labelLarge">Status</Text>
                 <Controller
                   render={({ field: { onChange, value } }) => (
                     <Surface
@@ -857,7 +883,7 @@ const styles = StyleSheet.create({
     fontSize: 8,
     // left: "38%",
     position: "absolute",
-    top: "40%",
+    top: "52%",
   },
   datePicker: {
     // backgroundColor: "red",
@@ -876,6 +902,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: Dimensions.padding,
     paddingVertical: Dimensions.padding * 1.25,
+  },
+  headerCalendarHeader: {
+    lineHeight: Dimensions.margin / 1.33,
+    paddingTop: Dimensions.padding / 4,
   },
   headerContainer: {
     // backgroundColor: "red",
@@ -913,13 +943,13 @@ const styles = StyleSheet.create({
     width: Dimensions.margin / 1.5,
   },
   lens: {
-    height: Dimensions.margin * 1.25,
-    left: Dimensions.margin / 4,
-    marginLeft: 0,
+    height: Dimensions.margin,
+    marginLeft: Dimensions.padding / 4,
     paddingLeft: 0,
-    position: "absolute",
+    // position: "absolute",
     resizeMode: "contain",
-    width: Dimensions.margin * 1.25,
+    right: Dimensions.margin,
+    width: Dimensions.margin,
   },
   modalContainer: {
     alignItems: "center",
@@ -973,6 +1003,15 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     position: "relative",
   },
+  searchLens: {
+    height: Dimensions.margin * 1.25,
+    left: Dimensions.margin / 4,
+    marginLeft: 0,
+    paddingLeft: 0,
+    position: "absolute",
+    resizeMode: "contain",
+    width: Dimensions.margin * 1.25,
+  },
   selectedTextStyle: {
     fontSize: 14,
   },
@@ -983,6 +1022,10 @@ const styles = StyleSheet.create({
   sortAndFilterContainer: {
     marginTop: Dimensions.margin / 2,
     paddingVertical: Dimensions.padding,
+  },
+  subHeading: {
+    color: palette.grey500,
+    lineHeight: Dimensions.margin / 1.33,
   },
   surface: {
     backgroundColor: CombinedDefaultTheme.colors.background,

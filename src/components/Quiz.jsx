@@ -27,7 +27,7 @@ const Quiz = ({ visible, hideModal, submitMoal }) => {
           <Appbar.Content
             title={
               <View>
-                <Text style={styles.headerContent} variant="titleSmall">
+                <Text style={styles.headerContent} variant="custom600_14">
                   Test:
                 </Text>
                 <Text style={styles.headerContent} variant="bodyMedium">
@@ -45,24 +45,28 @@ const Quiz = ({ visible, hideModal, submitMoal }) => {
         </Appbar>
         <View style={styles.contentContainer}>
           <View style={styles.remainingTimeContainer}>
-            <Text>Time Remaining:</Text>
+            <Text variant="bodySmall">Time Remaining:</Text>
             <Tag
               backgroundColor={palette.grey200}
               label={"00:25:30"}
               textColor={palette.grey700}
+              variant={"labelMedium"}
             />
           </View>
           <View style={styles.questionsContainer}>
-            <Text style={{ color: palette.grey900 }} variant="labelMedium">
+            <Text
+              style={{ color: palette.grey900, lineHeight: Dimensions.margin }}
+              variant="custom600_12"
+            >
               Instruction{" "}
-              <Text style={{ color: palette.grey500 }} variant="labelMedium">
+              <Text style={{ color: palette.grey600 }} variant="bodySmall">
                 Look at the following image and read the accompanying
                 description. Then, answer the question that follows:
               </Text>
             </Text>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{ rowGap: 16 }}
+              style={{ marginTop: Dimensions.margin * 1.5, rowGap: 16 }}
             >
               <FlatList
                 data={testData}

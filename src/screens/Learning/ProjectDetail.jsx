@@ -99,7 +99,11 @@ const ProjectDetail = ({ navigation }) => {
         />
         <Appbar.Content
           title={
-            <Text numberOfLines={2} variant="titleMedium">
+            <Text
+              numberOfLines={3}
+              style={{ color: palette.grey900 }}
+              variant="custom600_14"
+            >
               {title}
             </Text>
           }
@@ -223,34 +227,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     right: Dimensions.margin,
     width: Dimensions.margin,
-  },
-  searchBar: {
-    backgroundColor: palette.grey25,
-    borderColor: palette.grey200,
-    borderWidth: 1,
-    flex: 1,
-    marginLeft: 0,
-    marginVertical: Dimensions.margin * 1.25,
-    maxHeight: 40,
-    minHeight: 40,
-    paddingLeft: 0,
-    width: "auto",
-  },
-  searchContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: Dimensions.margin * 1.25,
-    justifyContent: "space-between",
-  },
-  searchInput: {
-    color: palette.grey900,
-    fontSize: 14,
-    left: -(Dimensions.margin / 1.33),
-    marginLeft: 0,
-    marginRight: 0,
-    minHeight: 0,
-    paddingVertical: 0,
-    position: "relative",
   },
   singleList: {
     marginTop: Dimensions.margin / 2,

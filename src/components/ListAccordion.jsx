@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import { List } from "react-native-paper";
+import { Image, StyleSheet, View } from "react-native";
+import { List, Text } from "react-native-paper";
 
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
@@ -36,7 +36,9 @@ const ItemDescription = ({ text = "", showResource = false, icon }) => {
             source={getIconImage(icon)}
             style={styles.itemDescriptionImage}
           />
-          <Text style={styles.itemDescriptionText}>{text}</Text>
+          <Text style={styles.itemDescriptionText} variant="bodySmall">
+            {text}
+          </Text>
         </View>
         {showResource && (
           <View
@@ -51,6 +53,7 @@ const ItemDescription = ({ text = "", showResource = false, icon }) => {
                 styles.itemDescriptionText,
                 styles.itemDescriptionResourcesText,
               ]}
+              variant="labelMedium"
             >
               Resources
             </Text>
@@ -64,6 +67,7 @@ const ItemDescription = ({ text = "", showResource = false, icon }) => {
 const ListAccordion = ({
   listData,
   onItemPress,
+  updateData,
   expandedState = false,
   rightIcon,
 }) => {
@@ -71,12 +75,28 @@ const ListAccordion = ({
 
   const upIcon = require("../../src/assets/icons/chevron_up.png");
   const downIcon = require("../../src/assets/icons/chevron_down.png");
+  const statusPurpleCircle = require("../assets/icons/status_purple.png");
+  const statusCircle = require("../assets/icons/status.png");
+  const checkCircle = require("../assets/icons/check_circle.png");
 
   const listItemHandler = (type) => {
     if (onItemPress) {
       onItemPress(type || ACCORDIOM_ITEM_TYPE.OVERVIEW);
     }
   };
+
+  const changeSelected = (newItem) => {
+    const newList = listData?.items?.map((item) => {
+      if (item?.id === newItem?.id) {
+        item.selected = true;
+      } else {
+        item.selected = false;
+      }
+      return item;
+    });
+    updateData({ ...listData, items: newList });
+  };
+
   return (
     <List.Accordion
       right={(props) => {
@@ -106,19 +126,27 @@ const ListAccordion = ({
           key={index}
           description={
             <ItemDescription
-              icon={item.descriptionIcon}
-              showResource={item.showResource}
-              text={item.text}
+              icon={item?.descriptionIcon}
+              showResource={item?.showResource}
+              text={item?.text}
             />
           }
-          left={() =>
-            item?.leftIcon ? (
-              <Image
-                source={item?.leftIcon}
-                style={{ height: 24, width: 24 }}
-              />
-            ) : null
-          }
+          left={() => {
+            const iconToShow = item?.hideLeft
+              ? null
+              : item?.leftIcon
+                ? item?.leftIcon
+                : item?.checked
+                  ? checkCircle
+                  : item?.selected
+                    ? statusPurpleCircle
+                    : statusCircle;
+            return (
+              !!iconToShow && (
+                <Image source={iconToShow} style={{ height: 24, width: 24 }} />
+              )
+            );
+          }}
           right={() =>
             item?.rightIcon ? (
               <Image
@@ -136,8 +164,10 @@ const ListAccordion = ({
           titleStyle={styles.itemTitleStyle}
           onPress={() => {
             if (item?.onClick) {
+              changeSelected(item);
               item.onClick(item?.type);
             } else if (listItemHandler) {
+              changeSelected(item);
               listItemHandler(item?.type);
             }
           }}

@@ -1552,3 +1552,82 @@ export const DOWNLOAD_LIST = [
   { name: "Session III video (mp4)", url: DOWNLOAD_URL },
   { name: "Session IV video (mp4)", url: DOWNLOAD_URL },
 ];
+
+export const SESSION_1 = {
+  description: "1/4 | 28min",
+  items: [
+    {
+      checked: true,
+      descriptionIcon: ACCORDIOM_ITEM_ICON.text,
+      id: "1",
+      text: "5 Min",
+      title: "Welcome to Employee Training 101",
+      type: ACCORDIOM_ITEM_TYPE.OVERVIEW,
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.video,
+      id: "2",
+      showResource: true,
+      text: "5 Min",
+      title: "Welcome to Employee Training?",
+      type: ACCORDIOM_ITEM_TYPE.VIDEO,
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.video,
+      id: "3",
+      text: "5 Min",
+      title: "Course Video",
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.reading,
+      id: "4",
+      text: "Reading",
+      title: "Reading PDF",
+      type: ACCORDIOM_ITEM_TYPE.READING,
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.weblink,
+      id: "5",
+      text: "Web link",
+      title: "How to Set Up an Employee Training Plan",
+      type: ACCORDIOM_ITEM_TYPE.WEBLINK,
+    },
+  ],
+  title: "Session 1",
+};
+
+export const SESSION_2 = {
+  description: "1/4 | 28min",
+  items: [
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.video,
+      id: "1",
+      selected: true,
+      text: "6 Min",
+      title: "What is Employee Training?",
+      type: ACCORDIOM_ITEM_TYPE.VIDEO,
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.test,
+      id: "2",
+      text: "15 Min",
+      title: "Test",
+      type: ACCORDIOM_ITEM_TYPE.TEST,
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.assignment,
+      id: "3",
+      text: "45 Min",
+      title: "Assignment",
+      type: ACCORDIOM_ITEM_TYPE.ASSIGNMENT,
+    },
+    {
+      descriptionIcon: ACCORDIOM_ITEM_ICON.weblink,
+      id: "4",
+      text: "45 Min",
+      title: "About the Critique Framework",
+      type: ACCORDIOM_ITEM_TYPE.WEBLINK,
+    },
+  ],
+  title: "Session 2",
+};

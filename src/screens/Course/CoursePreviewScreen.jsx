@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useMemo } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 import AssignmentHeader from "../../components/CourseHeader/AssignmentHeader";
 import OverView from "../../components/CourseHeader/OverView";
@@ -20,70 +20,64 @@ import { CombinedDefaultTheme } from "../../styles/theme";
 import { ACCORDIOM_ITEM_TYPE, TEMP_VIDEO_URL } from "../../utils/constant";
 
 const TABS = [
-  {
-    content: <SessionsContent />,
-    key: "sessions",
-    title: "Sessions",
-  },
-  {
-    content: <OverviewContent />,
-    key: "overview",
-    title: "Overview",
-  },
-  {
-    content: <KitContent />,
-    key: "kits",
-    title: "Kits",
-  },
-  {
-    content: <DiscussionsContent />,
-    key: "discussions",
-    title: "Discussions",
-  },
-  {
-    content: <NoteContent />,
-    key: "notes",
-    title: "Notes",
-  },
-  {
-    content: <ReviewsContent />,
-    key: "reviews",
-    title: "Reviews",
-  },
-  {
-    content: <RecordingsContent />,
-    key: "recordings",
-    title: "Recordings",
-  },
+  { content: <SessionsContent />, key: "sessions", title: "Sessions" },
+  { content: <OverviewContent />, key: "overview", title: "Overview" },
+  { content: <KitContent />, key: "kits", title: "Kits" },
+  { content: <DiscussionsContent />, key: "discussions", title: "Discussions" },
+  { content: <NoteContent />, key: "notes", title: "Notes" },
+  { content: <ReviewsContent />, key: "reviews", title: "Reviews" },
+  { content: <RecordingsContent />, key: "recordings", title: "Recordings" },
 ];
 
 const CourseHeaderContent = ({ type }) => {
-  if (type === ACCORDIOM_ITEM_TYPE.OVERVIEW) {
-    return <OverView />;
-  } else if (type === ACCORDIOM_ITEM_TYPE.VIDEO) {
-    return <VideoPlayer url={TEMP_VIDEO_URL} />;
-  } else if (type === ACCORDIOM_ITEM_TYPE.READING) {
-    return <PDFViewer />;
-  } else if (type === ACCORDIOM_ITEM_TYPE.WEBLINK) {
-    return <WebLink />;
-  } else if (type === ACCORDIOM_ITEM_TYPE.TEST) {
-    return <TestHeader />;
-  } else if (type === ACCORDIOM_ITEM_TYPE.ASSIGNMENT) {
-    return <AssignmentHeader />;
+  switch (type) {
+    case ACCORDIOM_ITEM_TYPE.OVERVIEW:
+      return <OverView />;
+    case ACCORDIOM_ITEM_TYPE.VIDEO:
+      return <VideoPlayer url={TEMP_VIDEO_URL} />;
+    case ACCORDIOM_ITEM_TYPE.READING:
+      return <PDFViewer />;
+    case ACCORDIOM_ITEM_TYPE.WEBLINK:
+      return <WebLink />;
+    case ACCORDIOM_ITEM_TYPE.TEST:
+      return <TestHeader />;
+    case ACCORDIOM_ITEM_TYPE.ASSIGNMENT:
+      return <AssignmentHeader />;
+    default:
+      return null;
   }
 };
 
-export const CoursePreviewScreen = (props) => {
-  const { type } = props?.route?.params;
+export const CoursePreviewScreen = ({ route }) => {
+  const { type } = route?.params;
+
+  const fullScroll = useMemo(
+    () => type === ACCORDIOM_ITEM_TYPE.OVERVIEW,
+    [type],
+  );
+
+  const ParentWrapper = fullScroll ? ScrollView : View;
+  const ChildWrapper = fullScroll ? View : ScrollView;
 
   return (
-    <View style={styles.container}>
+    <ParentWrapper
+      nestedScrollEnabled
+      contentContainerStyle={fullScroll ? { flexGrow: 1 } : {}}
+      scrollEnabled={fullScroll}
+      style={styles.container}
+    >
       <CourseHeaderContent type={type} />
-      <View style={styles.detailsContainer}>
+
+      <ChildWrapper
+        nestedScrollEnabled
+        contentContainerStyle={!fullScroll ? { flexGrow: 1 } : {}}
+        scrollEnabled={!fullScroll}
+        style={styles.detailsContainer}
+      >
         <CourseTitle />
         <CustomTabs tabs={TABS} />
-      </View>
-    </View>
+      </ChildWrapper>
+    </ParentWrapper>
   );
 };
 

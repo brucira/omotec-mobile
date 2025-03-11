@@ -61,7 +61,7 @@ const LargeCourseCard = ({
             color: palette.grey600,
             marginBottom: Dimensions.margin / 4,
           }}
-          variant="labelSmall"
+          variant="custom400_10"
         >
           {learningType === COURSE
             ? `${sessions + " Session •" + " Batch " + batch + " • " + location}`
@@ -70,23 +70,27 @@ const LargeCourseCard = ({
         <Text
           numberOfLines={2}
           style={{ color: palette.grey900 }}
-          variant="titleSmall"
+          variant="custom600_14"
         >
           {title}
         </Text>
         <View style={{ paddingVertical: Dimensions.padding / 2 }}>
           <View style={{ flexDirection: "row", gap: Dimensions.padding / 2 }}>
             <Tag
+              iconSource={
+                learningType === COURSE ? calendarRangeSource : bookSource
+              }
               backgroundColor={palette.primaryStudent50}
-              iconSource={learningType === COURSE ? calendarSource : bookSource}
               label={learningType === COURSE ? date : subject}
               textColor={CombinedDefaultTheme.colors.primary}
+              variant={"labelMedium"}
             />
             <Tag
               backgroundColor={palette.error50}
               iconSource={learningType === COURSE ? userSource : clockSource}
               label={learningType === COURSE ? trainer : duration}
               textColor={palette.error600}
+              variant={"labelMedium"}
             />
           </View>
         </View>
@@ -96,7 +100,7 @@ const LargeCourseCard = ({
             progress={progressNumerator / progressDenominator}
             style={styles.progressBar}
           />
-          <Text style={styles.progressText} variant="labelSmall">
+          <Text style={styles.progressText} variant="labelMedium">
             {progressNumerator + "/" + progressDenominator}
           </Text>
         </View>
@@ -112,7 +116,7 @@ const LargeCourseCard = ({
             <Text style={{ color: palette.grey700 }} variant="bodySmall">
               {learningType === COURSE ? "Avg. Performance:" : "Start Date"}
             </Text>
-            <Text style={{ color: palette.grey900 }} variant="bodySmall">
+            <Text style={{ color: palette.grey900 }} variant="labelMedium">
               {learningType === COURSE ? avgPerformance : startDate}
             </Text>
           </View>
@@ -128,7 +132,7 @@ const LargeCourseCard = ({
               {" "}
               {learningType === COURSE ? "Avg. Progress:" : "End Date"}
             </Text>
-            <Text style={{ color: palette.grey900 }} variant="bodySmall">
+            <Text style={{ color: palette.grey900 }} variant="labelMedium">
               {learningType === COURSE ? avgProgress : endDate}
             </Text>
           </View>
@@ -185,7 +189,9 @@ const styles = StyleSheet.create({
     height: Dimensions.margin / 2,
     width: 280,
   },
-  progressText: {},
+  progressText: {
+    color: palette.grey600,
+  },
   singleItemContainer: {
     alignItems: "center",
     flexDirection: "row",

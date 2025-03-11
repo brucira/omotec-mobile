@@ -36,7 +36,7 @@ const UserCard = ({
           <View style={styles.cardContent}>
             <Text
               numberOfLines={1}
-              style={{ marginBottom: Dimensions.margin / 4, maxWidth: "70%" }}
+              style={styles.userTitle}
               variant="labelLarge"
             >
               {title}
@@ -45,12 +45,13 @@ const UserCard = ({
               backgroundColor={palette.tintPurple}
               label={"Trainer"}
               textColor={CombinedDefaultTheme.colors.primary}
+              variant={"labelMedium"}
             />
           </View>
           <Text
             numberOfLines={1}
             style={{ color: palette.grey600 }}
-            variant={"labelMedium"}
+            variant={"bodySmall"}
           >
             {email}
           </Text>
@@ -64,10 +65,13 @@ const UserCard = ({
             style={styles.endIcons}
             tintColor={palette.grey700}
           />
-          <Text style={{ color: palette.grey700 }} variant="bodySmall">
+          <Text style={{ color: palette.grey700 }} variant="custom400_12">
             {"Last login:"}
           </Text>
-          <Text style={{ color: palette.grey900 }} variant="labelMedium">
+          <Text
+            style={{ color: palette.grey900, lineHeight: Dimensions.margin }}
+            variant="custom500_12"
+          >
             {lastLogin}
           </Text>
         </View>
@@ -94,8 +98,11 @@ const UserCard = ({
                 style={styles.download}
               />
               <Text
-                style={{ color: CombinedDefaultTheme.colors.primary }}
-                variant="labelMedium"
+                style={{
+                  color: CombinedDefaultTheme.colors.primary,
+                  lineHeight: Dimensions.margin,
+                }}
+                variant="custom500_12"
               >
                 Certificate
               </Text>
@@ -130,8 +137,8 @@ const styles = StyleSheet.create({
     backgroundColor: CombinedDefaultTheme.colors.background,
     borderColor: palette.grey200,
     borderRadius: Dimensions.margin / 1.33,
+    paddingBottom: Dimensions.margin / 1.33,
     paddingHorizontal: 0,
-    paddingVertical: 0,
   },
   contentStyleContainer: {
     padding: Dimensions.padding,
@@ -191,6 +198,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingBottom: Dimensions.padding / 1.77,
+  },
+  userTitle: {
+    color: palette.grey900,
+    marginBottom: Dimensions.margin / 4,
+    maxWidth: "70%",
   },
 });
 

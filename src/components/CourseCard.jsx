@@ -21,8 +21,14 @@ const CourseCard = ({ index, isLast }) => {
     >
       <Image source={require("../assets/dummy_1.png")} style={styles.banner} />
       <View style={styles.cardContent}>
-        <Text variant="titleLarge">Mastering Python</Text>
-        <Text variant="bodyMedium">Batch 1</Text>
+        <Text
+          numberOfLines={1}
+          style={{ color: palette.grey900 }}
+          variant="custom600_16"
+        >
+          Mastering Python
+        </Text>
+        <Text variant="bodySmall">Batch 1</Text>
         <View style={{ paddingVertical: Dimensions.padding / 1.33 }}>
           <View style={{ flexDirection: "row", gap: Dimensions.padding / 2 }}>
             <Tag
@@ -30,17 +36,24 @@ const CourseCard = ({ index, isLast }) => {
               iconSource={calenderSource}
               label={"May 1 - Jun 30"}
               textColor={CombinedDefaultTheme.colors.primary}
+              variant={"custom500_10"}
             />
             <Tag
               backgroundColor={palette.error50}
               iconSource={userSource}
               label={"John Doe"}
               textColor={palette.error600}
+              variant={"custom500_10"}
             />
           </View>
         </View>
         <View style={styles.upcoming}>
-          <Text variant="labelMedium">Upcoming Task:</Text>
+          <Text
+            style={{ color: palette.grey500, lineHeight: Dimensions.margin }}
+            variant="labelMedium"
+          >
+            Upcoming Tasks:
+          </Text>
           <Image
             source={require("../assets/icons/chevron_down.png")}
             style={styles.downIcon}
@@ -52,7 +65,7 @@ const CourseCard = ({ index, isLast }) => {
             progress={11 / 12}
             style={styles.progressBar}
           />
-          <Text style={styles.progressText} variant="labelSmall">
+          <Text style={styles.progressText} variant="labelMedium">
             11 /12
           </Text>
         </View>
@@ -103,7 +116,9 @@ const styles = StyleSheet.create({
     height: Dimensions.margin / 2,
     width: 183,
   },
-  progressText: {},
+  progressText: {
+    color: palette.grey600,
+  },
   upcoming: {
     flexDirection: "row",
     justifyContent: "space-between",

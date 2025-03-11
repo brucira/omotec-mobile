@@ -1,6 +1,6 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import { RadioButton } from "react-native-paper";
+import { Image, StyleSheet, View } from "react-native";
+import { RadioButton, Text } from "react-native-paper";
 
 import Tag from "../../components/Tag";
 import palette from "../../styles/palette";
@@ -20,18 +20,24 @@ const TodoCard = ({
       <View style={styles.todoContentContainer}>
         <Image source={imageSource} style={styles.todoImage} />
         <View style={{ justifyContent: "space-between" }}>
-          <Text>{todoTitle}</Text>
+          <Text variant="custom600_16">{todoTitle}</Text>
           <View style={styles.subHeading}>
-            <Text variant="bodySmall">{subject}</Text>
+            <Text style={{ color: palette.grey600 }} variant="bodySmall">
+              {subject}
+            </Text>
             <Text
               style={{
                 alignSelf: "center",
+                color: palette.grey200,
                 paddingHorizontal: Dimensions.padding / 6,
               }}
+              variant="bodySmall"
             >
-              &bull;
+              |
             </Text>
-            <Text variant="bodySmall">{date}</Text>
+            <Text style={{ color: palette.grey600 }} variant="bodySmall">
+              {date}
+            </Text>
           </View>
         </View>
       </View>
@@ -47,6 +53,7 @@ const TodoCard = ({
           backgroundColor={palette.success50}
           label={label}
           textColor={palette.success600}
+          variant={"labelMedium"}
         />
       </View>
     </View>

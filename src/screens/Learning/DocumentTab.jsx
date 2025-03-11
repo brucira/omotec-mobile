@@ -120,10 +120,14 @@ const DocumentTab = ({ activeTab }) => {
       />
       <BottomDrawer ref={bottomSheetModalRef}>
         <View style={styles.bottomSheetContainer}>
-          <Text variant="titleMedium">Sort & Filters</Text>
+          <Text style={{ color: palette.grey900 }} variant="custom600_18">
+            Sort & Filters
+          </Text>
           <View style={styles.sortAndFilterContainer}>
             <View style={{ gap: Dimensions.margin / 2 }}>
-              <Text variant="labelSmall">SORT BY</Text>
+              <Text style={styles.subHeading} variant="labelSmall">
+                SORT BY
+              </Text>
               <View>
                 <Controller
                   render={({ field: { onChange, value } }) => (
@@ -148,7 +152,7 @@ const DocumentTab = ({ activeTab }) => {
                             ? CombinedDefaultTheme.colors.primary
                             : palette.grey900,
                         }}
-                        variant="titleSmall"
+                        variant="labelLarge"
                       >
                         Status
                       </Text>
@@ -181,7 +185,7 @@ const DocumentTab = ({ activeTab }) => {
                             ? CombinedDefaultTheme.colors.primary
                             : palette.grey900,
                         }}
-                        variant="titleSmall"
+                        variant="labelLarge"
                       >
                         Modified on
                       </Text>
@@ -198,9 +202,13 @@ const DocumentTab = ({ activeTab }) => {
                 paddingTop: Dimensions.margin * 1.25,
               }}
             >
-              <Text variant="labelSmall">FILTERS</Text>
+              <Text style={styles.subHeading} variant="labelSmall">
+                FILTERS
+              </Text>
               <View>
-                <Text variant="titleSmall">Type</Text>
+                <Text style={{ color: palette.grey900 }} variant="labelLarge">
+                  Type
+                </Text>
 
                 <Controller
                   render={({ field: { onChange, value } }) => (
@@ -212,7 +220,21 @@ const DocumentTab = ({ activeTab }) => {
                       <Dropdown
                         search
                         placeholder={
-                          !focusOfTypeDropdown ? "Select type" : "..."
+                          !focusOfTypeDropdown ? (
+                            <Text
+                              style={{ color: palette.grey900 }}
+                              variant="bodyMedium"
+                            >
+                              Select type
+                            </Text>
+                          ) : (
+                            <Text
+                              style={{ color: palette.grey900 }}
+                              variant="bodyMedium"
+                            >
+                              ...
+                            </Text>
+                          )
                         }
                         style={[
                           styles.singleList,
@@ -227,10 +249,10 @@ const DocumentTab = ({ activeTab }) => {
                         renderRightIcon={renderDropdownRightIcon}
                         searchPlaceholder="Search..."
                         selectedTextStyle={styles.selectedTextStyle}
-                        value={value} // Use React Hook Form's value
+                        value={value}
                         valueField="value"
                         onBlur={() => setFocusOfTypeDropdown(false)}
-                        onChange={(item) => onChange(item.value)} // Update form state
+                        onChange={(item) => onChange(item.value)}
                         onFocus={() => setFocusOfTypeDropdown(true)}
                       />
                     </Surface>
@@ -240,7 +262,9 @@ const DocumentTab = ({ activeTab }) => {
                 />
               </View>
               <View>
-                <Text variant="titleSmall">Uploaded by</Text>
+                <Text style={{ color: palette.grey900 }} variant="labelLarge">
+                  Uploaded by
+                </Text>
 
                 <Controller
                   render={({ field: { onChange, value } }) => (
@@ -252,9 +276,21 @@ const DocumentTab = ({ activeTab }) => {
                       <Dropdown
                         search
                         placeholder={
-                          !focusOfUploadedDropdown
-                            ? "Select uploaded by"
-                            : "..."
+                          !focusOfTypeDropdown ? (
+                            <Text
+                              style={{ color: palette.grey900 }}
+                              variant="bodyMedium"
+                            >
+                              Select type
+                            </Text>
+                          ) : (
+                            <Text
+                              style={{ color: palette.grey900 }}
+                              variant="bodyMedium"
+                            >
+                              ...
+                            </Text>
+                          )
                         }
                         style={[
                           styles.singleList,
@@ -397,6 +433,10 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     position: "relative",
   },
+  selectedTextStyle: {
+    fontSize: Dimensions.margin / 1.14,
+    lineHeight: Dimensions.margin * 1.25,
+  },
   singleList: {
     backgroundColor: CombinedDefaultTheme.colors.background,
     borderRadius: Dimensions.margin / 2,
@@ -408,6 +448,10 @@ const styles = StyleSheet.create({
   sortAndFilterContainer: {
     marginTop: Dimensions.margin / 2,
     paddingVertical: Dimensions.padding,
+  },
+  subHeading: {
+    color: palette.grey500,
+    lineHeight: Dimensions.margin / 1.33,
   },
   surface: {
     backgroundColor: CombinedDefaultTheme.colors.background,

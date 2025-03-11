@@ -34,23 +34,25 @@ const ChartCard = ({
       style={styles.graphContainer}
     >
       <View style={styles.graphTitleContainer}>
-        <Text variant="titleMedium">{cardTitle}</Text>
+        <Text variant="custom600_16">{cardTitle}</Text>
         <Text
           style={{ color: CombinedDefaultTheme.colors.primary }}
-          variant="titleSmall"
+          variant="labelLarge"
         >
           View
         </Text>
       </View>
       <View style={styles.contentDetailContainer}>
         <View style={{ gap: Dimensions.margin / 4 }}>
-          <Text style={styles.averageTitle} variant="labelMedium">
+          <Text style={styles.averageTitle} variant="bodySmall">
             {cardSubTitle}
           </Text>
-          <Text variant="titleMedium">85%</Text>
+          <Text style={{ color: palette.grey900 }} variant="custom600_16">
+            85%
+          </Text>
         </View>
         <View style={{ gap: Dimensions.margin / 4 }}>
-          <Text style={styles.fromDuration} variant="labelMedium">
+          <Text style={styles.fromDuration} variant="bodySmall">
             From {chipTitle}
           </Text>
           <View style={styles.tag}>
@@ -67,6 +69,13 @@ const ChartCard = ({
         <View style={styles.listContainer}>
           <Dropdown
             search
+            placeholder={
+              !focusOfFirstDropdown ? (
+                <Text variant="labelMedium">Select item</Text>
+              ) : (
+                <Text variant="labelMedium">...</Text>
+              )
+            }
             renderRightIcon={() => (
               <Image
                 color={focusOfFirstDropdown ? "blue" : "black"}
@@ -86,7 +95,6 @@ const ChartCard = ({
             inputSearchStyle={styles.inputSearchStyle}
             labelField="label"
             maxHeight={300}
-            placeholder={!focusOfFirstDropdown ? "Select item" : "..."}
             placeholderStyle={styles.placeholderStyle}
             searchPlaceholder="Search..."
             selectedTextStyle={styles.selectedTextStyle}
@@ -102,6 +110,13 @@ const ChartCard = ({
           {dropdownNumber > 1 && (
             <Dropdown
               search
+              placeholder={
+                !focusOfFirstDropdown ? (
+                  <Text variant="labelMedium">Select item</Text>
+                ) : (
+                  <Text variant="labelMedium">...</Text>
+                )
+              }
               renderRightIcon={() => (
                 <Image
                   color={focusOfSecondDropdown ? "blue" : "black"}
@@ -121,7 +136,6 @@ const ChartCard = ({
               inputSearchStyle={styles.inputSearchStyle}
               labelField="label"
               maxHeight={300}
-              placeholder={!focusOfSecondDropdown ? "Select item" : "..."}
               placeholderStyle={styles.placeholderStyle}
               searchPlaceholder="Search..."
               selectedTextStyle={styles.selectedTextStyle}

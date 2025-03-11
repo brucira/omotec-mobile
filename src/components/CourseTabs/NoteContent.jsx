@@ -30,12 +30,12 @@ const NoteItem = ({ item }) => (
   <View style={styles.noteItemContainer}>
     <View style={styles.timelineContainer}>
       <View style={styles.timeLine}>
-        <Text style={styles.seconds} variant="labelMedium">
+        <Text style={styles.seconds} variant="custom500_12">
           {item?.time}
         </Text>
-        <Text style={styles.headingText} variant="labelMedium">
+        <Text style={styles.headingText} variant="custom600_12">
           {item.heading}: &nbsp;
-          <Text style={styles.descriptionText} variant="bodySmall">
+          <Text style={styles.descriptionText} variant="custom400_12">
             {item.des}
           </Text>
         </Text>
@@ -46,7 +46,7 @@ const NoteItem = ({ item }) => (
       />
     </View>
     <View style={styles.messageContainer}>
-      <Text style={styles.messageText} variant="labelLarge">
+      <Text style={styles.messageText} variant="custom500_14">
         {item.message}
       </Text>
     </View>
@@ -133,7 +133,7 @@ const NoteContent = () => {
               <Text
                 numberOfLines={1}
                 style={styles.addNoteText}
-                variant="bodyMedium"
+                variant="custom400_14"
               >
                 Create a new note at 0:02
               </Text>
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
   },
-  addNoteText: { color: "#98A2B3", flex: 1 },
+  addNoteText: { color: palette.grey400, flex: 1 },
   container: { paddingVertical: SIZE_16, rowGap: SIZE_24 },
   descriptionText: {
     color: palette.grey600,

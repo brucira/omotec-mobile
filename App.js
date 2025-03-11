@@ -1,10 +1,16 @@
 import {
+  Inter_100Thin,
+  Inter_200ExtraLight,
+  Inter_300Light,
   Inter_400Regular,
   Inter_500Medium,
   Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black,
+  useFonts,
 } from "@expo-google-fonts/inter";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import React, { useCallback } from "react";
@@ -20,11 +26,19 @@ import { CombinedDefaultTheme } from "./src/styles/theme";
   await SplashScreen.preventAutoHideAsync();
 })();
 export default function App() {
-  const [fontsLoaded] = useFonts([
+  const [fontsLoaded] = useFonts({
+    Inter_100Thin,
+    Inter_200ExtraLight,
+    Inter_300Light,
     Inter_400Regular,
     Inter_500Medium,
     Inter_600SemiBold,
-  ]);
+    Inter_700Bold,
+    Inter_800ExtraBold,
+    Inter_900Black,
+  });
+
+  console.log({ fontsLoaded });
 
   const onLayout = useCallback(async () => {
     if (fontsLoaded) {

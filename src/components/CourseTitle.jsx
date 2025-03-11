@@ -1,6 +1,7 @@
 import { Image } from "expo-image";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Text } from "react-native-paper";
 
 import { DIRECTION, JUSTIFY } from "../styles/constStyle";
 import palette from "../styles/palette";
@@ -48,7 +49,7 @@ const CourseTitle = ({
   return (
     <View style={styles.courseHeaderContainer}>
       <View style={styles.titleContainer}>
-        <Text numberOfLines={2} style={styles.title} variant="titleMedium">
+        <Text numberOfLines={2} style={styles.title} variant="custom600_16">
           {title}
         </Text>
         <CustomMenu
@@ -67,6 +68,7 @@ const CourseTitle = ({
 const styles = StyleSheet.create({
   courseHeaderContainer: {
     paddingHorizontal: SIZE_16,
+    paddingTop: SIZE_16 / 2,
     rowGap: 2,
   },
   description: {

@@ -29,7 +29,7 @@ const PopularCourseCard = ({
       <Image source={coverImage} style={styles.banner} />
       <View style={styles.cardContent}>
         <View style={styles.locationAndRating}>
-          <Text style={{ color: palette.warning500 }} variant="labelSmall">
+          <Text style={{ color: palette.warning500 }} variant="custom500_10">
             {location}
           </Text>
           <View style={{ flexDirection: "row", gap: Dimensions.margin / 4 }}>
@@ -37,14 +37,16 @@ const PopularCourseCard = ({
               source={require("../../assets/icons/star.png")}
               style={styles.star}
             />
-            <Text style={{ color: palette.grey600 }} variant="labelSmall">
+            <Text style={{ color: palette.grey600 }} variant="labelMedium">
               {rating}
             </Text>
           </View>
         </View>
-        <Text variant="labelLarge">{title}</Text>
+        <Text style={{ color: palette.grey900 }} variant="custom600_14">
+          {title}
+        </Text>
         <View>
-          <Text variant="labelSmall">
+          <Text style={{ color: palette.grey600 }} variant="custom400_10">
             {session} Session • {duration}
           </Text>
         </View>
@@ -63,7 +65,7 @@ const PopularCourseCard = ({
               style={styles.avatarOverlap}
             />
           </View>
-          <Text style={{ color: palette.grey700 }} variant="labelSmall">
+          <Text style={{ color: palette.grey700 }} variant="custom400_10">
             {" "}
             + {enrolls} Others
           </Text>

@@ -32,7 +32,7 @@ const StudentList = ({
   const renderItem = ({ item }) => (
     <View style={styles.studentCard}>
       <Image source={item.avatar} style={styles.studentAvatar} />
-      <Text variant="titleSmall">{item.name}</Text>
+      <Text variant="labelLarge">{item.name}</Text>
     </View>
   );
 
@@ -48,7 +48,7 @@ const StudentList = ({
           <Appbar.Content
             title={
               <View>
-                <Text variant="titleLarge">Student List</Text>
+                <Text variant="custom600_20">Student List</Text>
               </View>
             }
           />

@@ -18,10 +18,10 @@ const RatingRow = ({ color = "#0064D6", star }) => {
   return (
     <View style={styles.ratingRow}>
       <View style={styles.ratingLabel}>
-        <Text style={{ color: palette.grey600 }} variant="bodySmall">
+        <Text style={{ color: palette.grey600 }} variant="custom400_12">
           {star?.no}-star
         </Text>
-        <Text style={{ color: palette.grey900 }} variant="bodySmall">
+        <Text style={{ color: palette.grey900 }} variant="custom500_12">
           {star?.parcentage}%
         </Text>
       </View>
@@ -54,12 +54,14 @@ const ReviewsContent = () => {
       <View style={styles.topContainer}>
         <View>
           <View style={styles.ratingBox}>
-            <Text style={styles.rating}>4.8</Text>
+            <Text style={styles.rating} variant="custom700_28">
+              4.8
+            </Text>
             <View>
-              <Text style={styles.excellentText} variant="labelLarge">
+              <Text style={styles.excellentText} variant="custom500_14">
                 Excellent
               </Text>
-              <Text style={styles.ratingText} variant="bodyMedium">
+              <Text style={styles.ratingText} variant="custom400_14">
                 898 ratings
               </Text>
             </View>
@@ -70,7 +72,7 @@ const ReviewsContent = () => {
       </View>
       <View style={styles.bottomContainer}>
         <View style={styles.dropDownContainer}>
-          <Text style={styles.ratingCount} variant="titleLarge">
+          <Text style={styles.ratingCount} variant="custom600_18">
             56 Reviews
           </Text>
           <View style={{ flex: 1 }}></View>
@@ -115,11 +117,6 @@ const styles = StyleSheet.create({
   progressBar: { borderRadius: 10, height: 8 },
   rating: {
     color: CombinedDefaultTheme.colors.primary,
-    fontFamily: "Inter",
-    fontSize: 28,
-    fontWeight: "700",
-    letterSpacing: 0,
-    lineHeight: 36,
     textAlign: JUSTIFY.CENTER,
   },
   ratingBox: {
@@ -130,11 +127,6 @@ const styles = StyleSheet.create({
   },
   ratingCount: {
     color: palette.grey900,
-    fontFamily: "Inter",
-    fontSize: 18,
-    fontWeight: "600",
-    letterSpacing: 0,
-    lineHeight: 28,
     textAlign: "left",
   },
   ratingLabel: {

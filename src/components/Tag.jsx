@@ -5,7 +5,7 @@ import { Text } from "react-native-paper";
 import palette from "../styles/palette";
 import { Dimensions } from "../utils/constant";
 
-const Tag = ({ iconSource, label, backgroundColor, textColor }) => {
+const Tag = ({ iconSource, label, backgroundColor, textColor, variant }) => {
   return (
     <View style={[styles.dateChip, { backgroundColor: backgroundColor }]}>
       {iconSource && (
@@ -16,7 +16,10 @@ const Tag = ({ iconSource, label, backgroundColor, textColor }) => {
           tintColor={textColor}
         />
       )}
-      <Text style={[{ color: textColor }]} variant="labelSmall">
+      <Text
+        style={[{ color: textColor }]}
+        variant={variant ? variant : "custom500_10"}
+      >
         {label}
       </Text>
     </View>

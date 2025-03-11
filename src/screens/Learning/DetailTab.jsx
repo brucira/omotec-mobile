@@ -9,7 +9,9 @@ const DetailTab = () => {
   return (
     <ScrollView style={styles.container}>
       <View>
-        <Text variant="titleMedium">Project Details</Text>
+        <Text style={{ color: palette.grey900 }} variant="custom600_16">
+          Project Details
+        </Text>
         <Divider style={styles.divider} />
         <View>
           <View style={styles.detailContainer}>
@@ -59,7 +61,9 @@ const DetailTab = () => {
         </View>
       </View>
       <View style={{ paddingTop: Dimensions.margin * 1.5 }}>
-        <Text variant="titleMedium">Other Details</Text>
+        <Text style={{ color: palette.grey900 }} variant="custom600_16">
+          Other Details
+        </Text>
         <Divider style={styles.divider} />
         <View>
           <View style={styles.otherContainer}>

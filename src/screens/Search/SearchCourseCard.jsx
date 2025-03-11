@@ -26,7 +26,7 @@ const SearchCourseCard = ({
       </View>
       <View style={styles.cardContent}>
         <View style={styles.locationAndRating}>
-          <Text style={{ color: palette.warning500 }} variant="labelSmall">
+          <Text style={{ color: palette.warning500 }} variant="custom500_10">
             {location}
           </Text>
           <View style={{ flexDirection: "row", gap: Dimensions.margin / 4 }}>
@@ -34,14 +34,14 @@ const SearchCourseCard = ({
               source={require("../../assets/icons/star.png")}
               style={styles.star}
             />
-            <Text style={{ color: palette.grey600 }} variant="labelSmall">
+            <Text style={{ color: palette.grey600 }} variant="labelMedium">
               {rating}
             </Text>
           </View>
         </View>
-        <Text variant="labelLarge">{title}</Text>
+        <Text variant="custom600_14">{title}</Text>
         <View>
-          <Text variant="labelSmall">{sessions} Session</Text>
+          <Text variant="custom400_10">{sessions} Session</Text>
         </View>
         <View style={styles.calendarContentFooter}>
           <View style={styles.avatarGroup}>
@@ -58,7 +58,7 @@ const SearchCourseCard = ({
               style={styles.avatarOverlap}
             />
           </View>
-          <Text style={{ color: palette.grey700 }} variant="labelSmall">
+          <Text style={{ color: palette.grey700 }} variant="custom400_10">
             {" "}
             + {enrolls} Others
           </Text>

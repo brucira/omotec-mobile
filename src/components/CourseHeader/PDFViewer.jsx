@@ -100,7 +100,9 @@ const AbsoluteMenu = ({
           value={String(currentPage)}
           onChangeText={pageChangeHandler}
         />
-        <Text style={styles.totalPageCount}>/{totalPages}</Text>
+        <Text style={styles.totalPageCount} variant="bodySmall">
+          /{totalPages}
+        </Text>
         <TouchableOpacity style={styles.pdfIcon} onPress={nextPageHandler}>
           <Image
             contentFit={"cover"}

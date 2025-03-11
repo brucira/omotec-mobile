@@ -26,17 +26,24 @@ const TestModal = ({ visible, hideModal }) => {
               style={styles.backIcon}
               onPress={hideModal}
             />
-            <Appbar.Content title={"Quiz"} />
+            <Appbar.Content title={<Text variant="custom600_14">Quiz</Text>} />
           </Appbar>
           <View style={styles.contentContainer}>
-            <Text variant="titleMedium">Submit your Test</Text>
+            <Text style={{ color: palette.grey600 }} variant="custom600_16">
+              Submit your Test
+            </Text>
             <View style={styles.testTimingContainer}>
-              <Text style={styles.testTimingKey} variant="labelMedium">
+              <Text style={styles.testTimingKey} variant="custom500_12">
                 Due:{" "}
-                <Text style={styles.testTimingValue}>Nov 5, 11:59 PM PDT</Text>
+                <Text style={styles.testTimingValue} variant="custom400_12">
+                  Nov 5, 11:59 PM PDT
+                </Text>
               </Text>
-              <Text variant="labelMedium">
-                Attempts: <Text style={styles.testTimingValue}>2/3</Text>
+              <Text variant="custom500_12">
+                Attempts:{" "}
+                <Text style={styles.testTimingValue} variant="custom400_12">
+                  2/3
+                </Text>
               </Text>
             </View>
             <View style={styles.startTestButton}>
@@ -52,8 +59,11 @@ const TestModal = ({ visible, hideModal }) => {
               <View style={styles.testDetailRow}>
                 <View style={styles.individualTestDetail}>
                   <Text
-                    style={{ color: palette.grey900 }}
-                    variant="labelMedium"
+                    style={{
+                      color: palette.grey900,
+                      lineHeight: Dimensions.margin,
+                    }}
+                    variant="custom600_12"
                   >
                     Recieve grade
                   </Text>
@@ -69,15 +79,15 @@ const TestModal = ({ visible, hideModal }) => {
                 </View>
                 <View style={styles.individualTestDetail}>
                   <Text
-                    style={{ color: palette.grey900 }}
-                    variant="labelMedium"
+                    style={{
+                      color: palette.grey900,
+                      lineHeight: Dimensions.margin,
+                    }}
+                    variant="custom600_12"
                   >
                     Total marks
                   </Text>
-                  <Text
-                    style={{ color: palette.grey500 }}
-                    variant="labelMedium"
-                  >
+                  <Text style={{ color: palette.grey500 }} variant="bodySmall">
                     50
                   </Text>
                 </View>
@@ -86,29 +96,29 @@ const TestModal = ({ visible, hideModal }) => {
               <View style={styles.testDetailRow}>
                 <View style={styles.individualTestDetail}>
                   <Text
-                    style={{ color: palette.grey900 }}
-                    variant="labelMedium"
+                    style={{
+                      color: palette.grey900,
+                      lineHeight: Dimensions.margin,
+                    }}
+                    variant="custom600_12"
                   >
                     Difficulty level
                   </Text>
-                  <Text
-                    style={{ color: palette.grey500 }}
-                    variant="labelMedium"
-                  >
+                  <Text style={{ color: palette.grey500 }} variant="bodySmall">
                     Medium
                   </Text>
                 </View>
                 <View style={styles.individualTestDetail}>
                   <Text
-                    style={{ color: palette.grey900 }}
-                    variant="labelMedium"
+                    style={{
+                      color: palette.grey900,
+                      lineHeight: Dimensions.margin,
+                    }}
+                    variant="custom600_12"
                   >
                     Your grade
                   </Text>
-                  <Text
-                    style={{ color: palette.grey500 }}
-                    variant="labelMedium"
-                  >
+                  <Text style={{ color: palette.grey500 }} variant="bodySmall">
                     -
                   </Text>
                 </View>
@@ -178,9 +188,11 @@ const styles = StyleSheet.create({
   },
   testTimingKey: {
     color: palette.grey700,
+    lineHeight: Dimensions.margin,
   },
   testTimingValue: {
     color: palette.grey500,
+    lineHeight: Dimensions.margin,
   },
 });
 

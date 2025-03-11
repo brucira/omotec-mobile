@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Text } from "react-native-paper";
 
 import { DIRECTION, JUSTIFY } from "../../styles/constStyle";
 import palette from "../../styles/palette";
@@ -27,7 +28,7 @@ const AssignmentHeader = () => {
 
   return (
     <View style={styles.container}>
-      <CourseTabBack />
+      <CourseTabBack style={{ paddingHorizontal: SIZE_8 }} />
       <AssignmentModal
         hideModal={() => setShowModal(false)}
         visible={showModal}
@@ -35,11 +36,11 @@ const AssignmentHeader = () => {
       />
       <View style={styles.contentContainer}>
         <View style={styles.headerContainer}>
-          <Text style={styles.questionText} variant="bodyMedium">
+          <Text style={styles.questionText} variant="custom400_14">
             How can I create and organize robotics course materials on an LMS?
           </Text>
           <View style={styles.marksContainer}>
-            <Text style={styles.marksText} variant="labelMedium">
+            <Text style={styles.marksText} variant="custom500_12">
               10 Marks
             </Text>
           </View>

@@ -53,7 +53,7 @@ const Learning = ({ navigation }) => {
     <View style={styles.container}>
       <Appbar style={styles.appBarContainer}>
         <Appbar.Content
-          title={<Text variant="titleMedium">My Learnings</Text>}
+          title={<Text variant="custom600_16">My Learnings</Text>}
         />
         <View>
           <Appbar.Action
@@ -109,8 +109,13 @@ const Learning = ({ navigation }) => {
                 marginBottom: Dimensions.margin / 1.142,
               }}
             >
-              <Text variant="titleLarge">Ongoing courses</Text>
-              <Text variant="titleLarge"> {`(${courseCardData.length})`}</Text>
+              <Text style={{ color: palette.grey900 }} variant="custom700_18">
+                Ongoing courses
+              </Text>
+              <Text style={{ color: palette.grey700 }} variant="custom400_18">
+                {" "}
+                {`(${courseCardData.length})`}
+              </Text>
             </View>
             <FlatList
               contentContainerStyle={styles.arrowIndicator}
@@ -130,8 +135,13 @@ const Learning = ({ navigation }) => {
                 marginBottom: Dimensions.margin / 1.142,
               }}
             >
-              <Text variant="titleLarge">Ongoing projects</Text>
-              <Text variant="titleLarge"> {`(${projectCardData.length})`}</Text>
+              <Text style={{ color: palette.grey900 }} variant="custom700_18">
+                Ongoing projects
+              </Text>
+              <Text style={{ color: palette.grey700 }} variant="custom400_18">
+                {" "}
+                {`(${projectCardData.length})`}
+              </Text>
             </View>
             <FlatList
               contentContainerStyle={styles.arrowIndicator}
