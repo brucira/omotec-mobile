@@ -31,7 +31,9 @@ const Review = ({
   return (
     <View style={styles.container}>
       <View style={styles.reviewContainer}>
-        <Text variant="labelLarge">{remark}</Text>
+        <Text style={{ color: palette.grey900 }} variant="custom600_14">
+          {remark}
+        </Text>
         <View style={styles.starContainer}>{renderStar()}</View>
       </View>
       <Text style={styles.reviewDescription} variant="bodyMedium">
@@ -40,7 +42,10 @@ const Review = ({
       <View style={styles.userContainer}>
         <Avatar.Image size={34} source={profilePicture} />
         <View>
-          <Text style={{ color: palette.grey900 }} variant="labelMedium">
+          <Text
+            style={{ color: palette.grey900, lineHeight: Dimensions.margin }}
+            variant="custom600_12"
+          >
             {name}
           </Text>
           <Text style={{ color: palette.grey700 }} variant="bodySmall">

@@ -36,11 +36,12 @@ const DocumentCard = ({
           iconSource={documentTypeIcon}
           label={documentType}
           textColor={iconColor}
+          variant="labelMedium"
         />
         <Text
           numberOfLines={2}
           style={styles.documentTitle}
-          variant="titleSmall"
+          variant="custom600_14"
         >
           {title}
         </Text>

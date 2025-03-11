@@ -31,7 +31,9 @@ const Question = ({ questionNumber, options, question, questionType }) => {
             }}
           >
             <View>
-              <Text>{item.id}.</Text>
+              <Text style={{ color: palette.grey900 }} variant="bodySmall">
+                {item.id}.
+              </Text>
             </View>
             <Image source={item.img} style={styles.imageOption} />
             <TouchableOpacity
@@ -45,7 +47,9 @@ const Question = ({ questionNumber, options, question, questionType }) => {
               ]}
               onLongPress={drag}
             >
-              <Text style={styles.text}>{item.option}</Text>
+              <Text style={styles.text} variant="bodyMedium">
+                {item.option}
+              </Text>
               <Image
                 source={require("../assets/icons/ham_menu.png")}
                 style={styles.menuIcon}
@@ -55,16 +59,9 @@ const Question = ({ questionNumber, options, question, questionType }) => {
           </View>
         ) : (
           // </ScaleDecorator>
-          <View
-            style={{
-              alignItems: "center",
-              flex: 1,
-              flexDirection: "row",
-              gap: Dimensions.margin / 1.33,
-            }}
-          >
+          <View style={styles.options}>
             <View>
-              <Text>{item.id}.</Text>
+              <Text variant="bodyLarge">{item.id}.</Text>
             </View>
             <TouchableOpacity
               style={[
@@ -77,7 +74,9 @@ const Question = ({ questionNumber, options, question, questionType }) => {
               ]}
               onLongPress={drag}
             >
-              <Text style={styles.text}>{item.option}</Text>
+              <Text style={styles.text} variant="bodyLarge">
+                {item.option}
+              </Text>
               <Image
                 source={require("../assets/icons/ham_menu.png")}
                 style={styles.menuIcon}
@@ -94,13 +93,18 @@ const Question = ({ questionNumber, options, question, questionType }) => {
     <View>
       <View style={styles.questionContainer}>
         <View style={styles.questionContentContainer}>
-          <Text>{questionNumber}.</Text>
-          <Text>{question}</Text>
+          <Text style={{ color: palette.grey900 }} variant="bodyLarge">
+            {questionNumber}.
+          </Text>
+          <Text style={{ color: palette.grey900 }} variant="bodyLarge">
+            {question}
+          </Text>
         </View>
         <Tag
           backgroundColor={palette.primaryStudent50}
           label={"1 Mark"}
           textColor={CombinedDefaultTheme.colors.primary}
+          variant={"labelMedium"}
         />
       </View>
 
@@ -182,6 +186,12 @@ const styles = StyleSheet.create({
     height: Dimensions.margin * 1.25,
     width: Dimensions.margin * 1.25,
   },
+  options: {
+    alignItems: "center",
+    flex: 1,
+    flexDirection: "row",
+    gap: Dimensions.margin / 1.33,
+  },
   optionsContainer: {
     gap: Dimensions.margin / 1.33,
     paddingTop: Dimensions.padding,
@@ -196,6 +206,7 @@ const styles = StyleSheet.create({
     // maxWidth: 273,
   },
   rowItem: {
+    alignItems: "center",
     borderColor: palette.grey200,
     borderRadius: Dimensions.margin / 2,
     borderWidth: 1,
