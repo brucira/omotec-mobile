@@ -1,8 +1,9 @@
+/* eslint-disable sort-keys */
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { CommonActions, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Image } from "expo-image";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { BottomNavigation, Text, TouchableRipple } from "react-native-paper";
 
 import Calender from "./screens/Calender";
@@ -39,7 +40,7 @@ const Tabs = () => (
             const size = 24;
 
             return (
-              <>
+              <View style={{}}>
                 <Image
                   style={{
                     height: size,
@@ -49,7 +50,7 @@ const Tabs = () => (
                   contentFit="contain"
                   source={options.tabBarIcon}
                 />
-              </>
+              </View>
             );
           }
 
@@ -57,9 +58,13 @@ const Tabs = () => (
         }}
         renderLabel={({ route, focused, color }) => {
           const { options } = descriptors[route.key];
-
           return (
-            <>
+            <View
+              style={{
+                flex: 1,
+                minHeight: 26,
+              }}
+            >
               <Text
                 style={[
                   {
@@ -68,9 +73,10 @@ const Tabs = () => (
                         focused ? "secondary" : "onSurfaceDisabled"
                       ],
                     textAlign: "center",
+                    marginTop: 4,
                   },
                 ]}
-                variant="labelMedium"
+                variant="custom500_10"
               >
                 {options.tabBarLabel}
               </Text>
@@ -81,14 +87,27 @@ const Tabs = () => (
                     backgroundColor: focused
                       ? color
                       : CombinedDefaultTheme.colors.background,
+                    marginTop: 6,
+                    // borderWidth: 1,
+                    position: "absolute",
+                    bottom: 0,
                   },
                 ]}
               />
-            </>
+            </View>
           );
         }}
         renderTouchable={({ children, key, ...props }) => (
-          <TouchableRipple key={key} {...props} rippleColor="transparent">
+          <TouchableRipple
+            key={key}
+            {...props}
+            style={{
+              height: 64,
+              flex: 1,
+              paddingTop: 8,
+            }}
+            rippleColor="transparent"
+          >
             {children}
           </TouchableRipple>
         )}
@@ -110,7 +129,6 @@ const Tabs = () => (
             target: key,
             type: "tabPress",
           });
-
           if (event.defaultPrevented) {
             preventDefault();
           } else {
@@ -124,6 +142,8 @@ const Tabs = () => (
     )}
     id="tabs"
     initialRouteName={RouteNames.Home}
+    safeAreaInsets={{ bottom: Platform.OS === "ios" ? 21 : 0 }}
+    sty={{ backgroundColor: "blue" }}
   >
     <Tab.Screen
       options={{
@@ -159,7 +179,6 @@ const Tabs = () => (
     />
   </Tab.Navigator>
 );
-
 const Router = () => {
   return (
     <NavigationContainer>
@@ -193,7 +212,6 @@ const Router = () => {
     </NavigationContainer>
   );
 };
-
 const styles = StyleSheet.create({
   activeIndicator: {
     alignSelf: "center",
@@ -206,5 +224,4 @@ const styles = StyleSheet.create({
     width: Dimensions.screenWidth / 4 - Dimensions.margin * 2,
   },
 });
-
 export default Router;
