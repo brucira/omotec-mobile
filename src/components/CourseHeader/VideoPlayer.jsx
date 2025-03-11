@@ -24,8 +24,8 @@ const VideoPlayer = ({ url, containerStyle = {}, playerStyle = {} }) => {
       <VideoView
         allowsFullscreen
         allowsPictureInPicture
+        contentFit={RESIZE_MODE.COVER}
         player={player}
-        resizeMode={RESIZE_MODE.COVER}
         style={[styles.video, playerStyle]}
       />
     </View>

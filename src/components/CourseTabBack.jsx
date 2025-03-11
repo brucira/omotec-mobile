@@ -3,7 +3,7 @@ import { Image } from "expo-image";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 
-const CourseTabBack = ({ style = {} }) => {
+const CourseTabBack = ({ style = {}, iconURL }) => {
   const navigation = useNavigation();
 
   const gobackHandler = () => {
@@ -16,7 +16,7 @@ const CourseTabBack = ({ style = {} }) => {
   return (
     <TouchableOpacity style={style} onPress={gobackHandler}>
       <Image
-        source={require("../assets/icons/chevron_left.png")}
+        source={iconURL || require("../assets/icons/chevron_left.png")}
         style={{ height: 24, width: 24 }}
       />
     </TouchableOpacity>
