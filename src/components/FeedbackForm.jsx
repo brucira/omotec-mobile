@@ -45,12 +45,12 @@ export default function FeedbackForm({ onSubmit }) {
     return (
       <View style={styles.container}>
         <View style={styles.ratingContainer}>
-          <Text style={styles.title} variant="titleLarge">
+          <Text style={styles.title} variant="custom600_18">
             Why did you leave this rating?
           </Text>
 
           <View style={styles.feedbackWrapper}>
-            <Text style={styles.subtitle} variant="titleSmall">
+            <Text style={styles.subtitle} variant="labelLarge">
               Good/ Amazing
             </Text>
 
@@ -113,12 +113,12 @@ export default function FeedbackForm({ onSubmit }) {
   return (
     <View style={styles.container}>
       <View style={styles.ratingContainer}>
-        <Text style={styles.title} variant="titleLarge">
+        <Text style={styles.title} variant="custom600_18">
           How would you rate your experience with the Trainer so far?
         </Text>
 
         <View style={styles.feedbackWrapper}>
-          <Text style={styles.subtitle} variant="titleSmall">
+          <Text style={styles.subtitle} variant="labelLarge">
             Select Rating
           </Text>
 

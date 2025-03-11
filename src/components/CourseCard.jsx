@@ -36,12 +36,14 @@ const CourseCard = ({ index, isLast }) => {
               iconSource={calenderSource}
               label={"May 1 - Jun 30"}
               textColor={CombinedDefaultTheme.colors.primary}
+              variant={"custom500_10"}
             />
             <Tag
               backgroundColor={palette.error50}
               iconSource={userSource}
               label={"John Doe"}
               textColor={palette.error600}
+              variant={"custom500_10"}
             />
           </View>
         </View>

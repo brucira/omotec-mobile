@@ -37,7 +37,7 @@ export const CommentView = () => {
         <Image source={require("../assets/male.png")} style={styles.avatar} />
         <View style={styles.infoContainer}>
           <View style={styles.userRow}>
-            <Text style={styles.userName} variant="titleMedium">
+            <Text style={styles.userName} variant="custom600_16">
               Sahil Dabas
             </Text>
             {courseComment && (

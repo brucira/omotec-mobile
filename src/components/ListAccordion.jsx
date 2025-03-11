@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import { List } from "react-native-paper";
+import { Image, StyleSheet, View } from "react-native";
+import { List, Text } from "react-native-paper";
 
 import palette from "../styles/palette";
 import { CombinedDefaultTheme } from "../styles/theme";
@@ -36,7 +36,9 @@ const ItemDescription = ({ text = "", showResource = false, icon }) => {
             source={getIconImage(icon)}
             style={styles.itemDescriptionImage}
           />
-          <Text style={styles.itemDescriptionText}>{text}</Text>
+          <Text style={styles.itemDescriptionText} variant="bodySmall">
+            {text}
+          </Text>
         </View>
         {showResource && (
           <View
@@ -51,6 +53,7 @@ const ItemDescription = ({ text = "", showResource = false, icon }) => {
                 styles.itemDescriptionText,
                 styles.itemDescriptionResourcesText,
               ]}
+              variant="labelMedium"
             >
               Resources
             </Text>

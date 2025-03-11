@@ -79,7 +79,7 @@ const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
           <Appbar.Content
             title={
               <View>
-                <Text variant="titleLarge">Assignment</Text>
+                <Text variant="custom600_18">Assignment</Text>
               </View>
             }
           />
@@ -101,6 +101,7 @@ const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
                 backgroundColor={palette.primaryStudent50}
                 label={"10 Mark"}
                 textColor={CombinedDefaultTheme.colors.primary}
+                variant={"labelMedium"}
               />
             </View>
 
@@ -116,9 +117,12 @@ const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
                       style={styles.uploadIcon}
                     />
                     <View style={{ paddingTop: Dimensions.padding / 1.33 }}>
-                      <Text style={styles.uploadTitle} variant="bodyMedium">
+                      <Text style={styles.uploadTitle} variant="labelLarge">
                         Click to upload{" "}
-                        <Text style={{ color: palette.grey600 }}>
+                        <Text
+                          style={{ color: palette.grey600 }}
+                          variant="bodyMedium"
+                        >
                           or drag and drop
                         </Text>
                       </Text>
@@ -146,8 +150,8 @@ const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
                       <View style={styles.checkIconContainer}>
                         <Text
                           numberOfLines={1}
-                          style={{ maxWidth: "80%" }}
-                          variant="labelSmall"
+                          style={{ color: palette.grey800, maxWidth: "80%" }}
+                          variant="labelLarge"
                         >
                           {file.fileName}
                         </Text>
@@ -158,7 +162,11 @@ const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
                           />
                         </TouchableOpacity>
                       </View>
-                      <Text numberOfLines={1} variant="labelSmall">
+                      <Text
+                        numberOfLines={1}
+                        style={{ color: palette.grey600 }}
+                        variant="custom400_12"
+                      >
                         {file.fileSize}
                       </Text>
                       <View style={styles.progress}>
@@ -167,7 +175,10 @@ const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
                           progress={100 / 100}
                           style={styles.progressBar}
                         />
-                        <Text style={styles.progressText} variant="labelSmall">
+                        <Text
+                          style={styles.progressText}
+                          variant="custom500_12"
+                        >
                           {100}%
                         </Text>
                       </View>
@@ -177,7 +188,9 @@ const AssignmentModal = ({ visible, hideModal, onSavePress }) => {
               </TouchableOpacity>
             )}
             <View>
-              <Text variant="labelLarge">Remarks</Text>
+              <Text style={{ color: palette.grey900 }} variant="labelLarge">
+                Remarks
+              </Text>
               <Review
                 date={reviewData.date}
                 description={reviewData.description}
@@ -221,9 +234,9 @@ const styles = StyleSheet.create({
     borderRadius: Dimensions.margin / 2,
     borderWidth: 1,
     marginTop: Dimensions.margin / 1.33,
-    paddingLeft: Dimensions.padding / 2.66,
-    paddingRight: Dimensions.padding / 1.14,
-    paddingVertical: Dimensions.padding / 2.66,
+    paddingLeft: Dimensions.padding,
+    paddingRight: Dimensions.padding,
+    paddingVertical: Dimensions.padding,
   },
   assignmentQuestion: {
     maxWidth: "80%",
@@ -278,6 +291,9 @@ const styles = StyleSheet.create({
     borderRadius: Dimensions.margin,
     height: 6,
     width: "236",
+  },
+  progressText: {
+    color: palette.grey600,
   },
   upload: {
     alignItems: "center",
