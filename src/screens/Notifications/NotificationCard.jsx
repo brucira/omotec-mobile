@@ -46,21 +46,28 @@ const NotificationCard = ({
       <View style={styles.contentSection}>
         <View style={styles.titleAndDuration}>
           <View style={styles.contentContainer}>
-            <Text style={styles.heading} variant="labelLarge">
-              {notificationType === NEW_COURSE
-                ? `Hello, Welcome to ${course} course!`
-                : notificationType === GRADES
-                  ? `Your grade for ${course} has 
-been posted.`
-                  : notificationType === FEEDBACK
-                    ? `You have received a feedback!`
-                    : notificationType === CERTIFICATE
-                      ? `Your certificate is ready!`
-                      : notificationType === ASSIGNMENT
-                        ? `File Uploaded Succesfully`
-                        : notificationType === ENROLLMENT
-                          ? "New Course has been added."
-                          : null}
+            <Text style={styles.heading} variant="custom600_14">
+              {notificationType === NEW_COURSE ? (
+                <Text variant="custom600_14">
+                  Hello, Welcome to <Text variant="custom600_14">{course}</Text>{" "}
+                  course!
+                </Text>
+              ) : notificationType === GRADES ? (
+                <Text style={{ color: palette.grey900 }} variant="bodyMedium">
+                  Your grade for <Text variant="custom600_14">{course}</Text>{" "}
+                  has been posted.
+                </Text>
+              ) : notificationType === FEEDBACK ? (
+                <Text variant="custom600_14">
+                  You have received a feedback!
+                </Text>
+              ) : notificationType === CERTIFICATE ? (
+                <Text variant="custom600_14">Your certificate is ready!</Text>
+              ) : notificationType === ASSIGNMENT ? (
+                `File Uploaded Succesfully`
+              ) : notificationType === ENROLLMENT ? (
+                <Text variant="custom600_14">New Course has been added.</Text>
+              ) : null}
             </Text>
           </View>
           <Text style={{ color: palette.grey500 }} variant="bodySmall">
@@ -71,19 +78,34 @@ been posted.`
         <View>
           <Text style={{ color: palette.grey600 }} variant="bodySmall">
             {/* You have been added to a new course */}
-            {notificationType === NEW_COURSE
-              ? "You have been added to a new course"
-              : notificationType === GRADES
-                ? `Grade received:  ${grade}`
-                : notificationType === FEEDBACK
-                  ? `Course: ${course}`
-                  : notificationType === CERTIFICATE
-                    ? `${course} certificate is out now.`
-                    : notificationType === ASSIGNMENT
-                      ? `${course} assignment has been uploaded`
-                      : notificationType === ENROLLMENT
-                        ? `Check out the new course now.`
-                        : null}
+            {notificationType === NEW_COURSE ? (
+              <Text style={{ color: palette.grey600 }} variant="bodySmall">
+                You have been added to a new course
+              </Text>
+            ) : notificationType === GRADES ? (
+              <Text style={{ color: palette.grey600 }} variant="bodySmall">
+                Grade received:{" "}
+                <Text
+                  style={{ lineHeight: Dimensions.margin }}
+                  variant="custom600_12"
+                >
+                  {grade}
+                </Text>{" "}
+              </Text>
+            ) : notificationType === FEEDBACK ? (
+              <Text style={{ color: palette.grey600 }} variant="bodySmall">
+                Course:{" "}
+                <Text style={{ color: palette.grey900 }} variant="custom600_12">
+                  {course}
+                </Text>
+              </Text>
+            ) : notificationType === CERTIFICATE ? (
+              `${course} certificate is out now.`
+            ) : notificationType === ASSIGNMENT ? (
+              `${course} assignment has been uploaded`
+            ) : notificationType === ENROLLMENT ? (
+              `Check out the new course now.`
+            ) : null}
           </Text>
           {notificationType === FEEDBACK && (
             <View style={styles.feedbackComment}>
@@ -105,10 +127,10 @@ been posted.`
                 />
                 <View style={styles.content}>
                   <View>
-                    <Text numberOfLines={1} variant="labelSmall">
+                    <Text numberOfLines={1} variant="custom400_10">
                       {fileName}
                     </Text>
-                    <Text numberOfLines={1} variant="labelSmall">
+                    <Text numberOfLines={1} variant="custom400_10">
                       {fileSize}
                     </Text>
                     <View style={styles.progress}>
@@ -174,7 +196,10 @@ const styles = StyleSheet.create({
   buttonContent: {
     alignContent: "flex-start",
     alignSelf: "baseline",
+    fontSize: Dimensions.margin / 1.33,
+    fontWeight: "500",
     height: "auto",
+    lineHeight: Dimensions.margin,
     minHeight: 0,
     padding: 0,
   },
@@ -219,6 +244,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     color: palette.grey900,
+    maxWidth: "95%",
   },
   newNotification: {
     backgroundColor: palette.primaryStudent400,

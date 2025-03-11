@@ -12,6 +12,24 @@ const fontConfig = {
     latterSpacing: 0,
     lineHeight: 16,
   },
+  custom400_10: {
+    fontFamily: Platform.select({
+      android: "Inter_400Regular",
+      ios: "Inter-Regular",
+    }),
+    fontSize: 10,
+    latterSpacing: 0,
+    lineHeight: 16,
+  },
+  custom400_18: {
+    fontFamily: Platform.select({
+      android: "Inter_400Regular",
+      ios: "Inter-Regular",
+    }),
+    fontSize: 18,
+    latterSpacing: 0,
+    lineHeight: 28,
+  },
   custom500_10: {
     fontFamily: Platform.select({
       android: "Inter_500Medium",
@@ -21,6 +39,15 @@ const fontConfig = {
     latterSpacing: 0,
     lineHeight: 12,
   },
+  custom500_18: {
+    fontFamily: Platform.select({
+      android: "Inter_500Medium",
+      ios: "Inter-Medium",
+    }),
+    fontSize: 18,
+    latterSpacing: 0,
+    lineHeight: 28,
+  },
   custom600_12: {
     fontFamily: Platform.select({
       android: "Inter_600SemiBold",
@@ -28,6 +55,15 @@ const fontConfig = {
     }),
     fontSize: 12,
     latterSpacing: -0.5,
+    lineHeight: 20,
+  },
+  custom600_14: {
+    fontFamily: Platform.select({
+      android: "Inter_600SemiBold",
+      ios: "Inter-SemiBold",
+    }),
+    fontSize: 14,
+    latterSpacing: 0,
     lineHeight: 20,
   },
   custom600_16: {

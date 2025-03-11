@@ -81,7 +81,13 @@ const Profile = ({ navigation }) => {
           style={styles.backIcon}
           onPress={navigation.goBack}
         />
-        <Appbar.Content title={<Text variant="titleMedium">Profile</Text>} />
+        <Appbar.Content
+          title={
+            <Text style={{ color: palette.grey900 }} variant="custom600_16">
+              Profile
+            </Text>
+          }
+        />
         <View>
           <Appbar.Action
             icon={require("../../assets/icons/notification.png")}
@@ -98,13 +104,15 @@ const Profile = ({ navigation }) => {
             style={styles.profilePicture}
           />
           <View style={styles.completeContainer}>
-            <Text style={styles.completeText} variant="bodySmall">
+            <Text style={styles.completeText} variant="custom700">
               20% COMPLETE
             </Text>
           </View>
         </View>
         <View style={styles.userContent}>
-          <Text variant="titleLarge">Juilan, 12</Text>
+          <Text style={{ color: palette.grey900 }} variant="custom500_18">
+            Juilan, 12
+          </Text>
           <Button
             icon={() => (
               <Image
@@ -162,7 +170,11 @@ const styles = StyleSheet.create({
     borderColor: palette.grey200,
   },
   completeButtonContent: {
+    fontSize: Dimensions.margin / 1.33,
+    fontWeight: "500",
     gap: 0,
+    letterSpacing: 0,
+    lineHeight: Dimensions.margin,
     paddingHorizontal: Dimensions.padding / 4,
   },
   completeContainer: {
@@ -222,6 +234,8 @@ const styles = StyleSheet.create({
   },
   sectionContainer: {
     color: palette.grey500,
+    letterSpacing: 0.5,
+    lineHeight: Dimensions.margin / 1.33,
     paddingBottom: Dimensions.padding / 2,
   },
   userContent: {

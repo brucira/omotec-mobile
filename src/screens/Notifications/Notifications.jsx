@@ -20,7 +20,7 @@ const Notifications = ({ navigation }) => {
           onPress={navigation.goBack}
         />
         <Appbar.Content
-          title={<Text variant="titleMedium">Notification</Text>}
+          title={<Text variant="custom600_16">Notification</Text>}
         />
         <Appbar.Action
           icon={(props) => (

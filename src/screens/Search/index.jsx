@@ -76,7 +76,7 @@ const Search = ({ navigation }) => {
           source={require("../../assets/icons/search.png")}
           style={styles.searchIcon}
         />
-        <Text>{item}</Text>
+        <Text variant="bodyMedium">{item}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -107,7 +107,7 @@ const Search = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Appbar style={styles.appBarContainer}>
-        <Appbar.Content title={<Text variant="headlineSmall">Search</Text>} />
+        <Appbar.Content title={<Text variant="custom600_16">Search</Text>} />
         <Appbar.Action
           icon={require("../../assets/icons/notification.png")}
           onPress={() => navigation.navigate(RouteNames.Notifications)}
@@ -153,7 +153,9 @@ const Search = ({ navigation }) => {
         )}
         {!showResults && recentSearches.length > 0 && (
           <View style={styles.recentSearches}>
-            <Text variant="titleLarge">Recent searches</Text>
+            <Text style={{ color: palette.grey900 }} variant="custom700_18">
+              Recent searches
+            </Text>
             <View style={styles.itemSearched}>
               {recentSearches.map((chip, index) => {
                 return renderSearchChip(chip, index);
@@ -164,7 +166,7 @@ const Search = ({ navigation }) => {
         {!showResults && (
           <View>
             <View style={styles.popularSearches}>
-              <Text variant="titleLarge">Popular courses</Text>
+              <Text variant="custom700_18">Popular courses</Text>
               <View style={styles.popularCardContainer}>
                 <FlatList
                   contentContainerStyle={styles.arrowIndicator}
@@ -177,7 +179,7 @@ const Search = ({ navigation }) => {
               </View>
             </View>
             <View style={styles.recentSearches}>
-              <Text variant="titleLarge">Browse all</Text>
+              <Text variant="custom700_18">Browse all</Text>
               <View style={styles.browseCourseCard}>
                 {browseCourseCardData.map((item, index) => {
                   return renderSearchCourseCard(item, index);
@@ -222,6 +224,10 @@ const styles = StyleSheet.create({
   },
   chipContent: {
     color: palette.grey700,
+    fontSize: Dimensions.margin / 1.14,
+    fontWeight: "500",
+    letterSpacing: 0,
+    lineHeight: Dimensions.margin * 1.25,
   },
   closeIcon: {
     height: Dimensions.margin / 1.142,
@@ -296,7 +302,9 @@ const styles = StyleSheet.create({
   searchInput: {
     color: palette.grey900,
     fontSize: 14,
+    fontWeight: "400",
     left: -(Dimensions.margin / 1.33),
+    lineHeight: Dimensions.margin * 1.25,
     marginLeft: 0,
     marginRight: 0,
     minHeight: 0,
