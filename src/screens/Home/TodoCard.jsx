@@ -53,6 +53,7 @@ const TodoCard = ({
           backgroundColor={palette.success50}
           label={label}
           textColor={palette.success600}
+          variant={"labelMedium"}
         />
       </View>
     </View>

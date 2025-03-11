@@ -77,16 +77,20 @@ const LargeCourseCard = ({
         <View style={{ paddingVertical: Dimensions.padding / 2 }}>
           <View style={{ flexDirection: "row", gap: Dimensions.padding / 2 }}>
             <Tag
+              iconSource={
+                learningType === COURSE ? calendarRangeSource : bookSource
+              }
               backgroundColor={palette.primaryStudent50}
-              iconSource={learningType === COURSE ? calendarSource : bookSource}
               label={learningType === COURSE ? date : subject}
               textColor={CombinedDefaultTheme.colors.primary}
+              variant={"labelMedium"}
             />
             <Tag
               backgroundColor={palette.error50}
               iconSource={learningType === COURSE ? userSource : clockSource}
               label={learningType === COURSE ? trainer : duration}
               textColor={palette.error600}
+              variant={"labelMedium"}
             />
           </View>
         </View>
