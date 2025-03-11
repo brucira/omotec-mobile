@@ -10,7 +10,6 @@ import { Dimensions } from "../../utils/constant";
 
 const SIZE_8 = Dimensions.margin * 0.5;
 const SIZE_16 = Dimensions.margin;
-const SIZE_20 = Dimensions.margin * 1.25;
 const SIZE_24 = Dimensions.margin * 1.5;
 
 const OverView = ({ customBackNavigate }) => {
@@ -54,7 +53,7 @@ const OverView = ({ customBackNavigate }) => {
         <Text
           numberOfLines={viewAllText}
           style={styles.bodyText}
-          variant="bodyMedium"
+          variant="custom400_14"
         >
           {content}
         </Text>
@@ -63,7 +62,7 @@ const OverView = ({ customBackNavigate }) => {
             style={styles.viewMoreButton}
             onPress={viewMoreHandler}
           >
-            <Text style={styles.viewMoreText} variant="labelMedium">
+            <Text style={styles.viewMoreText} variant="custom500_12">
               View More
             </Text>
           </TouchableOpacity>
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
     color: palette.grey900,
   },
   overviewContainer: {
-    marginBottom: SIZE_20,
+    marginBottom: SIZE_8,
     marginTop: SIZE_16,
     rowGap: SIZE_16,
   },

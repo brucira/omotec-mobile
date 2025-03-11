@@ -18,7 +18,7 @@ const DescriptionItem = ({ title = "", description = "", iconURL = null }) => {
       <View style={styles.firstRow}>
         {iconURL && <Image source={iconURL} style={styles.iconStyle} />}
         {title && (
-          <Text style={styles.titleText} variant="titleSmall">
+          <Text style={styles.titleText} variant="custom500_14">
             {title}
           </Text>
         )}
@@ -26,7 +26,7 @@ const DescriptionItem = ({ title = "", description = "", iconURL = null }) => {
       {description && (
         <>
           <Divider />
-          <Text style={styles.descriptionText} variant="titleSmall">
+          <Text style={styles.descriptionText} variant="custom500_14">
             {description}
           </Text>
         </>

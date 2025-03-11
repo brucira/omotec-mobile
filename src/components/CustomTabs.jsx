@@ -75,7 +75,7 @@ const CustomTabs = ({ tabs }) => {
                       ? theme.colors.primary
                       : theme.colors.onSurfaceVariant,
                   }}
-                  variant="titleSmall"
+                  variant="custom500_14"
                 >
                   {tab.title}
                 </Text>

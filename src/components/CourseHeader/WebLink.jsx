@@ -53,7 +53,7 @@ const WebLink = () => {
       <CourseTabBack />
       <View style={styles.webLinkContent}>
         <View style={styles.webLinkTextContainer}>
-          <Text style={styles.copyHeadingText} variant="titleSmall">
+          <Text style={styles.copyHeadingText} variant="custom600_14">
             URL of webpage
           </Text>
           <View style={styles.copyLinkContainer}>
@@ -70,7 +70,7 @@ const WebLink = () => {
           onPress={externalLinkHandler}
         >
           <Image source={externalIcon} style={styles.menuImage} />
-          <Text style={styles.viewLinkText} variant="labelMedium">
+          <Text style={styles.viewLinkText} variant="custom500_12">
             View Link
           </Text>
         </TouchableOpacity>
@@ -113,6 +113,9 @@ const styles = StyleSheet.create({
     alignItems: JUSTIFY.CENTER,
     columnGap: SIZE_8,
     flexDirection: DIRECTION.ROW,
+  },
+  viewLinkText: {
+    color: palette.purple600,
   },
   webLinkContainer: {
     marginBottom: SIZE_20,

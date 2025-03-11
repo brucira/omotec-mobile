@@ -3,7 +3,6 @@ import { FlatList, Image, ScrollView, StyleSheet, View } from "react-native";
 import { Appbar, Avatar, Badge, Chip, Text } from "react-native-paper";
 
 import CourseCard from "../../components/CourseCard";
-import CustomText from "../../components/CustomText";
 import TopTab from "../../components/TopTab";
 import palette from "../../styles/palette";
 import { CombinedDefaultTheme } from "../../styles/theme";

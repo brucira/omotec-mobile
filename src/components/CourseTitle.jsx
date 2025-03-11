@@ -67,6 +67,7 @@ const CourseTitle = ({
 const styles = StyleSheet.create({
   courseHeaderContainer: {
     paddingHorizontal: SIZE_16,
+    paddingTop: SIZE_16 / 2,
     rowGap: 2,
   },
   description: {

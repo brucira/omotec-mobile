@@ -71,7 +71,7 @@ export const RecordingsContent = () => {
           onPress={() => downloadFile(video.url, video.name)}
         >
           <Image source={imageurl} style={styles.icon} />
-          <Text style={styles.videoText} variant="titleSmall">
+          <Text style={styles.videoText} variant="custom500_14">
             {video.name}
           </Text>
         </TouchableOpacity>
