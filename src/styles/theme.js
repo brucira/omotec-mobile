@@ -21,6 +21,15 @@ const fontConfig = {
     latterSpacing: 0,
     lineHeight: 16,
   },
+  custom400_12: {
+    fontFamily: Platform.select({
+      android: "Inter_400Regular",
+      ios: "Inter-Regular",
+    }),
+    fontSize: 12,
+    latterSpacing: 0,
+    lineHeight: 16,
+  },
   custom400_18: {
     fontFamily: Platform.select({
       android: "Inter_400Regular",

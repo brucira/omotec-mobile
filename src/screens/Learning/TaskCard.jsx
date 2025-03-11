@@ -43,8 +43,8 @@ const TaskCard = ({ ...items }) => {
             <View style={styles.cardContent}>
               <Text
                 numberOfLines={1}
-                style={{ marginBottom: Dimensions.margin / 4 }}
-                variant="labelLarge"
+                style={styles.title}
+                variant="custom600_14"
               >
                 {items.title}
               </Text>
@@ -53,7 +53,7 @@ const TaskCard = ({ ...items }) => {
                 label={items.status}
                 textColor={CombinedDefaultTheme.colors.primary}
               /> */}
-              <StatusTag status={items.status} />
+              <StatusTag status={items.status} variant={"labelMedium"} />
             </View>
             <Text
               numberOfLines={1}
@@ -89,7 +89,7 @@ const TaskCard = ({ ...items }) => {
             <Text style={{ color: palette.grey700 }} variant="bodySmall">
               {"Start:"}
             </Text>
-            <Text style={{ color: palette.grey900 }} variant="bodySmall">
+            <Text style={{ color: palette.grey900 }} variant="labelMedium">
               {items.start_date}
             </Text>
           </View>
@@ -103,7 +103,7 @@ const TaskCard = ({ ...items }) => {
             <Text style={{ color: palette.grey700 }} variant="bodySmall">
               {"End:"}
             </Text>
-            <Text style={{ color: palette.grey900 }} variant="bodySmall">
+            <Text style={{ color: palette.grey900 }} variant="labelMedium">
               {items.end_date}
             </Text>
           </View>
@@ -116,7 +116,7 @@ const TaskCard = ({ ...items }) => {
             <Text style={{ color: palette.grey700 }} variant="bodySmall">
               {"Remark:"}
             </Text>
-            <Text style={{ color: palette.grey900 }} variant="bodySmall">
+            <Text style={{ color: palette.grey900 }} variant="labelMedium">
               {items.remark === null ? "No remarks" : items.remark}
             </Text>
           </View>
@@ -171,8 +171,8 @@ const styles = StyleSheet.create({
     backgroundColor: CombinedDefaultTheme.colors.background,
     borderColor: palette.grey200,
     borderRadius: Dimensions.margin / 1.33,
+    paddingBottom: Dimensions.padding / 1.33,
     paddingHorizontal: 0,
-    paddingVertical: 0,
   },
   contentStyleContainer: {
     padding: Dimensions.padding,
@@ -226,6 +226,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: Dimensions.margin / 2,
     // justifyContent: "space-between",
+  },
+  title: {
+    color: palette.grey900,
+    marginBottom: Dimensions.margin / 4,
   },
   upcoming: {
     flexDirection: "row",

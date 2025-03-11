@@ -38,7 +38,11 @@ const IssueDetails = ({ visible, hideModal, event }) => {
                 justifyContent: "space-between",
               }}
             >
-              <Text numberOfLines={1} variant="labelSmall">
+              <Text
+                numberOfLines={1}
+                style={{ color: palette.grey800 }}
+                variant="labelMedium"
+              >
                 {file.fileName}
               </Text>
               <Image
@@ -46,7 +50,7 @@ const IssueDetails = ({ visible, hideModal, event }) => {
                 style={styles.check}
               />
             </View>
-            <Text numberOfLines={1} variant="labelSmall">
+            <Text numberOfLines={1} variant="bodySmall">
               {file.fileSize}
             </Text>
             <View style={styles.progress}>
@@ -55,7 +59,7 @@ const IssueDetails = ({ visible, hideModal, event }) => {
                 progress={100}
                 style={styles.progressBar}
               />
-              <Text style={styles.progressText} variant="labelSmall">
+              <Text style={styles.progressText} variant="labelMedium">
                 {100} %
               </Text>
             </View>
