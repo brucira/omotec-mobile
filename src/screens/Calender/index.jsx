@@ -104,7 +104,7 @@ const Calender = ({ navigation }) => {
                 ? CombinedDefaultTheme.colors.primary
                 : palette.grey900,
           }}
-          variant="titleSmall"
+          variant="labelLarge"
         >
           {item.title}
         </Text>
@@ -201,7 +201,7 @@ const Calender = ({ navigation }) => {
         />
         <BottomDrawer ref={bottomSheetModalRef}>
           <View style={styles.bottomSheetContainer}>
-            <Text style={styles.filterTitle} variant="titleMedium">
+            <Text style={styles.filterTitle} variant="custom600_18">
               Filters
             </Text>
             <View style={styles.viewContainer}>
@@ -236,7 +236,7 @@ const Calender = ({ navigation }) => {
                       ? CombinedDefaultTheme.colors.primary
                       : palette.grey900,
                   }}
-                  variant="titleSmall"
+                  variant="labelLarge"
                 >
                   Upcoming
                 </Text>
@@ -281,7 +281,7 @@ const Calender = ({ navigation }) => {
                 source={require("../../assets/icons/calender.png")}
                 style={styles.calendarIcon}
               />
-              <Text style={styles.dateInCalendar}>
+              <Text style={styles.dateInCalendar} variant="custom600_8">
                 {new Date(today).getUTCDate()}
               </Text>
             </View>
@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
     fontSize: 8,
     // left: "38%",
     position: "absolute",
-    top: "40%",
+    top: "52%",
   },
   divider: {
     marginVertical: Dimensions.margin,
@@ -375,6 +375,7 @@ const styles = StyleSheet.create({
     top: Dimensions.padding * 6.5,
   },
   filterTitle: {
+    color: palette.grey900,
     paddingHorizontal: Dimensions.padding / 1.33,
   },
   headerContainer: {
@@ -407,6 +408,7 @@ const styles = StyleSheet.create({
   },
   viewText: {
     color: palette.grey500,
+    lineHeight: Dimensions.margin / 1.33,
     paddingBottom: Dimensions.padding / 2,
     paddingHorizontal: Dimensions.padding / 1.33,
   },

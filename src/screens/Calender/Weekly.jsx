@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Calendar } from "react-native-big-calendar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Text } from "react-native-paper";
 
 import FullEventDetails from "../../components/FullEventDetails";
 import palette from "../../styles/palette";
@@ -56,8 +57,9 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
                 : CombinedDefaultTheme.colors.background,
               textAlign: "center",
             }}
+            variant="labelMedium"
           >
-            {date.format("dd")}
+            {date.format("dd").split("")[0]}
           </Text>
           <View style={styles.weekDates}>
             <Text
@@ -69,6 +71,7 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
                   textAlign: "center",
                 },
               ]}
+              variant="labelLarge"
             >
               {date.format("D")}
             </Text>
@@ -90,7 +93,7 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
               <Text
                 numberOfLines={1}
                 style={styles.specialDay}
-                variant="labelSmall"
+                variant="custom600_12"
               >
                 {specialDay}
               </Text>
@@ -107,7 +110,10 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
   const renderWeekEvent = (event, touchableOpacityProps) => {
     return (
       <TouchableOpacity {...touchableOpacityProps} key={event}>
-        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
+        <Text
+          style={{ color: CombinedDefaultTheme.colors.background }}
+          variant="custom600_10"
+        >
           {event.title}
         </Text>
       </TouchableOpacity>
@@ -169,7 +175,7 @@ const Weekly = ({ isToday, selectedDate, setSelectedDate }) => {
           height={Dimensions.screenHeight}
           hourRowHeight={52}
           mode="week"
-          overlapOffset={0}
+          // overlapOffset={}
           renderEvent={renderWeekEvent}
           renderHeader={renderWeekHeader}
           showAllDayEventCell={true}
@@ -241,6 +247,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.success700,
     color: CombinedDefaultTheme.colors.background,
     height: Dimensions.margin * 1.5,
+    lineHeight: Dimensions.margin,
     paddingLeft: Dimensions.padding / 2,
     paddingVertical: Dimensions.padding / 4,
   },

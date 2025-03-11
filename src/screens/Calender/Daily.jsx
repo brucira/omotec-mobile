@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Calendar } from "react-native-big-calendar";
-import { Avatar } from "react-native-paper";
+import { Avatar, Text } from "react-native-paper";
 
 import FullEventDetails from "../../components/FullEventDetails";
 import palette from "../../styles/palette";
@@ -39,10 +39,14 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
   const renderEvent = (event, touchableOpacityProps) => {
     return (
       <TouchableOpacity {...touchableOpacityProps} key={event}>
-        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
+        <Text style={styles.eventTitle} variant="custom600_12">
           {event.title}
         </Text>
-        <Text style={{ color: CombinedDefaultTheme.colors.background }}>
+        <Text
+          numberOfLines={2}
+          style={{ color: CombinedDefaultTheme.colors.background }}
+          variant="labelMedium"
+        >
           {event.subtitle}
         </Text>
       </TouchableOpacity>
@@ -66,9 +70,8 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
                   ? CombinedDefaultTheme.colors.primary
                   : palette.grey900,
                 maxWidth: 36,
-                // minHeight: 36,
               }}
-              variant="bodySmall"
+              variant="labelMedium"
             >
               {dayName}
             </Text>
@@ -100,17 +103,14 @@ const Daily = ({ isToday, selectedDate, setSelectedDate }) => {
             />
             <Text
               style={{ color: CombinedDefaultTheme.colors.primary }}
-              variant="labelMedium"
+              variant="custom500_12"
             >
               Online
             </Text>
           </View>
           {specialDay && (
             <View style={styles.specialDay}>
-              <Text
-                style={{ color: CombinedDefaultTheme.colors.background }}
-                variant="labelMedium"
-              >
+              <Text style={styles.special} variant="custom600_12">
                 {specialDay}
               </Text>
             </View>
@@ -191,6 +191,10 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: Dimensions.margin / 4,
   },
+  eventTitle: {
+    color: CombinedDefaultTheme.colors.background,
+    lineHeight: Dimensions.margin,
+  },
   headerContainer: {
     alignItems: "center",
     backgroundColor: CombinedDefaultTheme.colors.background,
@@ -247,6 +251,10 @@ const styles = StyleSheet.create({
     gap: Dimensions.margin / 2.66,
     paddingHorizontal: Dimensions.padding / 2,
     paddingVertical: Dimensions.padding / 8,
+  },
+  special: {
+    color: CombinedDefaultTheme.colors.background,
+    lineHeight: Dimensions.margin,
   },
   specialDay: {
     backgroundColor: palette.success700,

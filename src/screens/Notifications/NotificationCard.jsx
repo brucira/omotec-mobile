@@ -100,11 +100,23 @@ const NotificationCard = ({
                 </Text>
               </Text>
             ) : notificationType === CERTIFICATE ? (
-              `${course} certificate is out now.`
+              <Text style={{ color: palette.grey600 }} variant="bodySmall">
+                <Text style={{ color: palette.grey900 }} variant="custom600_12">
+                  {course}
+                </Text>{" "}
+                certificate is out now.
+              </Text>
             ) : notificationType === ASSIGNMENT ? (
-              `${course} assignment has been uploaded`
+              <Text style={{ color: palette.grey600 }} variant="bodySmall">
+                <Text style={{ color: palette.grey900 }} variant="custom600_12">
+                  {course}
+                </Text>{" "}
+                assignment has been uploaded
+              </Text>
             ) : notificationType === ENROLLMENT ? (
-              `Check out the new course now.`
+              <Text style={{ color: palette.grey600 }} variant="bodySmall">
+                Check out the new course now.
+              </Text>
             ) : null}
           </Text>
           {notificationType === FEEDBACK && (
