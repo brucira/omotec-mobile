@@ -101,7 +101,9 @@ const AddIssue = ({ visible, hideModal }) => {
   const renderItem = ({ file }) => (
     <View style={styles.contentContainer}>
       <View>
-        <Text>Issue ID</Text>
+        <Text style={{ color: palette.grey900 }} variant="labelLarge">
+          Issue ID
+        </Text>
         <Surface
           elevation={Platform.OS === "ios" ? 6 : null}
           mode="flat"
@@ -120,7 +122,9 @@ const AddIssue = ({ visible, hideModal }) => {
         </Surface>
       </View>
       <View>
-        <Text>Issue Name</Text>
+        <Text style={{ color: palette.grey900 }} variant="labelLarge">
+          Issue Name
+        </Text>
         <Surface
           elevation={Platform.OS === "ios" ? 6 : null}
           mode="flat"
@@ -140,7 +144,9 @@ const AddIssue = ({ visible, hideModal }) => {
         </Surface>
       </View>
       <View>
-        <Text>Severity</Text>
+        <Text style={{ color: palette.grey900 }} variant="labelLarge">
+          Severity
+        </Text>
         <Surface
           elevation={Platform.OS === "ios" ? 6 : null}
           mode="flat"
@@ -149,12 +155,18 @@ const AddIssue = ({ visible, hideModal }) => {
           <TouchableOpacity style={styles.severity} onPress={handleSeverity}>
             <Dropdown
               search
+              placeholder={
+                !focusOfFirstDropdown ? (
+                  <Text variant="labelLarge">Status</Text>
+                ) : (
+                  <Text variant="labelLarge">...</Text>
+                )
+              }
               data={dropdownData}
               iconStyle={styles.iconStyle}
               inputSearchStyle={styles.inputSearchStyle}
               labelField="label"
               maxHeight={300}
-              placeholder={!focusOfFirstDropdown ? "Status" : "..."}
               placeholderStyle={styles.placeholderStyle}
               renderRightIcon={renderDropdownRightIcon}
               searchPlaceholder="Search..."
@@ -170,7 +182,9 @@ const AddIssue = ({ visible, hideModal }) => {
         </Surface>
       </View>
       <View>
-        <Text>Description</Text>
+        <Text style={{ color: palette.grey900 }} variant="labelLarge">
+          Description
+        </Text>
         <Surface
           elevation={Platform.OS === "ios" ? 6 : null}
           mode="flat"
@@ -194,7 +208,9 @@ const AddIssue = ({ visible, hideModal }) => {
         </Surface>
       </View>
       <View>
-        <Text>Upload additional file</Text>
+        <Text style={{ color: palette.grey600 }} variant="labelLarge">
+          Upload additional file
+        </Text>
         {allFiles.map((file, index) => (
           <TouchableOpacity
             key={file.id}
@@ -211,8 +227,8 @@ const AddIssue = ({ visible, hideModal }) => {
                   <View style={styles.checkIconContainer}>
                     <Text
                       numberOfLines={1}
-                      style={{ maxWidth: "80%" }}
-                      variant="labelSmall"
+                      style={{ color: palette.grey800, maxWidth: "80%" }}
+                      variant="labelMedium"
                     >
                       {file.fileName}
                       {/* kit_cover.jpg */}
@@ -224,7 +240,11 @@ const AddIssue = ({ visible, hideModal }) => {
                       />
                     </TouchableOpacity>
                   </View>
-                  <Text numberOfLines={1} variant="labelSmall">
+                  <Text
+                    numberOfLines={1}
+                    style={{ color: palette.grey600 }}
+                    variant="bodySmall"
+                  >
                     {file.fileSize}
                     {/* 200KB */}
                   </Text>
@@ -234,7 +254,7 @@ const AddIssue = ({ visible, hideModal }) => {
                       progress={100 / 100}
                       style={styles.progressBar}
                     />
-                    <Text style={styles.progressText} variant="labelSmall">
+                    <Text style={styles.progressText} variant="labelMedium">
                       {100} %
                     </Text>
                   </View>
@@ -251,6 +271,7 @@ const AddIssue = ({ visible, hideModal }) => {
           <Image
             source={require("../../assets/icons/plus.png")}
             style={styles.backIcon}
+            tintColor={CombinedDefaultTheme.colors.primary}
           />
           <Text
             style={{ color: CombinedDefaultTheme.colors.primary }}
@@ -294,7 +315,7 @@ const AddIssue = ({ visible, hideModal }) => {
             onPress={hideModal}
           />
           <Appbar.Content
-            title={<Text variant="titleMedium">Add issue</Text>}
+            title={<Text variant="custom600_14">Add issue</Text>}
           />
         </Appbar>
 
@@ -427,6 +448,7 @@ const styles = StyleSheet.create({
   issueContentStyle: {
     backgroundColor: palette.transparent,
     fontSize: Dimensions.margin / 1.14,
+    lineHeight: Dimensions.margin * 1.25,
     paddingHorizontal: Dimensions.padding / 1.33,
   },
   issueDescription: {
@@ -439,7 +461,10 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
   },
   issueDescriptionContentStyle: {
+    color: palette.grey900,
+    fontSize: Dimensions.margin / 1.14,
     height: 100,
+    lineHeight: Dimensions.margin * 1.25,
     textAlignVertical: "top",
   },
   issueInput: {
@@ -461,7 +486,14 @@ const styles = StyleSheet.create({
     height: 6,
     width: "236",
   },
-  selectedTextStyle: {},
+  progressText: {
+    color: palette.grey600,
+  },
+  selectedTextStyle: {
+    color: palette.grey900,
+    fontSize: Dimensions.margin / 1.14,
+    lineHeight: Dimensions.margin * 1.25,
+  },
   severity: {
     elevation: 1,
     paddingHorizontal: Dimensions.padding / 1.33,

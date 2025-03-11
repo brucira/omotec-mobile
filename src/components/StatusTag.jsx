@@ -8,7 +8,7 @@ const UNDER_REVIEW = "under_review";
 const COMPLETED = "completed";
 const ONGOING = "ongoing";
 
-const StatusTag = ({ status }) => {
+const StatusTag = ({ status, variant }) => {
   const { background, text } = STATUS_COLORS[status] || STATUS_COLORS.ongoing;
 
   return (
@@ -25,6 +25,7 @@ const StatusTag = ({ status }) => {
         }
         backgroundColor={background}
         textColor={text}
+        variant={variant ? variant : null}
       />
     </View>
   );

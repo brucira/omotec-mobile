@@ -95,8 +95,8 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
                 style={[styles.badge, { backgroundColor: event.background }]}
               />
               <View>
-                <Text variant="titleLarge">{event.title}</Text>
-                <Text style={styles.subDescription} variant="bodyMedium">
+                <Text variant="custom600_20">{event.title}</Text>
+                <Text style={styles.subDescription} variant="bodySmall">
                   {`${formattedDateTime.dayName}, ${formattedDateTime.dayNumber} ${formattedDateTime.monthName} - ${formattedDateTime.startTime} - ${formattedDateTime.endTime}`}
                 </Text>
               </View>
@@ -108,7 +108,7 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
                 tintColor={palette.grey700}
               />
               <View style={{ flexDirection: "row" }}>
-                <Text variant="bodyMedium">Trainer: </Text>
+                <Text variant="labelLarge">Trainer: </Text>
                 <Text variant="bodyMedium">{event.trainer}</Text>
               </View>
             </View>
@@ -119,7 +119,7 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
                 tintColor={palette.grey700}
               />
               <View style={{ flexDirection: "row" }}>
-                <Text variant="bodyMedium">Course: </Text>
+                <Text variant="labelLarge">Course: </Text>
                 <Text variant="bodyMedium">{event.course}</Text>
               </View>
             </View>
@@ -131,13 +131,13 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
               />
               <View>
                 <View style={{ alignItems: "center", flexDirection: "row" }}>
-                  <Text variant="bodyMedium">Batch: </Text>
+                  <Text variant="labelLarge">Batch: </Text>
                   <Text variant="bodyMedium">{event.batchName} -</Text>
                   {studentCount > 0 && (
                     <TouchableOpacity
                       onPress={(event) => onShowStudentPress(event)}
                     >
-                      <Text style={styles.studentCount}>
+                      <Text style={styles.studentCount} variant="bodyMedium">
                         {" "}
                         {studentCount > 1
                           ? studentCount + " students"
@@ -210,7 +210,7 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
                   tintColor={palette.grey700}
                 />
                 <View>
-                  <Text variant="bodyMedium">{event.location}</Text>
+                  <Text variant="labelLarge">{event.location}</Text>
                   <Text style={styles.subDescription} variant="bodySmall">
                     {event.address}
                   </Text>
@@ -225,7 +225,15 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
                 tintColor={palette.grey700}
               />
               <View style={{ flexDirection: "row", maxWidth: "90%" }}>
-                <Text variant="bodyMedium">{event.description}</Text>
+                <Text
+                  style={{
+                    color: palette.grey900,
+                    lineHeight: Dimensions.margin * 1.25,
+                  }}
+                  variant="bodySmall"
+                >
+                  {event.description}
+                </Text>
               </View>
             </View>
             <View style={styles.contentSeperatorMultiple}>
@@ -240,7 +248,7 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
                   style={[styles.badge]}
                   tintColor={palette.grey700}
                 />
-                <Text style={{ color: palette.slate900 }} variant="titleSmall">
+                <Text style={{ color: palette.slate900 }} variant="labelLarge">
                   {event.attachment}
                 </Text>
               </View>
@@ -259,12 +267,12 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
           {showAttendance && (
             <View style={styles.bottomContainer}>
               <View style={styles.attendanceContainer}>
-                <Text style={{ color: palette.grey500 }} variant="titleMedium">
+                <Text style={{ color: palette.grey500 }} variant="labelLarge">
                   Attendance?
                 </Text>
                 <Text
                   style={{ color: CombinedDefaultTheme.colors.primary }}
-                  variant="titleMedium"
+                  variant="labelLarge"
                   onPress={(event) => onViewAttendancePress(event)}
                 >
                   View
@@ -278,7 +286,7 @@ const FullEventDetails = ({ visible, hideModal, event, showAttendance }) => {
                   value={isSwitchOn}
                   onValueChange={onToggleSwitch}
                 />
-                <Text variant="titleMedium">Present</Text>
+                <Text variant="labelLarge">Present</Text>
               </View>
             </View>
           )}

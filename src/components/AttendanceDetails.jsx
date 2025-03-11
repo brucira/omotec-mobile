@@ -34,10 +34,12 @@ const AttendanceDetails = ({
       key={index}
       style={[
         styles.row,
-        index === items.length + 1 ? { borderBottomWidth: 0 } : {},
+        index === event.attendance.length - 1 ? { borderBottomWidth: 0 } : {},
       ]}
     >
-      <DataTable.Cell style={styles.cell}>{item.name}</DataTable.Cell>
+      <DataTable.Cell style={styles.cell}>
+        <Text variant="labelLarge">{item.name}</Text>
+      </DataTable.Cell>
       <DataTable.Cell numeric style={styles.cell}>
         <Tag
           backgroundColor={
@@ -47,6 +49,7 @@ const AttendanceDetails = ({
             item.status === PRESENT ? palette.success700 : palette.error600
           }
           label={item.status === PRESENT ? "Present" : "Absent"}
+          variant={"labelLarge"}
         />
       </DataTable.Cell>
     </DataTable.Row>
@@ -64,7 +67,9 @@ const AttendanceDetails = ({
           <Appbar.Content
             title={
               <View>
-                <Text variant="titleLarge">Attendance</Text>
+                <Text style={{ color: palette.grey900 }} variant="custom600_20">
+                  Attendance
+                </Text>
               </View>
             }
           />
@@ -76,7 +81,9 @@ const AttendanceDetails = ({
         </Appbar>
         <View style={styles.contentContainer}>
           <View>
-            <Text variant="titleMedium">{event.title}</Text>
+            <Text style={{ color: "black" }} variant="custom600_18">
+              {event.title}
+            </Text>
             <View>
               <Text
                 style={{ color: palette.grey600 }}
@@ -145,7 +152,12 @@ const AttendanceDetails = ({
             <DataTable.Header style={styles.tableHeader}>
               <DataTable.Title style={styles.headerTitle}>
                 <View style={styles.headingContainer}>
-                  <Text>Student Name</Text>
+                  <Text
+                    style={{ color: palette.grey900 }}
+                    variant="labelMedium"
+                  >
+                    Student Name
+                  </Text>
                   <Image
                     source={require("../assets/icons/sorting.png")}
                     style={styles.sort}
@@ -154,7 +166,12 @@ const AttendanceDetails = ({
               </DataTable.Title>
               <DataTable.Title numeric style={styles.headerTitle}>
                 <View style={styles.headingContainer}>
-                  <Text>Attendance</Text>
+                  <Text
+                    style={{ color: palette.grey900 }}
+                    variant="labelMedium"
+                  >
+                    Attendance
+                  </Text>
                   <Image
                     source={require("../assets/icons/sorting.png")}
                     style={styles.sort}
@@ -199,12 +216,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dimensions.padding,
   },
   cell: {
+    alignItems: "center",
+    alignSelf: "center",
     // backgroundColor: "red",
     color: palette.grey900,
     fontSize: 14,
     fontWeight: "500",
     justifyContent: "flex-start",
     // flex: 0.5,
+    lineHeight: Dimensions.margin * 1.25,
     maxWidth: 175,
     minWidth: 175,
   },
@@ -264,7 +284,6 @@ const styles = StyleSheet.create({
   row: {
     maxHeight: "auto",
     minHeight: 56,
-    padding: Dimensions.padding,
   },
   searchBar: {
     backgroundColor: CombinedDefaultTheme.colors.background,
