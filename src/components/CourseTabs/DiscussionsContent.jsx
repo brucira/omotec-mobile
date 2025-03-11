@@ -17,11 +17,11 @@ export const DiscussionsContent = () => {
     "You can visit the Forums page to see all the different topics and discussions that are available. From there, you can post a question, start a new discussion, or join an existing conversation.";
   return (
     <View style={styles.container}>
-      <Text style={styles.noteText} variant="bodyMedium">
+      <Text style={styles.noteText} variant="custom400_14">
         {note}
       </Text>
       <TouchableOpacity style={styles.linkContainer}>
-        <Text style={styles.linkTextStyle} variant="bodyMedium">
+        <Text style={styles.linkTextStyle} variant="custom500_14">
           Discussions
         </Text>
         <Image source={linkIcon} style={styles.icon} />

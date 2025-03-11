@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Divider } from "react-native-paper";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Divider, Text } from "react-native-paper";
 
 import { DIRECTION, JUSTIFY } from "../../styles/constStyle";
 import palette from "../../styles/palette";
@@ -14,6 +14,19 @@ const SIZE_12 = SIZE_16 * 0.75;
 const SIZE_14 = SIZE_16 * 0.875;
 const SIZE_20 = SIZE_16 * 1.25;
 const SIZE_24 = SIZE_16 * 1.5;
+
+const TextWrapper = ({ title, des }) => {
+  return (
+    <View style={styles.flexContainer}>
+      <Text style={styles.labelTitleText} variant="custom600_12">
+        {title}
+      </Text>
+      <Text style={styles.bodySmallText} variant="bodySmall">
+        {des}
+      </Text>
+    </View>
+  );
+};
 
 const TestHeader = () => {
   const [openQuiz, setOpenQuiz] = useState(false);
@@ -45,7 +58,7 @@ const TestHeader = () => {
       <View style={styles.contentContainer}>
         <View style={styles.sectionContainer}>
           <View style={styles.headerContainer}>
-            <Text style={styles.titleText} variant="titleMedium">
+            <Text style={styles.titleText} variant="custom600_18">
               Submit your Test
             </Text>
             <View style={styles.rowContainer}>
@@ -68,7 +81,7 @@ const TestHeader = () => {
               style={styles.ratingButtonStyle}
               onPress={startQuizHandler}
             >
-              <Text style={styles.buttonText} variant="titleSmall">
+              <Text style={styles.buttonText} variant="labelLarge">
                 Start your Test
               </Text>
             </TouchableOpacity>
@@ -77,44 +90,23 @@ const TestHeader = () => {
         </View>
         <View style={styles.cardContainer}>
           <View style={styles.rowContainer}>
-            <View style={styles.flexContainer}>
-              <Text style={styles.labelTitleText} variant="labelMedium">
-                Receive grade
-              </Text>
-              <Text style={styles.labelText} variant="labelMedium">
-                To pass &nbsp;
-                <Text style={styles.bodySmallText} variant="bodySmall">
-                  75% or higher
+            <TextWrapper
+              des={
+                <Text style={styles.labelSubText} variant="labelMedium">
+                  To pass &nbsp;
+                  <Text style={styles.bodySmallText} variant="bodySmall">
+                    75% or higher
+                  </Text>
                 </Text>
-              </Text>
-            </View>
-            <View style={styles.flexContainer}>
-              <Text style={styles.labelTitleText} variant="labelMedium">
-                Total Marks
-              </Text>
-              <Text style={styles.bodySmallText} variant="bodySmall">
-                50
-              </Text>
-            </View>
+              }
+              title={"Receive grade"}
+            />
+            <TextWrapper des={"50"} title={"Total Marks"} />
           </View>
           <Divider style={styles.dividerStyle} />
           <View style={styles.rowContainer}>
-            <View style={styles.flexContainer}>
-              <Text style={styles.labelTitleText} variant="labelMedium">
-                Difficult level
-              </Text>
-              <Text style={styles.bodySmallText} variant="bodySmall">
-                Medium
-              </Text>
-            </View>
-            <View style={styles.flexContainer}>
-              <Text style={styles.labelTitleText} variant="labelMedium">
-                Total grade
-              </Text>
-              <Text style={styles.bodySmallText} variant="bodySmall">
-                -
-              </Text>
-            </View>
+            <TextWrapper des={"Medium"} title={"Difficult level"} />
+            <TextWrapper des={"-"} title={"Total grade"} />
           </View>
         </View>
       </View>
@@ -157,11 +149,14 @@ const styles = StyleSheet.create({
   headerContainer: {
     rowGap: 4,
   },
+  labelSubText: {
+    color: palette.grey900,
+  },
   labelText: {
     color: palette.grey700,
   },
   labelTitleText: {
-    color: palette.grey900,
+    color: palette.slate900,
   },
   ratingButtonStyle: {
     alignItems: JUSTIFY.CENTER,
