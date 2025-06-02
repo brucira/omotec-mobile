@@ -45,8 +45,6 @@ export default function App() {
     Inter_900Black,
   });
 
-  console.log({ fontsLoaded });
-
   const onLayout = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
