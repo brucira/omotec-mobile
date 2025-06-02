@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 module.exports = function (api) {
   api.cache(true);
   return {
@@ -6,7 +7,7 @@ module.exports = function (api) {
         plugins: ["react-native-paper/babel"],
       },
     },
-    plugins: ["react-native-reanimated/plugin"],
     presets: ["babel-preset-expo"],
+    plugins: ["react-native-reanimated/plugin"],
   };
 };

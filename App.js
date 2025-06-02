@@ -11,6 +11,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/inter";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { BugTracking } from "@ruttl/bug-tracking";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import React, { useCallback } from "react";
@@ -21,6 +22,12 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import Router from "./src/Router";
 import { CombinedDefaultTheme } from "./src/styles/theme";
+
+const BUILD = true;
+const PROJECT_ID = BUILD ? "7CmHYhB7lbHGE4JGmhfZ" : "0mL3d2RMtvcAbAbV5xtC";
+const TOKEN = BUILD
+  ? "TCYcrZi4XuS8gqo3OXKBXswHaS62"
+  : "vsirNGvN31gpoPsNz6YWLk6OFL92";
 
 (async () => {
   await SplashScreen.preventAutoHideAsync();
@@ -48,13 +55,14 @@ export default function App() {
 
   if (fontsLoaded) {
     return (
-      <GestureHandlerRootView>
+      <GestureHandlerRootView style={{ flex: 1 }}>
         <PaperProvider theme={CombinedDefaultTheme}>
-          <StatusBar style="dark" />
+          {/* <StatusBar hidden /> */}
+          <BugTracking projectID={PROJECT_ID} token={TOKEN} />
           <BottomSheetModalProvider>
             <SafeAreaProvider>
               <SafeAreaView
-                edges={["top", "right", "left"]}
+                edges={["top", "left", "right"]}
                 style={styles.container}
                 onLayout={onLayout}
               >

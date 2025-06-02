@@ -4,6 +4,7 @@
 node_modules/
 ios/
 android/
+*.tgz
 
 # Expo
 .expo/
