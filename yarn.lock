@@ -1927,9 +1927,9 @@
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@ruttl/bug-tracking@./ruttl-bug-tracking-1.0.19.tgz":
-  version "1.0.19"
-  resolved "./ruttl-bug-tracking-1.0.19.tgz#f36020ab9b1375dad1a19f6702e7726e5369bd9e"
+"@ruttl/bug-tracking@./ruttl-bug-tracking-1.0.20.tgz":
+  version "1.0.20"
+  resolved "./ruttl-bug-tracking-1.0.20.tgz#f4f0861c46a8e3730914f14ba9a100cb9b9950d0"
   dependencies:
     axios "^1.4.0"
     prop-types "^15.8.1"
@@ -7396,6 +7396,11 @@ react-native-gesture-handler@~2.20.2:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-image-picker@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-8.2.1.tgz#1ac7826563cbaa5d5298d9f2acc53c69805e5393"
+  integrity sha512-FBeGYJGFDjMdGCcyubDJgBAPCQ4L1D3hwLXyUU91jY9ahOZMTbluceVvRmrEKqnDPFJ0gF1NVhJ0nr1nROFLdg==
 
 react-native-material-ripple@^0.9.1:
   version "0.9.1"
