@@ -24,7 +24,7 @@ import Router from "./src/Router";
 import { CombinedDefaultTheme } from "./src/styles/theme";
 
 const BUILD = true;
-const PROJECT_ID = BUILD ? "7CmHYhB7lbHGE4JGmhfZ" : "0mL3d2RMtvcAbAbV5xtC";
+const PROJECT_ID = BUILD ? "mEaEdFOgLJIfFOOS4E33" : "0mL3d2RMtvcAbAbV5xtC";
 const TOKEN = BUILD
   ? "TCYcrZi4XuS8gqo3OXKBXswHaS62"
   : "vsirNGvN31gpoPsNz6YWLk6OFL92";
