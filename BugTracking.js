@@ -394,6 +394,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
           type: "error",
           text1: ERROR_MESSAGE_TITLE,
           text2: ERROR_MESSAGE_DESCRIPTION,
+          visibilityTime: 3000,
+          autoHide: true,
+          swipeable: true,
         });
         return;
       }
@@ -412,9 +415,11 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
         "x-plugin-code": token,
       };
 
+      const haveDescription = !!description?.trim();
+
       const saveData = {
         comment,
-        description: btmSheetVisible ? description : null,
+        description: haveDescription ? description?.trim() : null,
         // appVersion: '1.0.0',
         // device: 'iPhone',
         height: SCREEN_HEIGHT,
@@ -452,6 +457,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
         position: "top",
         type: "success",
         text1: "New ticket added successfully.",
+        visibilityTime: 3000,
+        autoHide: true,
+        swipeable: true,
       });
 
       onReset();
@@ -464,6 +472,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
         type: "error",
         text1: "Something went wrong",
         text2: e?.message || "Unknown error occurred",
+        visibilityTime: 3000,
+        autoHide: true,
+        swipeable: true,
       });
     } finally {
       setLoading(false);
@@ -668,7 +679,6 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                     Close
                   </Text>
                 </Ripple>
-
                 {src && (
                   <>
                     <Ripple
@@ -874,8 +884,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
             </KeyboardAvoidingView>
           </SafeAreaView>
         </Modal>
-        <Toast config={{ info: (props) => <BaseToast {...props} /> }} />
       </Fragment>
+      {/* <Toast config={{ info: (props) => <BaseToast {...props} /> }} /> */}
+      <Toast />
     </View>
   );
 };
@@ -1011,7 +1022,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     overflow: "hidden",
     textAlign: "justify",
-    borderRadius: 24,
+    borderRadius: 20,
+    paddingLeft: 6,
     textAlignVertical: "center",
   },
   rightIconContainer: {

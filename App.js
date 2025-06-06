@@ -11,7 +11,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/inter";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { BugTracking } from "@ruttl/bug-tracking";
+// import { BugTracking } from "@ruttl/bug-tracking";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import React, { useCallback } from "react";
@@ -20,10 +20,11 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
+import { BugTracking } from "./BugTracking";
 import Router from "./src/Router";
 import { CombinedDefaultTheme } from "./src/styles/theme";
 
-const BUILD = true;
+const BUILD = false;
 const PROJECT_ID = BUILD ? "AasRLbA8dC0Jkz6vxzdW" : "0mL3d2RMtvcAbAbV5xtC";
 const TOKEN = BUILD
   ? "TCYcrZi4XuS8gqo3OXKBXswHaS62"
