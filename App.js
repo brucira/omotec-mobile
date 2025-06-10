@@ -1,3 +1,4 @@
+/* eslint-disable simple-import-sort/imports */
 import {
   Inter_100Thin,
   Inter_200ExtraLight,
@@ -11,7 +12,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/inter";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { BugTracking } from "@ruttl/bug-tracking";
+// import { BugTracking } from "@ruttl/bug-tracking";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import React, { useCallback } from "react";
@@ -23,7 +24,9 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Router from "./src/Router";
 import { CombinedDefaultTheme } from "./src/styles/theme";
 
-const BUILD = true;
+import { BugTracking } from "./BugTracking";
+
+const BUILD = false;
 const PROJECT_ID = BUILD ? "C3Bx9nPNuXMnWX54XI6r" : "0mL3d2RMtvcAbAbV5xtC";
 const TOKEN = BUILD
   ? "TCYcrZi4XuS8gqo3OXKBXswHaS62"
