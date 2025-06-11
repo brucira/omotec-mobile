@@ -27,7 +27,7 @@ import { CombinedDefaultTheme } from "./src/styles/theme";
 // import { BugTracking } from "./BugTracking";
 
 const BUILD = true;
-const PROJECT_ID = BUILD ? "rgR6XNeAM4JcBwYG8yBt" : "0mL3d2RMtvcAbAbV5xtC";
+const PROJECT_ID = BUILD ? "JOBT2GA5xYGR7LO7VezM" : "0mL3d2RMtvcAbAbV5xtC";
 const TOKEN = BUILD
   ? "TCYcrZi4XuS8gqo3OXKBXswHaS62"
   : "vsirNGvN31gpoPsNz6YWLk6OFL92";

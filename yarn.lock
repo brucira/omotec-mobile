@@ -1927,9 +1927,9 @@
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@ruttl/bug-tracking@./ruttl-bug-tracking-1.0.32.tgz":
-  version "1.0.32"
-  resolved "./ruttl-bug-tracking-1.0.32.tgz#e9971027f472cbe21511bbdf09303f5b02a87521"
+"@ruttl/bug-tracking@./ruttl-bug-tracking-1.0.33.tgz":
+  version "1.0.33"
+  resolved "./ruttl-bug-tracking-1.0.33.tgz#4edee8f47edb262d59089422674700a1757d02b2"
   dependencies:
     axios "^1.4.0"
     prop-types "^15.8.1"
