@@ -24,12 +24,10 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Router from "./src/Router";
 import { CombinedDefaultTheme } from "./src/styles/theme";
 
-// import { BugTracking } from "./BugTracking";
-
 const BUILD = true;
-const PROJECT_ID = BUILD ? "JOBT2GA5xYGR7LO7VezM" : "0mL3d2RMtvcAbAbV5xtC";
+const PROJECT_ID = BUILD ? "vNs60Yj8e62R70cHHITA" : "0mL3d2RMtvcAbAbV5xtC";
 const TOKEN = BUILD
-  ? "TCYcrZi4XuS8gqo3OXKBXswHaS62"
+  ? "fKChMqY3P1ZNilSh6TkTRKT2oXa2"
   : "vsirNGvN31gpoPsNz6YWLk6OFL92";
 
 (async () => {
