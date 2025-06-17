@@ -25,10 +25,10 @@ import Router from "./src/Router";
 import { CombinedDefaultTheme } from "./src/styles/theme";
 
 const BUILD = true;
-const PROJECT_ID = BUILD ? "vNs60Yj8e62R70cHHITA" : "0mL3d2RMtvcAbAbV5xtC";
+const PROJECT_ID = BUILD ? "HE667tH71bHPguKvvHd5" : "eeIetlmAFdLpcbh9CnJE";
 const TOKEN = BUILD
-  ? "fKChMqY3P1ZNilSh6TkTRKT2oXa2"
-  : "vsirNGvN31gpoPsNz6YWLk6OFL92";
+  ? "EolWVGDVNuZHnwZVG1TMDWbtAji1"
+  : "BD7KAqd0O2hhJcSkoF8N8pBZaKS2";
 
 (async () => {
   await SplashScreen.preventAutoHideAsync();
