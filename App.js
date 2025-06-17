@@ -12,7 +12,6 @@ import {
   useFonts,
 } from "@expo-google-fonts/inter";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { BugTracking } from "@ruttl/bug-tracking";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import React, { useCallback } from "react";
@@ -23,6 +22,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import Router from "./src/Router";
 import { CombinedDefaultTheme } from "./src/styles/theme";
+import { BugTracking } from "@ruttl/bug-tracking";
 
 const BUILD = false;
 const PROJECT_ID = BUILD ? "HE667tH71bHPguKvvHd5" : "UAIiqxkYSyleRSM1kDiY";
