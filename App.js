@@ -24,11 +24,11 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Router from "./src/Router";
 import { CombinedDefaultTheme } from "./src/styles/theme";
 
-const BUILD = true;
-const PROJECT_ID = BUILD ? "HE667tH71bHPguKvvHd5" : "eeIetlmAFdLpcbh9CnJE";
+const BUILD = false;
+const PROJECT_ID = BUILD ? "HE667tH71bHPguKvvHd5" : "8mIUbtINge7IVkSARiMg";
 const TOKEN = BUILD
   ? "EolWVGDVNuZHnwZVG1TMDWbtAji1"
-  : "BD7KAqd0O2hhJcSkoF8N8pBZaKS2";
+  : "wiorLkSdoxfIH4CJvYWxj78Vou22";
 
 (async () => {
   await SplashScreen.preventAutoHideAsync();
