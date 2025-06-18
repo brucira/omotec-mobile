@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-undef */
 /* eslint-disable sort-keys */
 import PropTypes from "prop-types";
@@ -55,6 +54,9 @@ const width = height * ASPECT_RATIO;
 const ERROR_MESSAGE_TITLE = "Failed to capture this snapshot!";
 const ERROR_MESSAGE_DESCRIPTION = "Please try again later.";
 
+const PREVIEW_URL = true;
+const BASE_URL = `https://${PREVIEW_URL ? "us-central1-rally-brucira" : "us-central1-ruttlp"}.cloudfunctions.net/mobile/projects`;
+
 export const CommentInput = ({
   comment,
   toggleBottomNavigationView,
@@ -64,6 +66,7 @@ export const CommentInput = ({
   error,
   theme,
   disabled,
+  buttonColor,
 }) => {
   return (
     <View style={styles.commentContainer}>
@@ -93,11 +96,8 @@ export const CommentInput = ({
         <View style={{ width: 8 }} />
 
         <TouchableOpacity
-          style={[
-            styles.rightIconContainer,
-            disabled && { backgroundColor: "#7B7B7B" },
-          ]}
           disabled={loading || disabled}
+          style={[styles.rightIconContainer, { backgroundColor: buttonColor }]}
           onPress={onSubmit}
         >
           {loading ? (
@@ -127,7 +127,6 @@ const DraggableFab = ({
   const x = useSharedValue(initialX);
   const y = useSharedValue(initialY);
   const [showUploadOption, setShowUploadOption] = useState(false);
-
   const tapBlocked = useRef(false);
 
   const handlePress = () => {
@@ -260,6 +259,10 @@ const DraggableFab = ({
 };
 
 export const BugTracking = ({ projectID = "", token = "" }) => {
+  if (Platform.OS === "ios") {
+    throw new Error(`BugTracking is currently not supported on iOS`);
+  }
+
   if (!projectID || !token) {
     throw new Error(
       `Error: Unable to find required prop 'projectID' or 'token' or both.`,
@@ -289,6 +292,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
   const issueTitleRef = useRef(null);
   const [fabPos, setFabPos] = useState(START_POS);
   const scheme = useColorScheme();
+  const API_URL = `${BASE_URL}/${projectID}`;
 
   const toggleBottomNavigationView = () => {
     setbtmSheetVisible(!btmSheetVisible);
@@ -322,7 +326,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
       isCapturing.current = true;
       setWidgetVisible(false);
       setVisible(true);
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       const uri = await captureScreen({
         handleGLSurfaceViewOnAndroid: true,
         quality: 1,
@@ -376,24 +380,23 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
   };
 
   const onSubmit = async () => {
-    setLoading(true);
     if (!comment.trim()) {
       setError(true);
       return;
     }
-
     if (!exportRef.current) {
       Toast.show({
         type: "error",
         text1: ERROR_MESSAGE_TITLE,
         text2: ERROR_MESSAGE_DESCRIPTION,
-        visibilityTime: 3000,
+        visibilityTime: 2000,
         autoHide: true,
       });
       return;
     }
 
     try {
+      setLoading(true);
       const uri = await captureRef(exportRef, {
         result: "data-uri",
         quality: 1,
@@ -401,7 +404,6 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
         width: SCREEN_WIDTH,
       });
 
-      // Immediately reset form & notify user (optimistic UI)
       const haveDescription = !!description?.trim();
       const saveData = {
         comment,
@@ -417,35 +419,25 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
         onReset();
       }, 1000);
 
-      Toast.show({
-        position: "top",
-        type: "success",
-        text1: "Submitting ticket...",
-        visibilityTime: 2500,
-      });
-
-      // Submit in background (async)
       const backgroundSubmit = async () => {
-        const baseURL = `https://us-central1-rally-brucira.cloudfunctions.net/mobile/projects/${projectID}`;
         const headers = {
           "Content-Type": "application/json",
           "x-plugin-code": token,
         };
 
         try {
-          const ticketResponse = await fetch(`${baseURL}/tickets`, {
+          const ticketResponse = await fetch(`${API_URL}/tickets`, {
             method: "POST",
             headers,
             body: JSON.stringify(saveData),
           });
 
           if (!ticketResponse.ok) throw new Error("Failed to create ticket");
-
           const ticketJson = await ticketResponse.json();
           const ticketID = ticketJson?.id;
 
           const screenshotResponse = await fetch(
-            `${baseURL}/tickets/${ticketID}/screenshot`,
+            `${API_URL}/tickets/${ticketID}/screenshot`,
             {
               method: "POST",
               headers,
@@ -456,7 +448,6 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
           if (!screenshotResponse.ok)
             throw new Error("Failed to upload screenshot");
 
-          // Optional: toast again when background is truly done
           Toast.show({
             type: "success",
             text1: "New ticket added successfully.",
@@ -572,11 +563,6 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
     [loading],
   );
 
-  const buttonColor = useMemo(
-    () => (comment?.trim() !== "" ? "#6552FF" : "#6552FF80"),
-    [comment],
-  );
-
   const theme = useMemo(() => {
     return {
       background: scheme === "dark" ? "#2A2A2A" : "#FFFFFF",
@@ -627,6 +613,14 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
   const pageLoaded = useMemo(() => {
     return src || showImageUpload ? true : false;
   }, [src, showImageUpload]);
+
+  const disabledButton = useMemo(() => {
+    return !src || !comment?.trim();
+  }, [src, comment]);
+
+  const buttonColor = useMemo(() => {
+    return disabledButton ? "#7B7B7B" : "#6552FF";
+  }, [disabledButton]);
 
   return (
     <View style={{ zIndex: 999 }}>
@@ -821,8 +815,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
               style={styles.footerContainer}
             >
               <CommentInput
+                buttonColor={buttonColor}
                 comment={comment}
-                disabled={!src}
+                disabled={disabledButton}
                 error={error}
                 handleCommentChange={handleCommentChange}
                 loading={loading}
@@ -865,7 +860,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                         height: 154,
                         marginTop: 13,
                         textAlignVertical: "top",
-                        textAlign: "justify",
+                        textAlign: "auto",
                       },
                     ]}
                     keyboardType="name-phone-pad"
@@ -879,9 +874,8 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                     style={[
                       styles.bottomSheetButtonContainer,
                       { backgroundColor: buttonColor },
-                      !src && { backgroundColor: "#7B7B7B" },
                     ]}
-                    disabled={loading || !src}
+                    disabled={loading || disabledButton}
                     onPress={onSubmit}
                   >
                     <Text style={styles.submitButtonText}>{buttonText}</Text>
@@ -1154,7 +1148,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 4,
-    borderWidth: 0.001,
   },
   uploadButtonText: {
     color: "#000",

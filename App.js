@@ -22,7 +22,8 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import Router from "./src/Router";
 import { CombinedDefaultTheme } from "./src/styles/theme";
-import { BugTracking } from "@ruttl/bug-tracking";
+// import { BugTracking } from "@ruttl/bug-tracking";
+import { BugTracking } from "./BugTracking";
 
 const BUILD = false;
 const PROJECT_ID = BUILD ? "HE667tH71bHPguKvvHd5" : "UAIiqxkYSyleRSM1kDiY";
