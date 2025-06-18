@@ -26,10 +26,10 @@ import { CombinedDefaultTheme } from "./src/styles/theme";
 import { BugTracking } from "./BugTracking";
 
 const BUILD = false;
-const PROJECT_ID = BUILD ? "HE667tH71bHPguKvvHd5" : "UAIiqxkYSyleRSM1kDiY";
+const PROJECT_ID = BUILD ? "HE667tH71bHPguKvvHd5" : "yH6Yz68ev0gp24BKcSXp";
 const TOKEN = BUILD
   ? "EolWVGDVNuZHnwZVG1TMDWbtAji1"
-  : "DUZBs8DMgcX4LpXHmoRJqQG2flt2";
+  : "IOj2gf8aP2NuIkOA78xErhXWyJY2";
 
 (async () => {
   await SplashScreen.preventAutoHideAsync();
