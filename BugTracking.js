@@ -54,9 +54,6 @@ const width = height * ASPECT_RATIO;
 const ERROR_MESSAGE_TITLE = "Failed to capture this snapshot!";
 const ERROR_MESSAGE_DESCRIPTION = "Please try again later.";
 
-const PREVIEW_URL = true;
-const BASE_URL = `https://${PREVIEW_URL ? "us-central1-rally-brucira" : "us-central1-ruttlp"}.cloudfunctions.net/mobile/projects`;
-
 export const CommentInput = ({
   comment,
   toggleBottomNavigationView,
@@ -292,7 +289,6 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
   const issueTitleRef = useRef(null);
   const [fabPos, setFabPos] = useState(START_POS);
   const scheme = useColorScheme();
-  const API_URL = `${BASE_URL}/${projectID}`;
 
   const toggleBottomNavigationView = () => {
     setbtmSheetVisible(!btmSheetVisible);
@@ -420,13 +416,15 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
       }, 1000);
 
       const backgroundSubmit = async () => {
+        // const BASE_URL = `https://us-central1-rally-brucira.cloudfunctions.net/mobile/projects/${projectID}`;
+        const BASE_URL = `https://us-central1-ruttlp.cloudfunctions.net/mobile/projects/${projectID}`;
         const headers = {
           "Content-Type": "application/json",
           "x-plugin-code": token,
         };
 
         try {
-          const ticketResponse = await fetch(`${API_URL}/tickets`, {
+          const ticketResponse = await fetch(`${BASE_URL}/tickets`, {
             method: "POST",
             headers,
             body: JSON.stringify(saveData),
@@ -437,7 +435,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
           const ticketID = ticketJson?.id;
 
           const screenshotResponse = await fetch(
-            `${API_URL}/tickets/${ticketID}/screenshot`,
+            `${BASE_URL}/tickets/${ticketID}/screenshot`,
             {
               method: "POST",
               headers,
@@ -492,9 +490,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
     if (isTouch && event.nativeEvent.touches?.length === 1) {
       const newPath = [...currentPath];
       const { locationX, locationY } = event.nativeEvent;
-      const newPoint = `${newPath.length === 0 ? "M" : ""}${locationX.toFixed(
-        0,
-      )},${locationY.toFixed(0)} `;
+      const newPoint = `${newPath.length === 0 ? "M" : ""}${locationX.toFixed(0)},${locationY.toFixed(0)} `;
 
       if (
         locationX > 2 &&
