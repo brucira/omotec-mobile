@@ -375,6 +375,69 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
     );
   };
 
+  const backgroundSubmit = async (imageURI) => {
+    // const BASE_URL = `https://us-central1-rally-brucira.cloudfunctions.net/mobile/projects/${projectID}`;
+    const BASE_URL = `https://us-central1-ruttlp.cloudfunctions.net/mobile/projects/${projectID}`;
+    const headers = {
+      "Content-Type": "application/json",
+      "x-plugin-code": token,
+    };
+
+    const haveDescription = !!description?.trim();
+    const saveData = {
+      comment,
+      description: haveDescription ? description?.trim() : null,
+      height: SCREEN_HEIGHT,
+      width: SCREEN_WIDTH,
+      osName: Platform.OS,
+    };
+
+    try {
+      const ticketResponse = await fetch(`${BASE_URL}/tickets`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(saveData),
+      });
+
+      if (!ticketResponse.ok) {
+        throw new Error("Failed to create ticket");
+      }
+      const ticketJson = await ticketResponse.json();
+      const ticketID = ticketJson?.id;
+
+      const screenshotResponse = await fetch(
+        `${BASE_URL}/tickets/${ticketID}/screenshot`,
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ image: imageURI }),
+        },
+      );
+
+      if (!screenshotResponse.ok) {
+        throw new Error("Failed to upload screenshot");
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "New ticket added successfully.",
+        visibilityTime: 2000,
+        autoHide: true,
+      });
+    } catch (err) {
+      Toast.show({
+        type: "error",
+        text1: "Ticket upload failed in background",
+        text2: err.message || "Unknown error",
+        visibilityTime: 2000,
+        autoHide: true,
+      });
+      setTimeout(() => {
+        onLongPressHandler();
+      }, 2000);
+    }
+  };
+
   const onSubmit = async () => {
     if (!comment.trim()) {
       setError(true);
@@ -400,70 +463,11 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
         width: SCREEN_WIDTH,
       });
 
-      const haveDescription = !!description?.trim();
-      const saveData = {
-        comment,
-        description: haveDescription ? description?.trim() : null,
-        // appVersion: '1.0.0',
-        // device: 'iPhone',
-        height: SCREEN_HEIGHT,
-        width: SCREEN_WIDTH,
-        osName: Platform.OS,
-      };
-
       setTimeout(() => {
         onReset();
       }, 1000);
 
-      const backgroundSubmit = async () => {
-        // const BASE_URL = `https://us-central1-rally-brucira.cloudfunctions.net/mobile/projects/${projectID}`;
-        const BASE_URL = `https://us-central1-ruttlp.cloudfunctions.net/mobile/projects/${projectID}`;
-        const headers = {
-          "Content-Type": "application/json",
-          "x-plugin-code": token,
-        };
-
-        try {
-          const ticketResponse = await fetch(`${BASE_URL}/tickets`, {
-            method: "POST",
-            headers,
-            body: JSON.stringify(saveData),
-          });
-
-          if (!ticketResponse.ok) throw new Error("Failed to create ticket");
-          const ticketJson = await ticketResponse.json();
-          const ticketID = ticketJson?.id;
-
-          const screenshotResponse = await fetch(
-            `${BASE_URL}/tickets/${ticketID}/screenshot`,
-            {
-              method: "POST",
-              headers,
-              body: JSON.stringify({ image: uri }),
-            },
-          );
-
-          if (!screenshotResponse.ok)
-            throw new Error("Failed to upload screenshot");
-
-          Toast.show({
-            type: "success",
-            text1: "New ticket added successfully.",
-            visibilityTime: 2000,
-            autoHide: true,
-          });
-        } catch (err) {
-          Toast.show({
-            type: "error",
-            text1: "Ticket upload failed in background",
-            text2: err.message || "Unknown error",
-            visibilityTime: 2000,
-            autoHide: true,
-          });
-        }
-      };
-
-      backgroundSubmit();
+      backgroundSubmit(uri);
     } catch (e) {
       console.log("Error before background submit", e);
       Toast.show({

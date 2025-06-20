@@ -26,7 +26,7 @@ import { BugTracking } from "@ruttl/bug-tracking";
 // import { BugTracking } from "./BugTracking";
 
 const BUILD = true;
-const PROJECT_ID = BUILD ? "oiXLvNlthnCRGofnISkI" : "yH6Yz68ev0gp24BKcSXp";
+const PROJECT_ID = BUILD ? "RVofpGNDwdV48GfFODe3" : "yH6Yz68ev0gp24BKcSXp";
 const TOKEN = BUILD
   ? "wiorLkSdoxfIH4CJvYWxj78Vou22"
   : "IOj2gf8aP2NuIkOA78xErhXWyJY2";
