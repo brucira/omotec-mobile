@@ -76,11 +76,11 @@ export const CommentInput = ({
           ]}
         >
           <TextInput
+            id="comment-input"
             placeholder={"Report the issue"}
             placeholderTextColor={theme?.placeholder || "#000"}
             style={[styles.singleTextInput, { color: theme?.text || "#000" }]}
             value={comment}
-            id="comment-input"
             onChangeText={handleCommentChange}
           />
           <TouchableOpacity
@@ -151,11 +151,11 @@ const DraggableFab = ({
 
       x.value = Math.max(
         PADDING,
-        Math.min(newX, SCREEN_WIDTH - BUTTON_SIZE - PADDING)
+        Math.min(newX, SCREEN_WIDTH - BUTTON_SIZE - PADDING),
       );
       y.value = Math.max(
         PADDING,
-        Math.min(newY, SCREEN_HEIGHT - BUTTON_SIZE - PADDING)
+        Math.min(newY, SCREEN_HEIGHT - BUTTON_SIZE - PADDING),
       );
     },
     onEnd: () => {
@@ -273,7 +273,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
 
   if (!projectID || !token) {
     throw new Error(
-      `Error: Unable to find required prop 'projectID' or 'token' or both.`
+      `Error: Unable to find required prop 'projectID' or 'token' or both.`,
     );
   }
 
@@ -355,7 +355,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
   const openImagePicker = () => {
     if (typeof launchImageLibrary !== "function") {
       console.error(
-        "launchImageLibrary is not available. Check if the module is linked correctly."
+        "launchImageLibrary is not available. Check if the module is linked correctly.",
       );
       return;
     }
@@ -382,7 +382,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
             console.warn("No image URI returned");
           }
         }
-      }
+      },
     );
   };
 
@@ -435,7 +435,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
           method: "POST",
           headers,
           body: JSON.stringify({ image: imageURI }),
-        }
+        },
       );
 
       if (!screenshotResponse.ok) {
@@ -519,7 +519,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
       const newPath = [...currentPath];
       const { locationX, locationY } = event.nativeEvent;
       const newPoint = `${newPath.length === 0 ? "M" : ""}${locationX.toFixed(
-        0
+        0,
       )},${locationY.toFixed(0)} `;
 
       if (
@@ -625,7 +625,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
 
   const buttonText = useMemo(
     () => (loading ? "Submitting..." : "Submit"),
-    [loading]
+    [loading],
   );
 
   const theme = useMemo(() => {
