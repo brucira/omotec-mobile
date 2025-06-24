@@ -23,6 +23,7 @@ import {
   View,
 } from "react-native";
 import { BottomSheet } from "react-native-btr";
+import DeviceInfo from "react-native-device-info";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { launchImageLibrary } from "react-native-image-picker";
 import Ripple from "react-native-material-ripple";
@@ -79,9 +80,14 @@ export const CommentInput = ({
             placeholderTextColor={theme?.placeholder || "#000"}
             style={[styles.singleTextInput, { color: theme?.text || "#000" }]}
             value={comment}
+            id="comment-input"
             onChangeText={handleCommentChange}
           />
-          <TouchableOpacity onPress={toggleBottomNavigationView}>
+          <TouchableOpacity
+            disabled={loading}
+            onPress={toggleBottomNavigationView}
+            // id="open-sheet-button"
+          >
             <Image
               resizeMode="cover"
               source={require("./src/assets/ruttl/chat-icon.png")}
@@ -96,6 +102,7 @@ export const CommentInput = ({
           disabled={loading || disabled}
           style={[styles.rightIconContainer, { backgroundColor: buttonColor }]}
           onPress={onSubmit}
+          // id="add-comment-button"
         >
           {loading ? (
             <ActivityIndicator color="#FFF" style={{ paddingHorizontal: 4 }} />
@@ -144,11 +151,11 @@ const DraggableFab = ({
 
       x.value = Math.max(
         PADDING,
-        Math.min(newX, SCREEN_WIDTH - BUTTON_SIZE - PADDING),
+        Math.min(newX, SCREEN_WIDTH - BUTTON_SIZE - PADDING)
       );
       y.value = Math.max(
         PADDING,
-        Math.min(newY, SCREEN_HEIGHT - BUTTON_SIZE - PADDING),
+        Math.min(newY, SCREEN_HEIGHT - BUTTON_SIZE - PADDING)
       );
     },
     onEnd: () => {
@@ -186,6 +193,10 @@ const DraggableFab = ({
       top: isTop ? BUTTON_SIZE : -BUTTON_SIZE + 16,
     };
   }, [showUploadOption]);
+
+  useEffect(() => {
+    Image.resolveAssetSource(require("./src/assets/ruttl/plus.png"));
+  }, []);
 
   return (
     <>
@@ -262,7 +273,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
 
   if (!projectID || !token) {
     throw new Error(
-      `Error: Unable to find required prop 'projectID' or 'token' or both.`,
+      `Error: Unable to find required prop 'projectID' or 'token' or both.`
     );
   }
 
@@ -344,7 +355,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
   const openImagePicker = () => {
     if (typeof launchImageLibrary !== "function") {
       console.error(
-        "launchImageLibrary is not available. Check if the module is linked correctly.",
+        "launchImageLibrary is not available. Check if the module is linked correctly."
       );
       return;
     }
@@ -371,7 +382,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
             console.warn("No image URI returned");
           }
         }
-      },
+      }
     );
   };
 
@@ -383,6 +394,18 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
       "x-plugin-code": token,
     };
 
+    const packageName = DeviceInfo.getBundleId();
+    if (!packageName) {
+      Toast.show({
+        type: "error",
+        text1: "Application identifier not found",
+        text2: "Please ensure the app is configured correctly.",
+        visibilityTime: 2000,
+        autoHide: true,
+      });
+      return;
+    }
+
     const haveDescription = !!description?.trim();
     const saveData = {
       comment,
@@ -390,6 +413,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
       height: SCREEN_HEIGHT,
       width: SCREEN_WIDTH,
       osName: Platform.OS,
+      // appId : packageName,
     };
 
     try {
@@ -411,7 +435,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
           method: "POST",
           headers,
           body: JSON.stringify({ image: imageURI }),
-        },
+        }
       );
 
       if (!screenshotResponse.ok) {
@@ -425,6 +449,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
         autoHide: true,
       });
     } catch (err) {
+      setTimeout(() => {
+        onLongPressHandler();
+      }, 2000);
       Toast.show({
         type: "error",
         text1: "Ticket upload failed in background",
@@ -432,9 +459,6 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
         visibilityTime: 2000,
         autoHide: true,
       });
-      setTimeout(() => {
-        onLongPressHandler();
-      }, 2000);
     }
   };
 
@@ -494,7 +518,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
     if (isTouch && event.nativeEvent.touches?.length === 1) {
       const newPath = [...currentPath];
       const { locationX, locationY } = event.nativeEvent;
-      const newPoint = `${newPath.length === 0 ? "M" : ""}${locationX.toFixed(0)},${locationY.toFixed(0)} `;
+      const newPoint = `${newPath.length === 0 ? "M" : ""}${locationX.toFixed(
+        0
+      )},${locationY.toFixed(0)} `;
 
       if (
         locationX > 2 &&
@@ -540,37 +566,6 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
     }
   };
 
-  useEffect(() => {
-    RNAnimated.timing(withAnim, {
-      toValue: 40 * (expanded ? 3 : 1),
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  }, [expanded, withAnim]);
-
-  useEffect(() => {
-    let timeout;
-    if (btmSheetVisible) {
-      timeout = setTimeout(() => {
-        issueTitleRef.current?.focus();
-      }, 200);
-    }
-    return () => clearTimeout(timeout);
-  }, [btmSheetVisible]);
-
-  const buttonText = useMemo(
-    () => (loading ? "Submitting..." : "Submit"),
-    [loading],
-  );
-
-  const theme = useMemo(() => {
-    return {
-      background: scheme === "dark" ? "#2A2A2A" : "#FFFFFF",
-      text: scheme === "dark" ? "#FFFFFF" : "#000000",
-      placeholder: scheme === "dark" ? "#FFFFFF66" : "#00000066",
-    };
-  }, [scheme]);
-
   const onLongPressHandler = async () => {
     setWidgetVisible(false);
     setVisible(true);
@@ -609,6 +604,37 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
       </ImageBackground>
     );
   };
+
+  useEffect(() => {
+    RNAnimated.timing(withAnim, {
+      toValue: 40 * (expanded ? 3 : 1),
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  }, [expanded, withAnim]);
+
+  useEffect(() => {
+    let timeout;
+    if (btmSheetVisible) {
+      timeout = setTimeout(() => {
+        issueTitleRef.current?.focus();
+      }, 200);
+    }
+    return () => clearTimeout(timeout);
+  }, [btmSheetVisible]);
+
+  const buttonText = useMemo(
+    () => (loading ? "Submitting..." : "Submit"),
+    [loading]
+  );
+
+  const theme = useMemo(() => {
+    return {
+      background: scheme === "dark" ? "#2A2A2A" : "#FFFFFF",
+      text: scheme === "dark" ? "#FFFFFF" : "#000000",
+      placeholder: scheme === "dark" ? "#FFFFFF66" : "#00000066",
+    };
+  }, [scheme]);
 
   const pageLoaded = useMemo(() => {
     return src || showImageUpload ? true : false;
@@ -663,8 +689,10 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                       alignItems: "center",
                     },
                   ]}
+                  disabled={loading}
                   rippleColor="rgb(255, 251, 254)"
                   onPress={pageLoaded ? onReset : () => {}}
+                  // id={'close-button'}
                 >
                   <Text
                     style={{
@@ -683,9 +711,11 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                   <>
                     <Ripple
                       rippleCentered
+                      disabled={loading}
                       rippleColor="rgb(255, 251, 254)"
                       style={styles.iconButton}
                       onPress={onUndo}
+                      // id={'undo-button'}
                     >
                       <Image
                         style={{
@@ -710,8 +740,10 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                             justifyContent: "center",
                           },
                         ]}
+                        disabled={loading}
                         rippleOpacity={0.12}
                         onPress={toggleOpen}
+                        // id={'selected-color-picker-button'}
                       >
                         <Image
                           source={require("./src/assets/ruttl/edit_color.png")}
@@ -730,8 +762,10 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                               marginLeft: 8,
                             },
                           ]}
+                          disabled={loading}
                           rippleOpacity={0.12}
                           onPress={onChangeSelectedColor(c)}
+                          // id={`color-picker-button-${i + 1}`}
                         />
                       ))}
                     </RNAnimated.View>
@@ -784,6 +818,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                           <TouchableOpacity
                             style={styles.uploadButtonShow}
                             onPress={openImagePicker}
+                            // id="upload-image-button"
                           >
                             <Image
                               source={require("./src/assets/ruttl/plus.png")}
@@ -844,6 +879,7 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                     placeholderTextColor="#16064780"
                     value={comment}
                     onChangeText={handleCommentChange}
+                    // id="comment-title-input"
                   />
                   {error && (
                     <View style={{ width: "100%" }}>
@@ -869,12 +905,14 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                     placeholderTextColor="#16064780"
                     value={description}
                     onChangeText={setDescription}
+                    // id="comment-description-input"
                   />
                   <TouchableOpacity
                     style={[
                       styles.bottomSheetButtonContainer,
                       { backgroundColor: buttonColor },
                     ]}
+                    // id="submit-button"
                     disabled={loading || disabledButton}
                     onPress={onSubmit}
                   >
@@ -1185,7 +1223,6 @@ const styles = StyleSheet.create({
   uploadIcon: {
     width: 16,
     height: 16,
-    resizeMode: "contain",
   },
   uploadText: {
     fontSize: 14,
