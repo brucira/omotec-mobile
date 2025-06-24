@@ -85,8 +85,8 @@ export const CommentInput = ({
           />
           <TouchableOpacity
             disabled={loading}
+            id="open-sheet-button"
             onPress={toggleBottomNavigationView}
-            // id="open-sheet-button"
           >
             <Image
               resizeMode="cover"
@@ -100,9 +100,9 @@ export const CommentInput = ({
 
         <TouchableOpacity
           disabled={loading || disabled}
+          id="add-comment-button"
           style={[styles.rightIconContainer, { backgroundColor: buttonColor }]}
           onPress={onSubmit}
-          // id="add-comment-button"
         >
           {loading ? (
             <ActivityIndicator color="#FFF" style={{ paddingHorizontal: 4 }} />
@@ -232,6 +232,7 @@ const DraggableFab = ({
             {showUploadOption && (
               <Animated.View style={uploadButtonStyle}>
                 <TouchableOpacity
+                  id="screen-upload-button"
                   style={styles.uploadButton}
                   onPress={() => {
                     setShowUploadOption(false);
@@ -389,9 +390,12 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
   const backgroundSubmit = async (imageURI) => {
     // const BASE_URL = `https://us-central1-rally-brucira.cloudfunctions.net/mobile/projects/${projectID}`;
     const BASE_URL = `https://us-central1-ruttlp.cloudfunctions.net/mobile/projects/${projectID}`;
+    // const BASE_URL = `https://9290-2405-201-e-320e-2d2f-83ae-4fe7-897a.ngrok-free.app/ruttlp/us-central1/mobile/projects/${projectID}`;
+
     const headers = {
       "Content-Type": "application/json",
       "x-plugin-code": token,
+      // "ngrok-skip-browser-warning": true,
     };
 
     const packageName = DeviceInfo.getBundleId();
@@ -490,6 +494,18 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
       setTimeout(() => {
         onReset();
       }, 1000);
+
+      if (!uri || !uri.startsWith("data:image/")) {
+        Toast.show({
+          position: "top",
+          type: "error",
+          text1: "Data-URI not found or invalid format",
+          text2: `URI : ${uri}`,
+          visibilityTime: 5000,
+          autoHide: true,
+        });
+        return;
+      }
 
       backgroundSubmit(uri);
     } catch (e) {
@@ -690,9 +706,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                     },
                   ]}
                   disabled={loading}
+                  id={"close-button"}
                   rippleColor="rgb(255, 251, 254)"
                   onPress={pageLoaded ? onReset : () => {}}
-                  // id={'close-button'}
                 >
                   <Text
                     style={{
@@ -712,10 +728,10 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                     <Ripple
                       rippleCentered
                       disabled={loading}
+                      id={"undo-button"}
                       rippleColor="rgb(255, 251, 254)"
                       style={styles.iconButton}
                       onPress={onUndo}
-                      // id={'undo-button'}
                     >
                       <Image
                         style={{
@@ -741,9 +757,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                           },
                         ]}
                         disabled={loading}
+                        id={"selected-color-picker-button"}
                         rippleOpacity={0.12}
                         onPress={toggleOpen}
-                        // id={'selected-color-picker-button'}
                       >
                         <Image
                           source={require("./src/assets/ruttl/edit_color.png")}
@@ -763,9 +779,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                             },
                           ]}
                           disabled={loading}
+                          id={`color-picker-button-${i + 1}`}
                           rippleOpacity={0.12}
                           onPress={onChangeSelectedColor(c)}
-                          // id={`color-picker-button-${i + 1}`}
                         />
                       ))}
                     </RNAnimated.View>
@@ -816,9 +832,9 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                             Failed to capture screenshot.
                           </Text>
                           <TouchableOpacity
+                            id="upload-image-button"
                             style={styles.uploadButtonShow}
                             onPress={openImagePicker}
-                            // id="upload-image-button"
                           >
                             <Image
                               source={require("./src/assets/ruttl/plus.png")}
@@ -874,12 +890,12 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                       styles.bottomSheetTextInput,
                       error && { borderColor: "red" },
                     ]}
+                    id="comment-title-input"
                     keyboardType="name-phone-pad"
                     placeholder="Add issue title"
                     placeholderTextColor="#16064780"
                     value={comment}
                     onChangeText={handleCommentChange}
-                    // id="comment-title-input"
                   />
                   {error && (
                     <View style={{ width: "100%" }}>
@@ -899,21 +915,21 @@ export const BugTracking = ({ projectID = "", token = "" }) => {
                         textAlign: "auto",
                       },
                     ]}
+                    id="comment-description-input"
                     keyboardType="name-phone-pad"
                     numberOfLines={5}
                     placeholder="Add issue description (optional)"
                     placeholderTextColor="#16064780"
                     value={description}
                     onChangeText={setDescription}
-                    // id="comment-description-input"
                   />
                   <TouchableOpacity
                     style={[
                       styles.bottomSheetButtonContainer,
                       { backgroundColor: buttonColor },
                     ]}
-                    // id="submit-button"
                     disabled={loading || disabledButton}
+                    id="submit-button"
                     onPress={onSubmit}
                   >
                     <Text style={styles.submitButtonText}>{buttonText}</Text>
